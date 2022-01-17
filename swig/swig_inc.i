@@ -1,0 +1,3 @@
+%{
+  #include "fibo.hpp"
+%}

@@ -4,7 +4,7 @@
 
 project(myfibopy)      
 
-cmake_minimum_required(VERSION 3.20) # At least for USE_SWIG_DEPENDENCIES
+cmake_minimum_required(VERSION 3.20)
 
 add_subdirectory(src)
 add_subdirectory(python)

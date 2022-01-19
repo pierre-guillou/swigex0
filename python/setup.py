@@ -19,8 +19,8 @@ def get_long_description():
     return long_description
 
 setup(
-    name="myfibopy",
-    version="0.0.1",
+    name="myfibopy", # TODO: try using '@PACKAGE_NAME@'
+    version="0.0.1", # TODO: try using '@PROJECT_VERSION@'
     author="Fabien Ors",
     author_email="fabien.ors@mines-paristech.fr",
     description="Fibonacci",
@@ -28,12 +28,16 @@ setup(
     # TODO license file
     url="https://github.com/fabien-ors/myfibo", # TODO
     project_urls={
-        "Bug Tracker": "https://github.com/fabien-ors/myfibo/issues",  # TODO
+        "Bug Tracker": "https://github.com/fabien-ors/myfibo/issues", # TODO
     },
-    distclass=BinaryDistribution,
-    cmdclass={"install": InstallPlatlib},
-    packages={"myfibopy"},
-    package_data={"myfibopy": ["*.so"]}, # Otherwise _myfibopy.so is not installed 
+    distclass=BinaryDistribution, # TODO: Really needed?
+    cmdclass={"install": InstallPlatlib}, # TODO: Really needed?
+    packages={"myfibopy"}, # TODO: try using '@PACKAGE_NAME@'
+    package_data={
+      # TODO: try using '@PACKAGE_NAME@':['$<TARGET_FILE_NAME:@PACKAGE_NAME@>']
+      "myfibopy":["*.so"], # GCC swig library
+      "myfibopy":["*.pyd"] # MSVC swig library
+    },
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",

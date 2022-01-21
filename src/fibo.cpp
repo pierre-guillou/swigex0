@@ -42,7 +42,7 @@ Fibo::Fibo(int n, const std::string& title)
   if (_title.empty())
   {
     std::stringstream sstr;
-    sstr << "Fibonacci (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE;
+    sstr << "Fibonacci (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE << ")";
     _title = sstr.str();
   }
 }

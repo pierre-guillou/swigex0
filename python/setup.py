@@ -33,11 +33,7 @@ setup(
     distclass=BinaryDistribution, # TODO: Really needed?
     cmdclass={"install": InstallPlatlib}, # TODO: Really needed?
     packages={"myfibopy"}, # TODO: try using '@PACKAGE_NAME@'
-    package_data={
-      # TODO: try using '@PACKAGE_NAME@':['$<TARGET_FILE_NAME:@PACKAGE_NAME@>']
-      "myfibopy":["*.so"], # GCC swig library
-      "myfibopy":["*.pyd"] # MSVC swig library
-    },
+    package_data={"myfibopy":["*.so", "*.pyd"]}, # GCC and MSVC swig library extension # TODO: try using '@PACKAGE_NAME@':['$<TARGET_FILE_NAME:@PACKAGE_NAME@>']
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",

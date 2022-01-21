@@ -14,7 +14,7 @@ set(SRC fibo.i)
 # Keep sync with interface file content
 set(PACKAGE_NAME myfibopy)
 # Generation folders
-set(PACKAGE_ROOT_FOLDER            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>) # TODO: Add config directory only if relevant
+set(PACKAGE_ROOT_FOLDER            ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 set(PACKAGE_DESTINATION_FOLDER     ${PACKAGE_ROOT_FOLDER}/${PACKAGE_NAME})
 # Location for SWIG target language code
 set(CMAKE_SWIG_OUTDIR              ${PACKAGE_DESTINATION_FOLDER})

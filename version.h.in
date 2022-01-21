@@ -1,0 +1,6 @@
+#pragma once
+
+/* Version and date */
+
+#define MYFIBO_RELEASE "@myfibo_VERSION@"
+#define MYFIBO_DATE    "@myfibo_DATE@"

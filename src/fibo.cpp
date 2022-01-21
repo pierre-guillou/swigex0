@@ -1,5 +1,8 @@
 #include "fibo.hpp"
+#include "version.h"
+
 #include <iostream>
+#include <sstream>
 
 /**
  * Print Fibonacci numbers up to the provided value
@@ -38,7 +41,9 @@ Fibo::Fibo(int n, const std::string& title)
   }
   if (_title.empty())
   {
-    _title = "Fibonacci";
+    std::stringstream sstr;
+    sstr << "Fibonacci (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE;
+    _title = sstr.str();
   }
 }
 

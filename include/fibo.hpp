@@ -12,7 +12,7 @@ std::vector<int> fib(int n);
 class Fibo
 {
   public:
-    Fibo (int n, const std::string& title = "Fibonacci");
+    Fibo (int n, const std::string& title = "");
     ~Fibo();
     
     void display(bool showTitle = true) const;

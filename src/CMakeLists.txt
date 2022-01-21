@@ -12,6 +12,8 @@ add_library(myfibo STATIC fibo.cpp)
 target_include_directories(myfibo PUBLIC
   # Includes for compiling the library
   $<BUILD_INTERFACE: ${INCLUDES}>
+  # Add binary directory to find generated version.h
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
   # Installed includes are made PUBLIC for client who links the library
   $<INSTALL_INTERFACE:include>
 )
@@ -25,6 +27,7 @@ set_target_properties(myfibo PROPERTIES
   POSITION_INDEPENDENT_CODE 1
 )
 
+
 # Install the library in DESTINATION/lib folder
 install(TARGETS myfibo
   EXPORT corelibs
@@ -35,5 +38,11 @@ install(TARGETS myfibo
 install(
   DIRECTORY ${INCLUDES}/     # Install library headers
   DESTINATION include/myfibo # in DESTINATION/include/myfibo
+)
+
+# Install the version file
+install(
+  FILES ${PROJECT_BINARY_DIR}/version.h
+  DESTINATION include/myfibo
 )
 

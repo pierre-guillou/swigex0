@@ -13,13 +13,12 @@ target_include_directories(myfibo
     $<INSTALL_INTERFACE:include>
 )
 
-
 # Hide all by default
-#set_target_properties(foo_library
-#    PROPERTIES
-#        C_VISIBILITY_PRESET hidden
-#        CXX_VISIBILITY_PRESET hidden
-#)
+set_target_properties(myfibo
+  PROPERTIES
+    C_VISIBILITY_PRESET hidden
+    CXX_VISIBILITY_PRESET hidden
+)
 
 # Any client who links the library needs -fPIC
 set_property(TARGET myfibo PROPERTY POSITION_INDEPENDENT_CODE 1)

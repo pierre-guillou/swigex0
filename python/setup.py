@@ -26,9 +26,9 @@ setup(
     description="Fibonacci",
     long_description=get_long_description(),
     # TODO license file
-    url="https://github.com/fabien-ors/myfibo", # TODO
+    url="https://github.com/fabien-ors/myfibo", # TODO Project URL
     project_urls={
-        "Bug Tracker": "https://github.com/fabien-ors/myfibo/issues", # TODO
+        "Bug Tracker": "https://github.com/fabien-ors/myfibo/issues", # TODO Project URLs
     },
     distclass=BinaryDistribution, # TODO: Really needed?
     cmdclass={"install": InstallPlatlib}, # TODO: Really needed?

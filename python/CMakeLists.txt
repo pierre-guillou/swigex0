@@ -1,4 +1,4 @@
-if(NOT BUILD_PYTHON)
+if(NOT INSTALL_PYTHON)
   return()
 endif()
 
@@ -12,19 +12,19 @@ include(${SWIG_USE_FILE})
 # Interface file
 set(SRC fibo.i) 
 # Keep sync with interface file content
-set(PACKAGE_NAME myfibopy)
+set(PYTHON_PACKAGE_NAME myfibopy)
 # Generation folders
 if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG
-  set(PACKAGE_ROOT_FOLDER            ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
+  set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
 else()
-  set(PACKAGE_ROOT_FOLDER            ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+  set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 endif()
-set(PACKAGE_DESTINATION_FOLDER     ${PACKAGE_ROOT_FOLDER}/${PACKAGE_NAME})
+set(PYTHON_PACKAGE_DESTINATION_FOLDER ${PYTHON_PACKAGE_ROOT_FOLDER}/${PYTHON_PACKAGE_NAME})
 # Location for SWIG target language code
-set(CMAKE_SWIG_OUTDIR              ${PACKAGE_DESTINATION_FOLDER})
+set(CMAKE_SWIG_OUTDIR                 ${PYTHON_PACKAGE_DESTINATION_FOLDER})
 # Location for SWIG wrapper library
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PACKAGE_DESTINATION_FOLDER}) # Use LIBRARY (gcc)!
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PACKAGE_DESTINATION_FOLDER}) # Use RUNTIME (msvc)!
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY    ${PYTHON_PACKAGE_DESTINATION_FOLDER}) # Use LIBRARY (gcc)!
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${PYTHON_PACKAGE_DESTINATION_FOLDER}) # Use RUNTIME (msvc)!
 
 # SWIG interface source file
 set_source_files_properties(${SRC} PROPERTIES
@@ -42,8 +42,8 @@ set_source_files_properties(${SRC} PROPERTIES
 # TODO: This only works on GCC because MSVC always recompile swig (don't know why)
 set_property(SOURCE ${SRC} PROPERTY
   DEPENDS
-    ${PROJECT_SOURCE_DIR}/swig/swig_exp.i # TODO: use myfibo CMake interface?
-    ${PROJECT_SOURCE_DIR}/swig/swig_inc.i # TODO: use myfibo CMake interface?
+    ${PROJECT_SOURCE_DIR}/swig/swig_exp.i
+    ${PROJECT_SOURCE_DIR}/swig/swig_inc.i
     #${CMAKE_CURRENT_BINARY_DIR}documentation.i
 )
 
@@ -53,28 +53,43 @@ set(CMAKE_SWIG_FLAGS -py3 -keyword)
 
 # SWIG target (generate wrapper then _myfibopy.[so,pyd] and myfibopy.py)
 swig_add_library(
-  ${PACKAGE_NAME}
+  ${PYTHON_PACKAGE_NAME}
   LANGUAGE   python
   TYPE       SHARED
-  SOURCES    ${SRC})
-  
+  SOURCES    ${SRC}
+)
+
 # Link to static myfibo library
-target_link_libraries(${PACKAGE_NAME} PUBLIC myfibo)
+target_link_libraries(${PYTHON_PACKAGE_NAME} PUBLIC myfibo)
 
 # Find appropriate Python.h
-target_include_directories(${PACKAGE_NAME} PRIVATE ${Python3_INCLUDE_DIRS})
+target_include_directories(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_INCLUDE_DIRS})
 
 # Link to python's libraries (only for MSVC - Release)
 if(MSVC)
-  target_link_libraries(${PACKAGE_NAME} PRIVATE ${Python3_LIBRARIES})
+  target_link_libraries(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_LIBRARIES})
 endif()
 
-# Install python package (after SWIG target)
-# TODO: Force reinstallation each time setup.py or README.md is modified
-add_custom_command(TARGET ${PACKAGE_NAME}
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/setup.py ${PACKAGE_ROOT_FOLDER}
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/README.md ${PACKAGE_ROOT_FOLDER}
-  COMMAND ${Python3_EXECUTABLE} -m pip install ${PACKAGE_ROOT_FOLDER}
+# Fix setup.py automatically
+# First step: replace variables (@VAR@)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in 
+  ${CMAKE_CURRENT_BINARY_DIR}/setup.py.in
+  @ONLY
+)
+# Second step: replace generator expression ($<>)
+file(GENERATE
+  OUTPUT ${PYTHON_PACKAGE_ROOT_FOLDER}/setup.py
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py.in
+)
+
+# Install python package (if SWIG target has run)
+# TODO: Do also installation each time setup.py.in or README.md is modified
+add_custom_command(TARGET ${PYTHON_PACKAGE_NAME}
+#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/setup.py ${PYTHON_PACKAGE_ROOT_FOLDER}
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/README.md ${PYTHON_PACKAGE_ROOT_FOLDER}
+  COMMAND ${Python3_EXECUTABLE} -m pip install ${PYTHON_PACKAGE_ROOT_FOLDER}
   COMMENT "Installing python package"
-  VERBATIM)
+  VERBATIM
+)
 

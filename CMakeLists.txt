@@ -24,26 +24,26 @@ cmake_minimum_required(VERSION 3.20)
 
 project(myfibo
   VERSION      0.0.1
-  DESCRIPTION  "Fibonacci"
-  HOMEPAGE_URL https://github.com/fabien-ors/myfibo
+  DESCRIPTION  "Fibonacci simple class"
+  HOMEPAGE_URL "https://github.com/fabien-ors/myfibo"
   LANGUAGES    C CXX # Enable C language for third party libraries
 )
 
-# Get the date in gstlearn_DATE variable
-string(TIMESTAMP myfibo_DATE "%Y/%m/%d")
+# Get the date in myfibo_DATE variable
+string(TIMESTAMP myfibo_DATE "%Y/%m/%d - %H:%M")
 
 # Fix version.h automatically
 configure_file(version.h.in version.h)
 
-# Add python option
-option(BUILD_PYTHON "Build Python Library" OFF)
-message(STATUS "Build Python: ${BUILD_PYTHON}")
+# Add python package installation option
+option(INSTALL_PYTHON "Install Python Package" OFF)
+message(STATUS "INSTALL_PYTHON=${INSTALL_PYTHON}")
 
 # Make Release version the default
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  # Set the possible values of build type for cmake-gui
+  # Set the possible values of build type
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 

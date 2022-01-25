@@ -5,7 +5,7 @@
 # cmake -Bbuild -H. -DBUILD_PYTHON=ON
 # cmake --build build
 
-# Build and install static library (and don't build python package)
+# Build and install shared library (and don't build python package)
 # cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=/home/fors/myfibo_install
 # cmake --build build --target install
 
@@ -16,12 +16,13 @@
 # cmake -Bbuild -H. -DBUILD_PYTHON=ON
 # cmake --build build --config Release
 
-# Build and install static library (and don't build python package)
+# Build and install shared library (and don't build python package)
 # cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=C:/users/user/myfibo_install
 # cmake --build build --target install --config Release
 
 cmake_minimum_required(VERSION 3.20)
 
+# Define project here
 project(myfibo
   VERSION      0.0.1
   DESCRIPTION  "Fibonacci simple class"
@@ -29,15 +30,52 @@ project(myfibo
   LANGUAGES    C CXX # Enable C language for third party libraries
 )
 
-# Get the date in myfibo_DATE variable
-string(TIMESTAMP myfibo_DATE "%Y/%m/%d - %H:%M")
+####################################################
+## CONFIGURATION
+
+# Get the project date
+string(TIMESTAMP ${PROJECT_NAME}_DATE "%Y/%m/%d - %H:%M")
+
+# Convert project name to uppercase
+string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UP)
 
 # Fix version.h automatically
 configure_file(version.h.in version.h)
 
-# Add python package installation option
-option(INSTALL_PYTHON "Install Python Package" OFF)
-message(STATUS "INSTALL_PYTHON=${INSTALL_PYTHON}")
+# Add configuration options (Build shared only by default)
+option(BUILD_STATIC "Build Static Library" OFF)
+option(BUILD_SHARED "Build Shared Library" ON)
+option(BUILD_PYTHON "Build and Install Python Package" OFF)
+option(BUILD_TESTS "Build C++ Non-Regression Tests" OFF)
+option(RUN_TESTS "Run C++ Non-Regression Tests" OFF)
+
+# Test if static library is needed
+if (BUILD_PYTHON)
+  set(BUILD_STATIC ON)
+endif()
+
+# Test if building tests is needed
+if (RUN_TESTS)
+  set(BUILD_TESTS ON)
+endif()
+
+# Test if shared library is needed
+if (BUILD_TESTS)
+  set(BUILD_SHARED ON)
+endif()
+
+# Display configuration
+message(STATUS "BUILD_STATIC=${BUILD_STATIC}")
+message(STATUS "BUILD_SHARED=${BUILD_SHARED}")
+message(STATUS "BUILD_PYTHON=${BUILD_PYTHON}")
+message(STATUS "BUILD_TESTS =${BUILD_TESTS}")
+message(STATUS "RUN_TESTS   =${RUN_TESTS}")
+if (NOT BUILD_SHARED AND NOT BUILD_STATIC)
+  message(FATAL_ERROR "You must build at least shared or static library!")
+endif()
+
+####################################################
+## BUILD
 
 # Make Release version the default
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -47,20 +85,10 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-# Impose 'd' suffix in debug (global property)
-set(CMAKE_DEBUG_POSTFIX d)
+include(cmake/cpp.cmake)
 
-add_subdirectory(src)
 add_subdirectory(python)
 
-# Add uninstall target
-# https://gitlab.kitware.com/cmake/community/-/wikis/FAQ#can-i-do-make-uninstall-with-cmake
-if(NOT TARGET uninstall)
-  configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-    IMMEDIATE @ONLY)
+include(cmake/install.cmake)
 
-  add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
-endif()
+

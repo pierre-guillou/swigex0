@@ -1,15 +1,18 @@
 #pragma once
 
+#include "myfibo_export.hpp"
+
 #include <vector>
 #include <string>
 
-/// Global function
-std::vector<int> fib(int n);
+/// Global functions
+MYFIBO_EXPORT int fibn(int n);
+MYFIBO_EXPORT std::vector<int> fib(int n);
 
 /**
  * Class which handles Fibonacci integers serie
  */
-class Fibo
+class MYFIBO_EXPORT Fibo
 {
   public:
     Fibo (int n, const std::string& title = "");

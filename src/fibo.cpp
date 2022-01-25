@@ -5,6 +5,28 @@
 #include <sstream>
 
 /**
+ * Return the Nth Fibonacci number
+ *
+ * @param n: index of the value
+ */
+int fibn(int n)
+{
+  int a = 0;
+  int b = 1;
+  int i = 1;
+  if (n <= 0) return -1;
+  while (1)
+  {
+    if (i == n) return a;
+    int aa = a;
+    a = b;
+    b = aa+b;
+    i++;
+  }
+  return -1;
+}
+
+/**
  * Print Fibonacci numbers up to the provided value
  *
  * @param n: maximum value to be generated

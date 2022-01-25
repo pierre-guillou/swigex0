@@ -1,4 +1,4 @@
-if(NOT INSTALL_PYTHON)
+if(NOT BUILD_PYTHON)
   return()
 endif()
 
@@ -50,6 +50,7 @@ set_property(SOURCE ${SRC} PROPERTY
 # SWIG flags
 set(CMAKE_SWIG_FLAGS -py3 -keyword)
 # Note: Cannot use -doxygen feature because all documentation is in C++ body files
+# Note: Use -E option for seeing preprocessor output
 
 # SWIG target (generate wrapper then _myfibopy.[so,pyd] and myfibopy.py)
 swig_add_library(
@@ -59,8 +60,8 @@ swig_add_library(
   SOURCES    ${SRC}
 )
 
-# Link to static myfibo library
-target_link_libraries(${PYTHON_PACKAGE_NAME} PUBLIC myfibo)
+# Link to static ${PROJECT_NAME} library
+target_link_libraries(${PYTHON_PACKAGE_NAME} PUBLIC ${PROJECT_NAME}::static)
 
 # Find appropriate Python.h
 target_include_directories(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_INCLUDE_DIRS})
@@ -70,24 +71,29 @@ if(MSVC)
   target_link_libraries(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_LIBRARIES})
 endif()
 
-# Fix setup.py automatically
+# Generate setup.py automatically for each configuration
 # First step: replace variables (@VAR@)
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/setup.py.in 
   ${CMAKE_CURRENT_BINARY_DIR}/setup.py.in
   @ONLY
 )
+
 # Second step: replace generator expression ($<>)
 file(GENERATE
   OUTPUT ${PYTHON_PACKAGE_ROOT_FOLDER}/setup.py
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py.in
 )
 
+# Generate README.md for each configuration
+file(GENERATE
+  OUTPUT ${PYTHON_PACKAGE_ROOT_FOLDER}/README.md
+  INPUT  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
+)
+
 # Install python package (if SWIG target has run)
 # TODO: Do also installation each time setup.py.in or README.md is modified
 add_custom_command(TARGET ${PYTHON_PACKAGE_NAME}
-#  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/setup.py ${PYTHON_PACKAGE_ROOT_FOLDER}
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/README.md ${PYTHON_PACKAGE_ROOT_FOLDER}
   COMMAND ${Python3_EXECUTABLE} -m pip install ${PYTHON_PACKAGE_ROOT_FOLDER}
   COMMENT "Installing python package"
   VERBATIM

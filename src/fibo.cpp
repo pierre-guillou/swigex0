@@ -31,9 +31,9 @@ int fibn(int n)
  *
  * @param n: maximum value to be generated
  */
-std::vector<int> fib(int n)
+VectorInt fib(int n)
 {
-  std::vector<int> res;
+  VectorInt res;
   int a = 0;
   int b = 1;
   while (a < n)
@@ -52,7 +52,7 @@ std::vector<int> fib(int n)
  * @param n     Strict Positive Integer
  * @param title Title to be printed
  */
-Fibo::Fibo(int n, const std::string& title)
+Fibo::Fibo(int n, const String& title)
 : _n(n)
 , _title(title)
 {
@@ -64,7 +64,7 @@ Fibo::Fibo(int n, const std::string& title)
   if (_title.empty())
   {
     std::stringstream sstr;
-    sstr << "Fibonacci (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE << ")";
+    sstr << DEFAULT_TITLE << " (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE << ")";
     _title = sstr.str();
   }
 }
@@ -84,7 +84,7 @@ Fibo::~Fibo()
 void Fibo::display(bool showTitle) const
 {
   if (showTitle) std::cout << _title << ": ";
-  std::vector<int> res = get();
+  VectorInt res = get();
   for (const auto& i: res)
     std::cout << i << ' ';
   std::cout << std::endl;
@@ -96,7 +96,7 @@ void Fibo::display(bool showTitle) const
  *
  * @return Fibonacci integer vector serie
  */
-std::vector<int> Fibo::get() const
+VectorInt Fibo::get() const
 {
   return fib(_n);
 }

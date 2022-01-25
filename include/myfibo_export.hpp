@@ -1,5 +1,6 @@
 #pragma once
 
+// Do not use cmake GenerateExportHeader which is not adapted to double targets (static/shared)
 #if defined(_WIN32) || defined (__CYGWIN__) // Windows
 #  ifdef MYFIBO_BUILD_SHARED // Shared export
 #    pragma message("We are compiling the shared library")

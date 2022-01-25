@@ -1,13 +1,11 @@
 #pragma once
 
 #include "myfibo_export.hpp"
-
-#include <vector>
-#include <string>
+#include "fibo_define.hpp"
 
 /// Global functions
 MYFIBO_EXPORT int fibn(int n);
-MYFIBO_EXPORT std::vector<int> fib(int n);
+MYFIBO_EXPORT VectorInt fib(int n);
 
 /**
  * Class which handles Fibonacci integers serie
@@ -15,15 +13,15 @@ MYFIBO_EXPORT std::vector<int> fib(int n);
 class MYFIBO_EXPORT Fibo
 {
   public:
-    Fibo (int n, const std::string& title = "");
+    Fibo (int n, const String& title = "");
     ~Fibo();
     
     void display(bool showTitle = true) const;
     
-    std::vector<int> get() const;
+    VectorInt get() const;
   
   private:
-    int         _n;     /// Maximum integer for the serie
-    std::string _title; /// Title to be displayed when displaying the serie
+    int    _n;     /// Maximum integer for the serie
+    String _title; /// Title to be displayed when displaying the serie
 };
 

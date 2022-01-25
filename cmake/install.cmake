@@ -5,22 +5,20 @@ endif()
 
 # Default GNU installed directory names
 include(GNUInstallDirs)
-# To create a required version compatibility script
-include(CMakePackageConfigHelpers)
 
 ####################################################
 ## INSTALLATION
+
+# Install the shared library in DESTINATION/lib folder
+install(TARGETS shared
+  EXPORT ${PROJECT_NAME}_corelibs
+  LIBRARY DESTINATION lib
+)
 
 # Include directories
 target_include_directories(shared PUBLIC
   # Installed includes are made PUBLIC for client who links the shared library
   $<INSTALL_INTERFACE:include>
-)
-
-# Install the library in DESTINATION/lib folder
-install(TARGETS shared
-  EXPORT ${PROJECT_NAME}_corelibs
-  LIBRARY DESTINATION lib
 )
 
 # Install the includes
@@ -35,7 +33,7 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
-# Export the shared library (See src/CMakeLists.txt for corelibs definition)
+# Export the shared library cmake configuration (See above for corelibs definition)
 install(
   EXPORT ${PROJECT_NAME}_corelibs
   FILE ${PROJECT_NAME}Config.cmake

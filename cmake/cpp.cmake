@@ -42,7 +42,7 @@ foreach(FLAVOR ${FLAVORS})
   set_target_properties(${FLAVOR} PROPERTIES
     # Symbol for export.hpp header (do not use GenerateExportHeader)
     COMPILE_FLAGS "-D${PROJECT_NAME_UP}_BUILD_${FLAVOR_UP}"
-    # Hide all symbols by default
+    # Hide all symbols by default (impose same behavior between Linux and Windows)
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden
     # Any client who links the library needs -fPIC (static or shared)

@@ -100,3 +100,4 @@ VectorInt Fibo::get() const
 {
   return fib(_n);
 }
+

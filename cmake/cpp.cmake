@@ -34,15 +34,15 @@ foreach(FLAVOR ${FLAVORS})
   target_include_directories(${FLAVOR} PUBLIC
     # Includes for compiling the library
     $<BUILD_INTERFACE: ${INCLUDES}>
-    # Add binary directory to find generated version.h
+    # Add binary directory to find generated version.h and export.hpp
     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
   )
 
   # Set some target properties
   set_target_properties(${FLAVOR} PROPERTIES
     # Symbol for export.hpp header (do not use GenerateExportHeader)
-    COMPILE_FLAGS "-D${PROJECT_NAME_UP}_BUILD_${FLAVOR_UP}"
-    # Hide all symbols by default (impose same behavior between Linux and Windows)
+    #COMPILE_FLAGS "-D${PROJECT_NAME_UP}_BUILD_${FLAVOR_UP}"
+    # Hide all symbols by default (imposesame behavior between Linux and Windows)
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden
     # Any client who links the library needs -fPIC (static or shared)
@@ -57,12 +57,50 @@ foreach(FLAVOR ${FLAVORS})
   
 endforeach(FLAVOR ${FLAVORS})
 ############################## End loop on flavor
-  
+
+# Generate export header
+#include(GenerateExportHeader)
+#set(DISABLE_EXPORT_IF_SWIG "
+#ifdef SWIG
+#undef GSTLEARN_EXPORT
+#undef GSTLEARN_NO_EXPORT
+#define GSTLEARN_EXPORT
+#define GSTLEARN_NO_EXPORT
+#endif
+#")
+#generate_export_header(shared BASE_NAME gstlearn
+#                       EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/gstlearn_export.hpp
+#                       CUSTOM_CONTENT_FROM_VARIABLE DISABLE_EXPORT_IF_SWIG
+#)
+#set_target_properties(static PROPERTIES COMPILE_FLAGS -DGSTLEARN_STATIC_DEFINE)
+
 # Shared library specific options
 if (BUILD_SHARED)
+  # Generate export header
+  include(GenerateExportHeader)
+  set(DISABLE_EXPORT_IF_SWIG "
+   #ifdef SWIG
+    #undef ${PROJECT_NAME_UP}_EXPORT
+    #undef ${PROJECT_NAME_UP}_NO_EXPORT
+    #define ${PROJECT_NAME_UP}_EXPORT
+    #define ${PROJECT_NAME_UP}_NO_EXPORT
+    #endif
+  ")
+  generate_export_header(shared
+    BASE_NAME ${PROJECT_NAME}
+    EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_export.hpp
+    CUSTOM_CONTENT_FROM_VARIABLE DISABLE_EXPORT_IF_SWIG
+  )
   # Set the so version to project major version
   set_target_properties(shared PROPERTIES
     SOVERSION ${PROJECT_VERSION_MAJOR}
+  )
+endif()
+
+# Static library specific options
+if (BUILD_STATIC)
+  set_target_properties(static PROPERTIES
+    COMPILE_FLAGS -D${PROJECT_NAME_UP}_STATIC_DEFINE
   )
 endif()
 

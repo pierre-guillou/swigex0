@@ -25,3 +25,4 @@ class MYFIBO_EXPORT Fibo
     String _title; /// Title to be displayed when displaying the serie
 };
 
+

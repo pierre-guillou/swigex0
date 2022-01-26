@@ -27,6 +27,11 @@ install(
   DESTINATION include/${PROJECT_NAME} # in DESTINATION/include/${PROJECT_NAME}
 )
 
+# Install the export file
+install(FILES ${PROJECT_BINARY_DIR}/${PROJECT_NAME}_export.hpp
+        DESTINATION include/${PROJECT_NAME}
+)
+
 # Install the version file
 install(
   FILES ${PROJECT_BINARY_DIR}/version.h

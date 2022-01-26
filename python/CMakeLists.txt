@@ -62,6 +62,8 @@ swig_add_library(
 
 # Link to static ${PROJECT_NAME} library
 target_link_libraries(${PYTHON_PACKAGE_NAME} PUBLIC ${PROJECT_NAME}::static)
+# Transmit the fact that we are linking to static ${PROJECT_NAME} library
+set_target_properties(${PYTHON_PACKAGE_NAME} PROPERTIES COMPILE_FLAGS -D${PROJECT_NAME_UP}_STATIC_DEFINE)
 
 # Find appropriate Python.h
 target_include_directories(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_INCLUDE_DIRS})

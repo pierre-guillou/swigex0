@@ -1,10 +1,7 @@
-# Only shared library is installed
-if(NOT BUILD_SHARED)
-  return()
-endif()
-
 # Default GNU installed directory names
 include(GNUInstallDirs)
+
+# TODO: Currently, install target builds all but the tests (static, shared and python)
 
 ####################################################
 ## INSTALLATION
@@ -13,6 +10,7 @@ include(GNUInstallDirs)
 install(TARGETS shared
   EXPORT ${PROJECT_NAME}_corelibs
   LIBRARY DESTINATION lib
+  RUNTIME DESTINATION lib
 )
 
 # Include directories

@@ -2,8 +2,8 @@
 # GCC
 #########
 # Build static library (and install python package)
-# cmake -Bbuild -H. -DBUILD_PYTHON=ON
-# cmake --build build
+# cmake -Bbuild -H.
+# cmake --build build --target python
 
 # Build and install shared library (and don't build python package)
 # cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=/home/fors/myfibo_install
@@ -13,13 +13,14 @@
 # MSVC
 #########
 # Build static library (and install python package)
-# cmake -Bbuild -H. -DBUILD_PYTHON=ON
-# cmake --build build --config Release
+# cmake -Bbuild -H.
+# cmake --build build --target python --config Release
 
 # Build and install shared library (and don't build python package)
 # cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=C:/users/user/myfibo_install
 # cmake --build build --target install --config Release
 
+# For recent UseSWIG
 cmake_minimum_required(VERSION 3.20)
 
 # Define project here
@@ -41,36 +42,6 @@ string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UP)
 
 # Fix version.h automatically
 configure_file(version.h.in version.h)
-
-# Add configuration options (Build shared only by default)
-option(BUILD_STATIC "Build Static Library" OFF)
-option(BUILD_SHARED "Build Shared Library" ON)
-option(BUILD_PYTHON "Build and Install Python Package" OFF)
-option(BUILD_TESTS "Build C++ Non-Regression Tests" OFF)
-
-# Test if static library is needed
-if (BUILD_PYTHON)
-  set(BUILD_STATIC ON)
-endif()
-
-# Test if building tests is needed
-if (RUN_TESTS)
-  set(BUILD_TESTS ON)
-endif()
-
-# Test if shared library is needed
-if (BUILD_TESTS)
-  set(BUILD_SHARED ON)
-endif()
-
-# Display configuration
-message(STATUS "BUILD_STATIC = ${BUILD_STATIC}")
-message(STATUS "BUILD_SHARED = ${BUILD_SHARED}")
-message(STATUS "BUILD_PYTHON = ${BUILD_PYTHON}")
-message(STATUS "BUILD_TESTS  = ${BUILD_TESTS}")
-if (NOT BUILD_SHARED AND NOT BUILD_STATIC)
-  message(FATAL_ERROR "You must build at least shared or static library!")
-endif()
 
 ####################################################
 ## BUILD
@@ -101,8 +72,8 @@ else()
 endif()
 
 include(cmake/cpp.cmake)
+# TODO : Add doxygen feature
 #include(cmake/doxygen.cmake)
-#include(cmake/doc.cmake)
 include(cmake/install.cmake)
 
 
@@ -112,11 +83,10 @@ include(cmake/install.cmake)
 add_subdirectory(python)
 
 
-
 ####################################################
 ## TESTING
 
-# Add test target (execution)
+# Add build_test and test targets
 include(CTest)
 enable_testing()
 

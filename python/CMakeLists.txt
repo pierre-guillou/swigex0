@@ -1,7 +1,3 @@
-if(NOT BUILD_PYTHON)
-  return()
-endif()
-
 # Look for Python3
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 
@@ -9,9 +5,12 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
+# TODO : create 'python' target (EXCLUDE_FROM_ALL)
+
 # Interface file
 set(SRC fibo.i) 
 # Keep sync with interface file content
+# TODO : Generate automatically fibo.i ?
 set(PYTHON_PACKAGE_NAME myfibopy)
 # Generation folders
 if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG
@@ -31,7 +30,7 @@ set_source_files_properties(${SRC} PROPERTIES
   CPLUSPLUS ON
   # Swig wrapper will be regenerated if C++ headers are changed
   # https://stackoverflow.com/a/70375654/3952924
-  #USE_SWIG_DEPENDENCIES TRUE   # Incompatible with CMAKE_SWIG_OUTDIR under cmake 3.22 (MSVC)
+  #USE_SWIG_DEPENDENCIES TRUE   # TODO : Incompatible with CMAKE_SWIG_OUTDIR under cmake 3.22 (MSVC)
   # myfibo C++ headers will be found by %import directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
   # Python package name will be the name of the installed folder (no module)
@@ -44,13 +43,12 @@ set_property(SOURCE ${SRC} PROPERTY
   DEPENDS
     ${PROJECT_SOURCE_DIR}/swig/swig_exp.i
     ${PROJECT_SOURCE_DIR}/swig/swig_inc.i
-    #${CMAKE_CURRENT_BINARY_DIR}documentation.i
 )
 
 # SWIG flags
 set(CMAKE_SWIG_FLAGS -py3 -keyword)
 # Note: Cannot use -doxygen feature because all documentation is in C++ body files
-# Note: Use -E option for seeing preprocessor output
+# Note: Use -E option for seeing SWIG preprocessor output
 
 # SWIG target (generate wrapper then _myfibopy.[so,pyd] and myfibopy.py)
 swig_add_library(

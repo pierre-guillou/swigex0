@@ -1,5 +1,5 @@
 // No need of %module keyword when building using cmake UseSWIG
-// %module pymyfibo
+%module myfibo
 
 // Include myfibo swig interface files (Keep order!)
 %include ../swig/swig_inc.i

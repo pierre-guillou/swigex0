@@ -18,7 +18,7 @@ setup(
         "Bug Tracker": "https://github.com/fabien-ors/myfibo/issues", # TODO Project URLs
     },
     packages={"@PYTHON_PACKAGE_NAME@"},
-    package_data={"@PYTHON_PACKAGE_NAME@":["$<TARGET_FILE_NAME:@PYTHON_PACKAGE_NAME@>"]},
+    package_data={"@PYTHON_PACKAGE_NAME@":["$<TARGET_FILE_NAME:@PYTGT@>"]},
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",

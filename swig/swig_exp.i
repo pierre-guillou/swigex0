@@ -1,8 +1,8 @@
 // Sensitive file ! Keep Order
 
-// Cast strings into native type of the target langage
+// Cast strings into native type of the target language
 %include std_string.i
-// Cast vectors of integers into native type of the target langage
+// Cast vectors of integers into native type of the target language
 %include std_vector.i
 %template(VectorInt) std::vector<int>;
 

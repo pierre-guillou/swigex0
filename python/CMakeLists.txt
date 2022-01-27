@@ -1,3 +1,13 @@
+# Python package name
+set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
+# Beware : the real package name is the PROJECT_NAME (for better import)
+
+# Create the global target for building python package
+add_custom_target(python_build_package)
+
+###################################
+# DEPENDENCIES
+
 # Look for Python3
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 
@@ -5,10 +15,17 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
+
+######################################
+# WRAPPER GENERATION & BUILD
+
+# Python package target
+set(PYTGT python_build)
+
 # Interface file
 set(SRC fibo.i) 
 # No need to define %module in the interface file
-set(PYTHON_PACKAGE_NAME pymyfibo)
+
 # Generation folders
 if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG ?
   set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
@@ -47,32 +64,47 @@ set(CMAKE_SWIG_FLAGS -py3 -keyword)
 # Note: Cannot use -doxygen feature because all documentation is in C++ body files
 # Note: Use -E option for seeing SWIG preprocessor output
 
-# SWIG target (generate wrapper then _myfibopy.[so,pyd] and myfibopy.py)
+# SWIG target (generate wrapper & python script then build [so,pyd] library)
 swig_add_library(
-  ${PYTHON_PACKAGE_NAME}
+  ${PYTGT}
   LANGUAGE   python
   TYPE       SHARED
   SOURCES    ${SRC}
 )
 
-# Link to static ${PROJECT_NAME} library
-target_link_libraries(${PYTHON_PACKAGE_NAME} PUBLIC ${PROJECT_NAME}::static)
+# Link to static library
+target_link_libraries(${PYTGT} PUBLIC ${PROJECT_NAME}::static)
 
+# Transmit the fact that we are linking to static ${PROJECT_NAME} library
+if (MSVC)
+  set(COMP_FLAGS "/bigobj -D${PROJECT_NAME_UP}_STATIC_DEFINE")
+else()
+  set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
+endif()
 # Set some properties on SWIG target
-set_target_properties(${PYTHON_PACKAGE_NAME} PROPERTIES
+set_target_properties(${PYTGT} PROPERTIES
   # Do not build python package by default
   EXCLUDE_FROM_ALL ON
+  # Modify the generated library name
+  OUTPUT_NAME ${PROJECT_NAME}
   # Transmit the fact that we are linking to static ${PROJECT_NAME} library
-  COMPILE_FLAGS -D${PROJECT_NAME_UP}_STATIC_DEFINE
+  COMPILE_FLAGS ${COMP_FLAGS}
 )
 
 # Find appropriate Python.h
-target_include_directories(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_INCLUDE_DIRS})
+target_include_directories(${PYTGT} PRIVATE ${Python3_INCLUDE_DIRS})
 
 # Link to python's libraries (only for MSVC - Release)
 if(MSVC)
-  target_link_libraries(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_LIBRARIES})
+  target_link_libraries(${PYTGT} PRIVATE ${Python3_LIBRARIES})
 endif()
+
+# Add SWIG target to global python build package dependency
+add_dependencies(python_build_package ${PYTGT})
+
+
+########################################
+# PACKAGING (target independent)
 
 # Generate setup.py automatically for each configuration
 # First step: replace variables (@VAR@)
@@ -94,17 +126,18 @@ file(GENERATE
   INPUT  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
 )
 
-# Add a custom target for python package installation
-add_custom_target(${PYTHON_PACKAGE_NAME}_install)
-add_dependencies(${PYTHON_PACKAGE_NAME}_install ${PYTHON_PACKAGE_NAME})
+######################################
+# INSTALLATION
 
-# Install python package (if SWIG target has run)
+# Add a custom target for python package installation
 # TODO: Do also installation each time setup.py.in or README.md is modified
-add_custom_command(TARGET ${PYTHON_PACKAGE_NAME}_install
+add_custom_target(python_install
   COMMAND ${Python3_EXECUTABLE} -m pip install ${PYTHON_PACKAGE_ROOT_FOLDER}
   COMMENT "Installing python package"
   VERBATIM
 )
 
+# Tell cmake that python package must be built before installation
+add_dependencies(python_install python_build_package)
 
 

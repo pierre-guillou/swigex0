@@ -4,7 +4,7 @@ add_custom_target(build_tests)
 # Test sources
 set(TEST_SOURCES main.cpp)
 
-# Generation folder
+# Generation folders
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
@@ -17,9 +17,9 @@ foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
   list(APPEND TARGETS_EXE ${TEST_NAME})
   # Define sources list for the target executable
   add_executable(${TEST_NAME} EXCLUDE_FROM_ALL ${TEST_SOURCE_FILE})
-  # Link gstlearn to each test
+  # Link each test to shared library
   target_link_libraries(${TEST_NAME} PRIVATE ${PROJECT_NAME}::shared)
-  # Trigger the build of the test with the target build_test
+  # Trigger the build of the test with the target build_tests
   add_dependencies(build_tests ${TEST_NAME})
 endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 

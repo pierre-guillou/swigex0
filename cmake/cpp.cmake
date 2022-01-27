@@ -1,3 +1,25 @@
+# Make Release version the default (only for single configuration generators)
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to 'Release' as none was specified")
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+# Add c++11 support whatever the compiler
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Warning fiesta!
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+if (MSVC)
+  # Warning level 4 (4 = maximum, 0 = none)
+  add_compile_options(/W4) 
+else()
+  # Lots of warnings (-Wall = add some warnings, -Wextra = add a ton of warnings)
+  add_compile_options(-Wextra)
+endif()
+
 # C++ code location
 set(INCLUDES ${PROJECT_SOURCE_DIR}/include)
 set(SOURCES ${PROJECT_SOURCE_DIR}/src/fibo.cpp)
@@ -7,7 +29,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYP
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
-# TODO: Windows: It may be necessary to distinguish lib file for static library and lib file of shared library (import lib)
+# Change the name of the output file (to distinguish lib files under windows) 
+if (WIN32)
+  set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
+endif()
 
 # Impose 'd' suffix in debug (global property)
 set(CMAKE_DEBUG_POSTFIX d)
@@ -51,7 +76,8 @@ foreach(FLAVOR ${FLAVORS})
 endforeach(FLAVOR ${FLAVORS})
 ############################## End loop on flavor
 
-# Shared library specific options
+
+###################### Shared library specific options
 
 # Generate export header
 include(GenerateExportHeader)
@@ -73,7 +99,7 @@ set_target_properties(shared PROPERTIES
   SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
-# Static library specific options
+###################### Static library specific options
 
 # Prevent from using _declspec when static
 set_target_properties(static PROPERTIES

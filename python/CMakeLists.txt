@@ -5,15 +5,12 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
-# TODO : create 'python' target (EXCLUDE_FROM_ALL)
-
 # Interface file
 set(SRC fibo.i) 
-# Keep sync with interface file content
-# TODO : Generate automatically fibo.i ?
-set(PYTHON_PACKAGE_NAME myfibopy)
+# No need to define %module in the interface file
+set(PYTHON_PACKAGE_NAME pymyfibo)
 # Generation folders
-if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG
+if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG ?
   set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
 else()
   set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
@@ -60,8 +57,14 @@ swig_add_library(
 
 # Link to static ${PROJECT_NAME} library
 target_link_libraries(${PYTHON_PACKAGE_NAME} PUBLIC ${PROJECT_NAME}::static)
-# Transmit the fact that we are linking to static ${PROJECT_NAME} library
-set_target_properties(${PYTHON_PACKAGE_NAME} PROPERTIES COMPILE_FLAGS -D${PROJECT_NAME_UP}_STATIC_DEFINE)
+
+# Set some properties on SWIG target
+set_target_properties(${PYTHON_PACKAGE_NAME} PROPERTIES
+  # Do not build python package by default
+  EXCLUDE_FROM_ALL ON
+  # Transmit the fact that we are linking to static ${PROJECT_NAME} library
+  COMPILE_FLAGS -D${PROJECT_NAME_UP}_STATIC_DEFINE
+)
 
 # Find appropriate Python.h
 target_include_directories(${PYTHON_PACKAGE_NAME} PRIVATE ${Python3_INCLUDE_DIRS})
@@ -91,11 +94,17 @@ file(GENERATE
   INPUT  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
 )
 
+# Add a custom target for python package installation
+add_custom_target(${PYTHON_PACKAGE_NAME}_install)
+add_dependencies(${PYTHON_PACKAGE_NAME}_install ${PYTHON_PACKAGE_NAME})
+
 # Install python package (if SWIG target has run)
 # TODO: Do also installation each time setup.py.in or README.md is modified
-add_custom_command(TARGET ${PYTHON_PACKAGE_NAME}
+add_custom_command(TARGET ${PYTHON_PACKAGE_NAME}_install
   COMMAND ${Python3_EXECUTABLE} -m pip install ${PYTHON_PACKAGE_ROOT_FOLDER}
   COMMENT "Installing python package"
   VERBATIM
 )
+
+
 

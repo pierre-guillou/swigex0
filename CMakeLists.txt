@@ -43,33 +43,11 @@ string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UP)
 # Fix version.h automatically
 configure_file(version.h.in version.h)
 
-####################################################
-## BUILD
-
-# Make Release version the default
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  message(STATUS "Setting build type to 'Release' as none was specified")
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  # Set the possible values of build type
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-endif()
-
 # Activate verbose mode
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
-# Add c++11 support whatever the compiler
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-# Warning fiesta!
-# https://cmake.org/cmake/help/latest/command/add_compile_options.html
-if (MSVC)
-  # Warning level 4 (4 = maximum, 0 = none)
-  add_compile_options(/W4) 
-else()
-  # Lots of warnings (-Wall = add some warnings, -Wextra = add a ton of warnings)
-  add_compile_options(-Wextra)
-endif()
+####################################################
+## BUILD
 
 include(cmake/cpp.cmake)
 # TODO : Add doxygen feature

@@ -1,8 +1,6 @@
 # Default GNU installed directory names
 include(GNUInstallDirs)
 
-# TODO: Currently, install target builds all but the tests (static, shared and python)
-
 ####################################################
 ## INSTALLATION
 

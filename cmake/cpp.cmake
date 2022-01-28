@@ -38,8 +38,8 @@ endif()
 set(CMAKE_DEBUG_POSTFIX d)
 
 # Shared and Static libraries
-add_library(shared SHARED ${SOURCES})
-add_library(static STATIC ${SOURCES})
+add_library(shared                  SHARED ${SOURCES})
+add_library(static EXCLUDE_FROM_ALL STATIC ${SOURCES})
 set(FLAVORS shared static)
 
 ############################## Loop on flavors

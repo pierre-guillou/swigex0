@@ -40,7 +40,7 @@ else()
   set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND})
 endif()
 if (WIN32)
-  # Need DLL location before running the test
+  # Need C++ shared library location in the PATH before running the test
   add_custom_target(check
     COMMAND set PATH=$<TARGET_FILE_DIR:${PROJECT_NAME}::shared>\;%PATH%  # Do not forget \; !!
     COMMAND ${MY_CTEST_COMMAND} DEPENDS ${TARGETS_EXE}

@@ -32,10 +32,23 @@ jobs:
       # Build your program with the given configuration (-j 16 option seems having no effect on Gitub Action)
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target build_tests -- -j 8
 
+    - name: Echo Toto
+      run: echo toto
+
+    - name: ls workspace
+      run: ls ${{github.workspace}}
+      
+    - name: cd workspace
+      run: cd ${{github.workspace}} & pwd
+
+    - name: pwd
+      run: pwd
+            
+    - name: cd build
+      run: cd build
+
     - name: Test
       # working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ls ${{github.workspace}}
-      run: echo Toto
-      #& cd ${{github.workspace}} & ls & cd build & ls & ctest -C ${{env.BUILD_TYPE}} --output-on-failure
+      run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure

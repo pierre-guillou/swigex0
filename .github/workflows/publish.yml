@@ -18,9 +18,9 @@ jobs:
 	image: ndesassis/testrepo
 
     steps:
-    - uses: actions/checkout@v2
-	with:
-          persist-credentials: false
+    	- uses: actions/checkout@v2
+		with:
+          		persist-credentials: false
     
     #- name: Install dependencies
     #  run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev libhdf5-dev doxygen

@@ -3,7 +3,7 @@
 #########
 # Build static library (and install python package)
 # cmake -Bbuild -H.
-# cmake --build build --target python
+# cmake --build build --target python_install
 
 # Build and install shared library (and don't build python package)
 # cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=/home/fors/myfibo_install
@@ -14,7 +14,7 @@
 #########
 # Build static library (and install python package)
 # cmake -Bbuild -H.
-# cmake --build build --target python --config Release
+# cmake --build build --target python_install --config Release
 
 # Build and install shared library (and don't build python package)
 # cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX=C:/users/user/myfibo_install

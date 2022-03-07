@@ -7,28 +7,34 @@ on:
     branches: [ main ]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
- 
+  BUILD_DIR : build
 jobs:
-  
+   
   build:
-    runs-on: ubuntu-latest 
-    container: ndesassis/testrepo  
-
+    runs-on: ubuntu-latest
+    strategy :
+      matrix:
+       python: ["cp38","cp39"]
+    container:
+      image: ndesassis/testrepo
+ 
     steps:
+   
     - uses: actions/checkout@v2
       
-    - name: Configure CMake
+    - name : Create Wheels
+      run : deploy/pythonBuild.sh  ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}} ${{matrix.python}}
+      
+    - name : Install twine
+      run : python3.10 -m pip install twine 
 
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name : Upload
+      run : python3.10 -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
+        TWINE_REPOSITORY: testpypi
 
-    - name: Build
-      # Build your program with the given configuration (-j 16 option seems having no effect on Gitub Action)
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target build_tests -- -j 8
+   
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure

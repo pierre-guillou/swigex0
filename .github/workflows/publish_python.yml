@@ -1,11 +1,12 @@
 name: publish_python
 
 on:
-  push:
-    branches: 
-     -main
-    tags:
-     python        
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'     
+        required: false
+        default: 'warning'  
 
 env:
   BUILD_TYPE: Release

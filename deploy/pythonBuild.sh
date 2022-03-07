@@ -1,11 +1,15 @@
 #!/bin/bash
 
+if [ $2 = "cp36" ]; then
+	export PATH=/opt/python/cp36-cp36m/bin:$PATH
+fi
+
 if [ $2 = "cp38" ]; then
-	export PATH=/opt/python/cp38-cp38/bin/:$PATH
+	export PATH=/opt/python/cp38-cp38/bin:$PATH
 fi
 
 if [ $2 = "cp39" ]; then
-	export PATH=/opt/python/cp39-cp39/bin/:$PATH
+	export PATH=/opt/python/cp39-cp39/bin:$PATH
 fi
 
 

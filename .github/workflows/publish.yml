@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy :
       matrix:
-       python: ["cp38","cp39"]
+       python: ["cp36"]
     container:
       image: ndesassis/testrepo
  

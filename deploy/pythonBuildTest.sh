@@ -21,7 +21,7 @@ if [ $2 = "py39" ]; then
 fi
 
 if [ $2 = "py310" ]; then
-	export PATH=/opt/python/p39/bin:$PATH
+	export PATH=/opt/python/p310/bin:$PATH
 fi
 
 cmake -Bbuild  -DHDF5_ROOT:PATH=/opt/hdf5-1.12.1 -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_FLAGS="-DH5_USE_110_API"

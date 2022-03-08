@@ -29,7 +29,7 @@ jobs:
       run : deploy/pythonBuildTest.sh  ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}} ${{matrix.python}}
      
     - name : Upload
-      run : python3 -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
+      run :  /opt/python/p310/bin/python3 -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}

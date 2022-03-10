@@ -26,7 +26,8 @@ jobs:
     - name : Create Wheels
       run : cmake --build build --target python_install --config Release
 
-    - run :|
+    - names : runs
+      run : |
 	cd build
         dir
         cd python

@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest 
     steps:
     - uses: actions/checkout@v2
-    - name:OS
+    - name: OS
       run : echo "$OS"
 
     - name : Create Wheels

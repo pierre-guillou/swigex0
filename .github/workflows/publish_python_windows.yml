@@ -21,7 +21,7 @@ jobs:
       run : cmake -Bbuild -G "Visual Studio 17 2022"
    
     - name : install wheel
-      run  : python3 -m pip install wheel
+      run  : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe -m pip install wheel
 
     - name : ls
       run : dir

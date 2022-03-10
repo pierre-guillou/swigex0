@@ -29,10 +29,38 @@ jobs:
     - name : Create Wheels
       run : cmake --build build --target python_install --config Release
 
+    - name : ls
+      run : dir
 
+    - name : cd
+      run : cd build
+
+    - name : ls
+      run : dir
+
+    - name : cd 
+      run : cd python
+
+    - name : ls
+      run : dir
+
+    - name : cd
+      run : cd Release
+
+    - name : ls
+      run : dir
+
+    - name : cd 
+      run : cd dist
+
+    - name : ls
+      run : dir
+
+    - name : cd
+      run : cd ..
 
     - name : wheel
-      run : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe build\python\Release\setup.py bdist_wheel
+      run : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe build\python3.exe setup.py bdist_wheel
      
 
    

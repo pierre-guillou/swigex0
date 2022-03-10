@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - names : Upload HDF5
+    - name : Upload HDF5
       run: |
         mkdir ${{env.HDF5_ROOT}}
         curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.zip ${{env.HDF5_URL}}	
@@ -30,7 +30,7 @@ jobs:
         cd CMake-hdf5-1.12.1
         cmake 
 
-    - names : Upload Boost
+    - name : Upload Boost
       run: |
         mkdir ${{env.BOOST_ROOT}}
         curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}

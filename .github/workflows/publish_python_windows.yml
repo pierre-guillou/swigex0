@@ -27,13 +27,7 @@ jobs:
       run : cmake --build build --target python_install --config Release
 
     - run: |
-        npm ci
-        npm run build
-        npm test
-
-    - names : runs
-      run : |
-	cd build
+        cd build
         dir
         cd python
         dir

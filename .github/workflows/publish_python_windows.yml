@@ -27,7 +27,7 @@ jobs:
       run : cmake --build build --target shared --config Release
 
     - name : Create Wheels
-      run : cmake --build build --target python_build --config Release
+      run : cmake --build build --target python_install --config Release
 
     - name : install wheel
       run  : python3 -m pip install wheel

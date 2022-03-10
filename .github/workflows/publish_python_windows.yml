@@ -33,10 +33,7 @@ jobs:
         dir
         cd Release
         dir 
-        cd dist
-        dir
-
-#C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe build\Repython3.exe setup.py bdist_wheel
+        C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe build\Repython3.exe setup.py bdist_wheel
      
 
    

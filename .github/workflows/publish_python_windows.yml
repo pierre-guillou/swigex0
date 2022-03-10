@@ -23,14 +23,10 @@ jobs:
     - name : install wheel
       run  : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe -m pip install wheel
 
-    - name : ls
-      run : dir
-
     - name : Create Wheels
       run : cmake --build build --target python_install --config Release
 
-    - name : wheel
-      run : |
+    - run :	|
 	cd build
         dir
         cd python
@@ -39,6 +35,7 @@ jobs:
         dir 
         cd dist
         dir
+
 #C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe build\Repython3.exe setup.py bdist_wheel
      
 

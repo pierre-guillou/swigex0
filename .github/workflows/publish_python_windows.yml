@@ -29,11 +29,8 @@ jobs:
     - name : Create Wheels
       run : cmake --build build --target install --config Release
 
-    - name : cd
-      run : cd build/python/Release
-
     - name : wheels
-      run : python3 setup.py bdist_wheel
+      run : python3 build/python/Release/setup.py bdist_wheel
      
 
    

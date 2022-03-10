@@ -12,6 +12,8 @@ env:
   BUILD_DIR : build
   BOOST_ROOT: boost
   BOOST_URL: https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.bz2/download
+  HDF5_ROOT : hdf5
+  HDF5_URL : https://www.hdfgroup.org/package/cmake-hdf5-1-12-1-zip/?wpdmdl=15723&refresh=622a788eda38e1646950542
 
 jobs:
    
@@ -19,14 +21,24 @@ jobs:
     runs-on: windows-latest 
     steps:
     - uses: actions/checkout@v2
-    
-    - run: |
+
+    - names : Upload HDF5
+      run: |
+        mkdir ${{env.HDF5_ROOT}}
+        curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.zip ${{env.HDF5_URL}}	
+        7z x a.zip
+        cd CMake-hdf5-1.12.1
+        cmake 
+
+    - names : Upload Boost
+      run: |
         mkdir ${{env.BOOST_ROOT}}
         curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
         cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
-        rm -rf boost_*/* download.tar.bz2 download.tar
+   
+    
 
     - name : Create Wheels
       run : cmake -B$${{env.BUILD_DIR}} -G "Visual Studio 17 2022"

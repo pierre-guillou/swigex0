@@ -21,11 +21,11 @@ jobs:
     - uses: actions/checkout@v2
     
     - run: |
-        mkdir $BOOST_ROOT
-        curl --progress-bar --location --output $BOOST_ROOT/download.tar.bz2 $BOOST_URL
-        7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar.bz2 -y -bd
-        7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
-        cd $BOOST_ROOT && cp -r boost_*/* .
+        mkdir ${{env.BOOST_ROOT}}
+        curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
+        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
+        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
+        cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
         rm -rf boost_*/* download.tar.bz2 download.tar
 
     - name : Create Wheels

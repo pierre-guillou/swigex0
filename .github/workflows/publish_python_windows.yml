@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name:OS
-      run : echo $OS
+      run : echo "$OS"
 
     - name : Create Wheels
       run : cmake -Bbuild -G "Visual Studio 17 2022"

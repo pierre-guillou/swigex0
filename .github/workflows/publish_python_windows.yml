@@ -20,9 +20,10 @@ jobs:
     - uses: actions/checkout@v2
       
     - name : Create Wheels
-      run : cmake -Bbuild -H.
-      run : cmake --build build --target shared --config Release
-      run : cmake --build build --target install --config Release
+      run : |
+	cmake -Bbuild -H.
+        cmake --build build --target shared --config Release
+        cmake --build build --target install --config Release
      
 
    

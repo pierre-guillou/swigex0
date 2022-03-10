@@ -18,7 +18,8 @@ jobs:
     - uses: actions/checkout@v2
       
     - name : Create Wheels
-      run : cmake -Bbuild -G "Visual Studio 16 2019"
+      run : cmake -Bbuild -H
+#-G "Visual Studio 16 2019"
 
     - name : ls
       run : dir

@@ -33,7 +33,7 @@ jobs:
       run  : python3 -m pip install wheel
 
     - name : wheels
-      run : python3 build/python/Release/setup.py bdist_wheel
+      run : python3 build\python\Release\setup.py bdist_wheel
      
 
    

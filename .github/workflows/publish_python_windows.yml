@@ -27,13 +27,14 @@ jobs:
       run : cmake --build build --target python_install --config Release
 
     - run: |
-        cd build
-        dir
-        cd python
-        dir
-        cd Release
-        dir 
+        C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe -m pip install twine 
+        cd build\python\Release
         C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe setup.py bdist_wheel
+        C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe -m twine upload dist\*
+       env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
+        TWINE_REPOSITORY: testpypi
      
 
    

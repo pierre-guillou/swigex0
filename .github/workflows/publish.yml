@@ -1,11 +1,12 @@
 name: publish
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'     
+        required: false
+        default: 'warning'  
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build

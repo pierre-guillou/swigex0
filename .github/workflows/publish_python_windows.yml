@@ -1,0 +1,29 @@
+name: publish_python
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'     
+        required: false
+        default: ''  
+
+env:
+  BUILD_TYPE: Release
+  BUILD_DIR : build
+jobs:
+   
+  build:
+    runs-on: windows-latest 
+    steps:
+   
+    - uses: actions/checkout@v2
+      
+    - name : Create Wheels
+      run : cmake -Bbuild -H.
+      run : cmake --build build --target shared --config Release
+      run : cmake --build build --target install --config Release
+     
+
+   
+

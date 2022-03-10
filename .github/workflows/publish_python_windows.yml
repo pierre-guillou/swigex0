@@ -20,8 +20,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: OS
-      run : echo ${{ runner.os }}
+    - run: |
+        mkdir -p $BOOST_ROOT
+        curl --progress-bar --location --output $BOOST_ROOT/download.tar.bz2 $BOOST_URL
+        7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar.bz2 -y -bd
+        7z -o$BOOST_ROOT x $BOOST_ROOT/download.tar -y -bd
+        cd $BOOST_ROOT && cp -r boost_*/* .
+        rm -rf boost_*/* download.tar.bz2 download.tar
 
     - name : Create Wheels
       run : cmake -B$${{env.BUILD_DIR}} -G "Visual Studio 17 2022"

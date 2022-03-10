@@ -16,7 +16,9 @@ jobs:
     runs-on: windows-latest 
     steps:
     - uses: actions/checkout@v2
-      
+    - name:OS
+      run : echo $OS
+
     - name : Create Wheels
       run : cmake -Bbuild -G "Visual Studio 17 2022"
    
@@ -35,6 +37,8 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
         TWINE_REPOSITORY: testpypi
+        BOOST_ROOT: ${{github.workspace}}/3rdparty/boost
+      	BOOST_URL: https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.bz2/download
      
 
    

@@ -33,7 +33,7 @@ jobs:
         dir
         cd Release
         dir 
-        C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe build\setup.py bdist_wheel
+        C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe setup.py bdist_wheel
      
 
    

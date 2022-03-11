@@ -23,6 +23,7 @@ endif()
 
 # TODO : REMOVE!!!!!!
 #find_package(Boost REQUIRED)
+set(HDF5_USE_STATIC_LIBRARIES ON)
 find_package(HDF5 REQUIRED COMPONENTS C CXX)
 #find_package(Doxygen REQUIRED)
 

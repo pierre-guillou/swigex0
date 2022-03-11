@@ -25,7 +25,26 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-   
+    - name : Upload HDF5
+      run: |
+        mkdir ${{env.HDF5_ROOT}}
+        curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.zip ${{env.HDF5_URL}}	
+        7z x ${{env.HDF5_ROOT}}/download.zip
+        cd CMake-${{env.HDF5_VERSION}}
+        mkdir build 
+        cd build 
+        cmake -G ${{env.COMPILE_VERSION}} -DHDF5_GENERATE_HEADERS:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=OFF -DDEFAULT_API_VERSION:STRING=v110 -DCMAKE_BUILD_TYPE:STRING=Release -DHDF5_BUILD_FORTRAN:BOOL=OFF -DHDF5_BUILD_CPP_LIB:BOOL=ON -DHDF5_BUILD_JAVA:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=/opt/hdf5-1.12.1 -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DHDF5_BUILD_TOOLS:BOOL=OFF ../${{env.HDF5_VERSION}}
+        dir
+        make -j 8
+        make install
+
+    - name : Upload Boost and uncompressed Boost
+      run: |
+        mkdir ${{env.BOOST_ROOT}}
+        curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
+        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
+        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
+        cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
    
     
 
@@ -51,25 +70,6 @@ jobs:
         TWINE_REPOSITORY: testpypi
    
 
-    - name : Upload HDF5
-      run: |
-        mkdir ${{env.HDF5_ROOT}}
-        curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.zip ${{env.HDF5_URL}}	
-        7z x ${{env.HDF5_ROOT}}/download.zip
-        cd CMake-${{env.HDF5_VERSION}}
-        mkdir build 
-        cd build 
-        cmake -G ${{env.COMPILE_VERSION}} -DHDF5_GENERATE_HEADERS:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=OFF -DDEFAULT_API_VERSION:STRING=v110 -DCMAKE_BUILD_TYPE:STRING=Release -DHDF5_BUILD_FORTRAN:BOOL=OFF -DHDF5_BUILD_CPP_LIB:BOOL=ON -DHDF5_BUILD_JAVA:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=/opt/hdf5-1.12.1 -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DHDF5_BUILD_TOOLS:BOOL=OFF ../${{env.HDF5_VERSION}}
-        dir
-        make -j 8
-        make install
 
-    - name : Upload Boost and uncompressed Boost
-      run: |
-        mkdir ${{env.BOOST_ROOT}}
-        curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
-        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
-        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
-        cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
    
 

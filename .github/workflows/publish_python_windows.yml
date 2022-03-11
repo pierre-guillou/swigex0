@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run :  echo ${GITHUB_WORKSPACE}/${{env.HDF5_ROOT}}
+    - run :  echo ${{github.workspace}}/${{env.HDF5_ROOT}}
 
     - name : Download and install HDF5
       # | offers the possibility to run several command in 1 run (take care to indentation)

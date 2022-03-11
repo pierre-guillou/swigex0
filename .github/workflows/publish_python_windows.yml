@@ -30,6 +30,7 @@ jobs:
     - name : Download and install HDF5
       # | offers the possibility to run several command in 1 run (take care to indentation)
       run: | 
+        echo ${{env.GITHUB_WORKSPACE}}/${{env.HDF5_ROOT}}
         mkdir ${{env.HDF5_ROOT}}
         curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.zip ${{env.HDF5_URL}}	
         7z x ${{env.HDF5_ROOT}}/download.zip

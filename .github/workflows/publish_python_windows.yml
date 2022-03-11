@@ -59,7 +59,7 @@ jobs:
     - name : Configure Cmake
       run : |
        dir
-       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.HDF5_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
+       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.GITHUB_WORKSPACE}}/${{env.HDF5_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
    
     - name : Install wheel and twine
       run: |

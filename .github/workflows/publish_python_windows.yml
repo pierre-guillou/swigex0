@@ -27,6 +27,33 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+
+   
+  
+
+    - name : Configure Cmake
+      run : |
+       dir
+       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.HDF5_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
+   
+    - name : Install wheel and twine
+      run: |
+       ${{env.PYTHON3}} -m pip install wheel
+       ${{env.PYTHON3}} -m pip install twine 
+
+    - name : Library compilation
+      run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
+ 
+    - name : Build and upload wheel
+      run: |
+        cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
+        ${{env.PYTHON3}} setup.py bdist_wheel
+        ${{env.PYTHON3}} -m twine upload dist\*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
+        TWINE_REPOSITORY: testpypi
+   
     - name : Download and install HDF5
       # | offers the possibility to run several command in 1 run (take care to indentation)
       run: | 
@@ -53,30 +80,6 @@ jobs:
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
         cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
-   
-  
-
-    - name : Configure Cmake
-      run : cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.HDF5_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
-   
-    - name : Install wheel and twine
-      run: |
-       ${{env.PYTHON3}} -m pip install wheel
-       ${{env.PYTHON3}} -m pip install twine 
-
-    - name : Library compilation
-      run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
- 
-    - name : Build and upload wheel
-      run: |
-        cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel
-        ${{env.PYTHON3}} -m twine upload dist\*
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
-        TWINE_REPOSITORY: testpypi
-   
 
 
    

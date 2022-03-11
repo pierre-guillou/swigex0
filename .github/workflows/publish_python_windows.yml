@@ -15,7 +15,7 @@ env:
   HDF5_ROOT : hdf5
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1-zip/?wpdmdl=15723"
   HDF5_VERSION : hdf5-1.12.1
-  COMPILE_VERSION : '"Visual Studio 17 2022"'
+  COMPILE_VERSION : '"Visual Studio 17 2022"' #Because cmake -G needs " "
   PYTHON3 : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe
 
 jobs:
@@ -32,7 +32,9 @@ jobs:
         curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.zip ${{env.HDF5_URL}}	
         7z x ${{env.HDF5_ROOT}}/download.zip
         cd CMake-${{env.HDF5_VERSION}}
-        cmake -G ${{env.COMPILE_VERSION}} -Bbuild -H${{env.HDF5_VERSION}} -DHDF5_GENERATE_HEADERS:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=OFF -DDEFAULT_API_VERSION:STRING=v110 -DCMAKE_BUILD_TYPE:STRING=Release -DHDF5_BUILD_FORTRAN:BOOL=OFF -DHDF5_BUILD_CPP_LIB:BOOL=ON -DHDF5_BUILD_JAVA:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=../${{env.HDF5_ROOT}} -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DHDF5_BUILD_TOOLS:BOOL=OFF 
+        dir
+        echo ${{env.HDF5_VERSION}}
+        cmake -G ${{env.COMPILE_VERSION}} -Bbuild -H ${{env.HDF5_VERSION}} -DHDF5_GENERATE_HEADERS:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=OFF -DDEFAULT_API_VERSION:STRING=v110 -DCMAKE_BUILD_TYPE:STRING=Release -DHDF5_BUILD_FORTRAN:BOOL=OFF -DHDF5_BUILD_CPP_LIB:BOOL=ON -DHDF5_BUILD_JAVA:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=../${{env.HDF5_ROOT}} -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DHDF5_BUILD_TOOLS:BOOL=OFF 
         cmake --build . --target all --config Release
         cmake --build . --target install --config Release
 

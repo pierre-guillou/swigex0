@@ -15,7 +15,7 @@ env:
   HDF5_ROOT : hdf5
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1-zip/?wpdmdl=15723"
   HDF5_VERSION : hdf5-1.12.1
-  COMPILE_VERSION : Visual\ Studio\ 17\ 2022
+  COMPILE_VERSION : '"Visual Studio 17 2022"'
   PYTHON3 : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe
 
 jobs:

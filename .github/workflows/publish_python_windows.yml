@@ -15,7 +15,7 @@ env:
   HDF5_ROOT : hdf5
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1-zip/?wpdmdl=15723"
   HDF5_VERSION : hdf5-1.12.1
-  COMPILE_VERSION : " Visual Studio 17 2022 "
+  COMPILE_VERSION : "Visual\ Studio\ 17\ 2022"
   PYTHON3 : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-
+   
    
     
 
@@ -50,7 +50,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
         TWINE_REPOSITORY: testpypi
    
-   
+
     - name : Upload HDF5
       run: |
         mkdir ${{env.HDF5_ROOT}}
@@ -71,3 +71,5 @@ jobs:
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
         cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
+   
+

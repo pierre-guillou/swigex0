@@ -40,26 +40,28 @@ jobs:
         cmake --build . --target all --config Release
         cmake --build . --target install --config Release
 
-    - name : Download and install Doxygen  
-      run: |
-        mkdir ${{env.DOXYGEN_ROOT}}
-        curl --progress-bar --output ${{env.DOXYGEN_ROOT}}/download.zip ${{env.DOXYGEN_URL}}
-        7z x ${{env.DOXYGEN_ROOT}}/download.zip
+    #- name : Download and install Doxygen  
+    #  run: |
+    #    mkdir ${{env.DOXYGEN_ROOT}}
+    #    curl --progress-bar --output ${{env.DOXYGEN_ROOT}}/download.zip ${{env.DOXYGEN_URL}}
+    #    7z x ${{env.DOXYGEN_ROOT}}/download.zip
 
-    - name : Download and uncompressed Boost
-      run: |
-        mkdir ${{env.BOOST_ROOT}}
-        curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
-        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
-        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
-        cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
+    #- name : Download and uncompressed Boost
+    #  run: |
+    #    mkdir ${{env.BOOST_ROOT}}
+    #    curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
+    #    7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
+    #    7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
+    #    cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
    
   
 
     - name : Configure Cmake
       run : |
        dir
-       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.GITHUB_WORKSPACE}}/${{env.HDF5_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
+       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DHDF5_ROOT:PATH=${{env.GITHUB_WORKSPACE}}/${{env.HDF5_ROOT}}  -DCMAKE_C_FLAGS="-DH5_USE_110_API"  
+
+#-#DBoost_ROOT=${{env.BOOST_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
    
     - name : Install wheel and twine
       run: |

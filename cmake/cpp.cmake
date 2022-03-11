@@ -22,9 +22,9 @@ endif()
 
 
 # TODO : REMOVE!!!!!!
-find_package(Boost REQUIRED)
+#find_package(Boost REQUIRED)
 find_package(HDF5 REQUIRED COMPONENTS C CXX)
-find_package(Doxygen REQUIRED)
+#find_package(Doxygen REQUIRED)
 
 
 

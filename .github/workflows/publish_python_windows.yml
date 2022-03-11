@@ -19,7 +19,7 @@ env:
   PYTHON3 : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe
 
 env:
- CMAKEHDF5 : CMake-${{env.HDF5_VERSION}}
+  CMAKEHDF5 : CMake-${{env.HDF5_VERSION}}
 jobs:
    
   build:

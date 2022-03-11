@@ -12,7 +12,7 @@ env:
   BUILD_DIR : build
   BOOST_ROOT: boost
   BOOST_URL: https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.bz2/download
-  HDF5_ROOT : hdf5-1.12.1
+  HDF5_ROOT : hdf5
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1-zip/?wpdmdl=15723"
   HDF5_VERSION : hdf5-1.12.1
   DOXYGEN_ROOT : Doxygen
@@ -53,7 +53,8 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
         TWINE_REPOSITORY: testpypi
-   
+
+
     - name : Download and install HDF5
       # | offers the possibility to run several command in 1 run (take care to indentation)
       run: | 
@@ -80,6 +81,7 @@ jobs:
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
         cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
+   
 
 
    

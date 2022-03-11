@@ -12,9 +12,11 @@ env:
   BUILD_DIR : build
   BOOST_ROOT: boost
   BOOST_URL: https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.bz2/download
-  HDF5_ROOT : hdf5
+  HDF5_ROOT : hdf5-1.12.1
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1-zip/?wpdmdl=15723"
   HDF5_VERSION : hdf5-1.12.1
+  DOXYGEN_ROOT : Doxygen
+  DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.3.windows.x64.bin.zip
   COMPILE_VERSION : '"Visual Studio 17 2022"' #Because cmake -G needs " "
   PYTHON3 : C:\hostedtoolcache\windows\Python\3.10.2\x64\python3.exe
 
@@ -34,9 +36,15 @@ jobs:
         cd CMake-${{env.HDF5_VERSION}}
         dir
         echo ${{env.HDF5_VERSION}}
-        cmake -G ${{env.COMPILE_VERSION}} -Bbuild -H ${{env.HDF5_VERSION}} -DHDF5_GENERATE_HEADERS:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=OFF -DDEFAULT_API_VERSION:STRING=v110 -DCMAKE_BUILD_TYPE:STRING=Release -DHDF5_BUILD_FORTRAN:BOOL=OFF -DHDF5_BUILD_CPP_LIB:BOOL=ON -DHDF5_BUILD_JAVA:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=../${{env.HDF5_ROOT}} -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DHDF5_BUILD_TOOLS:BOOL=OFF 
-        cmake --build . --target all --config Release
-        cmake --build . --target install --config Release
+        cmake -G ${{env.COMPILE_VERSION}} -Bbuild -DHDF5_GENERATE_HEADERS:BOOL=OFF -DBUILD_SHARED_LIBS:BOOL=OFF -DDEFAULT_API_VERSION:STRING=v110 -DCMAKE_BUILD_TYPE:STRING=Release -DHDF5_BUILD_FORTRAN:BOOL=OFF -DHDF5_BUILD_CPP_LIB:BOOL=ON -DHDF5_BUILD_JAVA:BOOL=OFF -DCMAKE_INSTALL_PREFIX:PATH=../${{env.HDF5_ROOT}} -DHDF5_ENABLE_SZIP_SUPPORT:BOOL=OFF -DHDF5_ENABLE_Z_LIB_SUPPORT:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DHDF5_BUILD_TOOLS:BOOL=OFF ${{env.HDF5_VERSION}}
+        cmake --build build --target all --config Release
+        cmake --build build --target install --config Release
+
+    - name : Download and install Doxygen  
+      run: |
+        mkdir ${{env.DOXYGEN_ROOT}}
+        curl --progress-bar --output ${{env.DOXYGEN_ROOT}}/download.zip ${{env.DOXYGEN_URL}}
+        7z x ${{env.DOXYGEN_ROOT}}/download.zip
 
     - name : Download and uncompressed Boost
       run: |
@@ -46,10 +54,10 @@ jobs:
         7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
         cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
    
-    
+  
 
     - name : Configure Cmake
-      run : cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.HDF5_ROOT}}
+      run : cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT=${{env.HDF5_ROOT}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
    
     - name : Install wheel and twine
       run: |

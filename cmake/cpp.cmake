@@ -20,6 +20,14 @@ else()
   add_compile_options(-Wextra)
 endif()
 
+
+# TODO : REMOVE!!!!!!
+find_package(Boost REQUIRED)
+find_package(HDF5 REQUIRED COMPONENTS C CXX)
+
+
+
+
 # C++ code location
 set(INCLUDES ${PROJECT_SOURCE_DIR}/include)
 set(SOURCES ${PROJECT_SOURCE_DIR}/src/fibo.cpp)

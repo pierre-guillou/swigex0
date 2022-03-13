@@ -23,6 +23,7 @@ jobs:
 
     - name : Download and install Doxygen  
       run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         brew install doxygen
         brew install python3
  #mkdir ${{env.DOXYGEN_ROOT}}

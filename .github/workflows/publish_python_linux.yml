@@ -1,0 +1,44 @@
+name: publish_python_linux
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'     
+        required: false
+        default: 'warning'  
+
+env:
+  BUILD_TYPE: Release
+  BUILD_DIR : build
+jobs:
+   
+  build:
+    runs-on: ubuntu-latest
+    strategy :
+      matrix:
+       python: ["py36","py310"]
+    container:
+      image: ndesassis/test_ubuntu-16
+ 
+    steps:
+   
+    - uses: actions/checkout@v2
+      
+    - name : Create Wheels
+      run : |
+        export PATH=/opt/python/${{matrix.python}}/bin:$PATH
+        cmake -Bbuild -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
+        cmake --build build --target python_build -- -j8
+        cd ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}
+        python3 setup.py bdist_wheel --plat-name=manylinux1_x86_64
+
+    - name : Upload
+      run : /opt/python/${{matrix.python}}/bin/python3 -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
+        TWINE_REPOSITORY: testpypi
+
+   
+

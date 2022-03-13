@@ -33,7 +33,7 @@ jobs:
 
     - name : Configure Cmake
       run : |
-       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} 
+       cmake -B${{env.BUILD_DIR}}
 #-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} 
 
     - name : Install wheel and twine

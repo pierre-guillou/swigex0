@@ -12,8 +12,11 @@ env:
   BUILD_DIR : build
   PYTHON3 : python3
   HDF5_ROOT : hdf5 #do not use "." in the name 
+  PROG_ROOT : C:\hostedtoolcache\windows
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1.tar.gz/?wpdmdl=15722"
   HDF5_VERSION : hdf5-1.12.1
+  BOOST_ROOT: boost
+  BOOST_URL: https://sourceforge.net/projects/boost/files/boost/1.72.0/boost_1_72_0.tar.bz2/download
 
 jobs:   
   build:
@@ -24,15 +27,7 @@ jobs:
     - name : Download and install Doxygen  
       run: brew install doxygen
 
-    - name : Configure Cmake
-      run : cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=Release
-#-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} 
-
-    - name : Install wheel and twine
-      run: |
-       ${{env.PYTHON3}} -m pip install wheel
-       ${{env.PYTHON3}} -m pip install twine 
-
+  
     - name : HDF5
       run : |
         mkdir ${{env.HDF5_ROOT}}
@@ -45,7 +40,26 @@ jobs:
         cmake --build . --target all --config Release
         cmake --build . --target install --config Release
 
-    #- name : Library compilation
+
+    - name : Download and uncompressed Boost
+      run: |
+        mkdir ${{env.BOOST_ROOT}}
+        curl --progress-bar --location --output ${{env.BOOST_ROOT}}/download.tar.bz2 ${{env.BOOST_URL}}
+        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar.bz2 -y -bd
+        7z -o${{env.BOOST_ROOT}} x ${{env.BOOST_ROOT}}/download.tar -y -bd
+        cd ${{env.BOOST_ROOT}} && cp -r boost_*/* .
+    
+
+    - name : Configure Cmake
+      run : cmake -B${{env.BUILD_DIR}} -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT:PATH=${{env.PROG_ROOT}}/${{env.HDF5_ROOT}}  -DCMAKE_C_FLAGS="-DH5_USE_110_API"  
+
+#-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} 
+
+    - name : Install wheel and twine
+      run: |
+       ${{env.PYTHON3}} -m pip install wheel
+       ${{env.PYTHON3}} -m pip install twine 
+
     #  run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
  
     #- name : Build and upload wheel

@@ -1,4 +1,4 @@
-name: publish_python_windows_boost
+name: publish_python_windows
 
 on:
   workflow_dispatch:

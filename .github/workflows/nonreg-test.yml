@@ -1,4 +1,4 @@
-name: publish
+name: non regression tests
 
 on:
   push:

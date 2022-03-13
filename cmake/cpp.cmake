@@ -20,12 +20,7 @@ else()
   add_compile_options(-Wextra)
 endif()
 
-
-# TODO : REMOVE!!!!!!
-find_package(Boost REQUIRED)
-#set(HDF5_USE_STATIC_LIBRARIES ON)
-#find_package(HDF5 REQUIRED COMPONENTS C CXX)
-set(CMAKE_FIND_DEBUG_MODE TRUE)
+set(CMAKE_FIND_DEBUG_MODE FALSE)
 find_package(Doxygen REQUIRED)
 
 

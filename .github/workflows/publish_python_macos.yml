@@ -1,0 +1,64 @@
+name: publish_python_macos
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'     
+        required: false
+        default: ''  
+env:
+  BUILD_TYPE: Release
+  BUILD_DIR : build
+  DOXYGEN_ROOT : Doxygen
+  DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.3.windows.x64.bin.zip
+  PYTHON3 : python3
+
+jobs:
+   
+  build:
+    runs-on: windows-latest 
+    steps:
+    - uses: actions/checkout@v2
+
+    - name : Download and install Doxygen  
+      run: |
+        brew install doxygen
+        brew install python3
+ #mkdir ${{env.DOXYGEN_ROOT}}
+ #cd ${{env.DOXYGEN_ROOT}}
+ #mkdir bin
+ #cd .. 
+ #curl --progress-bar --output ${{env.DOXYGEN_ROOT}}/download.zip ${{env.DOXYGEN_URL}}
+ #7z -o${{env.DOXYGEN_ROOT}}/bin x ${{env.DOXYGEN_ROOT}}/download.zip 
+
+    - name : Configure Cmake
+      run : |
+       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} 
+#-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} 
+
+    - name : Install wheel and twine
+      run: |
+       ${{env.PYTHON3}} -m pip install wheel
+       ${{env.PYTHON3}} -m pip install twine 
+
+    - name : Library compilation
+      run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
+ 
+    - name : Build and upload wheel
+      run: |
+        cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
+        ${{env.PYTHON3}} setup.py bdist_wheel
+        ${{env.PYTHON3}} -m twine upload dist\*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
+        TWINE_REPOSITORY: testpypi
+
+
+
+   
+
+
+   
+

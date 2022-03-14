@@ -31,10 +31,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - run : env
     - name : Setup PATH
       run : |
        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
       
+    - run : env
     - run : echo "${{env.PYTHONPATH}}" 
       
     - name : Setup python.exe 
@@ -43,8 +45,11 @@ jobs:
     - run : echo "${{env.PYTHON3}}"
  
     - name : Modify PATH
-      run : echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
-        
+      run : |
+            echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
+            echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
+
+
     - name : Download and install Doxygen  
       run: |
         mkdir ${{env.DOXYGEN_ROOT}}

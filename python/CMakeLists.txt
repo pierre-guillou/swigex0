@@ -79,12 +79,15 @@ target_link_libraries(${PYTGT} PUBLIC ${PROJECT_NAME}::static)
 if (MSVC)
   set(COMP_FLAGS "/bigobj -D${PROJECT_NAME_UP}_STATIC_DEFINE")
 else()
-  if (APPLE)
-    set(COMP_FLAGS "-dynamiclib -D${PROJECT_NAME_UP}_STATIC_DEFINE -lpython")
-  else()
-    set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
-  endif()
+  set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
 endif()
+
+if (APPLE)
+  set(LINK_OPTIONS "-lpython")
+else()
+  set(LINK_OPTIONS "")
+endif()
+
 # Set some properties on SWIG target
 set_target_properties(${PYTGT} PROPERTIES
   # Do not build python package by default
@@ -93,6 +96,8 @@ set_target_properties(${PYTGT} PROPERTIES
   OUTPUT_NAME ${PROJECT_NAME}
   # Transmit the fact that we are linking to static ${PROJECT_NAME} library
   COMPILE_FLAGS ${COMP_FLAGS}
+  # Add -lpython for Mac
+  LINK_OPTIONS ${LINK_OPTIONS}
 )
 
 # Find appropriate Python.h

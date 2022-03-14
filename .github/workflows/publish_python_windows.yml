@@ -41,6 +41,7 @@ jobs:
 
     - name : print
       run : |
+       echo $GITHUB_PATH
        echo $PYTHONPATH
        echo ${PYTHONPATH}
        echo ${{PYTHONPATH}}

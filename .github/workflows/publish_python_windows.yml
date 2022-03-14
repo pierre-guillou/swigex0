@@ -31,25 +31,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-  #  - name: Set the value
-  #    id: step_one
-  #    run: |
-  #      echo ("action_state=yellow")>> $env:GITHUB_ENV
-  #  - name: Use the value
-  #    id: step_two
-  #    run: |
-  #      echo "${{ env.action_state }}" # This will output 'yellow'
-  #      echo $env:action_state
-
     - name : Setup variables
       run : |
-       echo ("PYTHONPATH=${{env.PYTHON3_PREF}}")>> $env:GITHUB_ENV
-
-#echo ("PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}")>> $env.GITHUB_ENV
+       echo ("PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}")>> $env:GITHUB_ENV
       
     - run : echo "${{env.PYTHONPATH}}" 
        
-    - run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env.GITHUB_ENV
+    - run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
 
     - run : echo "${{env.PYTHON3}}"
  

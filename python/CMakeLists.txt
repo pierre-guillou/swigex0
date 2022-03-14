@@ -5,6 +5,8 @@ set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 # Create the global target for building python package
 add_custom_target(python_build_package)
 
+cmake_policy(GET CMP0094 _CMP0094)
+
 ###################################
 # DEPENDENCIES
 

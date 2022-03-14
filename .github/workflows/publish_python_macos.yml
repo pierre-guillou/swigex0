@@ -33,7 +33,7 @@ jobs:
         mkdir ${{env.HDF5_ROOT}}
         curl --progress-bar --location --output ${{env.HDF5_ROOT}}/download.tar.gz ${{env.HDF5_URL}}	
         cd ${{env.HDF5_ROOT}}
-        7z  x $download.tar.gz
+        7z  x download.tar.gz
         cd CMake-${{env.HDF5_VERSION}}
         mkdir build
         cd build

@@ -25,7 +25,7 @@ if (NOT DEFINED Python_FIND_FRAMEWORK)
 endif ()
 
 # Look for Python3
-find_package(Python3 REQUIRED COMPONENTS Interpreter)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 
 if (APPLE)
   find_package(PythonLibs REQUIRED)

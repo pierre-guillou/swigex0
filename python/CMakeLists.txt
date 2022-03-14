@@ -104,7 +104,7 @@ set_target_properties(${PYTGT} PROPERTIES
 target_include_directories(${PYTGT} PRIVATE ${Python3_INCLUDE_DIRS})
 
 # Link to python's libraries (only for MSVC and MacOS - Release)
-if(MSVC OR APPLE)
+if(MSVC)
   target_link_libraries(${PYTGT} PRIVATE ${Python3_LIBRARIES})
 endif()
 

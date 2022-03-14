@@ -31,6 +31,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name : python versions
+      run  : | 
+        cd C:\hostedtoolcache\windows\Python\
+        dir
+        cd 3.8.12
+        dir
+        cd x64
+        dir 
+
+
     - name : Setup PATH
       run : |
        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV

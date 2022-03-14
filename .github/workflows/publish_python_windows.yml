@@ -46,7 +46,8 @@ jobs:
       run : echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 
     - name : print
-      run : |echo "${{env.PYTHONPATH}}"
+      run : |
+       echo "${{env.PYTHONPATH}}"
    
      
     - name : Download and install Doxygen  

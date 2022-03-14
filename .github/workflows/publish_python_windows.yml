@@ -84,7 +84,7 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name = win-amd64
+        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name=win_amd64
         ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__

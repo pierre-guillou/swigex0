@@ -59,13 +59,14 @@ jobs:
 
 #-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} 
 
+    - name : Build python package
+      run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
+ 
     - name : Install wheel and twine
       run: |
        ${{env.PYTHON3}} -m pip install wheel
        ${{env.PYTHON3}} -m pip install twine 
 
-    #  run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
- 
     #- name : Build and upload wheel
     #  run: |
     #    cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}

@@ -12,7 +12,7 @@ env:
   BUILD_DIR : build
   PYTHON3 : python3
   HDF5_ROOT : hdf5 #do not use "." in the name 
-  PROG_ROOT : /usr/local
+  PROG_ROOT : '/Users/runner/work/'
   HDF5_URL : "https://www.hdfgroup.org/package/cmake-hdf5-1-12-1.tar.gz/?wpdmdl=15722"
   HDF5_VERSION : hdf5-1.12.1
   BOOST_ROOT: boost

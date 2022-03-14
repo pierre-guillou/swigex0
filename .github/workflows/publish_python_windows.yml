@@ -31,13 +31,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run : env
     - name : Setup PATH
       run : |
        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
-      
-    - run : env
-    - run : echo "${{env.PYTHONPATH}}" 
       
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV

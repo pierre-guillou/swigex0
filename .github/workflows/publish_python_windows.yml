@@ -31,16 +31,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name : python versions
-      run  : | 
-        cd C:\hostedtoolcache\windows\Python\
-        dir
-        cd 3.8.10
-        dir
-        cd x64
-        dir 
-
-
     - name : Setup PATH
       run : |
        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
@@ -54,12 +44,7 @@ jobs:
  
     - name : Modify PATH
       run : echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
-
-    - name : print
-      run : |
-       echo "${{env.PYTHONPATH}}"
-   
-     
+        
     - name : Download and install Doxygen  
       run: |
         mkdir ${{env.DOXYGEN_ROOT}}
@@ -84,7 +69,7 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --abi-tag=${{matrix.python[2]}} --plat-name=win_amd64
+        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --abi=${{matrix.python[2]}} --plat-name=win_amd64
         ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__

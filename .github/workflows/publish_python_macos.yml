@@ -23,7 +23,9 @@ jobs:
     runs-on: macos-11 
     steps:
     - uses: actions/checkout@v2
-
+   
+    - name : python config
+      run : python-config --ldflags
 
     - name : Configure Cmake
       run : cmake -B${{env.BUILD_DIR}} -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT:PATH=${{env.PROG_ROOT}}/${{env.HDF5_ROOT}}  -DCMAKE_C_FLAGS="-DH5_USE_110_API"  

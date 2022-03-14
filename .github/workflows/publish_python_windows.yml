@@ -38,7 +38,7 @@ jobs:
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
 
-#- run : echo "${{env.PYTHON3}}"
+    - run : echo "${{env.PYTHON3}}"
  
     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |

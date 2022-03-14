@@ -31,20 +31,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name : Setup PATH
+    - name : Create PYTHONPATH
       run : |
        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
       
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
 
-    - run : echo "${{env.PYTHON3}}"
+    #- run : echo "${{env.PYTHON3}}"
  
-    - name : Modify PATH
+     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |
-            echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
             echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
 
+ #echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 
     - name : Download and install Doxygen  
       run: |
@@ -57,8 +57,7 @@ jobs:
 
     - name : Configure Cmake
       run : |
-       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}-DPython_ROOT_DIR=${{env.PYTHONPATH}} 
-#-DPython_FIND_STRATEGY=LOCATION
+       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}-DPython_ROOT_DIR=${{env.PYTHONPATH}} -DPython_FIND_STRATEGY=LOCATION
 # -Python_FIND_FRAMEWORK=NEVER -DPython_FIND_REGISTRY=NEVER
 #-DPython_EXECUTABLE=${{env.PYTHONPATH}}
 

@@ -35,14 +35,14 @@ jobs:
       run : |
         echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
       
-#    - name : Setup python.exe 
-#      run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
+    - name : Setup python.exe 
+      run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
  
     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |
         echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
 
- #echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
+#echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 
 #    - name : Download and install Doxygen  
 #      run: |
@@ -56,10 +56,6 @@ jobs:
     - name : Configure Cmake
       run : |
         cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
-# -DPython3_EXECUTABLE=${{env.PYTHON3}}
-
-#-DPython_FIND_STRATEGY=LOCATION -DPython_FIND_FRAMEWORK=NEVER -DPython_FIND_REGISTRY=NEVER
-#-DPython_EXECUTABLE=${{env.PYTHONPATH}}
 
     - name : Install wheel and twine
       run: |

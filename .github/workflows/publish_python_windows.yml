@@ -40,7 +40,7 @@ jobs:
       run : echo "$PYTHONPATH" >> $GITHUB_PATH
 
     - name : print
-      runs : |
+      run : |
        echo $PYTHONPATH
        echo ${{env.PYTHON3_PREF}}
 

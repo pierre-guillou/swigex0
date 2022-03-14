@@ -23,10 +23,10 @@ jobs:
     strategy :
       matrix:
        python: 
-        # - ["cp310-cp310","3.10.2"]
-          - ["cp39-cp39","3.9.10"]
-          - ["cp38-cp38","3.8.10"]
-        # - ["cp37-cp37m","3.7.9"]
+        # - ["cp310","3.10.2","cp310"]
+          - ["cp39","3.9.10","cp39"]
+          - ["cp38","3.8.10","cp38"]
+        # - ["cp37","3.7.9","cp37m"]
     
     steps:
     - uses: actions/checkout@v2
@@ -84,7 +84,7 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name=win_amd64
+        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --abi-tag=${{matrix.python[2]}} --plat-name=win_amd64
         ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__

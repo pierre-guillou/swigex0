@@ -33,7 +33,7 @@ jobs:
 
     - name : Create PYTHONPATH
       run : |
-       echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
+        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
       
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
@@ -42,7 +42,7 @@ jobs:
  
      - name : Modify PATH #to avoid a warning at cmake configuration
        run : |
-            echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
+        echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
 
  #echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 

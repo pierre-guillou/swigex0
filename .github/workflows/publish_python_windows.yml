@@ -40,19 +40,12 @@ jobs:
       run: |
         echo "${{ env.action_state }}" # This will output 'yellow'
         echo $env:action_state
-    - name : print
-      run : |
-        echo ${{matrix.python}}[1]
-        echo "${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}"
-   
-    - run : echo "TUTU=TOUTOU">> $GITHUB_ENV
-    - run : echo "${{ env.TUTU }}"
 
     - name : Setup variables
       run :
-       echo "PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}">> $GITHUB_ENV
+       echo ("PYTHONPATH="+${{env.PYTHON3_PREF}}"\"+${{matrix.python}}[1]"\"+${{env.PYTHON_SUFF}})>> $env.GITHUB_ENV
        
-    - run : echo "PYTHON3=${{env.PYTHONPATH}}\python3.exe" >> $GITHUB_ENV
+    - run : echo ("PYTHON3="+${{env.PYTHONPATH}}+"\python3.exe") >> $env.GITHUB_ENV
 
     - run : echo "${{env.PYTHON3}}"
  

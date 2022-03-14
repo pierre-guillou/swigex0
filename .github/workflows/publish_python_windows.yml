@@ -33,16 +33,19 @@ jobs:
 
     - name : Setup variables
       run : |
-       echo "$PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}">> $GITHUB_ENV
-       echo "$PYTHON3=${{env.PYTHONPATH}}\python3.exe" >> $GITHUB_ENV
+       echo "PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}">> $GITHUB_ENV
+       echo "PYTHON3=${{env.PYTHONPATH}}\python3.exe" >> $GITHUB_ENV
  
     - name : Modify PATH
-      run : echo "$PYTHONPATH" >> $GITHUB_PATH
+      run : echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 
     - name : print
       run : |
        echo $GITHUB_PATH
-     
+  
+#echo $PYTHONPATH
+#echo ${PYTHONPATH}
+#echo ${{PYTHONPATH}}     
      
     - name : Download and install Doxygen  
       run: |
@@ -59,8 +62,8 @@ jobs:
 
     - name : Install wheel and twine
       run: |
-       $PYTHON3 -m pip install wheel
-       $PYTHON3 -m pip install twine 
+       ${{env.PYTHON3}} -m pip install wheel
+       ${{env.PYTHON3}} -m pip install twine 
 
     - name : Library compilation
       run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
@@ -68,8 +71,8 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        $PYTHON3 setup.py bdist_wheel
-        $PYTHON3 -m twine upload dist\*
+        ${{env.PYTHON3}} setup.py bdist_wheel
+        ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}

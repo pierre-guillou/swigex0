@@ -20,6 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: Add python to path
+      run : echo "/opt/python/py310/bin" >> $GITHUB_PATH
+
     - run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build

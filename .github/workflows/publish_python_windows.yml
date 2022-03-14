@@ -38,7 +38,7 @@ jobs:
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
 
-    #- run : echo "${{env.PYTHON3}}"
+#- run : echo "${{env.PYTHON3}}"
  
      - name : Modify PATH #to avoid a warning at cmake configuration
        run : |
@@ -57,11 +57,9 @@ jobs:
 
     - name : Configure Cmake
       run : |
-       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}-DPython_ROOT_DIR=${{env.PYTHONPATH}} -DPython_FIND_STRATEGY=LOCATION
+        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}-DPython_ROOT_DIR=${{env.PYTHONPATH}} -DPython_FIND_STRATEGY=LOCATION
 # -Python_FIND_FRAMEWORK=NEVER -DPython_FIND_REGISTRY=NEVER
 #-DPython_EXECUTABLE=${{env.PYTHONPATH}}
-
-
 
     - name : Install wheel and twine
       run: |

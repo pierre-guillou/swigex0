@@ -57,7 +57,9 @@ jobs:
 
     - name : Configure Cmake
       run : |
-       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} -DPython_EXECUTABLE=${{env.PYTHONPATH}}
+       cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} -DPython_EXECUTABLE=${{env.PYTHONPATH}} -DPython_ROOT_DIR=${{env.PYTHONPATH}}
+
+
 
     - name : Install wheel and twine
       run: |

@@ -35,6 +35,7 @@ jobs:
       run : |
        echo "PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}">>$GITHUB_ENV
        echo "PYTHON3=${{env.PYTHONPATH}}\python3.exe" >>$GITHUB_ENV
+ 
     - name : Modify PATH
       run : echo "$PYTHONPATH" >> $GITHUB_PATH
 
@@ -58,8 +59,8 @@ jobs:
 
     - name : Install wheel and twine
       run: |
-       ${{env.PYTHON3}} -m pip install wheel
-       ${{env.PYTHON3}} -m pip install twine 
+       $PYTHON3 -m pip install wheel
+       $PYTHON3 -m pip install twine 
 
     - name : Library compilation
       run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
@@ -67,8 +68,8 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel
-        ${{env.PYTHON3}} -m twine upload dist\*
+        $PYTHON3 setup.py bdist_wheel
+        $PYTHON3 -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}

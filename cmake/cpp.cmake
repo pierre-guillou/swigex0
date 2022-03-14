@@ -20,12 +20,11 @@ else()
   add_compile_options(-Wextra)
 endif()
 
-find_package(Boost REQUIRED)
-set(HDF5_USE_STATIC_LIBRARIES ON)
-find_package(HDF5 REQUIRED COMPONENTS C CXX)
+#find_package(Boost REQUIRED)
+#set(HDF5_USE_STATIC_LIBRARIES ON)
+#find_package(HDF5 REQUIRED COMPONENTS C CXX)
 #set(CMAKE_FIND_DEBUG_MODE FALSE)
-find_package(Doxygen REQUIRED)
-
+#find_package(Doxygen REQUIRED)
 
 
 # C++ code location

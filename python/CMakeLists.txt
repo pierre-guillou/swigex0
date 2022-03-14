@@ -79,7 +79,11 @@ target_link_libraries(${PYTGT} PUBLIC ${PROJECT_NAME}::static)
 if (MSVC)
   set(COMP_FLAGS "/bigobj -D${PROJECT_NAME_UP}_STATIC_DEFINE")
 else()
-  set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
+  if (APPLE)
+    set(COMP_FLAGS "-dynamiclib -D${PROJECT_NAME_UP}_STATIC_DEFINE -lpython")
+  else()
+    set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
+  endif()
 endif()
 # Set some properties on SWIG target
 set_target_properties(${PYTGT} PROPERTIES
@@ -94,7 +98,7 @@ set_target_properties(${PYTGT} PROPERTIES
 # Find appropriate Python.h
 target_include_directories(${PYTGT} PRIVATE ${Python3_INCLUDE_DIRS})
 
-# Link to python's libraries (only for MSVC - Release)
+# Link to python's libraries (only for MSVC and MacOS - Release)
 if(MSVC OR APPLE)
   target_link_libraries(${PYTGT} PRIVATE ${Python3_LIBRARIES})
 endif()

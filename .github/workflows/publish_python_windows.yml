@@ -31,16 +31,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name : print
+      run : |
+        echo ${{matrix.python}}[1]
+        echo "${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}"
+   
+
     - name : Setup variables
       run : |
        echo "PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}">> $GITHUB_ENV
        echo "PYTHON3=${{env.PYTHONPATH}}\python3.exe" >> $GITHUB_ENV
  
     - name : Modify PATH
-      run : echo "${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}" >> $GITHUB_PATH
+      run : echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 
     - name : print
-      run : echo "${{env.PYTHONPATH}}"
+      run : |echo "${{env.PYTHONPATH}}"
    
      
     - name : Download and install Doxygen  

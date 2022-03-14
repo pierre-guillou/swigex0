@@ -40,8 +40,8 @@ jobs:
 
 #- run : echo "${{env.PYTHON3}}"
  
-     - name : Modify PATH #to avoid a warning at cmake configuration
-       run : |
+    - name : Modify PATH #to avoid a warning at cmake configuration
+      run : |
         echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
 
  #echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH

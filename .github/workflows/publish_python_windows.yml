@@ -43,7 +43,7 @@ jobs:
 
     - name : Setup variables
       run : |
-       echo ("PYTHONPATH=" + $env:PYTHON3_PREF)>> $env.GITHUB_ENV
+       echo ("PYTHONPATH=" + ${{env.PYTHON3_PREF}})>> $env:GITHUB_ENV
 
 #echo ("PYTHONPATH=${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}")>> $env.GITHUB_ENV
       

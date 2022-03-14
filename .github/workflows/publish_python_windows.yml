@@ -36,6 +36,8 @@ jobs:
         echo ${{matrix.python}}[1]
         echo "${{env.PYTHON3_PREF}}\${{matrix.python}}[1]\${{env.PYTHON_SUFF}}"
    
+    - run : echo "TUTU=TOUTOU">>$GITHUB_ENV
+    - run : echo ${{TUTU}}
 
     - name : Setup variables
       run :

@@ -83,9 +83,7 @@ else()
 endif()
 
 if (APPLE)
-  #set(LINK_OPTIONS "-lpython")
-  target_include_directories(${PYTGT} PRIVATE ${PYTHON_INCLUDE_DIRS})
-  target_link_libraries(${PYTGT} PRIVATE ${PYTHON_LIBRARIES})
+  set(LINK_OPTIONS "")
 else()
   set(LINK_OPTIONS "")
 endif()
@@ -108,6 +106,10 @@ target_include_directories(${PYTGT} PRIVATE ${Python3_INCLUDE_DIRS})
 # Link to python's libraries (only for MSVC and MacOS - Release)
 if(MSVC OR APPLE)
   target_link_libraries(${PYTGT} PRIVATE ${Python3_LIBRARIES})
+endif()
+
+if(APPLE)
+  target_link_libraries(${PYTGT} PRIVATE ${PYTHON_LIBRARIES})
 endif()
 
 # Add SWIG target to global python build package dependency

@@ -27,8 +27,8 @@ jobs:
           - ["cp38","3.8.10"]
         # - ["cp37","3.7.9"]
        windows-type:
-         # - ["win_amd64", "x64","3"]
-          - ["win32","x86","3"]
+         # - ["win_amd64", "x64"]
+          - ["win32","x86"]
           
     
     steps:
@@ -50,7 +50,7 @@ jobs:
         echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ matrix.python[1] }}\\${{matrix.windows-type[1] }}")>> $env:GITHUB_ENV
       
     - name : Setup python.exe 
-      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python${{matrix.windows-type[2]}}.exe") >> $env:GITHUB_ENV
+      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python3.exe") >> $env:GITHUB_ENV
  
     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |
@@ -67,7 +67,7 @@ jobs:
 
     - name : Configure Cmake
       run : |
-        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}}  -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
+        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A Win32  -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
 #-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
     - name : Install wheel and twine
       run: |

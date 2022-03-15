@@ -27,8 +27,8 @@ jobs:
           - ["cp38","3.8.10"]
         # - ["cp37","3.7.9"]
        windows-type:
-         # - ["win_amd64", "x64"]
-          - ["win32","x86"]
+          - ["win_amd64", "x64","x64"]
+          - ["win32","x86","Win32"]
           
     
     steps:
@@ -67,7 +67,7 @@ jobs:
 
     - name : Configure Cmake
       run : |
-        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A Win32  -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
+        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A ${{matrix.windows-type[2]}}  -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
 #-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
     - name : Install wheel and twine
       run: |
@@ -80,7 +80,7 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name=${{matrix.windows-type[0]}}
+        ${{env.PYTHON3}} setup.py bdist_wheel --plat-name=${{matrix.windows-type[0]}}
         ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__

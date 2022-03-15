@@ -40,9 +40,6 @@ jobs:
         dir 
         cd x86
         dir
-        cd bin
-        dir
-     
 
     - uses: actions/checkout@v2
 

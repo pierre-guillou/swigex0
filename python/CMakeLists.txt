@@ -22,6 +22,22 @@ find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
 
+########################## added by Nico from gstlearn version 
+# Look for pybind11
+find_package(pybind11 QUIET) # try locally
+if(NOT pybind11_FOUND) # else fetch it from github
+  message(STATUS "Could NOT find pybind11 (fetching it from GitHub)")
+  include(FetchContent)
+  FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY https://github.com/pybind/pybind11.git
+    GIT_TAG v2.6.1
+  )
+  FetchContent_MakeAvailable(pybind11)
+endif()
+
+
+
 ######################################
 # WRAPPER GENERATION & BUILD
 

@@ -40,7 +40,7 @@ jobs:
         dir 
         cd ${{matrix.windows-type[1]}}
         dir
-        cd include
+        cd bin
         dir
 
     - uses: actions/checkout@v2

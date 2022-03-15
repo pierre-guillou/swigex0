@@ -14,8 +14,7 @@ env:
   DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.3.windows.x64.bin.zip
   COMPILE_VERSION : '"Visual Studio 17 2022"' #Because cmake -G needs " "
   PYTHON3_PREF : C:\hostedtoolcache\windows\Python
-  PYTHON3_SUFF : x64
-
+  
 jobs:
    
   build:
@@ -23,17 +22,21 @@ jobs:
     strategy :
       matrix:
        python: 
-        # - ["cp310","3.10.2","cp310"]
-          - ["cp39","3.9.10","cp39"]
-          - ["cp38","3.8.10","cp38"]
-        # - ["cp37","3.7.9","cp37m"]
+        # - ["cp310","3.10.2"]
+          - ["cp39","3.9.10"]
+          - ["cp38","3.8.10"]
+        # - ["cp37","3.7.9"]
+       windows-type:
+          - ["win_amd64", "x64"]
+          - ["win32","x86"]
+          
     
     steps:
     - uses: actions/checkout@v2
 
     - name : Create PYTHONPATH
       run : |
-        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{ env.PYTHON3_SUFF }}")>> $env:GITHUB_ENV
+        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\${{ matrix.python[1] }}\${{matrix.windows-type[1] }}")>> $env:GITHUB_ENV
       
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\python3.exe") >> $env:GITHUB_ENV
@@ -41,8 +44,6 @@ jobs:
     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |
         echo "${{env.PYTHONPATH}}\Scripts" >> $GITHUB_PATH        
-
-#echo "${{env.PYTHONPATH}}" >> $GITHUB_PATH
 
 #    - name : Download and install Doxygen  
 #      run: |
@@ -55,8 +56,8 @@ jobs:
 
     - name : Configure Cmake
       run : |
-        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
-
+        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}}  -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
+#-DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
     - name : Install wheel and twine
       run: |
        ${{env.PYTHON3}} -m pip install wheel
@@ -68,7 +69,7 @@ jobs:
     - name : Build and upload wheel
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name=win_amd64
+        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name=${{matrix.windows-type[0]}}
         ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__

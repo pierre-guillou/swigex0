@@ -28,7 +28,7 @@ jobs:
         # - ["cp37","3.7.9"]
        windows-type:
          # - ["win_amd64", "x64"]
-          - ["win32","x86"]
+          - ["win32","x86\bin"]
           
     
     steps:
@@ -40,8 +40,7 @@ jobs:
         dir 
         cd ${{matrix.windows-type[1]}}
         dir
-        cd bin
-        dir
+     
 
     - uses: actions/checkout@v2
 

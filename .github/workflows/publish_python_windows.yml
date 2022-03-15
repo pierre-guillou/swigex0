@@ -43,18 +43,6 @@ jobs:
         cd include
         dir
 
-    - name : Dir
-      run : |
-        cd C:\hostedtoolcache\windows\Python
-        dir
-        cd ${{matrix.python[1]}}
-        dir 
-        cd ${{matrix.windows-type[1]}}.complete
-        dir
-        cd include
-        dir
-
-
     - uses: actions/checkout@v2
 
     - name : Create PYTHONPATH

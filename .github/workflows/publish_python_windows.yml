@@ -81,13 +81,15 @@ jobs:
       run: |
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
         ${{env.PYTHON3}} setup.py bdist_wheel 
-#--python-tag=${{matrix.python[0]}} --plat-name=${{matrix.windows-type[0]}}
         ${{env.PYTHON3}} -m twine upload dist\*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
         TWINE_REPOSITORY: testpypi
 
+
+
+#--python-tag=${{matrix.python[0]}} --plat-name=${{matrix.windows-type[0]}}
 
 
    

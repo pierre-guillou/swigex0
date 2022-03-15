@@ -38,7 +38,7 @@ jobs:
         dir
         cd ${{matrix.python[1]}}
         dir 
-        cd ${{matrix.windows-type[1]}}
+        cd x86
         dir
      
 

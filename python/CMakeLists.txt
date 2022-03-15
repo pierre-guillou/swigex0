@@ -10,9 +10,9 @@ add_custom_target(python_build_package)
 # DEPENDENCIES
 
 # Look for Python3
-set(CMAKE_FIND_DEBUG_MODE TRUE)
+#set(CMAKE_FIND_DEBUG_MODE TRUE)
 find_package(Python3 REQUIRED COMPONENTS Development.Module)
-set(CMAKE_FIND_DEBUG_MODE FALSE)
+#set(CMAKE_FIND_DEBUG_MODE FALSE)
 if (APPLE)
   find_package(PythonLibs REQUIRED)
 endif()

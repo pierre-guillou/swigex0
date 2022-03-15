@@ -43,7 +43,6 @@ jobs:
         cd include
         dir
 
-    steps:
     - name : Dir
       run : |
         cd C:\hostedtoolcache\windows\Python

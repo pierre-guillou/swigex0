@@ -34,7 +34,7 @@ jobs:
     steps:
     - name : Dir
       run : |
-        cd ${{env.PYTHON3_REF}}
+        cd ${{env.PYTHON3_PREF}}
         dir
         cd ${{matrix.python[1]}}
         dir 

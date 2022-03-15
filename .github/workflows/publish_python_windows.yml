@@ -27,8 +27,8 @@ jobs:
           - ["cp38","3.8.10"]
         # - ["cp37","3.7.9"]
        windows-type:
-         # - ["win_amd64", "x64"]
-          - ["win32","x86"]
+          - ["win_amd64", "x64","3"]
+          - ["win32","x86","3"]
           
     
     steps:
@@ -48,7 +48,7 @@ jobs:
         echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ matrix.python[1] }}\\${{matrix.windows-type[1] }}")>> $env:GITHUB_ENV
       
     - name : Setup python.exe 
-      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python3.exe") >> $env:GITHUB_ENV
+      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python${{matrix.windows-type[2]}}.exe") >> $env:GITHUB_ENV
  
     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |

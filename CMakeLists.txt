@@ -62,6 +62,7 @@ include(cmake/install.cmake)
 ## PACKAGES
 
 add_subdirectory(python)
+add_subdirectory(r)
 
 
 ####################################################

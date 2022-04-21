@@ -22,7 +22,7 @@ find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
 
-########################## added by Nico from gstlearn version 
+###################################
 # Look for pybind11
 find_package(pybind11 QUIET) # try locally
 if(NOT pybind11_FOUND) # else fetch it from github
@@ -45,7 +45,7 @@ endif()
 set(PYTGT python_build)
 
 # Interface file
-set(SRC fibo.i) 
+set(SRC pyfibo.i) 
 # No need to define %module in the interface file
 
 # Generation folders
@@ -66,7 +66,7 @@ set_source_files_properties(${SRC} PROPERTIES
   CPLUSPLUS ON
   # Swig wrapper will be regenerated if C++ headers are changed
   # https://stackoverflow.com/a/70375654/3952924
-  #USE_SWIG_DEPENDENCIES TRUE   # TODO : Incompatible with CMAKE_SWIG_OUTDIR under cmake 3.22 (MSVC)
+  USE_SWIG_DEPENDENCIES TRUE
   # myfibo C++ headers will be found by %import directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
   # Python package name will be the name of the installed folder (no module)

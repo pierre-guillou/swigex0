@@ -1,2 +1,2 @@
 ## Overview
-Fibonacci Python package long description
+Fibonacci Python package

@@ -1,3 +1,2 @@
 # myfibo
-
-Very long description
+Fibonacci C++ library exported in R and python

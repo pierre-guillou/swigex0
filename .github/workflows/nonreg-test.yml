@@ -29,8 +29,12 @@ jobs:
       # Build your program with the given configuration (-j 16 option seems having no effect on Gitub Action)
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target build_tests -- -j 2
 
+    - name: Install python wrapper
+      # Install the python wrapper (not done automatically when running ctest)
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target python_install -- -j 8
+      
     - name: Test
       # working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ls ${{github.workspace}} & cd ${{github.workspace}} & ls & cd build & ls & ctest -C ${{env.BUILD_TYPE}} --output-on-failure
+      run: ctest -C ${{env.BUILD_TYPE}} --output-on-failure

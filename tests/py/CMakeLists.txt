@@ -12,6 +12,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 
 # Set the output directory for logs
 set(TEST_DST_DIR ${GLOBAL_DST_DIR})
+file(MAKE_DIRECTORY ${TEST_DST_DIR})
 
 # Display test output in case of failure
 set(CTEST_OUTPUT_ON_FAILURE ON)

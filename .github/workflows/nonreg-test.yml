@@ -14,7 +14,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    container: ndesassis/test_ubuntu-16
+    #container: ndesassis/test_ubuntu-16
 
     steps:
     - uses: actions/checkout@v2
@@ -24,9 +24,9 @@ jobs:
 
     - run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    - name: Build
-      # Build your program with the given configuration (-j 16 option seems having no effect on Gitub Action)
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target build_tests -- -j 2
+    #- name: Build # Deactivate this because make check already build_tests
+    #  # Build your program with the given configuration (-j 16 option seems having no effect on Gitub Action)
+    #  run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target build_tests -- -j 2
 
     - name: Install python wrapper
       # Install the python wrapper (not done automatically when running ctest)

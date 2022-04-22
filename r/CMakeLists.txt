@@ -9,7 +9,7 @@ add_custom_target(r_build_package)
 # DEPENDENCIES
 
 # Look for R
-include(FindR.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/FindR.cmake)
 
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
@@ -92,7 +92,7 @@ set_target_properties(${RTGT} PROPERTIES
 # Find appropriate R.h
 target_include_directories(${RTGT} PRIVATE ${R_INCLUDE_DIRS})
 
-# Link to python's libraries (only for MSVC - Release)
+# Link to R's libraries (only for MSVC - Release)
 if(MSVC)
   target_link_libraries(${RTGT} PRIVATE ${R_LIBRARIES})
 endif()
@@ -138,8 +138,13 @@ file(GENERATE
 #  COMMENT "Installing R package"
 #  VERBATIM
 #)
+add_custom_target(r_install
+  COMMAND ${CMAKE_COMMAND} -E echo Nothing to do currently
+  COMMENT "Installing R package"
+  VERBATIM
+)
 
-# Tell cmake that python package must be built before installation
-add_dependencies(python_install python_build_package)
+# Tell cmake that r package must be built before installation
+add_dependencies(r_install r_build_package)
 
 

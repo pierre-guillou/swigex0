@@ -88,7 +88,6 @@ void Fibo::display(bool showTitle) const
   for (const auto& i: res)
     std::cout << i << ' ';
   std::cout << std::endl;
-
 }
 
 /**

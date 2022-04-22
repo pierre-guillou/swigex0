@@ -19,8 +19,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Install dependencies
-      run: sudo apt-get install r-base
+    #- name: Install dependencies
+    #  run: sudo apt-get install r-base
 
     - name: Configure
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}

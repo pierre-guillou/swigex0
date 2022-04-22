@@ -8,10 +8,10 @@ add_custom_target(check)
 if (MSVC) # TODO use IS_MULTI_CONFIG
   # Need configuration to be tested
 #  set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} --verbose -C $<CONFIG>)
-  set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} -C $<CONFIG>)
+  set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} -C $<CONFIG> --output-on-failure)
 else()
 #  set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} --verbose)
-  set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND})
+  set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
 endif()
 
 add_subdirectory(cpp)

@@ -14,13 +14,13 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    #container: ndesassis/test_ubuntu-16
+    #container: ndesassis/test_ubuntu-16 # If restored, github workflow cannot change to myfibo/build directory !!!
 
     steps:
     - uses: actions/checkout@v2
-
-#    - name: Add python to path
-#      run : echo "/opt/python/py310/bin" >> $GITHUB_PATH
+    
+    - name: Install dependencies
+      run: sudo apt-get install r-base
 
     - name: Configure
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -31,5 +31,4 @@ jobs:
       
     - name: Compile shared and execute non-regression tests
       # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check

@@ -16,9 +16,8 @@ endif()
 
 add_subdirectory(cpp)
 add_subdirectory(py)
-#add_subdirectory(r)
+add_subdirectory(r)
 
 # TODO : tests are executed for each directory but mixed
 # TODO : reports are separated
-#add_dependencies(check check_cpp check_py check_r)
-add_dependencies(check check_cpp check_py)
+add_dependencies(check check_cpp check_py check_r)

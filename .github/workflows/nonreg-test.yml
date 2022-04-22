@@ -14,7 +14,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    container: ndesassis/test_ubuntu-16
+    # container: ndesassis/test_ubuntu-16
 
     steps:
     - uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target python_install -- -j 2
       
     - name: Execute non-regression tests
+      working-directory: ${{github.workspace}}/build
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: cd ${{github.workspace}} & cd build & ctest -C ${{env.BUILD_TYPE}} --output-on-failure
-      # run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check

@@ -10,6 +10,10 @@ cmake_path(APPEND CMAKE_CURRENT_BINARY_DIR ${CMAKE_BUILD_TYPE}
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 
+# Python script runner path
+cmake_path(APPEND PROJECT_SOURCE_DIR python run_test.py
+           OUTPUT_VARIABLE RUN_TEST_SCRIPT)
+
 # Set the output directory for logs
 set(TEST_DST_DIR ${GLOBAL_DST_DIR})
 file(MAKE_DIRECTORY ${TEST_DST_DIR})
@@ -31,8 +35,7 @@ foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
                OUTPUT_VARIABLE TEST_SOURCE_FILE)
     # Run the test (and generate *.out in ${TEST_DST_DIR})
     add_test(NAME ${TARGET_TEST_NAME}
-             COMMAND ${Python3_EXECUTABLE} ${TEST_SOURCE_FILE}
-             WORKING_DIRECTORY ${TEST_DST_DIR})
+             COMMAND ${Python3_EXECUTABLE} ${RUN_TEST_SCRIPT} ${TEST_SOURCE_FILE} ${TEST_DST_DIR})
     # Compare the output result (diff output is shown when CTEST_OUTPUT_ON_FAILURE=1)
     add_test(NAME ${TARGET_TEST_NAME}_cmp
              COMMAND diff --strip-trailing-cr ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out

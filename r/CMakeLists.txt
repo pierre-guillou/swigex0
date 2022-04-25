@@ -109,17 +109,17 @@ add_dependencies(r_build_package ${RTGT})
 
 # Generate DESCRIPTION automatically for each configuration
 # First step: replace variables (@VAR@)
-#configure_file(
-#  ${CMAKE_CURRENT_SOURCE_DIR}/DESCRIPTION.in 
-#  ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
-#  @ONLY
-#)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/DESCRIPTION.in 
+  ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
+  @ONLY
+)
 
 # Second step: replace generator expression ($<>)
-#file(GENERATE
-#  OUTPUT ${R_PACKAGE_ROOT_FOLDER}/DESCRIPTION
-#  INPUT ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
-#)
+file(GENERATE
+  OUTPUT ${R_PACKAGE_ROOT_FOLDER}/DESCRIPTION
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
+)
 
 # Generate README.md for each configuration
 file(GENERATE

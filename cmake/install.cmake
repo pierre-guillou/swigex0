@@ -4,6 +4,21 @@ include(GNUInstallDirs)
 ####################################################
 ## INSTALLATION
 
+# Setup the installation directory
+# https://stackoverflow.com/questions/39481958/setting-cmake-install-prefix-from-cmakelists-txt-file/39485990#39485990
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  if(DEFINED MYFIBO_INSTALL_DIR) # Check for CMake variable first
+    set(CMAKE_INSTALL_PREFIX ${MYFIBO_INSTALL_DIR} CACHE PATH "" FORCE)
+  else()
+    if(DEFINED ENV{MYFIBO_INSTALL_DIR}) # Check for environment variable then
+      set(CMAKE_INSTALL_PREFIX $ENV{MYFIBO_INSTALL_DIR} CACHE PATH "" FORCE)
+    else()
+      # Default installation folder
+      set(CMAKE_INSTALL_PREFIX $ENV{HOME}/${PROJECT_NAME}_install CACHE PATH "" FORCE)
+    endif()
+  endif()
+endif()
+
 # Install the shared library in DESTINATION/lib folder
 install(TARGETS shared
   EXPORT ${PROJECT_NAME}_corelibs

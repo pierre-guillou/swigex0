@@ -32,11 +32,14 @@ else()
   set(R_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 endif()
 set(R_PACKAGE_DESTINATION_FOLDER ${R_PACKAGE_ROOT_FOLDER}/${R_PACKAGE_NAME})
+set(R_PACKAGE_R_FOLDER           ${R_PACKAGE_DESTINATION_FOLDER}/R)
+#file(MAKE_DIRECTORY ${R_PACKAGE_DESTINATION_FOLDER})
+
 # Location for SWIG target language code
-set(CMAKE_SWIG_OUTDIR                 ${R_PACKAGE_DESTINATION_FOLDER})
+set(CMAKE_SWIG_OUTDIR                 ${R_PACKAGE_R_FOLDER})
 # Location for SWIG wrapper library
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY    ${R_PACKAGE_DESTINATION_FOLDER}) # Use LIBRARY (gcc)!
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${R_PACKAGE_DESTINATION_FOLDER}) # Use RUNTIME (msvc)!
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY    ${R_PACKAGE_R_FOLDER}) # Use LIBRARY (gcc)!
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${R_PACKAGE_R_FOLDER}) # Use RUNTIME (msvc)!
 
 # SWIG interface source file properties
 set_source_files_properties(${SRC} PROPERTIES
@@ -105,7 +108,7 @@ endif()
 add_dependencies(r_build_package ${RTGT})
 
 ########################################
-# PACKAGING (target independent) (not tested)
+# PACKAGING (target independent)
 
 # Generate DESCRIPTION automatically for each configuration
 # First step: replace variables (@VAR@)
@@ -114,16 +117,28 @@ configure_file(
   ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
   @ONLY
 )
-
 # Second step: replace generator expression ($<>)
 file(GENERATE
-  OUTPUT ${R_PACKAGE_ROOT_FOLDER}/DESCRIPTION
+  OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/DESCRIPTION
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
+)
+
+# Generate NAMESPACE automatically for each configuration
+# First step: replace variables (@VAR@)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/NAMESPACE.in 
+  ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE.in
+  @ONLY
+)
+# Second step: replace generator expression ($<>)
+file(GENERATE
+  OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/NAMESPACE
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE.in
 )
 
 # Generate README.md for each configuration
 file(GENERATE
-  OUTPUT ${R_PACKAGE_ROOT_FOLDER}/README.md
+  OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/README.md
   INPUT  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
 )
 

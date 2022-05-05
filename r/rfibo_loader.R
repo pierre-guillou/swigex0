@@ -1,5 +1,5 @@
 # Example of libdir :
-# /home/fors/Projets/test/swig/myfibo/build/r/Release/myfibo
+# /home/fors/Projets/test/swig/myfibo/build/r/Release/myfibo/R
 
 load_myfibo = function(libdir)
 {

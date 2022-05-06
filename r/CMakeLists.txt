@@ -1,3 +1,7 @@
+if(NOT BUILD_R)
+  return()
+endif()
+
 # R package name
 set(R_PACKAGE_NAME ${PROJECT_NAME})
 # Beware : the real package name is the PROJECT_NAME (for better import)
@@ -76,12 +80,7 @@ swig_add_library(
 target_link_libraries(${RTGT} PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
-if (MSVC)
-  # Wrapper source is too big for MSVC !
-  set(COMP_FLAGS "/bigobj -D${PROJECT_NAME_UP}_STATIC_DEFINE")
-else()
-  set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
-endif()
+set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
 # Set some properties on SWIG target
 set_target_properties(${RTGT} PROPERTIES
   # Do not build R package by default
@@ -95,8 +94,8 @@ set_target_properties(${RTGT} PROPERTIES
 # Find appropriate R.h
 target_include_directories(${RTGT} PRIVATE ${R_INCLUDE_DIRS})
 
-# Link to R's libraries (only for MSVC - Release)
-if(MSVC)
+# Link to R's libraries (only for Windows - Release)
+if(WIN32)
   target_link_libraries(${RTGT} PRIVATE ${R_LIBRARIES})
 endif()
 

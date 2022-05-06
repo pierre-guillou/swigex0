@@ -1,3 +1,7 @@
+if(NOT BUILD_PYTHON)
+  return()
+endif()
+
 # Python package name
 set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 # Beware : the real package name is the PROJECT_NAME (for better import)

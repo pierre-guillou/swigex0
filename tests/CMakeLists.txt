@@ -14,10 +14,20 @@ else()
   set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
 endif()
 
-add_subdirectory(cpp)
-add_subdirectory(py)
-add_subdirectory(r)
-
 # TODO : tests are executed for each directory but mixed
 # TODO : reports are separated
-add_dependencies(check check_cpp check_py check_r)
+
+add_subdirectory(cpp)
+set(CHECK_DEP check_cpp)
+
+if (BUILD_PYTHON)
+  add_subdirectory(py)
+  list(APPEND CHECK_DEP check_py)
+endif()
+
+if (BUILD_R)
+  add_subdirectory(r)
+  list(APPEND CHECK_DEP check_r)
+endif()
+
+add_dependencies(check ${CHECK_DEP})

@@ -39,7 +39,7 @@ int main()
 #ifdef _WIN32
   // https://stackoverflow.com/questions/32185512/output-to-console-from-a-win32-gui-application-on-windows-10
   SetStdHandle(STD_OUTPUT_HANDLE, old_stdout);
-  int fd = _open_osfhandle((intptr_t)old_stdout, _O_WRONLY|_O_TEXT);
+  fd = _open_osfhandle((intptr_t)old_stdout, _O_WRONLY|_O_TEXT);
   FILE* fp = _fdopen(fd, "w");
   freopen_s( &fp, "CONOUT$", "w", stdout);
 #else

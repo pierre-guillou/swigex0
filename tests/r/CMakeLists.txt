@@ -1,3 +1,7 @@
+if(NOT BUILD_R)
+  return()
+endif()
+
 # Test sources
 set(TEST_SOURCES main.r)
 
@@ -35,7 +39,7 @@ foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
              WORKING_DIRECTORY ${TEST_DST_DIR})
     # Compare the output result (diff output is shown when CTEST_OUTPUT_ON_FAILURE=1)
     add_test(NAME ${TARGET_TEST_NAME}_cmp
-             COMMAND diff --strip-trailing-cr ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out
+             COMMAND git diff -w ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out
              WORKING_DIRECTORY ${TEST_DST_DIR})
 endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 

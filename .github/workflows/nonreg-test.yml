@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install r-base
       
-    - name: Setup personnal R libraries directory
+    - name: Setup personal R libraries directory
       run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
 
     - name: Configure cmake

@@ -149,7 +149,7 @@ add_dependencies(r_skeleton r_build)
 # Add a custom target for R package installation
 # TODO: Do also installation each time do_skeleton.R.in , DESCRIPTION.in or README.md is modified
 add_custom_target(r_install
-  COMMAND ${R_EXECUTABLE} CMD INSTALL ${R_PACKAGE_DESTINATION_FOLDER}
+  COMMAND ${R_EXECUTABLE} CMD INSTALL --no-multiarch ${R_PACKAGE_DESTINATION_FOLDER}
   COMMENT "Installing R package"
   VERBATIM
 )

@@ -21,14 +21,13 @@ jobs:
     
     - name: Install dependencies
       run: sudo apt-get install r-base
-
-    - name: Configure
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-
-    - name: Compile static and install python wrapper
-      # Install the python wrapper (not done automatically when running make check)
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target python_install -- -j 2
       
-    - name: Compile shared and execute non-regression tests
+    - name: Setup personnal R libraries directory
+      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
+
+    - name: Configure cmake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      
+    - name: Compile, install packages and execute non-regression tests
       # Execute tests defined by the CMake configuration.  
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check

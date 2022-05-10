@@ -1,4 +1,4 @@
-# This Makefile is just a shortcut to cmake commands for Linux users only
+# This Makefile is just a shortcut to cmake commands for make users
 #
 # Call 'make' with one of this target:
 # 
@@ -12,15 +12,16 @@
 #
 # Python wrapper:
 #  - python_doc     Build python package documentation [optional] [TODO]
-#  - python_build   Build python package [and its documentation]
+#  - python_build   Build python wrapper [and its documentation]
 #  - python_install Install python package [and its documentation]
 #  - python_upload  Build python package distribution and upload to PyPi [and its documentation] [TODO]
 #
 # R wrapper:
-#  - r_doc          Build R package documentation [optional] [TODO]
-#  - r_build        Build R package [and its documentation]
-#  - r_install      Install R package [and its documentation]
-#  - r_upload       Build R package distribution and upload to CRAN-like [and its documentation] [TODO]
+#  - r_doc           Build R package documentation [optional] [TODO]
+#  - r_build         Build R wrapper [and its documentation]
+#  - r_skeleton      Create R package skeleton [and its documentation]
+#  - r_install       Install R package [and its documentation]
+#  - r_upload        Build R package distribution and upload to CRAN-like [and its documentation] [TODO]
 #
 # No- regression tests:
 #  - check_cpp      Execute non-regression tests (cpp)
@@ -55,10 +56,10 @@ endif
 
 NO_PRINT_DIR = --no-print-directory
 CONFIG = 
-ifeq ($(OS),Windows_NT)
-  NO_PRINT_DIR =
-  CONFIG = --config $(FLAVOR)
-endif
+#ifeq ($(OS),Windows_NT)
+#  NO_PRINT_DIR =
+#  CONFIG = --config $(FLAVOR)
+#endif
 
 all: shared install
 
@@ -103,7 +104,7 @@ python_upload: cmake
 
 
 
-.PHONY: r_doc r_build r_install r_upload
+.PHONY: r_doc r_build r_install r_upload r_package
 
 r_doc: cmake
 	@echo "Target r_doc not yet implemented"
@@ -111,12 +112,14 @@ r_doc: cmake
 r_build: cmake
 	@cmake --build $(BUILD_DIR) --target r_build $(CONFIG) -- $(NO_PRINT_DIR) $(N_PROC_OPT)
 
+r_skeleton: cmake
+	@cmake --build $(BUILD_DIR) --target r_skeleton $(CONFIG) -- $(NO_PRINT_DIR) $(N_PROC_OPT)	
+
 r_install: cmake
 	@cmake --build $(BUILD_DIR) --target r_install $(CONFIG) -- $(NO_PRINT_DIR) $(N_PROC_OPT)
 
 r_upload: cmake
 	@echo "Target r_upload not yet implemented"
-
 
 
 .PHONY: check_cpp check_py check_r check

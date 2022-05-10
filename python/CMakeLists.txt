@@ -6,10 +6,6 @@ endif()
 set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 # Beware : the real package name is the PROJECT_NAME (for better import)
 
-# Create the global target for building python package
-add_custom_target(python_build_package)
-
-
 ###################################
 # DEPENDENCIES
 
@@ -26,27 +22,8 @@ find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
 
-###################################
-# Look for pybind11
-find_package(pybind11 QUIET) # try locally
-if(NOT pybind11_FOUND) # else fetch it from github
-  message(STATUS "Could NOT find pybind11 (fetching it from GitHub)")
-  include(FetchContent)
-  FetchContent_Declare(
-    pybind11
-    GIT_REPOSITORY https://github.com/pybind/pybind11.git
-    GIT_TAG v2.6.1
-  )
-  FetchContent_MakeAvailable(pybind11)
-endif()
-
-
-
 ######################################
 # WRAPPER GENERATION & BUILD
-
-# Python package target
-set(PYTGT python_build)
 
 # Interface file
 set(SRC pyfibo.i) 
@@ -92,14 +69,14 @@ set(CMAKE_SWIG_FLAGS -py3 -keyword)
 
 # SWIG target (generate wrapper & python script then build [so,pyd] library)
 swig_add_library(
-  ${PYTGT}
+  python_build
   LANGUAGE   python
   TYPE       SHARED
   SOURCES    ${SRC}
 )
 
 # Link to static library
-target_link_libraries(${PYTGT} PUBLIC ${PROJECT_NAME}::static)
+target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
 if (MSVC)
@@ -109,7 +86,7 @@ else()
 endif()
 
 # Set some properties on SWIG target
-set_target_properties(${PYTGT} PROPERTIES
+set_target_properties(python_build PROPERTIES
   # Do not build python package by default
   EXCLUDE_FROM_ALL ON
   # Modify the generated library name
@@ -119,19 +96,16 @@ set_target_properties(${PYTGT} PROPERTIES
 )
 
 # Find appropriate Python.h
-target_include_directories(${PYTGT} PRIVATE ${Python3_INCLUDE_DIRS})
+target_include_directories(python_build PRIVATE ${Python3_INCLUDE_DIRS})
 
 # Link to python's libraries (only for MSVC and MacOS - Release)
 if(MSVC)
-  target_link_libraries(${PYTGT} PRIVATE ${Python3_LIBRARIES})
+  target_link_libraries(python_build PRIVATE ${Python3_LIBRARIES})
 endif()
 
 if(APPLE)
-  target_link_libraries(${PYTGT} PRIVATE ${PYTHON_LIBRARIES})
+  target_link_libraries(python_build PRIVATE ${PYTHON_LIBRARIES})
 endif()
-
-# Add SWIG target to global python build package dependency
-add_dependencies(python_build_package ${PYTGT})
 
 
 ########################################
@@ -169,6 +143,6 @@ add_custom_target(python_install
 )
 
 # Tell cmake that python package must be built before installation
-add_dependencies(python_install python_build_package)
+add_dependencies(python_install python_build)
 
 

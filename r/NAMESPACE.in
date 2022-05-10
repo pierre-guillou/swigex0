@@ -1,2 +1,0 @@
-useDynLib(@R_PACKAGE_NAME@)
-

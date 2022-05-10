@@ -48,7 +48,7 @@ endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 
 # Look parent CMakeLists for MY_CTEST_COMMAND definition
 add_custom_target(check_py
-  COMMAND ${MY_CTEST_COMMAND})
+                  COMMAND ${MY_CTEST_COMMAND})
 
 # Add dependency for check_py
 add_dependencies(check_py python_install)

@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import os
+# This script redirects the standard output of a python test script (argv[1]) into a log file saved in a given directory (argv[2])
 python_exe = os.path.realpath(sys.executable)
 test_script = sys.argv[1]
 out_dir = sys.argv[2]

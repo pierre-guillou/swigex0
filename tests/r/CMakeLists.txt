@@ -35,7 +35,7 @@ foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
                OUTPUT_VARIABLE TEST_SOURCE_FILE)
     # Run the test (and generate *.out in ${TEST_DST_DIR})
     add_test(NAME ${TARGET_TEST_NAME}
-             COMMAND env MYFIBO_SOURCE_DIR=${PROJECT_SOURCE_DIR} ${R_EXECUTABLE} CMD BATCH --no-echo --no-timing ${TEST_SOURCE_FILE} ${TEST_NAME}.out
+             COMMAND ${R_EXECUTABLE} CMD BATCH --no-echo --no-timing ${TEST_SOURCE_FILE} ${TEST_NAME}.out
              WORKING_DIRECTORY ${TEST_DST_DIR})
     # Compare the output result (diff output is shown when CTEST_OUTPUT_ON_FAILURE=1)
     add_test(NAME ${TARGET_TEST_NAME}_cmp
@@ -45,7 +45,7 @@ endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 
 # Look parent CMakeLists for MY_CTEST_COMMAND definition
 add_custom_target(check_r
-  COMMAND ${MY_CTEST_COMMAND})
+                  COMMAND ${MY_CTEST_COMMAND})
 
 # Add dependency for check_r
 add_dependencies(check_r r_install)

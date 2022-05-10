@@ -6,9 +6,6 @@ endif()
 set(R_PACKAGE_NAME ${PROJECT_NAME})
 # Beware : the real package name is the PROJECT_NAME (for better import)
 
-# Create the global target for building R package
-add_custom_target(r_build_package)
-
 ###################################
 # DEPENDENCIES
 
@@ -23,9 +20,6 @@ include(${SWIG_USE_FILE})
 ######################################
 # WRAPPER GENERATION & BUILD
 
-# R package target
-set(RTGT r_build)
-
 # R package interface file
 set(SRC rfibo.i)
 
@@ -35,15 +29,15 @@ if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG
 else()
   set(R_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 endif()
-set(R_PACKAGE_DESTINATION_FOLDER ${R_PACKAGE_ROOT_FOLDER}/${R_PACKAGE_NAME})
-set(R_PACKAGE_R_FOLDER           ${R_PACKAGE_DESTINATION_FOLDER}/R)
-#file(MAKE_DIRECTORY ${R_PACKAGE_DESTINATION_FOLDER})
+set(R_PACKAGE_DESTINATION_FOLDER   ${R_PACKAGE_ROOT_FOLDER}/${R_PACKAGE_NAME})
+set(R_PACKAGE_R_FOLDER             ${R_PACKAGE_DESTINATION_FOLDER}/R)
+set(R_PACKAGE_SRC_FOLDER           ${R_PACKAGE_DESTINATION_FOLDER}/src)
 
 # Location for SWIG target language code
 set(CMAKE_SWIG_OUTDIR                 ${R_PACKAGE_R_FOLDER})
 # Location for SWIG wrapper library
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY    ${R_PACKAGE_R_FOLDER}) # Use LIBRARY (gcc)!
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${R_PACKAGE_R_FOLDER}) # Use RUNTIME (msvc)!
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY    ${R_PACKAGE_SRC_FOLDER}) # Use LIBRARY (gcc)!
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${R_PACKAGE_SRC_FOLDER}) # Use RUNTIME (msvc)!
 
 # SWIG interface source file properties
 set_source_files_properties(${SRC} PROPERTIES
@@ -70,19 +64,19 @@ set_property(SOURCE ${SRC} PROPERTY
 
 # SWIG target (generate wrapper & R script then build [so,dll] library)
 swig_add_library(
-  ${RTGT}
+  r_build
   LANGUAGE   r
   TYPE       SHARED
   SOURCES    ${SRC}
 )
 
 # Link to static library
-target_link_libraries(${RTGT} PUBLIC ${PROJECT_NAME}::static)
+target_link_libraries(r_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
 set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
 # Set some properties on SWIG target
-set_target_properties(${RTGT} PROPERTIES
+set_target_properties(r_build PROPERTIES
   # Do not build R package by default
   EXCLUDE_FROM_ALL ON
   # Modify the generated library name
@@ -92,24 +86,34 @@ set_target_properties(${RTGT} PROPERTIES
 )
 
 # Find appropriate R.h
-target_include_directories(${RTGT} PRIVATE ${R_INCLUDE_DIRS})
+target_include_directories(r_build PRIVATE ${R_INCLUDE_DIRS})
 
 # Link to R's libraries (only for Windows - Release)
 if(WIN32)
-  target_link_libraries(${RTGT} PRIVATE ${R_LIBRARIES})
+  target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
 endif()
 
 if(APPLE)
-  target_link_libraries(${RTGT} PRIVATE ${R_LIBRARIES})
+  target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
 endif()
 
-# Add SWIG target to global R build package dependency
-add_dependencies(r_build_package ${RTGT})
-
 ########################################
-# PACKAGING (target independent)
+# PACKAGING
 
-# Generate DESCRIPTION automatically for each configuration
+# Generate do_skeleton automatically for each configuration
+# First step: replace variables (@VAR@)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/do_skeleton.R.in 
+  ${CMAKE_CURRENT_BINARY_DIR}/do_skeleton.R.in
+  @ONLY
+)
+# Second step: replace generator expression ($<>)
+file(GENERATE
+  OUTPUT ${R_PACKAGE_ROOT_FOLDER}/do_skeleton.R
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/do_skeleton.R.in
+)
+
+# Replace DESCRIPTION automatically for each configuration
 # First step: replace variables (@VAR@)
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/DESCRIPTION.in 
@@ -122,43 +126,35 @@ file(GENERATE
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
 )
 
-# Generate NAMESPACE automatically for each configuration
-# First step: replace variables (@VAR@)
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/NAMESPACE.in 
-  ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE.in
-  @ONLY
-)
-# Second step: replace generator expression ($<>)
-file(GENERATE
-  OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/NAMESPACE
-  INPUT ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE.in
-)
-
 # Generate README.md for each configuration
 file(GENERATE
   OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/README.md
   INPUT  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
 )
 
+# Create skeleton (generate NAMESPACE)
+add_custom_target(r_skeleton
+                  COMMAND ${R_EXECUTABLE} CMD BATCH ${R_PACKAGE_ROOT_FOLDER}/do_skeleton.R
+                  COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars
+                  COMMENT "Creating R package skeleton"
+                  VERBATIM
+)
+
+# Add build target dependency to skeleton target
+add_dependencies(r_skeleton r_build)
 
 ######################################
 # INSTALLATION (not tested)
 
 # Add a custom target for R package installation
-# TODO: Do also installation each time DESCRIPTION.in or README.md is modified
-#add_custom_target(r_install
-#  COMMAND ${R_EXECUTABLE} CMD INSTALL --preclean --clean ${R_PACKAGE_ROOT_FOLDER}
-#  COMMENT "Installing R package"
-#  VERBATIM
-#)
+# TODO: Do also installation each time do_skeleton.R.in , DESCRIPTION.in or README.md is modified
 add_custom_target(r_install
-  COMMAND ${CMAKE_COMMAND} -E echo Nothing to do currently
+  COMMAND ${R_EXECUTABLE} CMD INSTALL ${R_PACKAGE_DESTINATION_FOLDER}
   COMMENT "Installing R package"
   VERBATIM
 )
 
-# Tell cmake that r package must be built before installation
-add_dependencies(r_install r_build_package)
+# Add skeleton target dependency to install target
+add_dependencies(r_install r_skeleton)
 
 

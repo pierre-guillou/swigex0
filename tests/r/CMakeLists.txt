@@ -3,7 +3,7 @@ if(NOT BUILD_R)
 endif()
 
 # Test sources
-set(TEST_SOURCES main.r)
+set(TEST_SOURCES main.r testArgs.r)
 
 # Look for R
 include(${PROJECT_SOURCE_DIR}/cmake/FindR.cmake)
@@ -38,9 +38,9 @@ foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
              COMMAND ${R_EXECUTABLE} CMD BATCH --no-echo --no-timing ${TEST_SOURCE_FILE} ${TEST_NAME}.out
              WORKING_DIRECTORY ${TEST_DST_DIR})
     # Compare the output result (diff output is shown when CTEST_OUTPUT_ON_FAILURE=1)
+    # Use git diff (cross-platform) with no-index (no need to have files under git control) and ignore whitespaces (-w)
     add_test(NAME ${TARGET_TEST_NAME}_cmp
-             COMMAND git diff -w ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out
-             WORKING_DIRECTORY ${TEST_DST_DIR})
+             COMMAND git diff --no-index -w ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out)
 endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 
 # Look parent CMakeLists for MY_CTEST_COMMAND definition

@@ -1,4 +1,8 @@
 Test int: 12
+integer
 Test VectorInt: [23 33 43 ]
+integer
 Test String: Str12
+character
 Test VectorString: [Str23 Str33 Str43 ]
+character

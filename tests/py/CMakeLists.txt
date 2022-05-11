@@ -18,32 +18,29 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 cmake_path(APPEND PROJECT_SOURCE_DIR python run_test.py
            OUTPUT_VARIABLE RUN_TEST_SCRIPT)
 
-# Set the output directory for logs
+# Create the output directory for logs
 set(TEST_DST_DIR ${GLOBAL_DST_DIR})
 file(MAKE_DIRECTORY ${TEST_DST_DIR})
-
+           
 # Display test output in case of failure
 set(CTEST_OUTPUT_ON_FAILURE ON)
 
-# Run each registered executable
-set(TARGETS_SCRIPT "")
+# Run each python scripts
 foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
     # Retrieve script file name without extension
     get_filename_component(TEST_NAME ${TEST_SOURCE_FILE} NAME_WE)
     # Build the target test name
     set(TARGET_TEST_NAME ${TEST_NAME}_py)
-    # Add to script targets list
-    list(APPEND TARGETS_SCRIPT ${TARGET_TEST_NAME})
     # Build the path to the python test script
     cmake_path(APPEND CMAKE_CURRENT_SOURCE_DIR ${TEST_SOURCE_FILE}
                OUTPUT_VARIABLE TEST_SOURCE_FILE)
-    # Run the test (and generate *.out in ${TEST_DST_DIR})
+    # Run the test (and generate log in ${TEST_DST_DIR})
     add_test(NAME ${TARGET_TEST_NAME}
              COMMAND ${Python3_EXECUTABLE} ${RUN_TEST_SCRIPT} ${TEST_SOURCE_FILE} ${TEST_DST_DIR})
     # Compare the output result (diff output is shown when CTEST_OUTPUT_ON_FAILURE=1)
+    # Use git diff (cross-platform) with no-index (no need to have files under git control) and ignore whitespaces (-w)
     add_test(NAME ${TARGET_TEST_NAME}_cmp
-             COMMAND git diff -w ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out
-             WORKING_DIRECTORY ${TEST_DST_DIR})
+             COMMAND git diff --no-index -w ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out)
 endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 
 # Look parent CMakeLists for MY_CTEST_COMMAND definition

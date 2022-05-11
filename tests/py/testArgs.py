@@ -1,19 +1,19 @@
 import myfibo
 
-i = testInt(12)
-print(class(i))
+i = myfibo.testInt(12)
+print(type(i))
 if (i != 12) :
   print("Wrong int!")
-vi = testVectorInt({23,33,43})
-print(class(vi))
-if (vi[0] != 23 || vi[1] != 33 || vi[2] != 43) :
+vi = myfibo.testVectorInt([23,33,43])
+print(type(vi))
+if (vi[0] != 23 or vi[1] != 33 or vi[2] != 43) :
   print("Wrong VectorInt!")
-s = testString("Str12")
-print(class(s))
+s = myfibo.testString("Str12")
+print(type(s))
 if (s != "Str12") :
   print("Wrong String!")
-vs = testVectorString({"Str23","Str33","Str43"})
-print(class(vs))
-if (vs[0] != "Str25" or vs[1] != "Str33" or vs[2] != "Str43") :
+vs = myfibo.testVectorString(["Str23","Str33","Str43"])
+print(type(vs))
+if (vs[0] != "Str23" or vs[1] != "Str33" or vs[2] != "Str43") :
   print("Wrong VectorString!")
 

@@ -3,7 +3,7 @@ if(NOT BUILD_PYTHON)
 endif()
 
 # Test sources
-set(TEST_SOURCES main.py)
+set(TEST_SOURCES main.py testArgs.py)
 
 # Look for Python3
 find_package(Python3 REQUIRED)

@@ -126,12 +126,6 @@ file(GENERATE
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
 )
 
-# Generate README.md for each configuration
-file(GENERATE
-  OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/README.md
-  INPUT  ${CMAKE_CURRENT_SOURCE_DIR}/README.md
-)
-
 # Create skeleton (generate NAMESPACE)
 add_custom_target(r_skeleton
                   COMMAND ${R_EXECUTABLE} CMD BATCH ${R_PACKAGE_ROOT_FOLDER}/do_skeleton.R
@@ -147,7 +141,7 @@ add_dependencies(r_skeleton r_build)
 # INSTALLATION (not tested)
 
 # Add a custom target for R package installation
-# TODO: Do also installation each time do_skeleton.R.in , DESCRIPTION.in or README.md is modified
+# TODO: Do also installation each time do_skeleton.R.in or DESCRIPTION.in is modified
 add_custom_target(r_install
   COMMAND ${R_EXECUTABLE} CMD INSTALL --no-multiarch ${R_PACKAGE_DESTINATION_FOLDER}
   COMMENT "Installing R package"

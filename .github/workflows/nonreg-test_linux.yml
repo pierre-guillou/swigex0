@@ -1,4 +1,4 @@
-name: non regression tests
+name: non regression tests under Linux (gcc)
 
 on:
   push:

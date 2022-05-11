@@ -1,4 +1,4 @@
-name: non regression tests
+name: Non regression tests under Windows (Visual)
 
 on:
   push:
@@ -13,7 +13,7 @@ env:
 jobs:
   
   build:
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2

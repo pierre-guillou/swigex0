@@ -28,8 +28,12 @@ endif()
 
 
 # C++ code location
-set(INCLUDES ${PROJECT_SOURCE_DIR}/include)
-set(SOURCES ${PROJECT_SOURCE_DIR}/src/fibo.cpp)
+set(INCLUDES 
+    ${PROJECT_SOURCE_DIR}/include)
+    
+set(SOURCES
+    ${PROJECT_SOURCE_DIR}/src/fibo.cpp
+    ${PROJECT_SOURCE_DIR}/src/args.cpp)
 
 # Generation folder
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})

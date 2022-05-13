@@ -100,17 +100,17 @@ endif()
 ########################################
 # PACKAGING
 
-# Generate do_skeleton automatically for each configuration
+# Generate NAMESPACE automatically for each configuration
 # First step: replace variables (@VAR@)
 configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/do_skeleton.R.in 
-  ${CMAKE_CURRENT_BINARY_DIR}/do_skeleton.R.in
+  ${CMAKE_CURRENT_SOURCE_DIR}/NAMESPACE.in 
+  ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE.in
   @ONLY
 )
 # Second step: replace generator expression ($<>)
 file(GENERATE
-  OUTPUT ${R_PACKAGE_ROOT_FOLDER}/do_skeleton.R
-  INPUT ${CMAKE_CURRENT_BINARY_DIR}/do_skeleton.R.in
+  OUTPUT ${R_PACKAGE_DESTINATION_FOLDER}/NAMESPACE
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/NAMESPACE.in
 )
 
 # Replace DESCRIPTION automatically for each configuration
@@ -126,29 +126,19 @@ file(GENERATE
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/DESCRIPTION.in
 )
 
-# Create skeleton (generate NAMESPACE)
-add_custom_target(r_skeleton
-                  COMMAND ${R_EXECUTABLE} CMD BATCH ${R_PACKAGE_ROOT_FOLDER}/do_skeleton.R
-                  COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars
-                  COMMENT "Creating R package skeleton"
-                  VERBATIM
-)
-
-# Add build target dependency to skeleton target
-add_dependencies(r_skeleton r_build)
-
 ######################################
-# INSTALLATION (not tested)
+# INSTALLATION
 
 # Add a custom target for R package installation
 # TODO: Do also installation each time do_skeleton.R.in or DESCRIPTION.in is modified
 add_custom_target(r_install
+  COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars
   COMMAND ${R_EXECUTABLE} CMD INSTALL --no-multiarch ${R_PACKAGE_DESTINATION_FOLDER}
   COMMENT "Installing R package"
   VERBATIM
 )
 
 # Add skeleton target dependency to install target
-add_dependencies(r_install r_skeleton)
+add_dependencies(r_install r_build)
 
 

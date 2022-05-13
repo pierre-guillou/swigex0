@@ -1,8 +1,24 @@
 Test int: 12
 <class 'int'>
+Test int Pointer: 22
+<class 'int'>
+Test int Create: 32
+<class 'int'>
 Test VectorInt: [23 33 43 ]
+<class 'tuple'>
+Test VectorInt Pointer: [24 34 44 ]
+<class 'tuple'>
+Test VectorInt Create: [25 35 45 ]
 <class 'tuple'>
 Test String: Str12
 <class 'str'>
+Test String Pointer: Str22
+<class 'str'>
+Test String Create: Str32
+<class 'str'>
 Test VectorString: [Str23 Str33 Str43 ]
+<class 'tuple'>
+Test VectorString Pointer: [Str24 Str34 Str44 ]
+<class 'tuple'>
+Test VectorString Create: [Str25 Str35 Str45 ]
 <class 'tuple'>

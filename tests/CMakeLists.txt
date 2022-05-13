@@ -14,9 +14,6 @@ else()
   set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure)
 endif()
 
-# TODO : tests are executed for each directory but mixed
-# TODO : reports are separated
-
 add_subdirectory(cpp)
 set(CHECK_DEP check_cpp)
 

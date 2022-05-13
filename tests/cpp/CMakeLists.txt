@@ -42,7 +42,7 @@ endforeach(TARGET_EXE ${TARGETS_EXE})
 
 # Look parent CMakeLists for MY_CTEST_COMMAND definition
 if (WIN32)
-  # Need to copy C++ shared library to tests directory
+  # Need to copy C++ shared library to tests directory # TODO : still mandatory ?
   add_custom_target(check_cpp
     COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${PROJECT_NAME}::shared> ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     COMMAND ${MY_CTEST_COMMAND} DEPENDS ${TARGETS_EXE}

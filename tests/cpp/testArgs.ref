@@ -1,4 +1,12 @@
 Test int: 12
+Test int Pointer: 22
+Test int Create: 32
 Test VectorInt: [23 33 43 ]
+Test VectorInt Pointer: [24 34 44 ]
+Test VectorInt Create: [25 35 45 ]
 Test String: Str12
+Test String Pointer: Str22
+Test String Create: Str32
 Test VectorString: [Str23 Str33 Str43 ]
+Test VectorString Pointer: [Str24 Str34 Str44 ]
+Test VectorString Create: [Str25 Str35 Str45 ]

@@ -5,7 +5,7 @@ endif()
 # Test sources
 set(TEST_SOURCES main.py testArgs.py)
 
-# Look for Python3
+# Look for Python3 (needed here because Python3_EXECUTABLE not populated everywhere)
 find_package(Python3 REQUIRED)
 
 # Generation folder
@@ -14,7 +14,7 @@ cmake_path(APPEND CMAKE_CURRENT_BINARY_DIR ${CMAKE_BUILD_TYPE}
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 
-# Python script runner path
+# Python script test runner path
 cmake_path(APPEND PROJECT_SOURCE_DIR python run_test.py
            OUTPUT_VARIABLE RUN_TEST_SCRIPT)
 
@@ -29,17 +29,15 @@ set(CTEST_OUTPUT_ON_FAILURE ON)
 foreach(TEST_SOURCE_FILE ${TEST_SOURCES})
     # Retrieve script file name without extension
     get_filename_component(TEST_NAME ${TEST_SOURCE_FILE} NAME_WE)
-    # Build the target test name
-    set(TARGET_TEST_NAME ${TEST_NAME}_py)
     # Build the path to the python test script
     cmake_path(APPEND CMAKE_CURRENT_SOURCE_DIR ${TEST_SOURCE_FILE}
                OUTPUT_VARIABLE TEST_SOURCE_FILE)
-    # Run the test (and generate log in ${TEST_DST_DIR})
-    add_test(NAME ${TARGET_TEST_NAME}
+    # Run the test (and generate log in ${TEST_DST_DIR}) (use a test runner script for stdout redirection)
+    add_test(NAME ${TEST_NAME}_py
              COMMAND ${Python3_EXECUTABLE} ${RUN_TEST_SCRIPT} ${TEST_SOURCE_FILE} ${TEST_DST_DIR})
     # Compare the output result (diff output is shown when CTEST_OUTPUT_ON_FAILURE=1)
     # Use git diff (cross-platform) with no-index (no need to have files under git control) and ignore whitespaces (-w)
-    add_test(NAME ${TARGET_TEST_NAME}_cmp
+    add_test(NAME ${TEST_NAME}_py_cmp
              COMMAND git diff --no-index -w ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_NAME}.ref ${TEST_DST_DIR}/${TEST_NAME}.out)
 endforeach(TEST_SOURCE_FILE ${TEST_SOURCES})
 

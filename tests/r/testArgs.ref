@@ -2,23 +2,11 @@ Test int: 12
 integer
 Test int Pointer: 22
 integer
-Test int Create: 32
-integer
 Test VectorInt: [23 33 43 ]
-integer
-Test VectorInt Pointer: [24 34 44 ]
-integer
-Test VectorInt Create: [25 35 45 ]
 integer
 Test String: Str12
 character
-Test String Pointer: Str22
-character
-Test String Create: Str32
-character
 Test VectorString: [Str23 Str33 Str43 ]
 character
-Test VectorString Pointer: [Str24 Str34 Str44 ]
-character
 Test VectorString Create: [Str25 Str35 Str45 ]
-character
+_p_std__vectorT_std__string_std__allocatorT_std__string_t_t

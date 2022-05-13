@@ -46,7 +46,7 @@ if (WIN32)
 endif()
 
 # Impose 'd' suffix in debug (global property)
-set(CMAKE_DEBUG_POSTFIX d)
+#set(CMAKE_DEBUG_POSTFIX d)
 
 # Shared and Static libraries
 add_library(shared                  SHARED ${SOURCES})

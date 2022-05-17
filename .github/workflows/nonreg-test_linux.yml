@@ -23,7 +23,10 @@ jobs:
       run: sudo apt-get install r-base
       
     - name: Setup personal R libraries directory
-      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
+      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile & Rscript -e "install.packages (c('maps'), lib='~/r_libs', repos='https://pbil.univ-lyon1.fr/CRAN')"
+      
+    - name: Test personal R libraries directory
+      run: ls ~/r_libs
 
     - name: Configure cmake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}

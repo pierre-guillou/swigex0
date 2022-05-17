@@ -68,7 +68,7 @@ message(STATUS "BUILD_PYTHON=" ${BUILD_PYTHON})
 message(STATUS "BUILD_R="      ${BUILD_R})
 
 ####################################################
-## BUILD
+## BUILD & INSTALL
 
 include(cmake/cpp.cmake)
 # TODO : Add doxygen feature
@@ -85,10 +85,8 @@ add_subdirectory(r)
 ####################################################
 ## TESTING
 
-# Add build_test and test targets
+# Add non-regression test target
 include(CTest)
 enable_testing()
 
 add_subdirectory(tests)
-
-

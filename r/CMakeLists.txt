@@ -10,7 +10,8 @@ set(R_PACKAGE_NAME ${PROJECT_NAME})
 # DEPENDENCIES
 
 # Look for R
-include(${PROJECT_SOURCE_DIR}/cmake/FindR.cmake)
+#set(CMAKE_FIND_DEBUG_MODE TRUE)
+include(FindR.cmake)
 
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
@@ -45,7 +46,7 @@ set_source_files_properties(${SRC} PROPERTIES
   # Swig wrapper will be regenerated if C++ headers are changed
   # https://stackoverflow.com/a/70375654/3952924
   USE_SWIG_DEPENDENCIES TRUE
-  # myfibo C++ headers will be found by %import directive
+  # myfibo C++ headers will be found by %import swig directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
 )
 
@@ -130,7 +131,7 @@ file(GENERATE
 # INSTALLATION
 
 # Add a custom target for R package installation
-# TODO: Do also installation each time do_skeleton.R.in or DESCRIPTION.in is modified
+# TODO: Do also installation each time NAMESPACE.in or DESCRIPTION.in is modified
 add_custom_target(r_install
   COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars
   COMMAND ${R_EXECUTABLE} CMD INSTALL --no-multiarch ${R_PACKAGE_DESTINATION_FOLDER}
@@ -138,7 +139,7 @@ add_custom_target(r_install
   VERBATIM
 )
 
-# Add skeleton target dependency to install target
+# Add r_build target dependency to install target
 add_dependencies(r_install r_build)
 
 

@@ -29,12 +29,12 @@ install(TARGETS shared
 # Include directories
 target_include_directories(shared PUBLIC
   # Installed includes are made PUBLIC for client who links the shared library
-  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>
 )
 
 # Install the includes
 install(
-  DIRECTORY ${INCLUDES}/              # Install library headers
+  DIRECTORY   ${INCLUDES}/            # Install library headers
   DESTINATION include/${PROJECT_NAME} # in DESTINATION/include/${PROJECT_NAME}
 )
 

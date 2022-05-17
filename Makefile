@@ -17,10 +17,10 @@
 #  - python_upload  Build python package distribution and upload to PyPi [and its documentation] [TODO]
 #
 # R wrapper:
-#  - r_doc           Build R package documentation [optional] [TODO]
-#  - r_build         Build R wrapper [and its documentation]
-#  - r_install       Install R package [and its documentation]
-#  - r_upload        Build R package distribution and upload to CRAN-like [and its documentation] [TODO]
+#  - r_doc          Build R package documentation [optional] [TODO]
+#  - r_build        Build R wrapper [and its documentation]
+#  - r_install      Install R package [and its documentation]
+#  - r_upload       Build R package distribution and upload to CRAN-like [and its documentation] [TODO]
 #
 # Non-regression tests:
 #  - check_cpp      Execute non-regression tests (cpp)
@@ -75,6 +75,7 @@ else
 endif
 
 
+
 .PHONY: all cmake static shared build_tests doxygen install uninstall
 
 all: shared install
@@ -118,7 +119,7 @@ python_upload: cmake
 
 
 
-.PHONY: r_doc r_build r_skeleton r_install r_upload
+.PHONY: r_doc r_build r_install r_upload
 
 r_doc: cmake
 	@echo "Target r_doc not yet implemented"
@@ -131,6 +132,7 @@ r_install: cmake
 
 r_upload: cmake
 	@echo "Target r_upload not yet implemented"
+
 
 
 .PHONY: check_cpp check_py check_r check

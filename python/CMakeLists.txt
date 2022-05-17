@@ -19,13 +19,14 @@ endif()
 
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
+# TODO : If SWIG not found, fetch it from the web
 include(${SWIG_USE_FILE})
 
 
 ######################################
 # WRAPPER GENERATION & BUILD
 
-# Interface file
+# Python package interface file
 set(SRC pyfibo.i) 
 # No need to define %module in the interface file
 
@@ -42,7 +43,7 @@ set(CMAKE_SWIG_OUTDIR                 ${PYTHON_PACKAGE_DESTINATION_FOLDER})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY    ${PYTHON_PACKAGE_DESTINATION_FOLDER}) # Use LIBRARY (gcc)!
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${PYTHON_PACKAGE_DESTINATION_FOLDER}) # Use RUNTIME (msvc)!
 
-# SWIG interface source file
+# SWIG interface source file properties
 set_source_files_properties(${SRC} PROPERTIES
   CPLUSPLUS ON
   # Swig wrapper will be regenerated if C++ headers are changed
@@ -79,11 +80,7 @@ swig_add_library(
 target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
-if (MSVC)
-  set(COMP_FLAGS "/bigobj -D${PROJECT_NAME_UP}_STATIC_DEFINE")
-else()
-  set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
-endif()
+set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
 
 # Set some properties on SWIG target
 set_target_properties(python_build PROPERTIES
@@ -91,7 +88,7 @@ set_target_properties(python_build PROPERTIES
   EXCLUDE_FROM_ALL ON
   # Modify the generated library name
   OUTPUT_NAME ${PROJECT_NAME}
-  # Transmit the fact that we are linking to static ${PROJECT_NAME} library
+  # Compiler flags for the SWIG library
   COMPILE_FLAGS ${COMP_FLAGS}
 )
 
@@ -142,7 +139,7 @@ add_custom_target(python_install
   VERBATIM
 )
 
-# Tell cmake that python package must be built before installation
+# Tell to CMake that python package must be built before installation [python_doc is optional]
 add_dependencies(python_install python_build)
 
 

@@ -2,7 +2,7 @@
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  # Set the possible values of build type
+  # Set the possible values of build type for cmake-gui
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
@@ -17,15 +17,8 @@ if (MSVC)
   add_compile_options(/W4) 
 else()
   # Lots of warnings (-Wall = add some warnings, -Wextra = add a ton of warnings)
-  add_compile_options(-Wextra)
+  add_compile_options(-Wall -Wextra)
 endif()
-
-#find_package(Boost REQUIRED)
-#set(HDF5_USE_STATIC_LIBRARIES ON)
-#find_package(HDF5 REQUIRED COMPONENTS C CXX)
-#set(CMAKE_FIND_DEBUG_MODE FALSE)
-#find_package(Doxygen REQUIRED)
-
 
 # C++ code location
 set(INCLUDES 
@@ -40,20 +33,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYP
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 
-# Change the name of the output file (to distinguish lib files under windows) 
+# Change the name of the output file (to distinguish lib files under Windows)
 if (WIN32)
   set(CMAKE_STATIC_LIBRARY_PREFIX "lib")
 endif()
-
-# Impose 'd' suffix in debug (global property)
-#set(CMAKE_DEBUG_POSTFIX d)
 
 # Shared and Static libraries
 add_library(shared                  SHARED ${SOURCES})
 add_library(static EXCLUDE_FROM_ALL STATIC ${SOURCES})
 set(FLAVORS shared static)
 
-############################## Loop on flavors
+############################## Loop on flavors: shared and static
 foreach(FLAVOR ${FLAVORS})
   # Convert flavor to uppercase
   string(TOUPPER ${FLAVOR} FLAVOR_UP)
@@ -66,7 +56,7 @@ foreach(FLAVOR ${FLAVORS})
     # Add includes path for compiling the library
     $<BUILD_INTERFACE: ${INCLUDES}>
     # Add binary directory to find generated version.h and export.hpp
-    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+    $<BUILD_INTERFACE: ${PROJECT_BINARY_DIR}>
   )
 
   # Set some target properties
@@ -85,7 +75,7 @@ foreach(FLAVOR ${FLAVORS})
   set_target_properties(${FLAVOR} PROPERTIES VERSION ${PROJECT_VERSION})
   
 endforeach(FLAVOR ${FLAVORS})
-############################## End loop on flavor
+############################## End loop on flavors
 
 
 ###################### Shared library specific options
@@ -105,6 +95,7 @@ generate_export_header(shared
   EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/${PROJECT_NAME}_export.hpp
   CUSTOM_CONTENT_FROM_VARIABLE DISABLE_EXPORT_IF_SWIG
 )
+
 # Set the so version to project major version
 set_target_properties(shared PROPERTIES
   SOVERSION ${PROJECT_VERSION_MAJOR}
@@ -116,4 +107,3 @@ set_target_properties(shared PROPERTIES
 set_target_properties(static PROPERTIES
   COMPILE_FLAGS -D${PROJECT_NAME_UP}_STATIC_DEFINE
 )
-

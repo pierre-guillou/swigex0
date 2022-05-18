@@ -23,14 +23,10 @@ jobs:
       run: sudo apt-get install r-base
       
     - name: Setup personal R libraries directory
-      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile & Rscript -e "install.packages (c('maps'), lib='~/r_libs', repos='https://pbil.univ-lyon1.fr/CRAN')"
-      
-    - name: Test personal R libraries directory
-      run: ls ~/r_libs
+      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
 
     - name: Configure cmake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       
     - name: Compile, install packages and execute non-regression tests
-      # Execute tests defined by the CMake configuration.  
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check

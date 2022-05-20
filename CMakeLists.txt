@@ -38,7 +38,7 @@ project(myfibo
 ## CONFIGURATION
 
 # Get the project date
-string(TIMESTAMP PROJET_DATE "%Y/%m/%d - %H:%M")
+string(TIMESTAMP ${PROJECT_NAME}_DATE "%Y/%m/%d - %H:%M")
 
 # Convert project name to uppercase
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UP)

@@ -11,11 +11,11 @@ set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 
 # Look for Python3
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
-if (APPLE)
-  find_package(Python REQUIRED COMPONENTS Interpreter Development)
-else()
-  find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
-endif()
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
+
+#if (APPLE)
+#  find_package(PythonLibs REQUIRED)
+#endif()
 
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
@@ -28,7 +28,6 @@ include(${SWIG_USE_FILE})
 
 # Python package interface file
 set(SRC pyfibo.i) 
-# No need to define %module in the interface file
 
 # Generation folders
 if (MSVC) # TODO: Prefer using GENERATOR_IS_MULTI_CONFIG ?
@@ -99,7 +98,7 @@ if(MSVC)
 endif()
 if(APPLE)
   # https://gitlab.kitware.com/cmake/cmake/-/issues/17664
-  target_link_libraries(python_build PRIVATE ${Python_LIBRARIES})
+  target_link_libraries(python_build PRIVATE Python3::Module)
 endif()
 
 

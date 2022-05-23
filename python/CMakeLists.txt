@@ -47,12 +47,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${PYTHON_PACKAGE_DESTINATION_FOLDER}) # Us
 set_source_files_properties(${SRC} PROPERTIES
   CPLUSPLUS ON
   # Swig wrapper will be regenerated if C++ headers are changed
-  # https://stackoverflow.com/a/70375654/3952924
+  # https://stackoverflow.com/a/70375654/3952924 (CMake 3.20 minimum)
   USE_SWIG_DEPENDENCIES TRUE
   # myfibo C++ headers will be found by %import directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
-  # Python package name will be the name of the installed folder (no module)
-  SWIG_MODULE_NAME __init__
 )
 
 # Tell to CMake that ${SRC} depends on some other files
@@ -120,6 +118,20 @@ configure_file(
 file(GENERATE
   OUTPUT ${PYTHON_PACKAGE_ROOT_FOLDER}/setup.py
   INPUT ${CMAKE_CURRENT_BINARY_DIR}/setup.py.in
+)
+
+# Generate __init__.py automatically for each configuration
+# First step: replace variables (@VAR@)
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/__init__.py.in 
+  ${CMAKE_CURRENT_BINARY_DIR}/__init__.py.in
+  @ONLY
+)
+
+# Second step: replace generator expression ($<>)
+file(GENERATE
+  OUTPUT ${PYTHON_PACKAGE_DESTINATION_FOLDER}/__init__.py
+  INPUT ${CMAKE_CURRENT_BINARY_DIR}/__init__.py.in
 )
 
 # Generate README.md for each configuration

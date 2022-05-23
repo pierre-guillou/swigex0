@@ -44,7 +44,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${R_PACKAGE_SRC_FOLDER}) # Use RUNTIME (ms
 set_source_files_properties(${SRC} PROPERTIES
   CPLUSPLUS ON
   # Swig wrapper will be regenerated if C++ headers are changed
-  # https://stackoverflow.com/a/70375654/3952924
+  # https://stackoverflow.com/a/70375654/3952924 (CMake 3.20 minimum)
   USE_SWIG_DEPENDENCIES TRUE
   # myfibo C++ headers will be found by %import swig directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
@@ -75,12 +75,8 @@ swig_add_library(
 target_link_libraries(r_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
-if (MSVC)
-  # Wrapper source is too big for MSVC !
-  set(COMP_FLAGS "/bigobj -D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-cast-function-type -Wno-unused-parameter") # Prevent some SWIG C++/R warnings
-else()
-  set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-cast-function-type -Wno-unused-parameter") # Prevent some SWIG C++/R warnings
-endif()
+set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-cast-function-type -Wno-unused-parameter") # Prevent some SWIG C++/R warnings
+
 # Set some properties on SWIG target
 set_target_properties(r_build PROPERTIES
   # Do not build R package by default

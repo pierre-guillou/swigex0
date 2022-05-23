@@ -67,6 +67,9 @@ endif()
 message(STATUS "BUILD_PYTHON=" ${BUILD_PYTHON})
 message(STATUS "BUILD_R="      ${BUILD_R})
 
+# Universal binary for Mac
+set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "Build architectures for Mac OS X" FORCE)
+
 ####################################################
 ## BUILD & INSTALL
 

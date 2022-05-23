@@ -87,6 +87,11 @@ set_target_properties(r_build PROPERTIES
   COMPILE_FLAGS ${COMP_FLAGS}
 )
 
+if (APPLE)
+  # To prevent 'library' from crashing under Mac (swig output suffix is .dynlib by default) 
+  set_target_properties(r_build PROPERTIES SUFFIX ".so")
+endif()
+
 # Find appropriate R.h
 target_include_directories(r_build PRIVATE ${R_INCLUDE_DIRS})
 

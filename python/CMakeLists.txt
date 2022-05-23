@@ -69,6 +69,11 @@ swig_add_library(
   SOURCES    ${SRC}
 )
 
+if (APPLE)
+  # To prevent 'import' from crashing under Mac (swig output suffix is .dynlib by default) 
+  set_target_properties(python_build PROPERTIES SUFFIX ".so")
+endif()
+
 # Link to static library
 target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static)
 

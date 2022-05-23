@@ -90,14 +90,10 @@ set_target_properties(r_build PROPERTIES
 # Find appropriate R.h
 target_include_directories(r_build PRIVATE ${R_INCLUDE_DIRS})
 
-# Link to R's libraries (only for Windows - Release)
-if(WIN32)
-  target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
-endif()
+message(STATUS "R_LIBRARIES is " ${R_LIBRARIES})
 
-if(APPLE)
-  target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
-endif()
+# Link to R's libraries (needed for MSYS and MacOS)
+target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
 
 ########################################
 # PACKAGING

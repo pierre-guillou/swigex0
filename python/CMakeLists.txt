@@ -13,10 +13,6 @@ set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 
-#if (APPLE)
-#  find_package(PythonLibs REQUIRED)
-#endif()
-
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
 # TODO : If SWIG not found, fetch it from the web
@@ -92,14 +88,10 @@ set_target_properties(python_build PROPERTIES
 # Find appropriate Python.h
 target_include_directories(python_build PRIVATE ${Python3_INCLUDE_DIRS})
 
-# Link to python's libraries (only for MSVC and MacOS - Release)
-if(MSVC)
-  target_link_libraries(python_build PRIVATE ${Python3_LIBRARIES})
-endif()
-if(APPLE)
-  # https://gitlab.kitware.com/cmake/cmake/-/issues/17664
-  target_link_libraries(python_build PRIVATE Python3::Module)
-endif()
+# Link to python's libraries (needed for MSVC and MacOS)
+# Prefer using Python3::Module (which works for MacOS) in place of ${Python3_LIBRARIES}
+# https://gitlab.kitware.com/cmake/cmake/-/issues/17664
+target_link_libraries(python_build PRIVATE Python3::Module)
 
 
 ########################################

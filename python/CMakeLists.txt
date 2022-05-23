@@ -97,9 +97,9 @@ target_include_directories(python_build PRIVATE ${Python3_INCLUDE_DIRS})
 if(MSVC)
   target_link_libraries(python_build PRIVATE ${Python3_LIBRARIES})
 endif()
-
 if(APPLE)
-  target_link_libraries(python_build PRIVATE ${PYTHON_LIBRARIES})
+  # https://gitlab.kitware.com/cmake/cmake/-/issues/17664
+  target_link_libraries(python_build PRIVATE Python3::Module)
 endif()
 
 

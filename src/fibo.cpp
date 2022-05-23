@@ -47,7 +47,7 @@ VectorInt fib(int n)
 }
 
 /**
- * Default constructor of a class which handle Fibonacci integer serie up to n
+ * Default constructor of a class which handle Fibonacci integer list up to n
  * 
  * @param n     Strict Positive Integer
  * @param title Title to be printed
@@ -63,9 +63,7 @@ Fibo::Fibo(int n, const String& title)
   }
   if (_title.empty())
   {
-    std::stringstream sstr;
-    sstr << DEFAULT_TITLE << " (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE << ")";
-    _title = sstr.str();
+    _title = DEFAULT_TITLE;
   }
 }
 
@@ -77,13 +75,13 @@ Fibo::~Fibo()
 }
 
 /**
- * Write the Fibonacci serie to standard output
+ * Write the Fibonacci list to standard output
  *
- * @param showTitle Flag for displaying title
+ * @param showTitle Flag for printing the title
  */
 void Fibo::display(bool showTitle) const
 {
-  if (showTitle) std::cout << _title << ": ";
+  if (showTitle) std::cout << getFullTitle() << ": ";
   VectorInt res = get();
   for (const auto& i: res)
     std::cout << i << ' ';
@@ -91,12 +89,42 @@ void Fibo::display(bool showTitle) const
 }
 
 /**
- * Return the Fibonacci serie as a vector of integer
+ * Return the Fibonacci list as a vector of integer
  *
- * @return Fibonacci integer vector serie
+ * @return Fibonacci integer vector
  */
 VectorInt Fibo::get() const
 {
   return fib(_n);
+}
+
+String Fibo::getFullTitle() const
+{
+  std::stringstream sstr;
+  sstr << _title << " (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE << ")";
+  return sstr.str();
+}
+
+/**
+ * Default constructor of a class which handle Fibonacci integer list up to n
+ *
+ * @param n     Strict Positive Integer
+ * @param title Title to be printed
+ */
+FiboEx::FiboEx(int n, const String& title)
+: Fibo(n, title)
+{
+}
+
+/**
+ * Destructor
+ */
+FiboEx::~FiboEx()
+{
+}
+
+String FiboEx::getFullTitle() const
+{
+  return _title;
 }
 

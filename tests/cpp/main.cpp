@@ -32,9 +32,9 @@ int main()
   VectorInt vec = fib(40);
   for(auto v : vec) std::cout << v << " ";
   std::cout << std::endl;
-  Fibo f1(50, "Test 50");
-  f1.display();
-  Fibo f2(100, "Test 100");
+  Fibo f1(50);
+  f1.display(false);
+  FiboEx f2(100, "Test 100");
   f2.display();
   
 #ifdef _WIN32

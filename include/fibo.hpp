@@ -8,6 +8,18 @@ MYFIBO_EXPORT int fibn(int n);
 MYFIBO_EXPORT VectorInt fib(int n);
 
 /**
+ * Test derivative classes in target langage
+ */
+class MYFIBO_EXPORT AParent
+{
+  public:
+    AParent() {};
+    virtual ~AParent() {};
+
+    virtual String getHello() const { return "Hello"; }
+};
+
+/**
  * Class which handles Fibonacci integers list
  */
 class MYFIBO_EXPORT Fibo
@@ -21,6 +33,8 @@ class MYFIBO_EXPORT Fibo
     VectorInt get() const;
 
     virtual String getFullTitle() const;
+
+    void showHello(AParent* parent) const;
   
   protected:
     int    _n;     /// Maximum integer of the list

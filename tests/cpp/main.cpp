@@ -2,12 +2,41 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 #if defined(_WIN32) || defined(_WIN64)
 #  include <windows.h>
 #  include <io.h>
 #  include <fcntl.h>
 #endif
+
+
+class Child : public AParent
+{
+public:
+  Child(): AParent() {}
+  virtual ~Child() {}
+
+  virtual String getHello() const override
+  {
+    return "From Child - Hello";
+  }
+};
+
+
+class FiboEx2 : public Fibo
+{
+public:
+  FiboEx2 (int n, const String& title = ""): Fibo(n, title) {}
+  virtual ~FiboEx2() {}
+
+  virtual String getFullTitle() const override
+  {
+    std::stringstream sstr;
+    sstr << "FiboEx2 - " << _title;
+    return sstr.str();
+  }
+};
 
 int main()
 {
@@ -36,7 +65,12 @@ int main()
   f1.display(false);
   FiboEx f2(100, "Test 100");
   f2.display();
+  FiboEx2 f3(50, "Test 50");
+  f3.display();
   
+  Child child;
+  f3.showHello(&child);
+
 #ifdef _WIN32
   // https://stackoverflow.com/questions/32185512/output-to-console-from-a-win32-gui-application-on-windows-10
   SetStdHandle(STD_OUTPUT_HANDLE, old_stdout);

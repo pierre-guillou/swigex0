@@ -105,6 +105,11 @@ String Fibo::getFullTitle() const
   return sstr.str();
 }
 
+void Fibo::showHello(AParent* parent) const
+{
+  std::cout << parent->getHello() << std::endl;
+}
+
 /**
  * Default constructor of a class which handle Fibonacci integer list up to n
  *

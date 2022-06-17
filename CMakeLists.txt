@@ -1,24 +1,37 @@
-##############
-# GCC / MSYS
-##############
-# Build static library (and install python package)
-# cmake -Bbuild -H.
-# cmake --build build --target python_install
-
-# Build and install shared library (and don't build python package)
-# cmake -Bbuild -H.
-# cmake --build build --target install
-
-#########
-# MSVC
-#########
-# Build static library (and install python package)
-# cmake -Bbuild -H.
-# cmake --build build --target python_install --config Release
-
-# Build and install shared library (and don't build python package)
-# cmake -Bbuild -H.
-# cmake --build build --target install --config Release
+##########################################################################################
+#
+#                      MYFIBO C++ Library and Wrappers
+#
+#                   Author: Fabien Ors (MINES Paris - PSL) 
+#                   License: MIT
+#                   Date: June 2022
+#
+#
+# 1. Configure project :
+#
+#                      cmake -Bbuild -H.
+#
+#
+# 2a. Build static library (and install Python package)
+# 
+#   GCC / MinGW =>     cmake --build build --target python_install
+#   MSVC        =>     cmake --build build --target python_install --config Release
+#
+#
+# 2b. Build and install shared library (and don't build Python package)
+#
+#   GCC / MinGW =>     cmake --build build --target install
+#   MSVC        =>     cmake --build build --target install --config Release
+#
+#
+# 3. Execute non-regression tests (C++, Python and R)
+#
+#   GCC / MinGW =>     cmake --build build --target check
+#   MSVC        =>     cmake --build build --target check --config Release
+#
+#
+# Note: See shortcuts for 'make' users in Makefile file
+#
 
 # For recent UseSWIG
 cmake_minimum_required(VERSION 3.20)

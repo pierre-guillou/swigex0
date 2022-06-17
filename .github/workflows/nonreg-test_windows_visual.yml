@@ -1,4 +1,4 @@
-name: Non regression tests under Windows (Visual)
+name: non regression tests under Windows (Visual)
 
 on:
   push:

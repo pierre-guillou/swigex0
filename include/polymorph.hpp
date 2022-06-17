@@ -30,9 +30,6 @@ class MYFIBO_EXPORT ChildOne : public AParent
 };
 
 /// Global function for testing polymorphism
-MYFIBO_EXPORT void showHello(AParent* parent)
-{
-  std::cout << parent->getHello() << std::endl;
-}
+MYFIBO_EXPORT void showHello(AParent* parent);
 
 

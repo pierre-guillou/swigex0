@@ -3,7 +3,7 @@
 #include "myfibo_export.hpp"
 #include "fibo_define.hpp"
 
-//                                                                         //   R         python
+//                                                                         //   R         Python
 // Global functions
 MYFIBO_EXPORT int testInt(int a);                                          //   OK        OK
 MYFIBO_EXPORT int testIntPtr(const int* a);                                //   OK        X_p1

@@ -13,6 +13,7 @@
 %include fibo_define.hpp   // Do not forget this file to export String, VectorInt and VectorString from SWIG
 %include fibo.hpp
 %include args.hpp
+%include polymorph.hpp
 
 // For suppressing SWIG warning due to -keyword option (if used)
 #pragma SWIG nowarn=511

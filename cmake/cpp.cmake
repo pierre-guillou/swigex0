@@ -26,7 +26,8 @@ set(INCLUDES
     
 set(SOURCES
     ${PROJECT_SOURCE_DIR}/src/fibo.cpp
-    ${PROJECT_SOURCE_DIR}/src/args.cpp)
+    ${PROJECT_SOURCE_DIR}/src/args.cpp
+    ${PROJECT_SOURCE_DIR}/src/stdoutredirect.cpp)
 
 # Generation folder
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})

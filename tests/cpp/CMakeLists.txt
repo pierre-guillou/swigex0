@@ -1,5 +1,5 @@
 # Test sources
-set(TEST_SOURCES main.cpp testArgs.cpp)
+set(TEST_SOURCES testFibo.cpp testArgs.cpp testPolymorph.cpp)
 
 # Generation folder
 cmake_path(APPEND CMAKE_CURRENT_BINARY_DIR ${CMAKE_BUILD_TYPE}

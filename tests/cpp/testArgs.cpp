@@ -1,34 +1,12 @@
 #include "args.hpp"
+#include "stdoutredirect.hpp"
 
 #include <iostream>
-#include <fstream>
-
-#if defined(_WIN32) || defined(_WIN64)
-#  include <windows.h>
-#  include <io.h>
-#  include <fcntl.h>
-#endif
 
 int main()
 {
-  String file = "testArgs.out";
+  StdoutRedirect sr("testArgs.out");
   
-#ifdef _WIN32
-  // https://stackoverflow.com/questions/54094127/redirecting-stdout-in-win32-does-not-redirect-stdout/54096218
-  void* old_stdout = GetStdHandle(STD_OUTPUT_HANDLE);
-  HANDLE new_stdout = CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-  SetStdHandle(STD_OUTPUT_HANDLE, new_stdout);
-  int fd = _open_osfhandle((intptr_t)new_stdout, _O_WRONLY|_O_TEXT);
-  _dup2(fd, _fileno(stdout));
-  _close(fd);
-#else
-  std::streambuf* coutbuf;
-  coutbuf = std::cout.rdbuf();
-  std::ofstream out;
-  out.open(file, std::fstream::out | std::fstream::trunc);
-  std::cout.rdbuf(out.rdbuf());
-#endif
-
   int i = testInt(12);
   if (i != 12)
     std::cout << "Wrong Int!" << std::endl;
@@ -65,17 +43,6 @@ int main()
   VectorString* pvs = testVectorStringCreate({"Str25","Str35","Str45"});
   if (pvs->at(0) != "Str25" || pvs->at(1) != "Str35" || pvs->at(2) != "Str45")
     std::cout << "Wrong VectorString Create!" << std::endl;
-
-#ifdef _WIN32
-  // https://stackoverflow.com/questions/32185512/output-to-console-from-a-win32-gui-application-on-windows-10
-  SetStdHandle(STD_OUTPUT_HANDLE, old_stdout);
-  fd = _open_osfhandle((intptr_t)old_stdout, _O_WRONLY|_O_TEXT);
-  FILE* fp = _fdopen(fd, "w");
-  freopen_s( &fp, "CONOUT$", "w", stdout);
-#else
-  std::cout.rdbuf(coutbuf);
-  out.close();
-#endif
   
   return 0;
 }

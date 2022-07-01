@@ -3,8 +3,6 @@
 #include "myfibo_export.hpp"
 #include "fibo_define.hpp"
 
-#include <iostream>
-
 /**
  * Base class for testing polymorphism in target language
  */

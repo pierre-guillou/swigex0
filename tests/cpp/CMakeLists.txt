@@ -2,8 +2,13 @@
 set(TEST_SOURCES testFibo.cpp testArgs.cpp testPolymorph.cpp)
 
 # Generation folder
-cmake_path(APPEND CMAKE_CURRENT_BINARY_DIR ${CMAKE_BUILD_TYPE}
-           OUTPUT_VARIABLE GLOBAL_DST_DIR)
+if (CMAKE_CONFIGURATION_TYPES)
+  cmake_path(APPEND CMAKE_CURRENT_BINARY_DIR $<CONFIG>
+             OUTPUT_VARIABLE GLOBAL_DST_DIR)
+else()
+  cmake_path(APPEND CMAKE_CURRENT_BINARY_DIR ${CMAKE_BUILD_TYPE}
+             OUTPUT_VARIABLE GLOBAL_DST_DIR)
+endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GLOBAL_DST_DIR})
 
@@ -44,7 +49,7 @@ endforeach(TARGET_EXE ${TARGETS_EXE})
 if (WIN32)
   # Need to copy C++ shared library to tests directory # TODO : still mandatory ?
   add_custom_target(check_cpp
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${PROJECT_NAME}::shared> ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:${PROJECT_NAME}::shared> ${TEST_DST_DIR}
     COMMAND ${MY_CTEST_COMMAND} DEPENDS ${TARGETS_EXE}
   )
 else()

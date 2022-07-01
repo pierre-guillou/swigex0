@@ -27,7 +27,6 @@ set(INCLUDES
 set(SOURCES
     ${PROJECT_SOURCE_DIR}/src/fibo.cpp
     ${PROJECT_SOURCE_DIR}/src/args.cpp
-    ${PROJECT_SOURCE_DIR}/src/typemap.cpp
     ${PROJECT_SOURCE_DIR}/src/polymorph.cpp
     ${PROJECT_SOURCE_DIR}/src/stdoutredirect.cpp)
 

@@ -6,4 +6,5 @@
   #include "fibo.hpp"
   #include "args.hpp"
   #include "polymorph.hpp"
+  #include "stdoutredirect.hpp"
 %}

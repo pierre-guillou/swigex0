@@ -7,5 +7,8 @@
 
 typedef std::string String;
 
+//#include "VectorT.hpp"
+
 typedef std::vector<int> VectorInt;
+typedef std::vector<double> VectorDouble;
 typedef std::vector<String> VectorString;

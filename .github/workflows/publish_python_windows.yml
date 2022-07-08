@@ -22,10 +22,11 @@ jobs:
     strategy :
       matrix:
        python: 
-        # - ["cp310","3.10.2"]
-          - ["cp39","3.9.10"]
+       # TODO: to be regularly updated according available pythons
+          - ["cp310","3.10.5"]
+          - ["cp39","3.9.13"]
           - ["cp38","3.8.10"]
-        # - ["cp37","3.7.9"]
+          - ["cp37","3.7.9"]
        windows-type:
           - ["win_amd64", "x64","x64"]
           - ["win32","x86","Win32"]

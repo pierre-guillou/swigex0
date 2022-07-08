@@ -18,8 +18,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Install dependencies
+      
+    - name: Install Python dependency
+      run: python3 -m pip install numpy
+      
+    - name: Install R dependencies
       run: sudo apt-get install r-base
       
     - name: Setup personal R libraries directory

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Manual'     
+        description: 'Manual'
         required: false
         default: ''  
 env:
@@ -55,7 +55,7 @@ jobs:
  
     - name : Modify PATH #to avoid a warning at cmake configuration
       run : |
-        echo "${{env.PYTHONPATH}}\\Scripts" >> $GITHUB_PATH        
+        echo "${{env.PYTHONPATH}}\\Scripts" >> $GITHUB_PATH
 
 #    - name : Download and install Doxygen  
 #      run: |

@@ -1,0 +1,12 @@
+<class 'int'>
+12
+<class 'float'>
+5.67
+<class 'str'>
+Str12
+<class 'numpy.ndarray'>
+[23 33 43]
+<class 'numpy.ndarray'>
+[5.67 6.78 7.89]
+<class 'numpy.ndarray'>
+[b'Str23' b'Str33' b'Str43']

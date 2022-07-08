@@ -1,12 +1,8 @@
 Test int: 12
 <class 'int'>
 Test VectorInt: [23 33 43 ]
-<class 'tuple'>
-Test VectorInt Create: [25 35 45 ]
-<class 'myfibo.VectorInt'>
+<class 'numpy.ndarray'>
 Test String: Str12
 <class 'str'>
 Test VectorString: [Str23 Str33 Str43 ]
-<class 'tuple'>
-Test VectorString Create: [Str25 Str35 Str45 ]
-<class 'myfibo.VectorString'>
+<class 'numpy.ndarray'>

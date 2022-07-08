@@ -46,6 +46,27 @@ VectorInt fib(int n)
   return res;
 }
 
+std::vector<int> fibStd(int n)
+{
+  return fib(n).getVector();
+}
+
+void printVi(const VectorInt& vec)
+{
+  std::cout << "printVi ";
+  for (const auto& i: vec)
+    std::cout << i << ' ';
+  std::cout << std::endl;
+}
+
+void printStd(const std::vector<int>& vec)
+{
+  std::cout << "printStd ";
+  for (const auto& i: vec)
+    std::cout << i << ' ';
+  std::cout << std::endl;
+}
+
 /**
  * Default constructor of a class which handle Fibonacci integer list up to n
  * 
@@ -100,3 +121,4 @@ VectorInt Fibo::get() const
 {
   return fib(_n);
 }
+

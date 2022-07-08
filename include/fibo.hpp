@@ -2,10 +2,14 @@
 
 #include "myfibo_export.hpp"
 #include "fibo_define.hpp"
+#include "VectorNumT.hpp"
 
 /// Global functions
 MYFIBO_EXPORT int fibn(int n);
 MYFIBO_EXPORT VectorInt fib(int n);
+MYFIBO_EXPORT std::vector<int> fibStd(int n);
+MYFIBO_EXPORT void printVi(const VectorInt& vec);
+MYFIBO_EXPORT void printStd(const std::vector<int>& vec);
 
 /**
  * Class which handles Fibonacci integers list

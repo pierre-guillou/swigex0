@@ -1,5 +1,5 @@
 # Test sources
-set(TEST_SOURCES testFibo.cpp testArgs.cpp testPolymorph.cpp)
+set(TEST_SOURCES testFibo.cpp testArgs.cpp testPolymorph.cpp testVectorT.cpp)
 
 # Generation folder
 if (CMAKE_CONFIGURATION_TYPES)

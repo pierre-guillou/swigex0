@@ -9,6 +9,8 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  PYTHON3_PREF : C:\\hostedtoolcache\\windows\\Python
+  PYTHON3_VERSION : 3.10.5
 
 jobs:
   
@@ -17,9 +19,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    - name : Create PYTHONPATH
+      run : |
+        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ env.PYTHON3_VERSION }}\\x64 }}")>> $env:GITHUB_ENV
       
+    - name : Setup python.exe 
+      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python3.exe") >> $env:GITHUB_ENV
+ 
+    - name : Modify PATH #to avoid a warning at cmake configuration
+      run : |
+        echo "${{env.PYTHONPATH}}\\Scripts" >> $GITHUB_PATH
+
     - name: Install Python dependency
-      run: python -m pip install numpy
+      run: ${{env.PYTHON3}} -m pip install numpy
 
     - name: Configure cmake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}

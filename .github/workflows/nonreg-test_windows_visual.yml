@@ -22,7 +22,7 @@ jobs:
     
     - name : Create PYTHONPATH
       run : |
-        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ env.PYTHON3_VERSION }}\\x64 }}")>> $env:GITHUB_ENV
+        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ env.PYTHON3_VERSION }}\\x64")>> $env:GITHUB_ENV
       
     - name : Setup python.exe 
       run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python3.exe") >> $env:GITHUB_ENV

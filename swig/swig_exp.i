@@ -7,7 +7,7 @@
 %include myfibo_export.hpp // Do not forget this file in priority (for SWIG preprocessor)
 %include fibo_define.hpp
 
-// Cast vectors of integers into native type of the target language
+// Cast our template vectors with scalar types
 %include VectorT.hpp
 %include VectorNumT.hpp
 %template(VectorString) VectorT<std::string>;

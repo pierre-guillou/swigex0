@@ -1,19 +1,12 @@
-NULL
 integer 
 12 
-NULL
 numeric 
 5.67 
-NULL
 character 
 Str12
-NULL
 integer
- [1] 23 33 43
-NULL
+23 33 43
 numeric
- [1] 5.67 6.78 7.89
-NULL
+5.67 6.78 7.89
 character
- [1] "Str23" "Str33" "Str43"
- 
+Str23 Str33 Str43

@@ -3,12 +3,17 @@
 #include "myfibo_export.hpp"
 #include "fibo_define.hpp"
 #include "VectorNumT.hpp"
+#include "VectorT.hpp"
+
+#include <vector>
 
 /// Global functions
 MYFIBO_EXPORT int fibn(int n);
 MYFIBO_EXPORT VectorInt fib(int n);
 MYFIBO_EXPORT std::vector<int> fibStd(int n);
 MYFIBO_EXPORT void printVi(const VectorInt& vec);
+MYFIBO_EXPORT void printVd(const VectorDouble& vec);
+MYFIBO_EXPORT void printVs(const VectorString& vec);
 MYFIBO_EXPORT void printStd(const std::vector<int>& vec);
 
 /**

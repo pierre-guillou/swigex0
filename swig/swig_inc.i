@@ -12,3 +12,10 @@
   #include "typemap.hpp"
   #include "stdoutredirect.hpp"
 %}
+
+// Mandatory for using swig::asptr for std::vectors
+%include std_vector.i
+%include std_string.i
+%template(VectorIntStd)    std::vector< int >;
+%template(VectorDoubleStd) std::vector< double >;
+%template(VectorStringStd) std::vector< std::string >;

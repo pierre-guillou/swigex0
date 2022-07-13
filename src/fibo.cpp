@@ -58,6 +58,20 @@ void printVi(const VectorInt& vec)
     std::cout << i << ' ';
   std::cout << std::endl;
 }
+void printVd(const VectorDouble& vec)
+{
+  std::cout << "printVd ";
+  for (const auto& i: vec)
+    std::cout << i << ' ';
+  std::cout << std::endl;
+}
+void printVs(const VectorString& vec)
+{
+  std::cout << "printVs ";
+  for (const auto& i: vec)
+    std::cout << i << ' ';
+  std::cout << std::endl;
+}
 
 void printStd(const std::vector<int>& vec)
 {

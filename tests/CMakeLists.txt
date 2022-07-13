@@ -20,9 +20,9 @@ if (BUILD_PYTHON)
   list(APPEND CHECK_DEP check_py)
 endif()
 
-#if (BUILD_R)
-#  add_subdirectory(r)
-#  list(APPEND CHECK_DEP check_r)
-#endif()
+if (BUILD_R)
+  add_subdirectory(r)
+  list(APPEND CHECK_DEP check_r)
+endif()
 
 add_dependencies(check ${CHECK_DEP})

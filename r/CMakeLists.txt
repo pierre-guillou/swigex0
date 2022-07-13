@@ -95,8 +95,6 @@ endif()
 # Find appropriate R.h
 target_include_directories(r_build PRIVATE ${R_INCLUDE_DIRS})
 
-message(STATUS "R_LIBRARIES is " ${R_LIBRARIES})
-
 # Link to R's libraries (needed for MSYS and MacOS)
 target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
 

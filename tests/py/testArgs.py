@@ -38,7 +38,7 @@ if (s != "Str12") :
 #  print("Wrong String Create!")
 vs = myfibo.testVectorString(["Str23","Str33","Str43"])
 print(type(vs))
-if (vs[0] != b'Str23' or vs[1] != b'Str33' or vs[2] != b'Str43') :
+if (vs[0] != 'Str23' or vs[1] != 'Str33' or vs[2] != 'Str43') :
   print("Wrong VectorString!")
 #vs = myfibo.testVectorStringPtr(["Str24","Str34","Str44"])
 #print(type(vs))

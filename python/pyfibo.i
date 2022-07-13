@@ -1,14 +1,22 @@
 %module(directors="1") myfibo
 
-%include ../swig/swig_inc.i
+// Note : Keep order in this file!
 
+//////////////////////////////////////////////////////////////
+//                C++ library SWIG interface                //
+//////////////////////////////////////////////////////////////
+
+%include ../swig/swig_inc.i
 
 //////////////////////////////////////////////////////////////
 //     Specific SWIG feature for Python target language     //
 //////////////////////////////////////////////////////////////
 
-/// TODO : What about using pybind11 in SWIG typemaps ?
+///////////////////////
+//   NumPy support 
 
+/// TODO : What about using pybind11 in SWIG typemaps ?
+/*
 %{
   #define SWIG_FILE_WITH_INIT // For numpy.i / import_array usage
 %}
@@ -19,11 +27,7 @@
 %init %{
   import_array();
 %}
-
-//////////////////////////////////////////////////////////////////////////
-// Adapted from pygeos.i (polaris)
-
-
+*/
 /////////////////////
 // Sequence check
 
@@ -58,7 +62,6 @@
 }
 */
 
-
 /*
 %typemap(typecheck, noblock=1, fragment="SequenceCheck") const VectorDouble&,
                                                                VectorDouble,
@@ -74,7 +77,7 @@
 
 ////////////////////////////
 // Python => C++
-
+/*
 %fragment("ConversionsPy2Cpp", "header", fragment="SWIG_AsVal_std_string")
 {
    
@@ -115,42 +118,68 @@
     return errcode;
   }
 }
-
-%fragment("ToVectorT", "header", fragment="ConversionsPy2Cpp")
+*/
+%fragment("ToVectorT", "header")
 {
   template <typename Container>
   int fillContainer(PyObject* obj, Container& container)
   {
-    using ValueType = typename Container::value_type;
-    if (!PySequence_Check(obj))
-    {
-      return SWIG_TypeError;
-    }
-  
-    const int nvalues = (int)PySequence_Length(obj);
-    container.reserve(nvalues);
-  
-    for (int i = 0; i < nvalues; ++i)
-    {
-      PyObject* item = PySequence_GetItem(obj, i);
-  
-      ValueType value;
-      const int errcode = convertObject(item, value);
-      if (!SWIG_IsOK(errcode))
-      {
-        return errcode;
-      }
-  
-      container.push_back(value);
-    }
-  
-    return SWIG_OK;
+    auto myvec = container.getVectorPtr();
+    int res = swig::asptr(obj, &myvec);
+    // TODO : same as rfibo.i
+    // So we copy the vector
+    // TODO : reserve
+    if (SWIG_IsOK(res))
+      for (const auto& i: *myvec)
+        container.push_back(i);
+    return res;
   }
 }
 
+//%fragment("ToVectorT", "header", fragment="ConversionsPy2Cpp")
+//{
+//  template <typename Container>
+//  int fillContainer(PyObject* obj, Container& container)
+//  {
+//    using ValueType = typename Container::value_type;
+//    if (!PySequence_Check(obj))
+//    {
+//      return SWIG_TypeError;
+//    }
+//  
+//    const int nvalues = (int)PySequence_Length(obj);
+//    container.reserve(nvalues);
+//  
+//    for (int i = 0; i < nvalues; ++i)
+//    {
+//      PyObject* item = PySequence_GetItem(obj, i);
+//  
+//      ValueType value;
+//      const int errcode = convertObject(item, value);
+//      if (!SWIG_IsOK(errcode))
+//      {
+//        return errcode;
+//      }
+//  
+//      container.push_back(value);
+//    }
+//  
+//    return SWIG_OK;
+//  }
+//}
+
+//%typemap(in, fragment="ToVectorT") VectorDouble,
+//                                   VectorInt,
+//                                   VectorString
+//{
+//  const int errcode = fillContainer($input, $1);
+//  if (!SWIG_IsOK(errcode))
+//    %argument_fail(errcode, "$type", $symname, $argnum);
+//}
+
 // References are considered as pointer hence this typemap presence (a local variable is then used)
-%typemap(in, fragment="ToVectorT") const VectorDouble& (VectorDouble container),
-                                   const VectorInt&    (VectorInt container),
+%typemap(in, fragment="ToVectorT") const VectorInt&    (VectorInt container),
+                                   const VectorDouble& (VectorDouble container),
                                    const VectorString& (VectorString container)
 {
   const int errcode = fillContainer($input, container);
@@ -159,12 +188,12 @@
   $1 = &container;
 }
 
-%typemap(in, fragment="ConversionsPy2Cpp") double
-{
-  const int errcode = convertObject($input, $1);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-}
+//%typemap(in, fragment="ConversionsPy2Cpp") double
+//{
+//  const int errcode = convertObject($input, $1);
+//  if (!SWIG_IsOK(errcode))
+//    %argument_fail(errcode, "$type", $symname, $argnum);
+//}
 
 // Coming from https://stackoverflow.com/questions/62119785/python-swig-wrapper-for-c-rvalue-stdstring
 //%typemap(in, fragment="SWIG_AsVal_std_string") std::string&& (std::string temp) {
@@ -176,6 +205,26 @@
 ////////////////////////////
 // C++ => Python
 
+%typemap(scoerceout) VectorInt,    VectorInt*,    VectorInt&,
+                     VectorDouble, VectorDouble*, VectorDouble&,
+                     VectorString, VectorString*, VectorString&
+ %{    %}
+
+%typemap(out) VectorInt, 
+              VectorDouble, 
+              VectorString
+{
+  $result = swig::from(result.getVector());
+}
+
+%typemap(out) VectorInt*,    VectorInt&,
+              VectorDouble*, VectorDouble&,
+              VectorString*, VectorString&
+{
+  $result = swig::from(result->getVector());
+}
+
+/*
 %fragment("ConversionsCpp2Py", "header")
 {
   template <typename> NPY_TYPES numpyType();
@@ -292,7 +341,7 @@
 {
   $result = SWIG_From_int(convertValue($1));
 }
-
+*/
 
 // Coming from https://stackoverflow.com/questions/62119785/python-swig-wrapper-for-c-rvalue-stdstring
 //%typemap(out, fragment="SWIG_From_std_string") std::string&& {

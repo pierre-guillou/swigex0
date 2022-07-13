@@ -5,16 +5,20 @@
 #include <sstream>
 
 /**
- * Return the Nth Fibonacci number
+ * Return the Nth Fibonacci number, -1 in case of error
  *
  * @param n: index of the value
  */
 int fibn(int n)
 {
+  if (n < 0 || n == INT_NA)
+  {
+    std::cout << "Error in fibn: Integer argument must be positive!" << std::endl;
+    return -1;
+  }
   int a = 0;
   int b = 1;
   int i = 1;
-  if (n <= 0) return -1;
   while (1)
   {
     if (i == n) return a;
@@ -23,6 +27,7 @@ int fibn(int n)
     b = aa+b;
     i++;
   }
+  std::cout << "Error in fibn: Unknown error!" << std::endl;
   return -1;
 }
 
@@ -33,6 +38,11 @@ int fibn(int n)
  */
 VectorInt fib(int n)
 {
+  if (n < 0 || n == INT_NA)
+  {
+    std::cout << "Error in fib: Integer argument must be positive!" << std::endl;
+    return -1;
+  }
   VectorInt res;
   int a = 0;
   int b = 1;
@@ -44,41 +54,6 @@ VectorInt fib(int n)
     b = aa+b;
   }
   return res;
-}
-
-std::vector<int> fibStd(int n)
-{
-  return fib(n).getVector();
-}
-
-void printVi(const VectorInt& vec)
-{
-  std::cout << "printVi ";
-  for (const auto& i: vec)
-    std::cout << i << ' ';
-  std::cout << std::endl;
-}
-void printVd(const VectorDouble& vec)
-{
-  std::cout << "printVd ";
-  for (const auto& i: vec)
-    std::cout << i << ' ';
-  std::cout << std::endl;
-}
-void printVs(const VectorString& vec)
-{
-  std::cout << "printVs ";
-  for (const auto& i: vec)
-    std::cout << i << ' ';
-  std::cout << std::endl;
-}
-
-void printStd(const std::vector<int>& vec)
-{
-  std::cout << "printStd ";
-  for (const auto& i: vec)
-    std::cout << i << ' ';
-  std::cout << std::endl;
 }
 
 /**

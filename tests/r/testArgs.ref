@@ -1,12 +1,34 @@
 Test int: 12
 integer
-Test int Pointer: 22
+Test int Reference: 22
 integer
+Test int Pointer: 32
+externalptr
 Test VectorInt: [23 33 43 ]
 integer
+Test VectorInt Reference: [24 34 44 ]
+integer
+Test VectorInt Pointer: [25 35 45 ]
+integer
+Test double: 12.1
+numeric
+Test double Reference: 22.2
+numeric
+Test double Pointer: 32.3
+externalptr
+Test VectorDouble: [23.1 33.1 43.1 ]
+numeric
+Test VectorDouble Reference: [24.2 34.2 44.2 ]
+numeric
+Test VectorDouble Pointer: [25.3 35.3 45.3 ]
+numeric
 Test String: Str12
+character
+Test String Reference: Str22
 character
 Test VectorString: [Str23 Str33 Str43 ]
 character
-Test VectorString Create: [Str25 Str35 Str45 ]
-_p_std__vectorT_std__string_std__allocatorT_std__string_t_t
+Test VectorString Reference: [Str24 Str34 Str44 ]
+character
+Test VectorString Pointer: [Str25 Str35 Str45 ]
+character 

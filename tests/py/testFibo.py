@@ -7,5 +7,3 @@ f2.display()
 
 vec = myfibo.fib(40)
 print(vec)
-myfibo.printVi(vec)
-myfibo.printVi([4,5,6])

@@ -2,48 +2,57 @@
 
 #include "myfibo_export.hpp"
 #include "fibo_define.hpp"
+
 #include "VectorT.hpp"
 #include "VectorNumT.hpp"
 
-//                                                                         //   R         Python
-// Global functions
-MYFIBO_EXPORT int testInt(int a);                                          //   OK        OK
-MYFIBO_EXPORT int testIntPtr(const int* a);                                //   OK        X_p1
-MYFIBO_EXPORT int* testIntCreate(int a);                                   //   X_r1      X_p2
 
-MYFIBO_EXPORT VectorInt testVectorInt(const VectorInt& a);                 //   OK        OK
-MYFIBO_EXPORT VectorInt testVectorIntPtr(const VectorInt* a);              //   X_r0      X_p1
-MYFIBO_EXPORT VectorInt* testVectorIntCreate(const VectorInt& a);          //   X_r3      x_p3
+class MYFIBO_EXPORT TypeClass
+{
+public:
+  TypeClass();
+  ~TypeClass();
+//                                                                    //   R         Python
 
-MYFIBO_EXPORT String testString(const String& a);                          //   OK        OK
-MYFIBO_EXPORT String testStringPtr(const String* a);                       //   X_r0      X_p1
-MYFIBO_EXPORT String* testStringCreate(const String& a);                   //   X_r2      X_p2
+  int testInt(int a);                                                 //   OK        OK
+  const int& testIntRef(const int& a);                                //   OK        OK
+  const int* testIntPtr(const int* a);                                //   X_r1      X_p1
 
-MYFIBO_EXPORT VectorString testVectorString(const VectorString& a);        //   OK        OK
-MYFIBO_EXPORT VectorString testVectorStringPtr(const VectorString* a);     //   X_r0      X_p1
-MYFIBO_EXPORT VectorString* testVectorStringCreate(const VectorString& a); //   OK        X_p3
+  VectorInt testVectorInt(VectorInt a);                               //   OK        OK
+  const VectorInt& testVectorIntRef(const VectorInt& a);              //   OK        OK
+  const VectorInt* testVectorIntPtr(const VectorInt* a);              //   OK        OK
+
+  double testDouble(double a);                                        //   OK        OK
+  const double& testDoubleRef(const double& a);                       //   OK        OK
+  const double* testDoublePtr(const double* a);                       //   X_r1      X_p1
+
+  VectorDouble testVectorDouble(VectorDouble a);                      //   OK        OK
+  const VectorDouble& testVectorDoubleRef(const VectorDouble& a);     //   OK        OK
+  const VectorDouble* testVectorDoublePtr(const VectorDouble* a);     //   OK        OK
+
+  String testString(String a);                                        //   OK        OK
+  const String& testStringRef(const String& a);                       //   OK        OK
+  const String*testStringPtr(const String* a);                        //   X_r2      X_p1
+
+  VectorString testVectorString(VectorString a);                      //   OK        OK
+  const VectorString& testVectorStringRef(const VectorString& a);     //   OK        OK
+  const VectorString* testVectorStringPtr(const VectorString* a);     //   OK        OK
+
+private:
+  int          _varInt;
+  double       _varDouble;
+  String       _varString;
+  VectorInt    _varVectorInt;
+  VectorDouble _varVectorDouble;
+  VectorString _varVectorString;
+};
 
 /*
- X_r0: R Crash with SEGV in SWIG_R_ConvertPtr
 
- X_r1: Arg OK but return value NOK:
+ X_r1: Call OK but object return is externalptr so the value is not interpretable
 
-       Erreur dans getClass(Class, where = topenv(parent.frame())) :
-        “_p_int” is not a defined class
-
- X_r2: Arg OK but return value NOK:
-
-       Erreur dans getClass(Class, where = topenv(parent.frame())) :
-        “_p_std__string” is not a defined class
-
- X_r3: Call OK, but object returned is externalptr (TODO : so why testVectorStringCreate is Ok ?):
-
-       Erreur dans vi[1] : objet de type 'externalptr' non indiçable
+ X_r2: R Crash with SEGV (don't know why)
 
  X_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
-
- X_p2: Call OK but object returned is SwigPyObject so the value is not interpretable
-
- X_p3: Call OK but object returned is 'VectorXXX' and is not subscriptable
 
 */

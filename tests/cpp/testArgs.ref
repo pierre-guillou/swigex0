@@ -1,12 +1,18 @@
 Test int: 12
-Test int Pointer: 22
-Test int Create: 32
+Test int Reference: 22
+Test int Pointer: 32
 Test VectorInt: [23 33 43 ]
-Test VectorInt Pointer: [24 34 44 ]
-Test VectorInt Create: [25 35 45 ]
+Test VectorInt Reference: [24 34 44 ]
+Test VectorInt Pointer: [25 35 45 ]
+Test double: 12.1
+Test double Reference: 22.2
+Test double Pointer: 32.3
+Test VectorDouble: [23.1 33.1 43.1 ]
+Test VectorDouble Reference: [24.2 34.2 44.2 ]
+Test VectorDouble Pointer: [25.3 35.3 45.3 ]
 Test String: Str12
-Test String Pointer: Str22
-Test String Create: Str32
+Test String Reference: Str22
+Test String Pointer: Str32
 Test VectorString: [Str23 Str33 Str43 ]
-Test VectorString Pointer: [Str24 Str34 Str44 ]
-Test VectorString Create: [Str25 Str35 Str45 ]
+Test VectorString Reference: [Str24 Str34 Str44 ]
+Test VectorString Pointer: [Str25 Str35 Str45 ]

@@ -3,8 +3,7 @@ if(NOT BUILD_R)
 endif()
 
 # Test sources
-#set(TEST_SOURCES testFibo.r testArgs.r testPolymorph.r testTypemap.r)
-set(TEST_SOURCES testFibo.r testPolymorph.r testTypemap.r)
+set(TEST_SOURCES testFibo.r testArgs.r testPolymorph.r)
 
 # Look for R (not needed here because R_EXECUTABLE is a user defined variable already set by r/CMakeLists.txt)
 #include(${PROJECT_SOURCE_DIR}/cmake/FindR.cmake)

@@ -3,8 +3,7 @@ if(NOT BUILD_PYTHON)
 endif()
 
 # Test sources
-set(TEST_SOURCES testFibo.py testArgs.py testPolymorph.py testTypemap.py)
-#set(TEST_SOURCES testFibo.py testPolymorph.py testTypemap.py)
+set(TEST_SOURCES testFibo.py testArgs.py testPolymorph.py)
 
 # Look for Python3 (needed here because Python3_EXECUTABLE not populated everywhere)
 find_package(Python3 REQUIRED)

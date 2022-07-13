@@ -7,5 +7,3 @@ invisible(f2$display())
 
 vec = fib(40)
 print(vec)
-invisible(printVi(vec))
-invisible(printVi(c(4,5,6)))

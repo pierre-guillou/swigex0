@@ -22,8 +22,9 @@
 
 /***************************************************************************
  **
- ** Vector of T values (any type).
+ ** Vector of T values (numerical type).
  ** T type must define copy constructor and assignment operator
+ ** T type must override numerical operators (+, -, *, /)
  **
  ***************************************************************************/
 template <typename T>

@@ -28,8 +28,7 @@ set(SOURCES
     ${PROJECT_SOURCE_DIR}/src/fibo.cpp
     ${PROJECT_SOURCE_DIR}/src/args.cpp
     ${PROJECT_SOURCE_DIR}/src/polymorph.cpp
-    ${PROJECT_SOURCE_DIR}/src/stdoutredirect.cpp
-    ${PROJECT_SOURCE_DIR}/src/typemap.cpp)
+    ${PROJECT_SOURCE_DIR}/src/stdoutredirect.cpp)
 
 # Generation folder (into Release or Debug)
 if (NOT CMAKE_CONFIGURATION_TYPES)

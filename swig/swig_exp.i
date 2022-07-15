@@ -6,10 +6,14 @@
 
 // Cast our template vectors with scalar types
 %include VectorT.hpp
+%template(VectorTInt)    VectorT<int>;     // Mandatory to be used as base class 
+%template(VectorTDouble) VectorT<double>;  // Mandatory to be used as base class
+%template(VectorString)  VectorT<std::string>;
+
 %include VectorNumT.hpp
-%template(VectorString) VectorT<std::string>;
 %template(VectorInt)    VectorNumT<int>;
 %template(VectorDouble) VectorNumT<double>;
+
 
 // Rest of the header files from myfibo library
 %include fibo.hpp

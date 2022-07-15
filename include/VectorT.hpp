@@ -173,9 +173,13 @@ void VectorT<T>::_detach()
   _v = std::make_shared<Vector>(*_v);
 }
 
-// Force instantiation for Vector of String
+// Force instantiation for Vector
 
-#ifndef SWIG
+#ifndef SWIG // To avoid "Explicit template instantiation ignored."
+template class VectorT<int>;    // Mandatory to be used as base class
+template class VectorT<double>; // Mandatory to be used as base class
 template class VectorT<String>;
 #endif
+typedef VectorT<int> VectorTInt;
+typedef VectorT<double> VectorTDouble;
 typedef VectorT<String> VectorString;

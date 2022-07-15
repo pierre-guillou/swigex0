@@ -38,12 +38,12 @@ int fibn(int n)
  */
 VectorInt fib(int n)
 {
+  VectorInt res;
   if (n < 0 || n == INT_NA)
   {
     std::cout << "Error in fib: Integer argument must be positive!" << std::endl;
-    return -1;
+    return res;
   }
-  VectorInt res;
   int a = 0;
   int b = 1;
   while (a < n)

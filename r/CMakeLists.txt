@@ -59,7 +59,7 @@ set_property(SOURCE ${SRC} PROPERTY
 )
 
 # SWIG flags
-#set(CMAKE_SWIG_FLAGS)
+set(CMAKE_SWIG_FLAGS -naturalvar)
 # Note: Cannot use -doxygen feature because all documentation is in C++ body files
 # Note: Use -E option for seeing SWIG preprocessor output
 

@@ -22,13 +22,15 @@
 %include std_string.i
 %template(VectorIntStd)    std::vector< int >;
 %template(VectorDoubleStd) std::vector< double >;
-%template(VectorStringStd) std::vector< std::string >;
+%template(VectorStringStd) std::vector< std::string >; // Keep std::string here !
 
 
 ////////////////////////////////////////////////
 // Conversion Target language => C++
 
-// Note : fillVector function must be defined in ToVectorT fragment before including this file
+// Note : fillVector and convert2cpp functions
+//        must be defined in ToVectorT and Conversions
+//        fragments before including this file
 
 %typemap(in, fragment="ToVectorT") VectorInt,
                                    VectorDouble,
@@ -50,6 +52,25 @@
   if (!SWIG_IsOK(errcode))
     %argument_fail(errcode, "$type", $symname, $argnum);
   $1 = &vec;
+}
+
+// Convert scalar arguments by value
+%typemap(in, fragment="Conversions") int,
+                                     double
+{
+  const int errcode = convert2cpp($input, $1);
+  if (!SWIG_IsOK(errcode))
+    %argument_fail(errcode, "$type", $symname, $argnum);
+}
+
+// Convert scalar argument by reference (cannot convert pointers)
+%typemap(in, fragment="Conversions") const int&    (int val),
+                                     const double& (double val)
+{
+  const int errcode = convert2cpp($input, val);
+  if (!SWIG_IsOK(errcode))
+    %argument_fail(errcode, "$type", $symname, $argnum);
+  $1 = &val;
 }
 
 ////////////////////////////////////////////////

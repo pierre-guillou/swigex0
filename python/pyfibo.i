@@ -8,27 +8,21 @@
 
 // TODO : Handle undefined or NA values
 
-%fragment("Conversions", "header", fragment="SWIG_AsVal_std_string")
+%fragment("Conversions", "header")
 {
   template <typename Type>
-  int convertObject(PyObject* obj, Type& value);
+  int convert2cpp(PyObject* obj, Type& value);
   
   template <>
-  int convertObject(PyObject* obj, int& value)
+  int convert2cpp(PyObject* obj, int& value)
   {
-    return SWIG_AsVal_int(obj, &value);;
+    return SWIG_AsVal_int(obj, &value);
   }
   
   template <>
-  int convertObject(PyObject* obj, double& value)
+  int convert2cpp(PyObject* obj, double& value)
   {
     return SWIG_AsVal_double(obj, &value);
-  }
-  
-  template <>
-  int convertObject(PyObject* obj, String& value)
-  {
-    return SWIG_AsVal_std_string(obj, &value);
   }
 }
 
@@ -50,28 +44,6 @@
     }
     return res;
   }
-}
-
-%typemap(in, fragment="Conversions") int,
-                                     double//,
-//                                     String
-{
-  const int errcode = convertObject($input, $1);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-}
-
-%typemap(in, fragment="Conversions") const int&    (int val),
-                                     const int*    (int val),
-                                     const double& (double val), 
-                                     const double* (double val)//, 
-//                                     const String& (String val),
-//                                     const String* (String val)
-{
-  const int errcode = convertObject($input, val);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-  $1 = &val;
 }
 
 //////////////////////////////////////////////////////////////

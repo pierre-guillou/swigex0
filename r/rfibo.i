@@ -8,27 +8,21 @@
 
 // TODO : Handle undefined or NA values
 
-%fragment("Conversions", "header", fragment="SWIG_AsVal_std_string")
+%fragment("Conversions", "header")
 {
   template <typename Type>
-  int convertObject(SEXP obj, Type& value);
+  int convert2cpp(SEXP obj, Type& value);
   
   template <>
-  int convertObject(SEXP obj, int& value)
+  int convert2cpp(SEXP obj, int& value)
   {
-    return SWIG_AsVal_int(obj, &value);;
+    return SWIG_AsVal_int(obj, &value);
   }
   
   template <>
-  int convertObject(SEXP obj, double& value)
+  int convert2cpp(SEXP obj, double& value)
   {
     return SWIG_AsVal_double(obj, &value);
-  }
-  
-  template <>
-  int convertObject(SEXP obj, String& value)
-  {
-    return SWIG_AsVal_std_string(obj, &value);
   }
 }
 
@@ -49,8 +43,7 @@
 }
 
 %typemap(scoerceout) int,    int*,    int&,
-                     double, double*, double&,
-                     String, String*, String&
+                     double, double*, double&
  %{    %}
 
 %typemap(scoerceout) VectorInt,    VectorInt*,    VectorInt&,

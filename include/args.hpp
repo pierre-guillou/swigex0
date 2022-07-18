@@ -51,7 +51,7 @@ private:
 
  X_r1: Call OK but object return is externalptr so the value is not interpretable
 
- X_r2: R Crash with SEGV (don't know why)
+ X_r2: R Crashes with SEGV (don't know why)
 
  X_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
 

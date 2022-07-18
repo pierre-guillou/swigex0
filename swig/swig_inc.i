@@ -17,12 +17,12 @@
 //        Typemaps        //
 ////////////////////////////
 
-// Mandatory for using swig::asptr for std::vectors
+// Mandatory for using swig::asptr and swig::from for std::vectors
 %include std_vector.i
 %include std_string.i
-%template(VectorIntStd)    std::vector< int >;
-%template(VectorDoubleStd) std::vector< double >;
-%template(VectorStringStd) std::vector< std::string >; // Keep std::string here !
+%template(DoNotUseVectorIntStd)    std::vector< int >;
+%template(DoNotUseVectorDoubleStd) std::vector< double >;
+%template(DoNotUseVectorStringStd) std::vector< std::string >; // Keep std::string here !
 
 
 ////////////////////////////////////////////////
@@ -47,7 +47,7 @@
                                    const VectorDouble* (VectorDouble vec),
                                    const VectorString& (VectorString vec),
                                    const VectorString* (VectorString vec)
-{ 
+{
   const int errcode = fillVector($input, vec);
   if (!SWIG_IsOK(errcode))
     %argument_fail(errcode, "$type", $symname, $argnum);

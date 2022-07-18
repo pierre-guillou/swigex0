@@ -4,15 +4,15 @@
 %include myfibo_export.hpp // Do not forget this file in priority (for SWIG preprocessor)
 %include fibo_define.hpp
 
-// Cast our template vectors with scalar types
-%include VectorT.hpp
-%template(VectorTInt)    VectorT<int>;     // Mandatory to be used as base class 
-%template(VectorTDouble) VectorT<double>;  // Mandatory to be used as base class
-%template(VectorString)  VectorT<String>;  // Keep String here !
-
-%include VectorNumT.hpp
-%template(VectorInt)    VectorNumT<int>;
-%template(VectorDouble) VectorNumT<double>;
+// Cast our template vectors with scalar types 
+// No more needed as vectors are converted in target language vectors
+//%include VectorT.hpp
+//%template(VectorTInt)    VectorT<int>; 
+//%template(VectorTDouble) VectorT<double>;
+//%template(VectorString)  VectorT<String>;
+//%include VectorNumT.hpp
+//%template(VectorInt)    VectorNumT<int>;
+//%template(VectorDouble) VectorNumT<double>;
 
 // Rest of the header files from myfibo library
 %include fibo.hpp

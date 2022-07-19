@@ -7,3 +7,4 @@ tests/*/main.out
 .cproject
 .pydevproject
 .settings
+*.Rout

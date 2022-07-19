@@ -7,7 +7,9 @@ TypeClass::TypeClass()
 , _varDouble()
 , _varString()
 , _varVectorInt()
+, _varVVectorInt()
 , _varVectorDouble()
+, _varVVectorDouble()
 , _varVectorString()
 {
 
@@ -66,6 +68,97 @@ const VectorInt* TypeClass::testVectorIntPtr(const VectorInt* a)
     std::cout << v << " ";
   std::cout << "]" << std::endl;
   return &_varVectorInt;
+}
+
+VectorVectorInt TypeClass::testVVectorInt(VectorVectorInt a)
+{
+  _varVVectorInt = a;
+  std::cout << "Test VectorVectorInt: [" << std::endl;
+  for(auto v1 : a)
+  {
+    std::cout << "[";
+    for(auto v2 : v1)
+      std::cout << v2 << " ";
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+  return _varVVectorInt;
+}
+
+const VectorVectorInt& TypeClass::testVVectorIntRef(const VectorVectorInt& a)
+{
+  _varVVectorInt = a;
+  std::cout << "Test VectorVectorInt Reference: [" << std::endl;
+  for(auto v1 : a)
+  {
+    std::cout << "[";
+    for(auto v2 : v1)
+      std::cout << v2 << " ";
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+  return _varVVectorInt;
+}
+
+const VectorVectorInt* TypeClass::testVVectorIntPtr(const VectorVectorInt* a)
+{
+  _varVVectorInt = *a;
+  std::cout << "Test VectorVectorInt Pointer: [" << std::endl;
+  for(auto v1 : *a)
+  {
+    std::cout << "[";
+    for(auto v2 : v1)
+      std::cout << v2 << " ";
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+  return &_varVVectorInt;
+}
+
+
+VectorVectorDouble TypeClass::testVVectorDouble(VectorVectorDouble a)
+{
+  _varVVectorDouble = a;
+  std::cout << "Test VectorVectorDouble: [" << std::endl;
+  for(auto v1 : a)
+  {
+    std::cout << "[";
+    for(auto v2 : v1)
+      std::cout << v2 << " ";
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+  return _varVVectorDouble;
+}
+
+const VectorVectorDouble& TypeClass::testVVectorDoubleRef(const VectorVectorDouble& a)
+{
+  _varVVectorDouble = a;
+  std::cout << "Test VectorVectorDouble Reference: [" << std::endl;
+  for(auto v1 : a)
+  {
+    std::cout << "[";
+    for(auto v2 : v1)
+      std::cout << v2 << " ";
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+  return _varVVectorDouble;
+}
+
+const VectorVectorDouble* TypeClass::testVVectorDoublePtr(const VectorVectorDouble* a)
+{
+  _varVVectorDouble = *a;
+  std::cout << "Test VectorVectorDouble Pointer: [" << std::endl;
+  for(auto v1 : *a)
+  {
+    std::cout << "[";
+    for(auto v2 : v1)
+      std::cout << v2 << " ";
+    std::cout << "]" << std::endl;
+  }
+  std::cout << "]" << std::endl;
+  return &_varVVectorDouble;
 }
 
 double TypeClass::testDouble(double a)

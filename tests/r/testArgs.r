@@ -37,6 +37,30 @@ if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
 {
   cat("Wrong VectorInt Pointer!", "\n")
 }
+vvi = a$testVVectorInt(list(c(23,33,43),c(53,63),c(73,83,93)))
+cat(class(vvi), "\n")
+if (vvi[[1]][1] != 23 || vvi[[1]][2] != 33 || vvi[[1]][3] != 43 ||
+    vvi[[2]][1] != 53 || vvi[[2]][2] != 63 ||
+    vvi[[3]][1] != 73 || vvi[[3]][2] != 83 || vvi[[3]][3] != 93)
+{
+  cat("Wrong VectorVectorInt!", "\n")
+}
+vvi = a$testVVectorIntRef(list(c(24,34,44),c(54,64),c(74,84,94)))
+cat(class(vvi), "\n")
+if (vvi[[1]][1] != 24 || vvi[[1]][2] != 34 || vvi[[1]][3] != 44 ||
+    vvi[[2]][1] != 54 || vvi[[2]][2] != 64 ||
+    vvi[[3]][1] != 74 || vvi[[3]][2] != 84 || vvi[[3]][3] != 94)
+{
+  cat("Wrong VectorVectorInt Reference!", "\n")
+}
+vvi = a$testVVectorIntPtr(list(c(25,35,45),c(55,65),c(75,85,95)))
+cat(class(vvi), "\n")
+if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
+    vvi[[2]][1] != 55 || vvi[[2]][2] != 65 ||
+    vvi[[3]][1] != 75 || vvi[[3]][2] != 85 || vvi[[3]][3] != 95)
+{
+  cat("Wrong VectorVectorInt Pointer!", "\n")
+}
 d = a$testDouble(12.1)
 cat(class(d), "\n")
 if (d != 12.1)
@@ -72,6 +96,30 @@ cat(class(vi), "\n")
 if (vi[1] != 25.3 || vi[2] != 35.3 || vi[3] != 45.3)
 {
   cat("Wrong VectorDouble Pointer!", "\n")
+}
+vvd = a$testVVectorDouble(list(c(23.1,33.1,43.1),c(53.1,63.1),c(73.1,83.1,93.1)))
+cat(class(vvd), "\n")
+if (vvd[[1]][1] != 23.1 || vvd[[1]][2] != 33.1 || vvd[[1]][3] != 43.1 ||
+    vvd[[2]][1] != 53.1 || vvd[[2]][2] != 63.1 ||
+    vvd[[3]][1] != 73.1 || vvd[[3]][2] != 83.1 || vvd[[3]][3] != 93.1)
+{
+  cat("Wrong VectorVectorDouble!", "\n")
+}
+vvd = a$testVVectorDoubleRef(list(c(24.2,34.2,44.2),c(54.2,64.2),c(74.2,84.2,94.2)))
+cat(class(vvd), "\n")
+if (vvd[[1]][1] != 24.2 || vvd[[1]][2] != 34.2 || vvd[[1]][3] != 44.2 ||
+    vvd[[2]][1] != 54.2 || vvd[[2]][2] != 64.2 ||
+    vvd[[3]][1] != 74.2 || vvd[[3]][2] != 84.2 || vvd[[3]][3] != 94.2)
+{
+  cat("Wrong VectorVectorDouble Reference!", "\n")
+}
+vvd = a$testVVectorDoublePtr(list(c(25.3,35.3,45.3),c(55.3,65.3),c(75.3,85.3,95.3)))
+cat(class(vvd), "\n")
+if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
+    vvd[[2]][1] != 55.3 || vvd[[2]][2] != 65.3 ||
+    vvd[[3]][1] != 75.3 || vvd[[3]][2] != 85.3 || vvd[[3]][3] != 95.3)
+{
+  cat("Wrong VectorVectorDouble Pointer!", "\n")
 }
 s = a$testString("Str12")
 cat(class(s), "\n")

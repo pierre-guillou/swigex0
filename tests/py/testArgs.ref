@@ -8,6 +8,24 @@ Test VectorInt Reference: [24 34 44 ]
 <class 'tuple'>
 Test VectorInt Pointer: [25 35 45 ]
 <class 'tuple'>
+Test VectorVectorInt: [
+[23 33 43 ]
+[53 63 ]
+[73 83 93 ]
+]
+<class 'list'>
+Test VectorVectorInt Reference: [
+[24 34 44 ]
+[54 64 ]
+[74 84 94 ]
+]
+<class 'list'>
+Test VectorVectorInt Pointer: [
+[25 35 45 ]
+[55 65 ]
+[75 85 95 ]
+]
+<class 'list'>
 Test double: 12.1
 <class 'float'>
 Test double Reference: 22.2
@@ -18,6 +36,24 @@ Test VectorDouble Reference: [24.2 34.2 44.2 ]
 <class 'tuple'>
 Test VectorDouble Pointer: [25.3 35.3 45.3 ]
 <class 'tuple'>
+Test VectorVectorDouble: [
+[23.1 33.1 43.1 ]
+[53.1 63.1 ]
+[73.1 83.1 93.1 ]
+]
+<class 'list'>
+Test VectorVectorDouble Reference: [
+[24.2 34.2 44.2 ]
+[54.2 64.2 ]
+[74.2 84.2 94.2 ]
+]
+<class 'list'>
+Test VectorVectorDouble Pointer: [
+[25.3 35.3 45.3 ]
+[55.3 65.3 ]
+[75.3 85.3 95.3 ]
+]
+<class 'list'>
 Test String: Str12
 <class 'str'>
 Test String Reference: Str22

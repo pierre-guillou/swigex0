@@ -52,7 +52,6 @@ public:
   inline VectorNumT(std::initializer_list<T> init)                 : Parent(init) { }
 #endif
 
-#ifndef SWIG
 // Only for C++ users
 // These functions are not available in target language
 // because numerical vectors are converted in target language vectors
@@ -76,9 +75,8 @@ public:
   inline const VectorNumT<T>& subtract(const T& v);
   inline const VectorNumT<T>& multiply(const T& v);
   inline const VectorNumT<T>& divide(const T& v);
-#endif
 };
-#ifndef SWIG
+
 template <typename T>
 bool VectorNumT<T>::isSame(const VectorNumT& other,
                            double eps) const
@@ -218,12 +216,20 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
   std::for_each(VectorNumT::begin(), VectorNumT::end(), [v](T& d) { d /= v;});
   return *this;
 }
-#endif
-// Force instantiation for numerical vectors of int and double
-// Needs instantiation of base class for int and double (see end of VectorT.hpp)
-#ifndef SWIG // To avoid "Explicit template instantiation ignored."
+
+// Do not export VectorXXX to SWIG (no more instantiation needed)
+/*
+// Force instantiation for VectorNumT of int and double
+// Needs instantiation of base class for int and double (see VectorT.hpp)
+#ifndef SWIG // To avoid Swig error "Explicit template instantiation ignored."
 template class VectorNumT<int>;
+template class VectorT<VectorNumT<int> >;
 template class VectorNumT<double>;
+template class VectorT<VectorNumT<double> >;
 #endif
+*/
+
 typedef VectorNumT<int> VectorInt;
+typedef VectorT<VectorNumT<int> > VectorVectorInt;
 typedef VectorNumT<double> VectorDouble;
+typedef VectorT<VectorNumT<double> > VectorVectorDouble;

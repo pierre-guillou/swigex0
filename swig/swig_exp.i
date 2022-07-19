@@ -5,14 +5,18 @@
 %include fibo_define.hpp
 
 // Cast our template vectors with scalar types 
-// No more needed as vectors are converted in target language vectors
-//%include VectorT.hpp
-//%template(VectorTInt)    VectorT<int>; 
-//%template(VectorTDouble) VectorT<double>;
-//%template(VectorString)  VectorT<String>;
-//%include VectorNumT.hpp
-//%template(VectorInt)    VectorNumT<int>;
-//%template(VectorDouble) VectorNumT<double>;
+// No more needed because vectors are converted in target language vectors
+/*
+%include VectorT.hpp
+%template(VectorTInt)         VectorT<int>; 
+%template(VectorTDouble)      VectorT<double>;
+%template(VectorString)       VectorT<String>;
+%include VectorNumT.hpp
+%template(VectorInt)          VectorNumT<int>;
+%template(VectorDouble)       VectorNumT<double>;
+%template(VectorVectorInt)    VectorT<VectorNumT<int> >;
+%template(VectorVectorDouble) VectorT<VectorNumT<double> >;
+*/
 
 // Rest of the header files from myfibo library
 %include fibo.hpp

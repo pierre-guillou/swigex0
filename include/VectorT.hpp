@@ -95,9 +95,11 @@ public:
   inline void remove(size_type i, size_type count)                 { _detach(); _v->erase(begin() + i, begin() + i + count); }
 
   inline void push_back(const T& value)                            { _detach(); _v->push_back(value); }
-  inline void push_back(const T&& value)                           { _detach(); _v->push_back(value); }
   inline void push_front(const T& value)                           { _detach(); _v->insert(begin(), value); }
+#ifndef SWIG
+  inline void push_back(const T&& value)                           { _detach(); _v->push_back(value); }
   inline void push_front(const T&& value)                          { _detach(); _v->insert(begin(), value); }
+#endif
   inline void resize(size_type count)                              { if (count == size()) return; _detach(); _v->resize(count); }
   inline void resize(size_type count, const T& value)              { if (count == size()) return; _detach(); _v->resize(count, value); }
 
@@ -173,13 +175,15 @@ void VectorT<T>::_detach()
   _v = std::make_shared<Vector>(*_v);
 }
 
-// Force instantiation for Vector
-
-#ifndef SWIG // To avoid "Explicit template instantiation ignored."
+// Do not export VectorXXX to SWIG (no more instantiation needed)
+/*
+// Force instantiation for VectorT
+#ifndef SWIG // To avoid Swig error "Explicit template instantiation ignored."
 template class VectorT<int>;    // Mandatory to be used as base class
 template class VectorT<double>; // Mandatory to be used as base class
 template class VectorT<String>;
 #endif
+*/
 typedef VectorT<int> VectorTInt;
 typedef VectorT<double> VectorTDouble;
 typedef VectorT<String> VectorString;

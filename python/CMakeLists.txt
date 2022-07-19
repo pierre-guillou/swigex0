@@ -11,7 +11,8 @@ set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 
 # Look for Python3
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module NumPy)
+#find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module NumPy)
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
@@ -77,10 +78,14 @@ if (APPLE)
 endif()
 
 # Link to static library and NumPy headers
-target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static Python3::NumPy)
+#target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static Python3::NumPy)
+target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
 set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
+if ("${FLAVOR}" STREQUAL "Debug")
+  set(COMP_FLAGS "${COMP_FLAGS} -g")
+endif()
 
 # Set some properties on SWIG target
 set_target_properties(python_build PROPERTIES

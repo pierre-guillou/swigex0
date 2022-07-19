@@ -217,17 +217,16 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
   return *this;
 }
 
-// Do not export VectorXXX to SWIG (no more instantiation needed)
-/*
-// Force instantiation for VectorNumT of int and double
-// Needs instantiation of base class for int and double (see VectorT.hpp)
-#ifndef SWIG // To avoid Swig error "Explicit template instantiation ignored."
-template class VectorNumT<int>;
-template class VectorT<VectorNumT<int> >;
-template class VectorNumT<double>;
-template class VectorT<VectorNumT<double> >;
+// Force instantiation for VectorT (for windows export)
+#if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
+  // Do not export VectorNumXXX to SWIG (no more instantiation needed)
+  #ifndef SWIG
+    MYFIBO_TEMPLATE_EXPORT template class VectorNumT<int>;
+    MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<int> >;
+    MYFIBO_TEMPLATE_EXPORT template class VectorNumT<double>;
+    MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<double> >;
+  #endif
 #endif
-*/
 
 typedef VectorNumT<int> VectorInt;
 typedef VectorT<VectorNumT<int> > VectorVectorInt;

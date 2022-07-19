@@ -175,15 +175,17 @@ void VectorT<T>::_detach()
   _v = std::make_shared<Vector>(*_v);
 }
 
-// Do not export VectorXXX to SWIG (no more instantiation needed)
-/*
-// Force instantiation for VectorT
-#ifndef SWIG // To avoid Swig error "Explicit template instantiation ignored."
-template class VectorT<int>;    // Mandatory to be used as base class
-template class VectorT<double>; // Mandatory to be used as base class
-template class VectorT<String>;
+
+// Force instantiation for VectorT (for windows export)
+#if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
+  // Do not export VectorXXX to SWIG (no more instantiation needed)
+  #ifndef SWIG
+    MYFIBO_TEMPLATE_EXPORT template class VectorT<int>;
+    MYFIBO_TEMPLATE_EXPORT template class VectorT<double>;
+    MYFIBO_TEMPLATE_EXPORT template class VectorT<String>;
+  #endif
 #endif
-*/
+
 typedef VectorT<int> VectorTInt;
 typedef VectorT<double> VectorTDouble;
 typedef VectorT<String> VectorString;

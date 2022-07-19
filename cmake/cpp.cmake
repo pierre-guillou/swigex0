@@ -88,12 +88,19 @@ endforeach(FLAVOR ${FLAVORS})
 # Generate export header
 include(GenerateExportHeader)
 set(DISABLE_EXPORT_IF_SWIG "
- #ifdef SWIG
-  #undef ${PROJECT_NAME_UP}_EXPORT
-  #undef ${PROJECT_NAME_UP}_NO_EXPORT
-  #define ${PROJECT_NAME_UP}_EXPORT
-  #define ${PROJECT_NAME_UP}_NO_EXPORT
-  #endif
+#ifdef SWIG
+#    undef ${PROJECT_NAME_UP}_EXPORT
+#    undef ${PROJECT_NAME_UP}_NO_EXPORT
+#    define ${PROJECT_NAME_UP}_EXPORT
+#    define ${PROJECT_NAME_UP}_NO_EXPORT
+#endif
+#ifndef MYFIBO_STATIC_DEFINE
+#    ifdef shared_EXPORTS
+#        define MYFIBO_TEMPLATE_EXPORT
+#    else
+#        define MYFIBO_TEMPLATE_EXPORT extern
+#    endif
+#endif
 ")
 generate_export_header(shared
   BASE_NAME ${PROJECT_NAME}

@@ -94,7 +94,9 @@ set(DISABLE_EXPORT_IF_SWIG "
 #    define ${PROJECT_NAME_UP}_EXPORT
 #    define ${PROJECT_NAME_UP}_NO_EXPORT
 #endif
-#ifndef MYFIBO_STATIC_DEFINE
+#ifdef MYFIBO_STATIC_DEFINE
+#    define MYFIBO_TEMPLATE_EXPORT
+#else
 #    ifdef shared_EXPORTS
 #        define MYFIBO_TEMPLATE_EXPORT
 #    else

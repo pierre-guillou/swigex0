@@ -29,36 +29,36 @@
   int vectorToCpp(PyObject* obj, Vector& vec) // Using PyObject
   {
     auto myvec = vec.getVectorPtr();
-    int res = swig::asptr(obj, &myvec);
+    int myres = swig::asptr(obj, &myvec);
     // So we copy the vector
     // TODO : reserve
-    if (SWIG_IsOK(res))
+    if (SWIG_IsOK(myres))
     {
       for (const auto& i: *myvec)
       {
         vec.push_back(i);
       }
     }
-    return res;
+    return myres;
   }
   
   template <typename VectorVector>
   int vectorVectorToCpp(PyObject* obj, VectorVector& vvec) // Using PyObject
   {
     using InputVector = typename VectorVector::value_type;
-    int res = 0;
+    int myres = 0;
     const int nvalues = (int)PySequence_Length(obj);
     for (int i = 0; i < nvalues; ++i)
     {
       PyObject* item = PySequence_GetItem(obj, i);
       InputVector vec;
-      res = vectorToCpp(item, vec);
-      if (SWIG_IsOK(res))
+      myres = vectorToCpp(item, vec);
+      if (SWIG_IsOK(myres))
         vvec.push_back(vec);
       else
         break;
     }
-    return res;
+    return myres;
   }
 }
 
@@ -74,23 +74,23 @@
   template <typename VectorVector>
   int vectorVectorFromCpp(PyObject** obj, const VectorVector& vec) // Using PyObject  
   {
-    int res = -1;
+    int myres = -1;
     // https://stackoverflow.com/questions/36050713/using-py-buildvalue-to-create-a-list-of-tuples-in-c
     *obj = PyList_New(0);
     if(*obj != NULL)
     {
-      res = 0;
+      myres = 0;
       const unsigned int size = vec.size();
-      for(unsigned int i = 0; i < size && res == 0; i++)
+      for(unsigned int i = 0; i < size && myres == 0; i++)
       {
         PyObject* tuple;
-        res = vectorFromCpp(&tuple, vec.at(i));
-        if (res == 0)
-          res = PyList_Append(*obj, tuple);
+        myres = vectorFromCpp(&tuple, vec.at(i));
+        if (myres == 0)
+          myres = PyList_Append(*obj, tuple);
       }
     }
     
-    return res;
+    return myres;
   }
 }
 

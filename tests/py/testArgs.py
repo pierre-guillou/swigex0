@@ -1,6 +1,4 @@
 import myfibo
-from _ast import Or
-from bokeh.core.query import OR
 
 a = myfibo.TypeClass()
 i = a.testInt(12)

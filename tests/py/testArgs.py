@@ -31,10 +31,10 @@ if (vvi[0][0] != 23 or vvi[0][1] != 33 or vvi[0][2] != 43 or
     vvi[1][0] != 53 or vvi[1][1] != 63 or
     vvi[2][0] != 73 or vvi[2][1] != 83 or vvi[2][2] != 93) :
   print("Wrong VectorVectorInt!")
-vvi = a.testVVectorIntRef([[24,34,44],[54,64],[74,84,94]])
+vvi = a.testVVectorIntRef([[24,34,44],[54,64,74],[74,84,94]])
 print(type(vvi))
 if (vvi[0][0] != 24 or vvi[0][1] != 34 or vvi[0][2] != 44 or
-    vvi[1][0] != 54 or vvi[1][1] != 64 or
+    vvi[1][0] != 54 or vvi[1][1] != 64 or vvi[1][2] != 74 or
     vvi[2][0] != 74 or vvi[2][1] != 84 or vvi[2][2] != 94) :
   print("Wrong VectorVectorInt Reference!")
 vvi = a.testVVectorIntPtr([[25,35,45],[55,65],[75,85,95]])
@@ -73,10 +73,10 @@ if (vvd[0][0] != 23.1 or vvd[0][1] != 33.1 or vvd[0][2] != 43.1 or
     vvd[1][0] != 53.1 or vvd[1][1] != 63.1 or
     vvd[2][0] != 73.1 or vvd[2][1] != 83.1 or vvd[2][2] != 93.1) :
   print("Wrong VectorVectorDouble!")
-vvd = a.testVVectorDoubleRef([[24.2,34.2,44.2],[54.2,64.2],[74.2,84.2,94.2]])
+vvd = a.testVVectorDoubleRef([[24.2,34.2,44.2],[54.2,64.2,74.2],[74.2,84.2,94.2]])
 print(type(vvd))
 if (vvd[0][0] != 24.2 or vvd[0][1] != 34.2 or vvd[0][2] != 44.2 or
-    vvd[1][0] != 54.2 or vvd[1][1] != 64.2 or
+    vvd[1][0] != 54.2 or vvd[1][1] != 64.2 or vvd[1][2] != 74.2 or
     vvd[2][0] != 74.2 or vvd[2][1] != 84.2 or vvd[2][2] != 94.2) :
   print("Wrong VectorVectorDouble Reference!")
 vvd = a.testVVectorDoublePtr([[25.3,35.3,45.3],[55.3,65.3],[75.3,85.3,95.3]])
@@ -110,3 +110,12 @@ print(type(vs))
 if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
   print("Wrong VectorString Pointer!")
 
+a.testVectorInt(()) # Empty vector
+a.testVectorInt(101) # Single value
+a.testVectorInt((102)) # Vector with 1 item
+a.testVectorDouble(()) # Empty vector
+a.testVectorDouble(201.1) # Single value
+a.testVectorDouble((202.1)) # Vector with 1 item
+a.testVectorString(()) # Empty vector
+a.testVectorString("Str301") # Single value
+a.testVectorString(("Str302")) # Vector with 1 item

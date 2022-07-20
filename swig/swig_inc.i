@@ -36,6 +36,25 @@
 //        - vectorFromCpp, vectorVectorFromCpp and convertFromCpp 
 //          functions must be defined in FromCpp fragment
 
+// Convert scalar arguments by value
+%typemap(in, fragment="ToCpp") int,
+                               double
+{
+  const int errcode = convertToCpp($input, $1);
+  if (!SWIG_IsOK(errcode))
+    %argument_fail(errcode, "$type", $symname, $argnum);
+}
+
+// Convert scalar argument by reference (cannot convert pointers)
+%typemap(in, fragment="ToCpp") const int&    (int val),
+                               const double& (double val)
+{
+  const int errcode = convertToCpp($input, val);
+  if (!SWIG_IsOK(errcode))
+    %argument_fail(errcode, "$type", $symname, $argnum);
+  $1 = &val;
+}
+
 %typemap(in, fragment="ToCpp") VectorInt,
                                VectorDouble,
                                VectorString
@@ -77,26 +96,6 @@
   $1 = &vec;
 }
 
-
-// Convert scalar arguments by value
-%typemap(in, fragment="ToCpp") int,
-                               double
-{
-  const int errcode = convertToCpp($input, $1);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-}
-
-// Convert scalar argument by reference (cannot convert pointers)
-%typemap(in, fragment="ToCpp") const int&    (int val),
-                               const double& (double val)
-{
-  const int errcode = convertToCpp($input, val);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-  $1 = &val;
-}
-
 ////////////////////////////////////////////////
 // Conversion C++ => Target language
 
@@ -106,7 +105,7 @@
 {
   const int errcode = vectorFromCpp(&($result), result);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
+    SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
 
 %typemap(out, fragment="FromCpp") VectorInt*,    VectorInt&,
@@ -115,7 +114,7 @@
 {
   const int errcode = vectorFromCpp(&($result), *result);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
+    SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
 
 %typemap(out, fragment="FromCpp") VectorVectorInt, 
@@ -123,7 +122,7 @@
 {
   const int errcode = vectorVectorFromCpp(&($result), result);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
+    SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
 
 %typemap(out, fragment="FromCpp") VectorVectorInt*,    VectorVectorInt&,
@@ -131,5 +130,5 @@
 {
   const int errcode = vectorVectorFromCpp(&($result), *result);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
+    SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }

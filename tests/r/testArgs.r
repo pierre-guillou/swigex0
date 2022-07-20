@@ -157,3 +157,22 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 {
   cat("Wrong VectorString Pointer!", "\n")
 }
+
+#a$testVectorInt(c()) # Empty vector
+#a$testVectorInt(101) # Single value
+#a$testVectorInt(c(102)) # Vector with 1 item
+#a$testVectorDouble(c()) # Empty vector
+#a$testVectorDouble(201.1) # Single value
+#a$testVectorDouble(c(202.1)) # Vector with 1 item
+#a$testVectorString(c()) # Empty vector
+#a$testVectorString("Str301") # Single value
+#a$testVectorString(c("Str302")) # Vector with 1 item
+#a$testVectorInt(c()) # Empty vector
+#a$testVVectorInt(101) # Single value
+#a$testVVectorInt(c(102)) # Vector with 1 item
+#a$testVVectorInt(c(103, 104)) # Vector with 1 vector
+#a$testVVectorDouble(c()) # Empty vector
+#a$testVVectorDouble(201.1) # Single value
+#a$testVVectorDouble(c(202.1)) # Vector with 1 item
+#a$testVVectorDouble(c(203.1, 204.1)) # Vector with 1 vector
+# No VectorVectorString

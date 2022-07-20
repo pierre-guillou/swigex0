@@ -14,6 +14,7 @@
   template <> int convertToCpp(PyObject* obj, int& value)
   {
     // TODO : Handle undefined or NA values
+    // TODO : SWIG_AsVal_int fails when PyObject is a NumPy Array item!
     return SWIG_AsVal_int(obj, &value);
   }
   template <> int convertToCpp(PyObject* obj, double& value)

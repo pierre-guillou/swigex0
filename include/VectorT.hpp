@@ -206,3 +206,7 @@ void VectorT<T>::_detach()
 typedef VectorT<int> VectorTInt;
 typedef VectorT<double> VectorTDouble;
 typedef VectorT<String> VectorString;
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const VectorT<T>& vec);
+

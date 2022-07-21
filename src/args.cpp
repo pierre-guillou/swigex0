@@ -43,63 +43,42 @@ const int* TypeClass::testIntPtr(const int* a)
 VectorInt TypeClass::testVectorInt(VectorInt a)
 {
   _varVectorInt = a;
-  std::cout << "Test VectorInt: " << a.toString() << std::endl;
+  std::cout << "Test VectorInt: " << a << std::endl;
   return _varVectorInt;
 }
 
 const VectorInt& TypeClass::testVectorIntRef(const VectorInt& a)
 {
   _varVectorInt = a;
-  std::cout << "Test VectorInt Reference: " << a.toString() << std::endl;
+  std::cout << "Test VectorInt Reference: " << a << std::endl;
   return _varVectorInt;
 }
 
 const VectorInt* TypeClass::testVectorIntPtr(const VectorInt* a)
 {
   _varVectorInt = *a;
-  std::cout << "Test VectorInt Pointer: " << a->toString() << std::endl;
+  std::cout << "Test VectorInt Pointer: " << *a << std::endl;
   return &_varVectorInt;
 }
 
 VectorVectorInt TypeClass::testVVectorInt(VectorVectorInt a)
 {
   _varVVectorInt = a;
-  std::cout << "Test VectorVectorInt: [";
-  for (VectorVectorInt::size_type i = 0, n = a.size(); i < n; i++)
-  {
-    std::cout << a.at(i).toString();
-    if (i != n-1)
-      std::cout << " ";
-  }
-  std::cout << "]" << std::endl;
+  std::cout << "Test VectorVectorInt: " << a << std::endl;
   return _varVVectorInt;
 }
 
 const VectorVectorInt& TypeClass::testVVectorIntRef(const VectorVectorInt& a)
 {
   _varVVectorInt = a;
-  std::cout << "Test VectorVectorInt Reference: [";
-  for (VectorVectorInt::size_type i = 0, n = a.size(); i < n; i++)
-  {
-    std::cout << a.at(i).toString();
-    if (i != n-1)
-      std::cout << " ";
-  }
-  std::cout << "]" << std::endl;
+  std::cout << "Test VectorVectorInt Reference: " << a << std::endl;
   return _varVVectorInt;
 }
 
 const VectorVectorInt* TypeClass::testVVectorIntPtr(const VectorVectorInt* a)
 {
   _varVVectorInt = *a;
-  std::cout << "Test VectorVectorInt Pointer: [";
-  for (VectorVectorInt::size_type i = 0, n = a->size(); i < n; i++)
-  {
-    std::cout << a->at(i).toString();
-    if (i != n-1)
-      std::cout << " ";
-  }
-  std::cout << "]" << std::endl;
+  std::cout << "Test VectorVectorInt Pointer: " << *a << std::endl;
   return &_varVVectorInt;
 }
 
@@ -128,63 +107,42 @@ const double* TypeClass::testDoublePtr(const double* a)
 VectorDouble TypeClass::testVectorDouble(VectorDouble a)
 {
   _varVectorDouble = a;
-  std::cout << "Test VectorDouble: " << a.toString() << std::endl;
+  std::cout << "Test VectorDouble: " << a << std::endl;
   return _varVectorDouble;
 }
 
 const VectorDouble& TypeClass::testVectorDoubleRef(const VectorDouble& a)
 {
   _varVectorDouble = a;
-  std::cout << "Test VectorDouble Reference: " << a.toString() << std::endl;
+  std::cout << "Test VectorDouble Reference: " << a << std::endl;
   return _varVectorDouble;
 }
 
 const VectorDouble* TypeClass::testVectorDoublePtr(const VectorDouble* a)
 {
   _varVectorDouble = *a;
-  std::cout << "Test VectorDouble Pointer: " << a->toString() << std::endl;
+  std::cout << "Test VectorDouble Pointer: " << *a << std::endl;
   return &_varVectorDouble;
 }
 
 VectorVectorDouble TypeClass::testVVectorDouble(VectorVectorDouble a)
 {
   _varVVectorDouble = a;
-  std::cout << "Test VectorVectorDouble: [";
-  for (VectorVectorInt::size_type i = 0, n = a.size(); i < n; i++)
-  {
-    std::cout << a.at(i).toString();
-    if (i != n-1)
-      std::cout << " ";
-  }
-  std::cout << "]" << std::endl;
+  std::cout << "Test VectorVectorDouble: " << a << std::endl;
   return _varVVectorDouble;
 }
 
 const VectorVectorDouble& TypeClass::testVVectorDoubleRef(const VectorVectorDouble& a)
 {
   _varVVectorDouble = a;
-  std::cout << "Test VectorVectorDouble Reference: [";
-  for (VectorVectorInt::size_type i = 0, n = a.size(); i < n; i++)
-  {
-    std::cout << a.at(i).toString();
-    if (i != n-1)
-      std::cout << " ";
-  }
-  std::cout << "]" << std::endl;
+  std::cout << "Test VectorVectorDouble Reference: " << a << std::endl;
   return _varVVectorDouble;
 }
 
 const VectorVectorDouble* TypeClass::testVVectorDoublePtr(const VectorVectorDouble* a)
 {
   _varVVectorDouble = *a;
-  std::cout << "Test VectorVectorDouble Pointer: [";
-  for (VectorVectorInt::size_type i = 0, n = a->size(); i < n; i++)
-  {
-    std::cout << a->at(i).toString();
-    if (i != n-1)
-      std::cout << " ";
-  }
-  std::cout << "]" << std::endl;
+  std::cout << "Test VectorVectorDouble Pointer: " << *a << std::endl;
   return &_varVVectorDouble;
 }
 
@@ -212,20 +170,20 @@ const String* TypeClass::testStringPtr(const String* a)
 VectorString TypeClass::testVectorString(VectorString a)
 {
   _varVectorString = a;
-  std::cout << "Test VectorString: " << a.toString() << std::endl;
+  std::cout << "Test VectorString: " << a << std::endl;
   return _varVectorString;
 }
 
 const VectorString& TypeClass::testVectorStringRef(const VectorString& a)
 {
   _varVectorString = a;
-  std::cout << "Test VectorString Reference: " << a.toString() << std::endl;
+  std::cout << "Test VectorString Reference: " << a << std::endl;
   return _varVectorString;
 }
 
 const VectorString* TypeClass::testVectorStringPtr(const VectorString* a)
 {
   _varVectorString = *a;
-  std::cout << "Test VectorString Pointer: " << a->toString() << std::endl;
+  std::cout << "Test VectorString Pointer: " << *a << std::endl;
   return &_varVectorString;
 }

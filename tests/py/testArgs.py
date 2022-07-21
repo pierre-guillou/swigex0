@@ -123,9 +123,9 @@ a.testVectorString(("Str302")) # Vector with 1 item     # TODO : String is decom
 a.testVVectorInt(()) # Empty vector
 a.testVVectorInt(101) # Single value
 a.testVVectorInt((102)) # Vector with 1 item
-a.testVVectorInt((103, 104)) # Vector with 1 vector
+a.testVVectorInt((103, 104)) # Vector with 2 items
 a.testVVectorDouble(()) # Empty vector
 a.testVVectorDouble(201.1) # Single value
 a.testVVectorDouble((202.1)) # Vector with 1 item
-a.testVVectorDouble((203.1, 204.1)) # Vector with 1 vector
+a.testVVectorDouble((203.1, 204.1)) # Vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)

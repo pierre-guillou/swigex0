@@ -8,8 +8,7 @@
 
 %fragment("ToCpp", "header")
 {
-  template <typename Type>
-  int convertToCpp(PyObject* obj, Type& value);
+  template <typename Type> int convertToCpp(PyObject* obj, Type& value);
   
   template <> int convertToCpp(PyObject* obj, int& value)
   {
@@ -30,7 +29,10 @@
   template <typename Vector>
   int vectorToCpp(PyObject* obj, Vector& vec)
   {
+    // Type definitions
     using ValueType = typename Vector::value_type;
+    
+    // Conversion
     vec.clear();
     int myres = SWIG_OK;
     int size = (int)PySequence_Length(obj);
@@ -64,7 +66,10 @@
   template <typename VectorVector>
   int vectorVectorToCpp(PyObject* obj, VectorVector& vvec)
   {
+    // Type definitions
     using InputVector = typename VectorVector::value_type;
+    
+    // Conversion
     vvec.clear();
     int myres = SWIG_OK;
     int size = (int)PySequence_Length(obj);

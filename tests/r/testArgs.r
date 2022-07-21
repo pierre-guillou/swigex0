@@ -161,18 +161,18 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 v = a$testVectorInt(c()) # Empty vector
 v = a$testVectorInt(101) # Single value
 v = a$testVectorInt(c(102)) # Vector with 1 item
-# v = a$testVectorDouble(c()) # Empty vector                     # TODO Error: REAL() can only be applied to a 'numeric', not a 'NULL'
+v = a$testVectorDouble(c()) # Empty vector
 v = a$testVectorDouble(201.1) # Single value
 v = a$testVectorDouble(c(202.1)) # Vector with 1 item
 v = a$testVectorString(c()) # Empty vector
 v = a$testVectorString("Str301") # Single value
 v = a$testVectorString(c("Str302")) # Vector with 1 item
 v = a$testVVectorInt(c()) # Empty vector
-#v = a$testVVectorInt(101) # Single value                        # TODO Error : VECTOR_ELT() can only be applied to a 'list', not a 'double'
-#v = a$testVVectorInt(c(102)) # Vector with 1 item               # TODO Error : VECTOR_ELT() can only be applied to a 'list', not a 'double'
-#v = a$testVVectorInt(c(103, 104)) # Vector with 1 vector        # TODO Error : VECTOR_ELT() can only be applied to a 'list', not a 'double'
+v = a$testVVectorInt(101) # Single value
+v = a$testVVectorInt(c(102)) # Vector with 1 item
+v = a$testVVectorInt(c(103, 104)) # Vector with 2 items
 v = a$testVVectorDouble(c()) # Empty vector
-#v = a$testVVectorDouble(201.1) # Single value                   # TODO Error : VECTOR_ELT() can only be applied to a 'list', not a 'double'
-#v = a$testVVectorDouble(c(202.1)) # Vector with 1 item          # TODO Error : VECTOR_ELT() can only be applied to a 'list', not a 'double'
-#v = a$testVVectorDouble(c(203.1, 204.1)) # Vector with 1 vector # TODO Error : VECTOR_ELT() can only be applied to a 'list', not a 'double'
+v = a$testVVectorDouble(201.1) # Single value
+v = a$testVVectorDouble(c(202.1)) # Vector with 1 item
+v = a$testVVectorDouble(c(203.1, 204.1)) # Vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)

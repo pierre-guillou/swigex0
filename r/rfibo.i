@@ -43,8 +43,8 @@
   {
     using InputVector = typename VectorVector::value_type;
     int myres = SWIG_OK;
-    const int nvalues = (int)Rf_length(obj);
-    for (int i = 0; i < nvalues; ++i)
+    const int size = (int)Rf_length(obj);
+    for (int i = 0; i < size; ++i)
     {
       SEXP item = VECTOR_ELT(obj, i);
       InputVector vec;

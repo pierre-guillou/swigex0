@@ -110,7 +110,7 @@ vs = a.testVectorStringPtr(("Str25","Str35","Str45")) # From tuple
 print(type(vs))
 if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
   print("Wrong VectorString Pointer!")
-# No VectorVectorString (doesn't exist in myfibo)
+# No VectorVectorString (doesn't exist in the C++ library)
 a.testVectorInt(()) # Empty vector
 a.testVectorInt(101) # Single value
 a.testVectorInt((102)) # Vector with 1 item
@@ -118,9 +118,9 @@ a.testVectorDouble(()) # Empty vector
 a.testVectorDouble(201.1) # Single value
 a.testVectorDouble((202.1)) # Vector with 1 item
 a.testVectorString(()) # Empty vector
-a.testVectorString("Str301") # Single value # TODO : String is decomposed in a vector of one character items
-a.testVectorString(("Str302")) # Vector with 1 item # TODO : String is decomposed in a vector of one character items
-a.testVectorInt(()) # Empty vector
+a.testVectorString("Str301") # Single value             # TODO : String is decomposed in a vector of one character items
+a.testVectorString(("Str302")) # Vector with 1 item     # TODO : String is decomposed in a vector of one character items
+a.testVVectorInt(()) # Empty vector
 a.testVVectorInt(101) # Single value
 a.testVVectorInt((102)) # Vector with 1 item
 a.testVVectorInt((103, 104)) # Vector with 1 vector
@@ -128,4 +128,4 @@ a.testVVectorDouble(()) # Empty vector
 a.testVVectorDouble(201.1) # Single value
 a.testVVectorDouble((202.1)) # Vector with 1 item
 a.testVVectorDouble((203.1, 204.1)) # Vector with 1 vector
-# No VectorVectorString (doesn't exist in myfibo)
+# No VectorVectorString (doesn't exist in the C++ library)

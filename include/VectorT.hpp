@@ -126,6 +126,8 @@ public:
   inline void assign(const T* tab, size_type size);
   inline void set(size_type i, const T& value);
 
+  inline String toString() const;
+
 protected:
   std::shared_ptr<Vector> _v;
 
@@ -165,6 +167,21 @@ void VectorT<T>::set(size_type i, const T& value)
 {
   _detach();
   operator[](i) = value;
+}
+
+template <typename T>
+String VectorT<T>::toString() const
+{
+  std::stringstream sstr;
+  sstr << "[";
+  for (size_type i = 0, n = size(); i < n; i++)
+  {
+    sstr << at(i);
+    if (i != n-1)
+      sstr << " ";
+  }
+  sstr << "]";
+  return sstr.str();
 }
 
 template <typename T>

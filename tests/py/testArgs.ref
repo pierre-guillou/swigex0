@@ -2,97 +2,58 @@ Test int: 12
 <class 'int'>
 Test int Reference: 22
 <class 'int'>
-Test VectorInt: [23 33 43 ]
+Test VectorInt: [23 33 43]
 <class 'numpy.ndarray'>
-Test VectorInt Reference: [24 34 44 ]
+Test VectorInt Reference: [24 34 44]
 <class 'numpy.ndarray'>
-Test VectorInt Pointer: [25 35 45 ]
+Test VectorInt Pointer: [25 35 45]
 <class 'numpy.ndarray'>
-Test VectorVectorInt: [
-[23 33 43 ]
-[53 63 ]
-[73 83 93 ]
-]
+Test VectorVectorInt: [[23 33 43] [53 63] [73 83 93]]
 <class 'list'>
-Test VectorVectorInt Reference: [
-[24 34 44 ]
-[54 64 74 ]
-[74 84 94 ]
-]
+Test VectorVectorInt Reference: [[24 34 44] [54 64 74] [74 84 94]]
 <class 'numpy.ndarray'>
-Test VectorVectorInt Pointer: [
-[25 35 45 ]
-[55 65 ]
-[75 85 95 ]
-]
+Test VectorVectorInt Pointer: [[25 35 45] [55 65] [75 85 95]]
 <class 'list'>
 Test double: 12.1
 <class 'float'>
 Test double Reference: 22.2
 <class 'float'>
-Test VectorDouble: [23.1 33.1 43.1 ]
+Test VectorDouble: [23.1 33.1 43.1]
 <class 'numpy.ndarray'>
-Test VectorDouble Reference: [24.2 34.2 44.2 ]
+Test VectorDouble Reference: [24.2 34.2 44.2]
 <class 'numpy.ndarray'>
-Test VectorDouble Pointer: [25.3 35.3 45.3 ]
+Test VectorDouble Pointer: [25.3 35.3 45.3]
 <class 'numpy.ndarray'>
-Test VectorVectorDouble: [
-[23.1 33.1 43.1 ]
-[53.1 63.1 ]
-[73.1 83.1 93.1 ]
-]
+Test VectorVectorDouble: [[23.1 33.1 43.1] [53.1 63.1] [73.1 83.1 93.1]]
 <class 'list'>
-Test VectorVectorDouble Reference: [
-[24.2 34.2 44.2 ]
-[54.2 64.2 74.2 ]
-[74.2 84.2 94.2 ]
-]
+Test VectorVectorDouble Reference: [[24.2 34.2 44.2] [54.2 64.2 74.2] [74.2 84.2 94.2]]
 <class 'numpy.ndarray'>
-Test VectorVectorDouble Pointer: [
-[25.3 35.3 45.3 ]
-[55.3 65.3 ]
-[75.3 85.3 95.3 ]
-]
+Test VectorVectorDouble Pointer: [[25.3 35.3 45.3] [55.3 65.3] [75.3 85.3 95.3]]
 <class 'list'>
 Test String: Str12
 <class 'str'>
 Test String Reference: Str22
 <class 'str'>
-Test VectorString: [Str23 Str33 Str43 ]
+Test VectorString: [Str23 Str33 Str43]
 <class 'tuple'>
-Test VectorString Reference: [Str24 Str34 Str44 ]
+Test VectorString Reference: [Str24 Str34 Str44]
 <class 'tuple'>
-Test VectorString Pointer: [Str25 Str35 Str45 ]
+Test VectorString Pointer: [Str25 Str35 Str45]
 <class 'tuple'>
 Test VectorInt: []
-Test VectorInt: [101 ]
-Test VectorInt: [102 ]
+Test VectorInt: [101]
+Test VectorInt: [102]
 Test VectorDouble: []
-Test VectorDouble: [201.1 ]
-Test VectorDouble: [202.1 ]
+Test VectorDouble: [201.1]
+Test VectorDouble: [202.1]
 Test VectorString: []
-Test VectorString: [S t r 3 0 1 ]
-Test VectorString: [S t r 3 0 2 ]
-Test VectorInt: []
-Test VectorVectorInt: [
-[101 ]
-]
-Test VectorVectorInt: [
-[102 ]
-]
-Test VectorVectorInt: [
-[103 ]
-[104 ]
-]
-Test VectorVectorDouble: [
-]
-Test VectorVectorDouble: [
-[201.1 ]
-]
-Test VectorVectorDouble: [
-[202.1 ]
-]
-Test VectorVectorDouble: [
-[203.1 ]
-[204.1 ]
-]
+Test VectorString: [S t r 3 0 1]
+Test VectorString: [S t r 3 0 2]
+Test VectorVectorInt: []
+Test VectorVectorInt: [[101]]
+Test VectorVectorInt: [[102]]
+Test VectorVectorInt: [[103] [104]]
+Test VectorVectorDouble: []
+Test VectorVectorDouble: [[201.1]]
+Test VectorVectorDouble: [[202.1]]
+Test VectorVectorDouble: [[203.1] [204.1]]

@@ -23,7 +23,7 @@ endif()
 # C++ code location
 set(INCLUDES 
     ${PROJECT_SOURCE_DIR}/include)
-    
+
 set(SOURCES
     ${PROJECT_SOURCE_DIR}/src/fibo.cpp
     ${PROJECT_SOURCE_DIR}/src/args.cpp
@@ -96,13 +96,13 @@ set(DISABLE_EXPORT_IF_SWIG "
 #    define ${PROJECT_NAME_UP}_EXPORT
 #    define ${PROJECT_NAME_UP}_NO_EXPORT
 #endif
-#ifdef MYFIBO_STATIC_DEFINE
-#    define MYFIBO_TEMPLATE_EXPORT
+#ifdef ${PROJECT_NAME_UP}_STATIC_DEFINE
+#    define ${PROJECT_NAME_UP}_TEMPLATE_EXPORT
 #else
 #    ifdef shared_EXPORTS
-#        define MYFIBO_TEMPLATE_EXPORT
+#        define ${PROJECT_NAME_UP}_TEMPLATE_EXPORT
 #    else
-#        define MYFIBO_TEMPLATE_EXPORT extern
+#        define ${PROJECT_NAME_UP}_TEMPLATE_EXPORT extern
 #    endif
 #endif
 ")

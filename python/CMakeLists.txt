@@ -12,11 +12,10 @@ set(PYTHON_PACKAGE_NAME ${PROJECT_NAME})
 # Look for Python3
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module NumPy)
-#find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 
 # Look for SWIG 4
 find_package(SWIG 4.0 REQUIRED)
-# TODO : If SWIG not found, fetch it from the web
+# TODO : If SWIG not found, fetch it from the web?
 include(${SWIG_USE_FILE})
 
 
@@ -28,9 +27,9 @@ set(SRC pyfibo.i)
 
 # Generation folders
 if (CMAKE_CONFIGURATION_TYPES)
-  set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
+  set(PYTHON_PACKAGE_ROOT_FOLDER ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>)
 else()
-  set(PYTHON_PACKAGE_ROOT_FOLDER        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
+  set(PYTHON_PACKAGE_ROOT_FOLDER ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_BUILD_TYPE})
 endif()
 set(PYTHON_PACKAGE_DESTINATION_FOLDER ${PYTHON_PACKAGE_ROOT_FOLDER}/${PYTHON_PACKAGE_NAME})
 # Location for SWIG target language code
@@ -142,5 +141,4 @@ add_custom_target(python_install
 
 # Tell to CMake that python package must be built before installation [python_doc is optional]
 add_dependencies(python_install python_build)
-
 

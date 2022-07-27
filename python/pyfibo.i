@@ -8,6 +8,38 @@
 
 %fragment("ToCpp", "header")
 {
+  int isNumericVector(PyObject* obj)
+  {
+    if (PySequence_Check(obj) || PyArray_CheckExact(obj))
+    {
+      int size = (int)PySequence_Length(obj);
+      for (int i = 0; i < size; ++i)
+      {
+        PyObject* item = PySequence_GetItem(obj, i);
+        if (!PyNumber_Check(item))
+          return SWIG_TypeError;
+      }
+      return SWIG_OK;
+    }
+    return SWIG_TypeError;
+  }
+  int isStringVector(PyObject* obj)
+  {
+    if (PySequence_Check(obj) || PyArray_CheckExact(obj))
+    {
+      // TODO : PyString_Check doesn't return true ?
+      //int size = (int)PySequence_Length(obj);
+      //for (int i = 0; i < size; ++i)
+      //{
+      //  PyObject* item = PySequence_GetItem(obj, i);
+      //  if (!PyString_Check(item))
+      //    return SWIG_TypeError;
+      //}
+      return SWIG_OK;
+    }
+    return SWIG_TypeError;
+  }
+
   template <typename Type> int convertToCpp(PyObject* obj, Type& value);
   
   template <> int convertToCpp(PyObject* obj, int& value)
@@ -97,6 +129,19 @@
     }
     return myres;
   }
+}
+
+// Add numerical vector typecheck typemaps for dispatching functions
+%typemap(typecheck, noblock=1, fragment="ToCpp", precedence=SWIG_TYPECHECK_DOUBLE_ARRAY) const VectorInt&,    VectorInt,
+                                                                                         const VectorDouble&, VectorDouble
+{
+  $1 = SWIG_CheckState(isNumericVector($input));
+}
+
+// Add generic vector typecheck typemaps for dispatching functions
+%typemap(typecheck, noblock=1, fragment="ToCpp", precedence=SWIG_TYPECHECK_STRING_ARRAY) const VectorString&, VectorString
+{
+  $1 = SWIG_CheckState(isStringVector($input));
 }
 
 // Include numpy interface for creating arrays
@@ -237,7 +282,6 @@
     
     return myres;
   }
-
 }
 
 //////////////////////////////////////////////////////////////
@@ -252,8 +296,12 @@
 
 %include ../swig/swig_exp.i
 
-///////////////////////////////////////////////////////////
-//     Add target language additional features below     //
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//                    Add C++ extension                     //
+//////////////////////////////////////////////////////////////
 
+
+//////////////////////////////////////////////////////////////
+//       Add target language additional features below      //
+//////////////////////////////////////////////////////////////
 

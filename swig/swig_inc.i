@@ -22,9 +22,9 @@
 %include std_string.i
 %template(DoNotUseVectorIntStd)     std::vector< int >;
 %template(DoNotUseVectorDoubleStd)  std::vector< double >;
+%template(DoNotUseVectorStringStd)  std::vector< std::string >; // Keep std::string here otherwise asptr fails!
 %template(DoNotUseVVectorIntStd)    std::vector< std::vector< int > >;
 %template(DoNotUseVVectorDoubleStd) std::vector< std::vector< double > >;
-%template(DoNotUseVectorStringStd)  std::vector< std::string >; // Keep std::string here otherwise asptr fails!
 
 
 ////////////////////////////////////////////////
@@ -132,3 +132,4 @@
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
+

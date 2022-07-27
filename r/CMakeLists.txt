@@ -59,6 +59,7 @@ set_property(SOURCE ${SRC} PROPERTY
 )
 
 # SWIG flags
+#set(CMAKE_SWIG_FLAGS -debug-classes -naturalvar)
 set(CMAKE_SWIG_FLAGS -naturalvar)
 # Note: Cannot use -doxygen feature because all documentation is in C++ body files
 # Note: Use -E option for seeing SWIG preprocessor output
@@ -75,7 +76,8 @@ swig_add_library(
 target_link_libraries(r_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
-set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-cast-function-type -Wno-unused-parameter") # Prevent some SWIG C++/R warnings
+#set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-cast-function-type -Wno-unused-parameter") # Prevent some SWIG C++/R warnings
+set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
 if ("${FLAVOR}" STREQUAL "Debug")
   set(COMP_FLAGS "${COMP_FLAGS} -g")
 endif()
@@ -137,6 +139,8 @@ file(GENERATE
 # TODO: Do also installation each time NAMESPACE.in or DESCRIPTION.in is modified
 add_custom_target(r_install
   COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars
+  COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars.win
+  COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars.ucrt
   COMMAND ${R_EXECUTABLE} CMD INSTALL --no-multiarch ${R_PACKAGE_DESTINATION_FOLDER}
   COMMENT "Installing R package"
   VERBATIM

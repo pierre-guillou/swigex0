@@ -187,3 +187,28 @@ const VectorString* TypeClass::testVectorStringPtr(const VectorString* a)
   std::cout << "Test VectorString Pointer: " << *a << std::endl;
   return &_varVectorString;
 }
+
+void TypeClass::testIntOverload(int a) const
+{
+  std::cout << "Test int Overload [Scalar]: " << a << std::endl;
+}
+void TypeClass::testIntOverload(const VectorInt& a) const
+{
+  std::cout << "Test int Overload [Vector]: " << a << std::endl;
+}
+void TypeClass::testDoubleOverload(double a) const
+{
+  std::cout << "Test double Overload [Scalar]: " << a << std::endl;
+}
+void TypeClass::testDoubleOverload(const VectorDouble& a) const
+{
+  std::cout << "Test double Overload [Vector]: " << a << std::endl;
+}
+void TypeClass::testStringOverload(String a) const
+{
+  std::cout << "Test String Overload [Single]: " << a << std::endl;
+}
+void TypeClass::testStringOverload(const VectorString& a) const
+{
+  std::cout << "Test String Overload [Vector]: " << a << std::endl;
+}

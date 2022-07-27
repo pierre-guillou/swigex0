@@ -1,13 +1,3 @@
-/******************************************************************************/
-/* COPYRIGHT ARMINES, ALL RIGHTS RESERVED                                     */
-/*                                                                            */
-/* THE CONTENT OF THIS WORK CONTAINS CONFIDENTIAL AND PROPRIETARY             */
-/* INFORMATION OF ARMINES. ANY DUPLICATION, MODIFICATION,                     */
-/* DISTRIBUTION, OR DISCLOSURE IN ANY FORM, IN WHOLE, OR IN PART, IS STRICTLY */
-/* PROHIBITED WITHOUT THE PRIOR EXPRESS WRITTEN PERMISSION OF ARMINES         */
-/*                                                                            */
-/* TAG_SOURCE_CG                                                              */
-/******************************************************************************/
 #pragma once
 
 #include "myfibo_export.hpp"
@@ -217,18 +207,18 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
   return *this;
 }
 
-// Force instantiation for VectorT (for windows export)
+// Force instantiation for VectorNumT (for windows export)
 #if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
   // Do not export VectorNumXXX to SWIG (no more instantiation needed)
   #ifndef SWIG
     MYFIBO_TEMPLATE_EXPORT template class VectorNumT<int>;
-    MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<int> >;
     MYFIBO_TEMPLATE_EXPORT template class VectorNumT<double>;
+    MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<int> >;
     MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<double> >;
   #endif
 #endif
 
-typedef VectorNumT<int> VectorInt;
-typedef VectorT<VectorNumT<int> > VectorVectorInt;
-typedef VectorNumT<double> VectorDouble;
+typedef VectorNumT<int>              VectorInt;
+typedef VectorNumT<double>           VectorDouble;
+typedef VectorT<VectorNumT<int> >    VectorVectorInt;
 typedef VectorT<VectorNumT<double> > VectorVectorDouble;

@@ -16,19 +16,19 @@ public:
 
   int testInt(int a);                                                          //   OK        OK
   const int& testIntRef(const int& a);                                         //   OK        OK
-  const int* testIntPtr(const int* a);                                         //   X_r1      X_p1
+  const int* testIntPtr(const int* a);                                         //   OK_r1     ## NOK_p1
 
-  VectorInt testVectorInt(VectorInt a);                                        //   OK        OK
-  const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK
-  const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK
+  VectorInt testVectorInt(VectorInt a);                                        //   OK        OK_p2
+  const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK_p2
+  const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK_p2
 
-  VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK
-  const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK
-  const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);          //   OK        OK
+  VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK_p2
+  const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK_p2
+  const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);          //   OK        OK_p2
 
   double testDouble(double a);                                                 //   OK        OK
   const double& testDoubleRef(const double& a);                                //   OK        OK
-  const double* testDoublePtr(const double* a);                                //   X_r1      X_p1
+  const double* testDoublePtr(const double* a);                                //   OK_r1     ## NOK_p1
 
   VectorDouble testVectorDouble(VectorDouble a);                               //   OK        OK
   const VectorDouble& testVectorDoubleRef(const VectorDouble& a);              //   OK        OK
@@ -40,11 +40,18 @@ public:
 
   String testString(String a);                                                 //   OK        OK
   const String& testStringRef(const String& a);                                //   OK        OK
-  const String*testStringPtr(const String* a);                                 //   X_r2      X_p1
+  const String*testStringPtr(const String* a);                                 //   ## NOK_r2 ## NOK_p1
 
   VectorString testVectorString(VectorString a);                               //   OK        OK
   const VectorString& testVectorStringRef(const VectorString& a);              //   OK        OK
   const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK
+
+  void testIntOverload(int a) const;                                           //   OK_r3     OK
+  void testIntOverload(const VectorInt& a) const;                              //   OK        OK_p2
+  void testDoubleOverload(double a) const;                                     //   OK_r3     OK
+  void testDoubleOverload(const VectorDouble& a) const;                        //   OK        OK
+  void testStringOverload(String a) const;                                     //   OK_r3     OK
+  void testStringOverload(const VectorString& a) const;                        //   OK        OK
 
 private:
   int                _varInt;
@@ -59,10 +66,14 @@ private:
 
 /*
 
- X_r1: Call OK but object return is externalptr so the value is not interpretable
+ OK_r1: Call OK but object returned is externalptr so the value is not interpretable
 
- X_r2: R Crashes with SEGV (don't know why)
+ NOK_r2: R Crashes with SEGV (don't know why)
 
- X_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
+ OK_r3: Call OK but a single value is seen as a vector
+
+ NOK_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
+
+ OK_p2: Call OK but if argument is a NumPy array, items must be dtype='object' (not integers)
 
 */

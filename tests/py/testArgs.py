@@ -56,11 +56,11 @@ if (d != 22.2) :
 #print(type(d))
 #if (d != 32.3) :
 #  print("Wrong double Pointer!")
-vd = a.testVectorDouble(np.array((23.1,33.1,43.1))) # From numpy.array
+vd = a.testVectorDouble([23.1,33.1,43.1]) # From list
 print(type(vd))
 if (vd[0] != 23.1 or vd[1] != 33.1 or vd[2] != 43.1) :
   print("Wrong VectorDouble!")
-vd = a.testVectorDoubleRef([24.2,34.2,44.2]) # From list
+vd = a.testVectorDoubleRef(np.array([24.2,34.2,44.2])) # From numpy.array
 print(type(vd))
 if (vd[0] != 24.2 or vd[1] != 34.2 or vd[2] != 44.2) :
   print("Wrong VectorDouble Reference!")
@@ -129,3 +129,18 @@ a.testVVectorDouble(201.1) # Single value
 a.testVVectorDouble((202.1)) # Only 1 vector with 1 item
 a.testVVectorDouble((203.1, 204.1)) # Only 1 vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)
+
+a.testIntOverload(12)
+a.testIntOverload((13, 14))
+a.testIntOverload([15, 16])
+a.testIntOverload(np.array([17, 18],dtype='object')) # TODO : From numpy.array (of integers): not yet possible
+
+a.testDoubleOverload(12.1)
+a.testDoubleOverload((13.1, 14.1))
+a.testDoubleOverload([15.1, 16.1])
+a.testDoubleOverload(np.array([17.1, 18.1]))
+
+a.testStringOverload("Str12.1")
+a.testStringOverload(("Str13.1", "Str14.1"))
+a.testStringOverload(["Str15.1", "Str16.1"])
+a.testStringOverload(np.array(["Str17.1", "Str18.1"]))

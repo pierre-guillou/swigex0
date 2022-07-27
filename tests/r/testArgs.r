@@ -176,3 +176,12 @@ v = a$testVVectorDouble(201.1) # Single value
 v = a$testVVectorDouble(c(202.1)) # Only 1 vector with 1 item
 v = a$testVVectorDouble(c(203.1, 204.1)) # Only 1 vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)
+
+invisible(a$testIntOverload(12)) # TODO : Will be seen as a vector (precedence of typecheck?)
+invisible(a$testIntOverload(c(13, 14))) 
+
+invisible(a$testDoubleOverload(12.1)) # TODO : Will be seen as a vector (precedence of typecheck?)
+invisible(a$testDoubleOverload(c(13.1, 14.1)))
+
+invisible(a$testStringOverload("Str12.1")) # TODO : Will be seen as a vector (precedence of typecheck?)
+invisible(a$testStringOverload(c("Str13.1", "Str14.1")))

@@ -8,6 +8,30 @@
 
 %fragment("ToCpp", "header")
 {
+  int isVector(SEXP obj)
+  {
+    //if (PySequence_Check(obj) || PyArray_CheckExact(obj))
+    //{
+      return SWIG_OK;
+    //}
+    //return SWIG_TypeError;
+  }
+  int isNumericVector(SEXP obj)
+  {
+    //if (PySequence_Check(obj) || PyArray_CheckExact(obj))
+    //{
+    //  int size = (int)PySequence_Length(obj);
+    //  for (int i = 0; i < size; ++i)
+    //  {
+    //    PyObject* item = PySequence_GetItem(obj, i);
+    //    if (!PyNumber_Check(item))
+    //      return SWIG_TypeError;
+    //  }
+      return SWIG_OK;
+    //}
+    //return SWIG_TypeError;
+  }
+  
   template <typename Type> int convertToCpp(SEXP obj, Type& value);
   
   template <> int convertToCpp(SEXP obj, int& value)
@@ -104,6 +128,31 @@
   }
 }
 
+// Add numerical typecheck typemaps for dispatching functions
+%typemap(rtypecheck) const int&,    int,
+                     const double&, iouble
+{
+  is.numeric($arg) && length($arg) == 1
+}
+
+// Add string typecheck typemaps for dispatching functions
+%typemap(rtypecheck) const String&, String
+{
+  is.character($arg) && length($arg) == 1
+}
+
+// Add numerical vector typecheck typemaps for dispatching functions
+%typemap(rtypecheck) const VectorInt&,    VectorInt,
+                     const VectorDouble&, VectorDouble
+{
+  is.numeric($arg) && length($arg) >= 1
+}
+
+// Add string vector typecheck typemaps for dispatching functions
+%typemap(rtypecheck) const VectorString&, VectorString
+{
+  is.character($arg) && length($arg) >= 1
+}
 
 %fragment("FromCpp", "header")
 {
@@ -162,8 +211,13 @@
 
 %include ../swig/swig_exp.i
 
-///////////////////////////////////////////////////////////
-//     Add target language additional features below     //
-///////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+//                    Add C++ extension                     //
+//////////////////////////////////////////////////////////////
+
+
+//////////////////////////////////////////////////////////////
+//       Add target language additional features below      //
+//////////////////////////////////////////////////////////////
 
 // TODO : Redirection of std::cout for windows RGui.exe users

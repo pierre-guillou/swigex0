@@ -266,8 +266,8 @@ VectorT<T>& VectorT<T>::operator<<(const VectorT<T>& v)
 #endif
 
 
-// Force instantiation for VectorT (for windows export)
-#if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
+// Force instantiation for VectorT (for Windows MSVC export)
+#ifdef _MSC_VER
   // Do not export VectorXXX to SWIG (no more instantiation needed)
   #ifndef SWIG
     MYFIBO_TEMPLATE_EXPORT template class VectorT<int>;

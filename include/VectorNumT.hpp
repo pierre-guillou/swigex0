@@ -140,7 +140,7 @@ const VectorNumT<T>& VectorNumT<T>::add(const VectorNumT<T>& v)
   if (v.size() != VectorNumT::size())
     throw("VectorNumT<T>::add: Wrong size");
   for (size_type i = 0, n = VectorNumT::size(); i < n; i++)
-    VectorNumT::set(i, VectorNumT::at(i)+v[i]);
+    VectorNumT::operator[](i) = VectorNumT::at(i)+v[i];
   return *this;
 }
 
@@ -150,7 +150,7 @@ const VectorNumT<T>& VectorNumT<T>::subtract(const VectorNumT<T>& v)
   if (v.size() != VectorNumT::size())
     throw("VectorNumT<T>::subtract: Wrong size");
   for (size_type i = 0, n = VectorNumT::size(); i < n; i++)
-    VectorNumT::set(i, VectorNumT::at(i)-v[i]);
+    VectorNumT::operator[](i) = VectorNumT::at(i)-v[i];
   return *this;
 }
 
@@ -160,7 +160,7 @@ const VectorNumT<T>& VectorNumT<T>::multiply(const VectorNumT<T>& v)
   if (v.size() != VectorNumT::size())
     throw("VectorNumT<T>::multiply: Wrong size");
   for (size_type i = 0, n = VectorNumT::size(); i < n; i++)
-    VectorNumT::set(i, VectorNumT::at(i)*v[i]);
+    VectorNumT::operator[](i) = VectorNumT::at(i)*v[i];
   return *this;
 }
 
@@ -173,7 +173,7 @@ const VectorNumT<T>& VectorNumT<T>::divide(const VectorNumT<T>& v)
   {
     if (abs(v[i]) < 1.e-10)
       throw("VectorNumT<T>::divide: division by 0");
-    VectorNumT::set(i, VectorNumT::at(i)/v[i]);
+    VectorNumT::operator[](i) = VectorNumT::at(i)/v[i];
   }
   return *this;
 }
@@ -208,8 +208,8 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
   return *this;
 }
 
-// Force instantiation for VectorNumT (for windows export)
-#if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
+// Force instantiation for VectorNumT (for Windows MSVC export)
+#ifdef _MSC_VER
   // Do not export VectorNumXXX to SWIG (no more instantiation needed)
   #ifndef SWIG
     MYFIBO_TEMPLATE_EXPORT template class VectorNumT<int>;

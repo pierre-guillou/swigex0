@@ -270,8 +270,8 @@
       if(*obj != NULL)
       {
         myres = SWIG_OK;
-        const unsigned int size = vec.size();
-        for(unsigned int i = 0; i < size && SWIG_IsOK(myres); i++)
+        SizeType size2 = vec.size();
+        for(SizeType i = 0; i < size2 && SWIG_IsOK(myres); i++)
         {
           PyObject* tuple;
           myres = vectorFromCpp(&tuple, vec.at(i));

@@ -5,11 +5,6 @@ typedef std::string String;
 
 #define DEFAULT_TITLE "Fibonacci List"
 
-#if defined(WIN32) || defined(_WIN32) || defined(WIN64) || defined(_WIN64)
-#pragma warning(disable: 4251)
-#pragma warning(disable: 4244)
-#endif
-
 #define INT_NA    -999
 #define DOUBLE_NA -999.999
 #define STRING_NA "NA"

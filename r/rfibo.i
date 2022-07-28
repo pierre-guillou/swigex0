@@ -213,12 +213,16 @@ function(x, i, value)
   x
 }
 
+setMethod('[',   '_p_VectorTT_int_t',                  getitem)
+setMethod('[<-', '_p_VectorTT_int_t',                  setitem)
+setMethod('[',   '_p_VectorTT_double_t',               getitem)
+setMethod('[<-', '_p_VectorTT_double_t',               setitem)
+setMethod('[',   '_p_VectorTT_std__string_t',          getitem)
+setMethod('[<-', '_p_VectorTT_std__string_t',          setitem)
 setMethod('[',   '_p_VectorNumTT_int_t',               getitem)
 setMethod('[<-', '_p_VectorNumTT_int_t',               setitem)
 setMethod('[',   '_p_VectorNumTT_double_t',            getitem)
 setMethod('[<-', '_p_VectorNumTT_double_t',            setitem)
-setMethod('[',   '_p_VectorTT_std__string_t',          getitem)
-setMethod('[<-', '_p_VectorTT_std__string_t',          setitem)
 #setMethod('[',   '_p_VectorTT_VectorNumTT_int_t_t',    getitem) # TODO : VectorVectorXXX getitem doesn't work yet
 #setMethod('[<-', '_p_VectorTT_VectorNumTT_int_t_t',    setitem) # TODO : VectorVectorXXX setitem doesn't work yet
 #setMethod('[',   '_p_VectorTT_VectorNumTT_double_t_t', getitem) # TODO : VectorVectorXXX getitem doesn't work yet

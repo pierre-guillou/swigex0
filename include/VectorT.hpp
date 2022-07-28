@@ -33,12 +33,12 @@ public:
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
   inline VectorT(size_type count, const T& value = T())               : _v(std::make_shared<Vector>(count, value)) { }
   inline VectorT(const T* first, const T* last)                       : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
-  inline VectorT(const VectorT& other)                                : _v(other._v) { }
+  inline VectorT(const VectorT& other) = default;
 #ifndef SWIG
   inline VectorT(std::initializer_list<T> init)                       : _v(std::make_shared<Vector>(init)) { }
   inline VectorT(VectorT&& other)                                     { _v.swap(other._v); }
 #endif
-  inline ~VectorT()                                                   { }
+  inline ~VectorT() = default;
 
 #ifndef SWIG
   inline operator const Vector&() const                               { return *_v; }
@@ -140,18 +140,18 @@ private:
 template <typename T>
 const T& VectorT<T>::get(int pos) const
 {
-  if (pos >= static_cast<int>(_v->size()))
+  if (pos < 0 || pos >= length())
     throw("VectorT<T>::get: index out of range");
-  return _v->operator[](pos);
+  return operator[](pos);
 }
 
 template <typename T>
 void VectorT<T>::set(int pos, const T& v)
 {
-  if (pos >= static_cast<int>(_v->size()))
+  if (pos < 0 || pos >= length())
     throw("VectorT<T>::set: index out of range");
   _detach();
-  _v->operator[](pos) = v;
+  operator[](pos) = v;
 }
 template <typename T>
 int VectorT<T>::length() const
@@ -162,25 +162,25 @@ int VectorT<T>::length() const
 template <typename T>
 const T& VectorT<T>::at(size_type pos) const
 {
-  if (pos >= _v->size())
+  if (pos >= size())
     throw("VectorT<T>::at: index out of range");
-  return _v->operator[](pos);
+  return operator[](pos);
 }
 
 template <typename T>
 T& VectorT<T>::at(size_type pos)
 {
-  if (pos >= _v->size())
+  if (pos >= size())
     throw("VectorT<T>::at: index out of range");
   _detach();
-  return _v->operator[](pos);
+  return operator[](pos);
 }
 
 #ifndef SWIG
 template <typename T>
 const T& VectorT<T>::operator[](size_type pos) const
 {
-  if (pos >= _v->size())
+  if (pos >= size())
     throw("VectorT<T>::operator[]: index out of range");
   return _v->operator[](pos);
 }
@@ -188,7 +188,7 @@ const T& VectorT<T>::operator[](size_type pos) const
 template <typename T>
 T& VectorT<T>::operator[](size_type pos)
 {
-  if (pos >= _v->size())
+  if (pos >= size())
     throw("VectorT<T>::operator[]: index out of range");
   _detach();
   return _v->operator[](pos);
@@ -211,7 +211,7 @@ template <typename T>
 void VectorT<T>::fill(const T& value, size_type size)
 {
   _detach();
-  _v->resize(size);
+  resize(size);
   std::fill(begin(), end(), value);
 }
 
@@ -250,7 +250,7 @@ template <typename T>
 VectorT<T>& VectorT<T>::operator<<(const T& value)
 {
   _detach();
-  _v->push_back(value);
+  push_back(value);
   return (*this);
 }
 
@@ -260,7 +260,7 @@ VectorT<T>& VectorT<T>::operator<<(const VectorT<T>& v)
   _detach();
   reserve(size() + v.size());
   std::for_each(v.cbegin(), v.cend(), [&](const T& value)
-                { _v->push_back(value); });
+                { push_back(value); });
   return (*this);
 }
 #endif

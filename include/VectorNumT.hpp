@@ -37,11 +37,11 @@ public:
   inline VectorNumT(const Vector& vec)                             : Parent(vec) { }
   inline VectorNumT(size_type count, const T& value = T())         : Parent(count, value) { }
   inline VectorNumT(const T* first, const T* last)                 : Parent(first, last) { }
-  inline VectorNumT(const VectorNumT& other)                       : Parent(other) { }
-
+  inline VectorNumT(const VectorNumT& other) = default;
 #ifndef SWIG
   inline VectorNumT(std::initializer_list<T> init)                 : Parent(init) { }
 #endif
+  inline ~VectorNumT() = default;
 
 // Only for C++ users
 // These functions are not available in target language

@@ -22,3 +22,16 @@ Test String Pointer: Str32
 Test VectorString: [Str23 Str33 Str43]
 Test VectorString Reference: [Str24 Str34 Str44]
 Test VectorString Pointer: [Str25 Str35 Str45]
+Test VectorInt: []
+Test VectorInt: [102]
+Test VectorDouble: []
+Test VectorDouble: [202.1]
+Test VectorString: []
+Test VectorString: [Str302]
+Test VectorVectorInt: []
+Test VectorVectorDouble: []
+Test int Overload [Scalar]: 12
+Test int Overload [Vector]: [13 14]
+Test double Overload [Scalar]: 12.1
+Test double Overload [Vector]: [13.1 14.1]
+Test String Overload [Single]: Str12.1

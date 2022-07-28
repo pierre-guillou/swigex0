@@ -40,6 +40,12 @@ const int* TypeClass::testIntPtr(const int* a)
   return &_varInt;
 }
 
+void TypeClass::testIntRefOut(int& a) const
+{
+  a = _varInt;
+  std::cout << "Test int Reference Out: " << a << std::endl;
+}
+
 VectorInt TypeClass::testVectorInt(VectorInt a)
 {
   _varVectorInt = a;
@@ -59,6 +65,12 @@ const VectorInt* TypeClass::testVectorIntPtr(const VectorInt* a)
   _varVectorInt = *a;
   std::cout << "Test VectorInt Pointer: " << *a << std::endl;
   return &_varVectorInt;
+}
+
+void TypeClass::testVectorIntRefOut(VectorInt& a) const
+{
+  a = _varVectorInt;
+  std::cout << "Test VectorInt Reference Out: " << a << std::endl;
 }
 
 VectorVectorInt TypeClass::testVVectorInt(VectorVectorInt a)
@@ -82,6 +94,11 @@ const VectorVectorInt* TypeClass::testVVectorIntPtr(const VectorVectorInt* a)
   return &_varVVectorInt;
 }
 
+void TypeClass::testVVectorIntRefOut(VectorVectorInt& a) const
+{
+  a = _varVVectorInt;
+  std::cout << "Test VectorVectorInt Reference Out: " << a << std::endl;
+}
 
 double TypeClass::testDouble(double a)
 {
@@ -102,6 +119,12 @@ const double* TypeClass::testDoublePtr(const double* a)
   _varDouble = *a;
   std::cout << "Test double Pointer: " << *a << std::endl;
   return &_varDouble;
+}
+
+void TypeClass::testDoubleRefOut(double& a) const
+{
+  a = _varDouble;
+  std::cout << "Test Double Reference Out: " << a << std::endl;
 }
 
 VectorDouble TypeClass::testVectorDouble(VectorDouble a)
@@ -125,6 +148,12 @@ const VectorDouble* TypeClass::testVectorDoublePtr(const VectorDouble* a)
   return &_varVectorDouble;
 }
 
+void TypeClass::testVectorDoubleRefOut(VectorDouble& a) const
+{
+  a = _varVectorDouble;
+  std::cout << "Test VectorDouble Reference Out: " << a << std::endl;
+}
+
 VectorVectorDouble TypeClass::testVVectorDouble(VectorVectorDouble a)
 {
   _varVVectorDouble = a;
@@ -144,6 +173,12 @@ const VectorVectorDouble* TypeClass::testVVectorDoublePtr(const VectorVectorDoub
   _varVVectorDouble = *a;
   std::cout << "Test VectorVectorDouble Pointer: " << *a << std::endl;
   return &_varVVectorDouble;
+}
+
+void TypeClass::testVVectorDoubleRefOut(VectorVectorDouble& a) const
+{
+  a = _varVVectorDouble;
+  std::cout << "Test VectorVectorDouble Reference Out: " << a << std::endl;
 }
 
 String TypeClass::testString(String a)
@@ -167,6 +202,12 @@ const String* TypeClass::testStringPtr(const String* a)
   return &_varString;
 }
 
+void TypeClass::testStringRefOut(String& a) const
+{
+  a = _varString;
+  std::cout << "Test String Reference Out: " << a << std::endl;
+}
+
 VectorString TypeClass::testVectorString(VectorString a)
 {
   _varVectorString = a;
@@ -186,6 +227,12 @@ const VectorString* TypeClass::testVectorStringPtr(const VectorString* a)
   _varVectorString = *a;
   std::cout << "Test VectorString Pointer: " << *a << std::endl;
   return &_varVectorString;
+}
+
+void TypeClass::testVectorStringRefOut(VectorString& a) const
+{
+  a = _varVectorString;
+  std::cout << "Test VectorString Reference Out: " << a << std::endl;
 }
 
 void TypeClass::testIntOverload(int a) const

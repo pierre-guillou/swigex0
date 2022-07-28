@@ -17,34 +17,42 @@ public:
   int testInt(int a);                                                          //   OK        OK
   const int& testIntRef(const int& a);                                         //   OK        OK
   const int* testIntPtr(const int* a);                                         //   OK_r1     ## NOK_p1
+  void testIntRefOut(int& a) const;                                            //   ## NOK_r4 ## NOK_p3
 
   VectorInt testVectorInt(VectorInt a);                                        //   OK        OK_p2
   const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK_p2
   const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK_p2
+  void testVectorIntRefOut(VectorInt& a) const;                                //   OK        OK
 
   VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK_p2
   const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK_p2
   const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);          //   OK        OK_p2
+  void testVVectorIntRefOut(VectorVectorInt& a) const;                         //   OK_r5     OK
 
   double testDouble(double a);                                                 //   OK        OK
   const double& testDoubleRef(const double& a);                                //   OK        OK
   const double* testDoublePtr(const double* a);                                //   OK_r1     ## NOK_p1
+  void testDoubleRefOut(double& a) const;                                      //   ## NOK_r4 ## NOK_p3
 
   VectorDouble testVectorDouble(VectorDouble a);                               //   OK        OK
   const VectorDouble& testVectorDoubleRef(const VectorDouble& a);              //   OK        OK
   const VectorDouble* testVectorDoublePtr(const VectorDouble* a);              //   OK        OK
+  void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK        OK
 
   VectorVectorDouble testVVectorDouble(VectorVectorDouble a);                  //   OK        OK
   const VectorVectorDouble& testVVectorDoubleRef(const VectorVectorDouble& a); //   OK        OK
   const VectorVectorDouble* testVVectorDoublePtr(const VectorVectorDouble* a); //   OK        OK
+  void testVVectorDoubleRefOut(VectorVectorDouble& a) const;                   //   OK_r5     ## NOK_p3
 
   String testString(String a);                                                 //   OK        OK
   const String& testStringRef(const String& a);                                //   OK        OK
   const String*testStringPtr(const String* a);                                 //   ## NOK_r2 ## NOK_p1
+  void testStringRefOut(String& a) const;                                      //   ## NOK_r4 ## NOK_p3
 
   VectorString testVectorString(VectorString a);                               //   OK        OK
   const VectorString& testVectorStringRef(const VectorString& a);              //   OK        OK
   const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK
+  void testVectorStringRefOut(VectorString& a) const;                          //   OK        OK
 
   void testIntOverload(int a) const;                                           //   OK_r3     OK
   void testIntOverload(const VectorInt& a) const;                              //   OK        OK_p2
@@ -72,8 +80,14 @@ private:
 
  OK_r3: Call OK but a single value is seen as a vector
 
+ NOK_r4: R Crashes with SEGV (output argument for scalar not supported)
+
+ OK_r5: Call OK but result VectorVectorXXX is non indicable (whereas getitem method has been added)
+
  NOK_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
 
  OK_p2: Call OK but if argument is a NumPy array, items must be dtype='object' (not integers)
 
+ NOK_p3: Scalar output reference or pointer arguments are not possible with SWIG
+         Instead, we must use %apply output (see https://www.swig.org/Doc4.0/SWIGDocumentation.html#Arguments)
 */

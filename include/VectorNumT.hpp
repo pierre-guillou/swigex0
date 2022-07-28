@@ -36,6 +36,7 @@ public:
   inline VectorNumT()                                              : Parent() { }
   inline VectorNumT(const Vector& vec)                             : Parent(vec) { }
   inline VectorNumT(size_type count, const T& value = T())         : Parent(count, value) { }
+  inline VectorNumT(const T* first, const T* last)                 : Parent(first, last) { }
   inline VectorNumT(const VectorNumT& other)                       : Parent(other) { }
 
 #ifndef SWIG
@@ -54,7 +55,7 @@ public:
   inline double mean() const;
   inline double norm() const;
 
-  inline T innerProduct(const VectorNumT<T>& v) const;
+  inline double innerProduct(const VectorNumT<T>& v) const;
 
   inline const VectorNumT<T>& add(const VectorNumT<T>& v);
   inline const VectorNumT<T>& subtract(const VectorNumT<T>& v);
@@ -81,7 +82,7 @@ template <typename T>
 T VectorNumT<T>::sum() const
 {
   if (VectorNumT::size() <= 0) return T();
-  T sum = 0.;
+  T sum = 0;
   for (size_type i = 0, n = VectorNumT::size(); i < n; i++)
     sum += VectorNumT::_v->at(i);
   return (sum);
@@ -90,7 +91,7 @@ T VectorNumT<T>::sum() const
 template <typename T>
 T VectorNumT<T>::max() const
 {
-  if (VectorNumT::size() <= 0) return 0.;
+  if (VectorNumT::size() <= 0) return 0;
   T max = std::numeric_limits<T>::min();
   for (auto v : *VectorNumT::_v)
     if (v > max) max = v;
@@ -100,7 +101,7 @@ T VectorNumT<T>::max() const
 template <typename T>
 T VectorNumT<T>::min() const
 {
-  if (VectorNumT::size() <= 0) return 0.;
+  if (VectorNumT::size() <= 0) return 0;
   T min = std::numeric_limits<T>::max();
   for (auto v : *VectorNumT::_v)
     if (v < min) min = v;
@@ -118,18 +119,18 @@ double VectorNumT<T>::mean() const
 template <typename T>
 double VectorNumT<T>::norm() const
 {
-  double ip = static_cast<double>(innerProduct(*this));
+  double ip = innerProduct(*this);
   return sqrt(ip);
 }
 
 template <typename T>
-T VectorNumT<T>::innerProduct(const VectorNumT<T>& v) const
+double VectorNumT<T>::innerProduct(const VectorNumT<T>& v) const
 {
   if (v.size() != VectorNumT::size())
     throw("VectorNumT<T>::innerProduct: Wrong size");
-  T prod = 0.;
+  double prod = 0.;
   for (size_type i = 0, n = VectorNumT::size(); i < n; i++)
-    prod += VectorNumT::at(i) * v[i];
+    prod += static_cast<double>(VectorNumT::at(i)) * static_cast<double>(v[i]);
   return prod;
 }
 

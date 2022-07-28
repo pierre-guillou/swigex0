@@ -15,9 +15,16 @@ if (i != 22)
 }
 i = a$testIntPtr(32)
 cat(class(i), "\n")
-#if (i != 32) # i is an externalptr
+#if (i != 32) # TODO : i is an externalptr
 #{
 #  cat("Wrong int Pointer!", "\n")
+#}
+#i = 5
+#a$testIntRefOut(i) # TODO : Output argument for scalar not supported
+#cat(class(i), "\n")
+#if (i != 22)
+#{
+#  cat("Wrong int Reference Out!", "\n")
 #}
 vi = a$testVectorInt(c(23,33,43))
 cat(class(vi), "\n")
@@ -36,6 +43,13 @@ cat(class(vi), "\n")
 if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
 {
   cat("Wrong VectorInt Pointer!", "\n")
+}
+vi = VectorInt()
+invisible(a$testVectorIntRefOut(vi)) # Output argument
+cat(class(vi), "\n")
+if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
+{
+  cat("Wrong VectorInt Reference Out!", "\n")
 }
 vvi = a$testVVectorInt(list(c(23,33,43),c(53,63),c(73,83,93)))
 cat(class(vvi), "\n")
@@ -61,6 +75,15 @@ if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
 {
   cat("Wrong VectorVectorInt Pointer!", "\n")
 }
+vvi = VectorVectorInt()
+invisible(a$testVVectorIntRefOut(vvi)) # Output argument
+cat(class(vvi), "\n") # TODO : vvi is a list and not indicable
+#if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
+#    vvi[[2]][1] != 55 || vvi[[2]][2] != 65 ||
+#    vvi[[3]][1] != 75 || vvi[[3]][2] != 85 || vvi[[3]][3] != 95)
+#{
+#  cat("Wrong VectorVectorInt Reference Out!", "\n")
+#}
 d = a$testDouble(12.1)
 cat(class(d), "\n")
 if (d != 12.1)
@@ -75,9 +98,16 @@ if (d != 22.2)
 }
 d = a$testDoublePtr(32.3)
 cat(class(d), "\n")
-#if (d != 32.3) # d is an externalptr
+#if (d != 32.3) # TODO : d is an externalptr
 #{
 #  cat("Wrong int Pointer!", "\n")
+#}
+#d = 5.0
+#a$testDoubleRefOut(d) # TODO : Output argument for scalar not supported
+#cat(class(d), "\n")
+#if (d != 22.2)
+#{
+#  cat("Wrong double Reference Out!", "\n")
 #}
 vi = a$testVectorDouble(c(23.1,33.1,43.1))
 cat(class(vi), "\n")
@@ -96,6 +126,13 @@ cat(class(vi), "\n")
 if (vi[1] != 25.3 || vi[2] != 35.3 || vi[3] != 45.3)
 {
   cat("Wrong VectorDouble Pointer!", "\n")
+}
+vd = VectorDouble()
+invisible(a$testVectorDoubleRefOut(vd)) # Output argument
+cat(class(vd), "\n")
+if (vd[1] != 25.3 || vd[2] != 35.3 || vd[3] != 45.3)
+{
+  cat("Wrong VectorDouble Reference Out!", "\n")
 }
 vvd = a$testVVectorDouble(list(c(23.1,33.1,43.1),c(53.1,63.1),c(73.1,83.1,93.1)))
 cat(class(vvd), "\n")
@@ -121,6 +158,15 @@ if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
 {
   cat("Wrong VectorVectorDouble Pointer!", "\n")
 }
+vvd = VectorVectorDouble()
+invisible(a$testVVectorDoubleRefOut(vvd)) # Output argument
+cat(class(vvd), "\n") # TODO : vvd is a list and not indicable
+#if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
+#    vvd[[2]][1] != 55.3 || vvd[[2]][2] != 65.3 ||
+#    vvd[[3]][1] != 75.3 || vvd[[3]][2] != 85.3 || vvd[[3]][3] != 95.3)
+#{
+#  cat("Wrong VectorVectorDouble Reference Out!", "\n")
+#}
 s = a$testString("Str12")
 cat(class(s), "\n")
 if (s != "Str12")
@@ -139,6 +185,13 @@ if (s != "Str22")
 #{
 #  cat("Wrong String Pointer!", "\n")
 #}
+#s = "SSS"
+#a$testStringRefOut(s) # TODO : Output argument for scalar not supported
+#cat(class(s), "\n")
+#if (s != "Str22")
+#{
+#  cat("Wrong String Reference Out!", "\n")
+#}
 vs = a$testVectorString(c("Str23","Str33","Str43"))
 cat(class(vs), "\n")
 if (vs[1] != "Str23" || vs[2] != "Str33" || vs[3] != "Str43")
@@ -156,6 +209,13 @@ cat(class(vs), "\n")
 if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 {
   cat("Wrong VectorString Pointer!", "\n")
+}
+vs = VectorString()
+invisible(a$testVectorStringRefOut(vs)) # Output argument
+cat(class(vs), "\n")
+if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
+{
+  cat("Wrong VectorString Reference Out!", "\n")
 }
 # No VectorVectorString (doesn't exist in the C++ library)
 v = a$testVectorInt(c()) # Empty vector

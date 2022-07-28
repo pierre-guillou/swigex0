@@ -32,6 +32,7 @@ public:
   inline VectorT()                                                    : _v(std::make_shared<Vector>()) { }
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
   inline VectorT(size_type count, const T& value = T())               : _v(std::make_shared<Vector>(count, value)) { }
+  inline VectorT(const T* first, const T* last)                       : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const VectorT& other)                                : _v(other._v) { }
 #ifndef SWIG
   inline VectorT(std::initializer_list<T> init)                       : _v(std::make_shared<Vector>(init)) { }
@@ -60,11 +61,18 @@ public:
   inline bool operator >(const VectorT& other) const                  { return *_v  > *other._v; }
   inline bool operator>=(const VectorT& other) const                  { return *_v >= *other._v; }
 
-  inline const T& at(size_type pos) const                             { if (pos >= _v->size()) throw("VectorT<T>::at: index out of range");                    return _v->operator[](pos); }
+  // For SWIG users (size_type is not much appreciated)
+  inline const T& get(int pos) const;
+  inline void set(int pos, const T& v);
+  inline int length() const;
+
 #ifndef SWIG
-  inline T& operator[](size_type pos)                                 { if (pos >= _v->size()) throw("VectorT<T>::operator[]: index out of range"); _detach(); return _v->operator[](pos); }
-  inline const T& operator[](size_type pos) const                     { if (pos >= _v->size()) throw("VectorT<T>::operator[]: index out of range");            return _v->operator[](pos); }
+  inline const T& at(size_type pos) const;
+  inline T& at(size_type pos);
+  inline const T& operator[](size_type pos) const;
+  inline T& operator[](size_type pos);
 #endif
+
   inline T& front()                                                   { _detach(); return _v->front(); }
   inline const T& front() const                                       { return _v->front(); }
   inline T& back()                                                    { _detach(); return _v->back(); }
@@ -81,6 +89,9 @@ public:
 
   inline void insert(size_type i, const T& value)                     { _detach(); _v->insert(begin() + i, value); }
   inline void insert(size_type i, size_type count, const T& value)    { _detach(); _v->insert(begin() + i, count, value); }
+  inline iterator insert(const_iterator pos,
+                         const_iterator first,
+                         const_iterator last )                        { _detach(); return _v->insert(pos, first, last); }
   inline void remove(size_type i)                                     { _detach(); _v->erase(begin() + i); }
   inline void remove(size_type i, size_type count)                    { _detach(); _v->erase(begin() + i, begin() + i + count); }
   inline iterator erase( const_iterator pos )                         { _detach(); return _v->erase(pos); }
@@ -108,15 +119,14 @@ public:
   inline const_reverse_iterator crend() const                         { return _v->crend(); }
 
 #ifndef SWIG
-  inline VectorT& operator<<(const T& value)                          { _detach(); _v->push_back(value); return (*this); }
-  inline VectorT& operator<<(const VectorT<T>& v)                     { _detach(); reserve(size() + v.size()); std::for_each(v.cbegin(), v.cend(), [&](const T& value) { _v->push_back(value); }); return (*this); }
+  inline VectorT& operator<<(const T& value);
+  inline VectorT& operator<<(const VectorT<T>& v);
 #endif
 
   inline void swap(VectorT& other);
   inline bool contains(const T& value) const;
   inline void fill(const T& value, size_type size = -1);
   inline void assign(const T* first, const T* last);
-  inline void set(size_type i, const T& value);
 
   inline String toString() const;
 
@@ -126,6 +136,64 @@ protected:
 private:
   inline void _detach();
 };
+
+template <typename T>
+const T& VectorT<T>::get(int pos) const
+{
+  if (pos >= static_cast<int>(_v->size()))
+    throw("VectorT<T>::get: index out of range");
+  return _v->operator[](pos);
+}
+
+template <typename T>
+void VectorT<T>::set(int pos, const T& v)
+{
+  if (pos >= static_cast<int>(_v->size()))
+    throw("VectorT<T>::set: index out of range");
+  _detach();
+  _v->operator[](pos) = v;
+}
+template <typename T>
+int VectorT<T>::length() const
+{
+  return static_cast<int>(_v->size());
+}
+
+template <typename T>
+const T& VectorT<T>::at(size_type pos) const
+{
+  if (pos >= _v->size())
+    throw("VectorT<T>::at: index out of range");
+  return _v->operator[](pos);
+}
+
+template <typename T>
+T& VectorT<T>::at(size_type pos)
+{
+  if (pos >= _v->size())
+    throw("VectorT<T>::at: index out of range");
+  _detach();
+  return _v->operator[](pos);
+}
+
+#ifndef SWIG
+template <typename T>
+const T& VectorT<T>::operator[](size_type pos) const
+{
+  if (pos >= _v->size())
+    throw("VectorT<T>::operator[]: index out of range");
+  return _v->operator[](pos);
+}
+
+template <typename T>
+T& VectorT<T>::operator[](size_type pos)
+{
+  if (pos >= _v->size())
+    throw("VectorT<T>::operator[]: index out of range");
+  _detach();
+  return _v->operator[](pos);
+}
+#endif
 
 template <typename T>
 void VectorT<T>::swap(VectorT& other)
@@ -155,13 +223,6 @@ void VectorT<T>::assign(const T* first, const T* last)
 }
 
 template <typename T>
-void VectorT<T>::set(size_type i, const T& value)
-{
-  _detach();
-  operator[](i) = value;
-}
-
-template <typename T>
 String VectorT<T>::toString() const
 {
   std::stringstream sstr;
@@ -183,6 +244,26 @@ void VectorT<T>::_detach()
     return;
   _v = std::make_shared<Vector>(*_v);
 }
+
+#ifndef SWIG
+template <typename T>
+VectorT<T>& VectorT<T>::operator<<(const T& value)
+{
+  _detach();
+  _v->push_back(value);
+  return (*this);
+}
+
+template <typename T>
+VectorT<T>& VectorT<T>::operator<<(const VectorT<T>& v)
+{
+  _detach();
+  reserve(size() + v.size());
+  std::for_each(v.cbegin(), v.cend(), [&](const T& value)
+                { _v->push_back(value); });
+  return (*this);
+}
+#endif
 
 
 // Force instantiation for VectorT (for windows export)

@@ -26,7 +26,6 @@
 %template(DoNotUseVVectorIntStd)    std::vector< std::vector< int > >;
 %template(DoNotUseVVectorDoubleStd) std::vector< std::vector< double > >;
 
-
 ////////////////////////////////////////////////
 // Conversion Target language => C++
 

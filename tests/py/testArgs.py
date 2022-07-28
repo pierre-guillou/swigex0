@@ -14,6 +14,11 @@ if (i != 22) :
 #print(type(i))
 #if (i != 32) :
 #  print("Wrong int Pointer!")
+#i = 5
+#a.testIntRefOut(i) # TODO : Output argument for scalar not supported
+#print(type(i))
+#if (i != 22) :
+#  print("Wrong int Reference Out!")
 vi = a.testVectorInt(np.array((23,33,43),dtype='object')) # TODO : From numpy.array (of integers): not yet possible
 print(type(vi))
 if (vi[0] != 23 or vi[1] != 33 or vi[2] != 43) :
@@ -26,7 +31,12 @@ vi = a.testVectorIntPtr((25,35,45)) # From tuple
 print(type(vi))
 if (vi[0] != 25 or vi[1] != 35 or vi[2] != 45) :
   print("Wrong VectorInt Pointer!")
-vvi = a.testVVectorInt(np.array([[23,33,43],[53,63],[73,83,93]])) # From numpy.array: possible because dtype=object (sub-vector sizes are not the same)
+vi = myfibo.VectorInt()
+a.testVectorIntRefOut(vi) # Output argument
+print(type(vi))
+if (vi[0] != 25 or vi[1] != 35 or vi[2] != 45) :
+  print("Wrong VectorInt Reference Out!")
+vvi = a.testVVectorInt(np.array([[23,33,43],[53,63],[73,83,93]], dtype='object')) # From numpy.array: possible because dtype='object' (sub-vector sizes are not the same)
 print(type(vvi))
 if (vvi[0][0] != 23 or vvi[0][1] != 33 or vvi[0][2] != 43 or
     vvi[1][0] != 53 or vvi[1][1] != 63 or
@@ -44,6 +54,13 @@ if (vvi[0][0] != 25 or vvi[0][1] != 35 or vvi[0][2] != 45 or
     vvi[1][0] != 55 or vvi[1][1] != 65 or
     vvi[2][0] != 75 or vvi[2][1] != 85 or vvi[2][2] != 95) :
   print("Wrong VectorVectorInt Pointer!")
+vvi = myfibo.VectorVectorInt()
+a.testVVectorIntRefOut(vvi) # Output argument
+print(type(vvi))
+if (vvi[0][0] != 25 or vvi[0][1] != 35 or vvi[0][2] != 45 or
+    vvi[1][0] != 55 or vvi[1][1] != 65 or
+    vvi[2][0] != 75 or vvi[2][1] != 85 or vvi[2][2] != 95) :
+  print("Wrong VectorVectorInt Reference Out!")
 d = a.testDouble(12.1)
 print(type(d))
 if (d != 12.1) :
@@ -56,6 +73,11 @@ if (d != 22.2) :
 #print(type(d))
 #if (d != 32.3) :
 #  print("Wrong double Pointer!")
+#d = 5.0
+#a.testDoubleRefOut(d) # TODO : Output argument for scalar not supported
+#print(type(d))
+#if (d != 22.2) :
+#  print("Wrong double Reference Out!")
 vd = a.testVectorDouble([23.1,33.1,43.1]) # From list
 print(type(vd))
 if (vd[0] != 23.1 or vd[1] != 33.1 or vd[2] != 43.1) :
@@ -68,6 +90,11 @@ vd = a.testVectorDoublePtr((25.3,35.3,45.3)) # From tuple
 print(type(vd))
 if (vd[0] != 25.3 or vd[1] != 35.3 or vd[2] != 45.3) :
   print("Wrong VectorDouble Pointer!")
+vd = myfibo.VectorDouble()
+a.testVectorDoubleRefOut(vd) # Output argument
+print(type(vd))
+if (vd[0] != 25.3 or vd[1] != 35.3 or vd[2] != 45.3) :
+  print("Wrong VectorDouble Reference Out!")
 vvd = a.testVVectorDouble(np.array([[23.1,33.1,43.1],[53.1,63.1],[73.1,83.1,93.1]]))  # From numpy.array
 print(type(vvd))
 if (vvd[0][0] != 23.1 or vvd[0][1] != 33.1 or vvd[0][2] != 43.1 or
@@ -86,6 +113,13 @@ if (vvd[0][0] != 25.3 or vvd[0][1] != 35.3 or vvd[0][2] != 45.3 or
     vvd[1][0] != 55.3 or vvd[1][1] != 65.3 or
     vvd[2][0] != 75.3 or vvd[2][1] != 85.3 or vvd[2][2] != 95.3) :
   print("Wrong VectorVectorDouble Pointer!")
+vvd = myfibo.VectorVectorDouble()
+a.testVVectorDoubleRefOut(vvd) # Output argument
+print(type(vvd))
+if (vvd[0][0] != 25.3 or vvd[0][1] != 35.3 or vvd[0][2] != 45.3 or
+    vvd[1][0] != 55.3 or vvd[1][1] != 65.3 or
+    vvd[2][0] != 75.3 or vvd[2][1] != 85.3 or vvd[2][2] != 95.3) :
+  print("Wrong VectorVectorDouble Reference Out!")
 s = a.testString("Str12")
 print(type(s))
 if (s != "Str12") :
@@ -98,6 +132,11 @@ if (s != "Str22") :
 #print(type(s))
 #if (s != "Str32") :
 #  print("Wrong String Pointer!")
+#s = "SSS"
+#a.testStringRefOut(s) # TODO : Output argument for scalar not supported
+#print(type(s))
+#if (s != "Str22") :
+#  print("Wrong String Reference Out!")
 vs = a.testVectorString(np.array(("Str23","Str33","Str43"))) # From numpy.array
 print(type(vs))
 if (vs[0] != 'Str23' or vs[1] != 'Str33' or vs[2] != 'Str43') :
@@ -110,6 +149,11 @@ vs = a.testVectorStringPtr(("Str25","Str35","Str45")) # From tuple
 print(type(vs))
 if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
   print("Wrong VectorString Pointer!")
+vs = myfibo.VectorString()
+a.testVectorStringRefOut(vs) # Output argument
+print(type(vs))
+if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
+  print("Wrong VectorString Reference Out!")
 # No VectorVectorString (doesn't exist in the C++ library)
 a.testVectorInt(()) # Empty vector
 a.testVectorInt(101) # Single value

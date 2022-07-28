@@ -103,5 +103,33 @@ int main()
   if ((*pvs)[0] != "Str25" || (*pvs)[1] != "Str35" || (*pvs)[2] != "Str45")
     std::cout << "Wrong VectorString Pointer!" << std::endl;
 
+  a.testVectorInt({}); // Empty vector
+  //a.testVectorInt(101); // Single value                              // TODO : Not possible in C++  (value interpreted as size_type)
+  a.testVectorInt({102}); // Vector with 1 item
+  a.testVectorDouble({}); // Empty vector
+  //a.testVectorDouble(201.1); // Single value                         // TODO : Not possible in C++  (value interpreted as size_type)
+  a.testVectorDouble({202.1}); // Vector with 1 item
+  a.testVectorString({}); // Empty vector
+  //a.testVectorString("Str301"); // Single value                      // TODO : Not possible in C++  (cannot convert value to size_type)
+  a.testVectorString({"Str302"}); // Vector with 1 item
+  a.testVVectorInt({}); // Empty vector
+  //a.testVVectorInt(101); // Single value                             // TODO : Not possible in C++  (value interpreted as size_type)
+  //a.testVVectorInt({102}); // Only 1 vector with 1 item              // TODO : Not possible in C++  (value interpreted as size_type)
+  //a.testVVectorInt({103, 104}); // Only 1 vector with 2 items        // TODO : Not possible in C++  (values interpreted as size_type)
+  a.testVVectorDouble({}); // Empty vector
+  //a.testVVectorDouble(201.1); // Single value                        // TODO : Not possible in C++  (value interpreted as size_type)
+  //a.testVVectorDouble({202.1}); // Only 1 vector with 1 item         // TODO : Not possible in C++  (cannot convert value to size_type)
+  //a.testVVectorDouble({203.1, 204.1}); // Only 1 vector with 2 items // TODO : Not possible in C++  (cannot convert value to size_type)
+  // No VectorVectorString (doesn't exist in the C++ library)
+
+  a.testIntOverload(12);
+  a.testIntOverload({13, 14});
+
+  a.testDoubleOverload(12.1);
+  a.testDoubleOverload({13.1, 14.1});
+
+  a.testStringOverload("Str12.1");
+  //a.testStringOverload({"Str13.1", "Str14.1"}); // TODO : Not possible in C++
+
   return 0;
 }

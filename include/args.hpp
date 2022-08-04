@@ -22,7 +22,7 @@ public:
   VectorInt testVectorInt(VectorInt a);                                        //   OK        OK_p2
   const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK_p2
   const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK_p2
-  void testVectorIntRefOut(VectorInt& a) const;                                //   OK        OK
+  void testVectorIntRefOut(VectorInt& a) const;                                //   OK_r6     OK
 
   VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK_p2
   const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK_p2
@@ -37,7 +37,7 @@ public:
   VectorDouble testVectorDouble(VectorDouble a);                               //   OK        OK
   const VectorDouble& testVectorDoubleRef(const VectorDouble& a);              //   OK        OK
   const VectorDouble* testVectorDoublePtr(const VectorDouble* a);              //   OK        OK
-  void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK        OK
+  void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK_r6     OK
 
   VectorVectorDouble testVVectorDouble(VectorVectorDouble a);                  //   OK        OK
   const VectorVectorDouble& testVVectorDoubleRef(const VectorVectorDouble& a); //   OK        OK
@@ -52,7 +52,7 @@ public:
   VectorString testVectorString(VectorString a);                               //   OK        OK
   const VectorString& testVectorStringRef(const VectorString& a);              //   OK        OK
   const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK
-  void testVectorStringRefOut(VectorString& a) const;                          //   OK        OK
+  void testVectorStringRefOut(VectorString& a) const;                          //   OK_r6     OK
 
   void testIntOverload(int a) const;                                           //   OK_r3     OK
   void testIntOverload(const VectorInt& a) const;                              //   OK        OK_p2
@@ -83,6 +83,8 @@ private:
  NOK_r4: R Crashes with SEGV (output argument for scalar not supported)
 
  OK_r5: Call OK but result VectorVectorXXX is non indicable (whereas getitem method has been added)
+
+ OK_r6: Call OK but result VectorXXX [] operator doesn't work with Ubuntu 20
 
  NOK_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
 

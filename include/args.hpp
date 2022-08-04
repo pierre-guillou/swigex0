@@ -78,7 +78,7 @@ private:
 
  NOK_r2: R Crashes with SEGV (don't know why)
 
- OK_r3: Call OK but a single value is seen as a vector
+ OK_r3: Call OK but a vector with only 1 item will be seen as a scalar
 
  NOK_r4: R Crashes with SEGV (output argument for scalar not supported)
 

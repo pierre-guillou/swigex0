@@ -306,28 +306,31 @@
 //       Add target language additional features below      //
 //////////////////////////////////////////////////////////////
 
-// Make VectorXXX python class subscriptable
-
 %pythoncode %{
-  import myfibo as mf
-  def setitem(self, idx, item):
-    if idx < 0 or idx >= self.length():
-      raise IndexError("Index out or range")
-    self.set(idx,item)
-    
-  def getitem(self, idx):
-    if idx < 0 or idx >= self.length():
-      raise IndexError("Index out or range")
-    return self.get(idx)
 
-  setattr(mf.VectorDouble,      "__getitem__", getitem)
-  setattr(mf.VectorDouble,      "__setitem__", setitem)
-  setattr(mf.VectorInt,         "__getitem__", getitem)
-  setattr(mf.VectorInt,         "__setitem__", setitem)
-  setattr(mf.VectorString,      "__getitem__", getitem)
-  setattr(mf.VectorString,      "__setitem__", setitem)
-  setattr(mf.VectorVectorDouble,"__getitem__", getitem)
-  setattr(mf.VectorVectorDouble,"__setitem__", setitem)
-  setattr(mf.VectorVectorInt,   "__getitem__", getitem)
-  setattr(mf.VectorVectorInt,   "__setitem__", setitem)
+import myfibo as mf
+
+## Add operator [] to VectorXXX R class [1-based index] ##
+## ---------------------------------------------------- ##
+
+def setitem(self, idx, item):
+  if idx < 0 or idx >= self.length():
+    raise IndexError("Index out or range")
+  self.set(idx,item)
+  
+def getitem(self, idx):
+  if idx < 0 or idx >= self.length():
+    raise IndexError("Index out or range")
+  return self.get(idx)
+
+setattr(mf.VectorDouble,      "__getitem__", getitem)
+setattr(mf.VectorDouble,      "__setitem__", setitem)
+setattr(mf.VectorInt,         "__getitem__", getitem)
+setattr(mf.VectorInt,         "__setitem__", setitem)
+setattr(mf.VectorString,      "__getitem__", getitem)
+setattr(mf.VectorString,      "__setitem__", setitem)
+setattr(mf.VectorVectorDouble,"__getitem__", getitem)
+setattr(mf.VectorVectorDouble,"__setitem__", setitem)
+setattr(mf.VectorVectorInt,   "__getitem__", getitem)
+setattr(mf.VectorVectorInt,   "__setitem__", setitem)
 %}

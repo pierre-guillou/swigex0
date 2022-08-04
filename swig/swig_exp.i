@@ -8,7 +8,7 @@
 %include myfibo_export.hpp // Do not forget this file in priority (for SWIG preprocessor)
 %include fibo_define.hpp
 
-//
+// Export VectorXXX classes
 %include VectorT.hpp
 %include VectorNumT.hpp
 %template(VectorTInt)         VectorT< int >;
@@ -26,6 +26,5 @@
 
 // For suppressing SWIG warning due to -keyword option (if used)
 #pragma SWIG nowarn=511
-#pragma SWIG nowarn=506
 
 

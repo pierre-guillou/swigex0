@@ -23,6 +23,7 @@
   }
   template <> int convertToCpp(SEXP obj, String& value)
   {
+    // TODO : Handle undefined or NA values
     return SWIG_AsVal_std_string(obj, &value);
   }
 
@@ -105,18 +106,14 @@
   }
 }
 
-// Add numerical vector typecheck typemaps for dispatching functions
-%typemap(rtypecheck) const VectorInt&,    VectorInt,
-                     const VectorDouble&, VectorDouble
-{
-  is.numeric($arg) && length($arg) >= 1
-}
-
-// Add string vector typecheck typemaps for dispatching functions
-%typemap(rtypecheck) const VectorString&, VectorString
-{
-  is.character($arg) && length($arg) >= 1
-}
+// Add typecheck typemaps for dispatching functions
+// TODO : rtypecheck doesn't take into account precedence. Vector with one item will be seen as a single scalar
+%typemap(rtypecheck, noblock=1) const int&, int                   { length($arg) == 1 && (is.integer($arg) || is.numeric($arg)) }
+%typemap(rtypecheck, noblock=1) const double&, double             { length($arg) == 1 &&  is.numeric($arg) }
+%typemap(rtypecheck, noblock=1) const String&, String             { length($arg) == 1 &&  is.character($arg) }
+%typemap(rtypecheck, noblock=1) const VectorInt&, VectorInt       { length($arg)  > 1 && (is.integer($arg) || is.numeric($arg)) }
+%typemap(rtypecheck, noblock=1) const VectorDouble&, VectorDouble { length($arg)  > 1 &&  is.numeric($arg) }
+%typemap(rtypecheck, noblock=1) const VectorString&, VectorString { length($arg)  > 1 &&  is.character($arg) }
 
 %fragment("FromCpp", "header")
 {
@@ -186,10 +183,11 @@
 
 // TODO : Redirection of std::cout for windows RGui.exe users
 
-// Make VectorXXX R class indicable [1-based index]
-
 %insert(s)
 %{
+
+## Add operator [] to VectorXXX R class [1-based index] ##
+## ---------------------------------------------------- ##
 
 "getitem" <-
 function(x, i)

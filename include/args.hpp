@@ -38,6 +38,8 @@ public:
   const VectorDouble& testVectorDoubleRef(const VectorDouble& a);              //   OK        OK
   const VectorDouble* testVectorDoublePtr(const VectorDouble* a);              //   OK        OK
   void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK_r6     OK
+  //void testStdVectorDoubleRef(double a);
+  //void testStdVectorDoubleRef(const std::vector<double>& a);
 
   VectorVectorDouble testVVectorDouble(VectorVectorDouble a);                  //   OK        OK
   const VectorVectorDouble& testVVectorDoubleRef(const VectorVectorDouble& a); //   OK        OK

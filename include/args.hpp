@@ -22,12 +22,12 @@ public:
   VectorInt testVectorInt(VectorInt a);                                        //   OK        OK_p2
   const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK_p2
   const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK_p2
-  void testVectorIntRefOut(VectorInt& a) const;                                //   OK_r6     OK
+  void testVectorIntRefOut(VectorInt& a) const;                                //   OK        OK
 
   VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK_p2
   const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK_p2
   const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);          //   OK        OK_p2
-  void testVVectorIntRefOut(VectorVectorInt& a) const;                         //   OK_r5     OK
+  void testVVectorIntRefOut(VectorVectorInt& a) const;                         //   OK        OK
 
   double testDouble(double a);                                                 //   OK        OK
   const double& testDoubleRef(const double& a);                                //   OK        OK
@@ -37,14 +37,14 @@ public:
   VectorDouble testVectorDouble(VectorDouble a);                               //   OK        OK
   const VectorDouble& testVectorDoubleRef(const VectorDouble& a);              //   OK        OK
   const VectorDouble* testVectorDoublePtr(const VectorDouble* a);              //   OK        OK
-  void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK_r6     OK
+  void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK        OK
   //void testStdVectorDoubleRef(double a);
   //void testStdVectorDoubleRef(const std::vector<double>& a);
 
   VectorVectorDouble testVVectorDouble(VectorVectorDouble a);                  //   OK        OK
   const VectorVectorDouble& testVVectorDoubleRef(const VectorVectorDouble& a); //   OK        OK
   const VectorVectorDouble* testVVectorDoublePtr(const VectorVectorDouble* a); //   OK        OK
-  void testVVectorDoubleRefOut(VectorVectorDouble& a) const;                   //   OK_r5     ## NOK_p3
+  void testVVectorDoubleRefOut(VectorVectorDouble& a) const;                   //   OK        ## NOK_p3
 
   String testString(String a);                                                 //   OK        OK
   const String& testStringRef(const String& a);                                //   OK        OK
@@ -54,7 +54,7 @@ public:
   VectorString testVectorString(VectorString a);                               //   OK        OK
   const VectorString& testVectorStringRef(const VectorString& a);              //   OK        OK
   const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK
-  void testVectorStringRefOut(VectorString& a) const;                          //   OK_r6     OK
+  void testVectorStringRefOut(VectorString& a) const;                          //   OK        OK
 
   void testIntOverload(int a) const;                                           //   OK_r3     OK
   void testIntOverload(const VectorInt& a) const;                              //   OK        OK_p2
@@ -83,10 +83,6 @@ private:
  OK_r3: Call OK but a vector with only 1 item will be seen as a scalar
 
  NOK_r4: R Crashes with SEGV (output argument for scalar not supported)
-
- OK_r5: Call OK but result VectorVectorXXX is non indicable (whereas getitem method has been added)
-
- OK_r6: Call OK but result VectorXXX [] operator doesn't work with Ubuntu 20
 
  NOK_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
 

@@ -316,12 +316,12 @@ import myfibo as mf
 def setitem(self, idx, item):
   if idx < 0 or idx >= self.length():
     raise IndexError("Index out or range")
-  self.set(idx,item)
+  self.setAt(idx,item)
   
 def getitem(self, idx):
   if idx < 0 or idx >= self.length():
     raise IndexError("Index out or range")
-  return self.get(idx)
+  return self.getAt(idx)
 
 setattr(mf.VectorDouble,      "__getitem__", getitem)
 setattr(mf.VectorDouble,      "__setitem__", setitem)

@@ -47,10 +47,10 @@ if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
 vi = VectorInt()
 invisible(a$testVectorIntRefOut(vi)) # Output argument
 cat(class(vi), "\n")
-#if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45) # TODO : VectorXXX [] operator doesn't work with Ubuntu 20
-#{
-#  cat("Wrong VectorInt Reference Out!", "\n")
-#}
+if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
+{
+  cat("Wrong VectorInt Reference Out!", "\n")
+}
 vvi = a$testVVectorInt(list(c(23,33,43),c(53,63),c(73,83,93)))
 cat(class(vvi), "\n")
 if (vvi[[1]][1] != 23 || vvi[[1]][2] != 33 || vvi[[1]][3] != 43 ||
@@ -77,13 +77,13 @@ if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
 }
 vvi = VectorVectorInt()
 invisible(a$testVVectorIntRefOut(vvi)) # Output argument
-cat(class(vvi), "\n") # TODO : vvi is a list and not indicable
-#if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
-#    vvi[[2]][1] != 55 || vvi[[2]][2] != 65 ||
-#    vvi[[3]][1] != 75 || vvi[[3]][2] != 85 || vvi[[3]][3] != 95)
-#{
-#  cat("Wrong VectorVectorInt Reference Out!", "\n")
-#}
+cat(class(vvi), "\n")
+if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
+    vvi[[2]][1] != 55 || vvi[[2]][2] != 65 ||
+    vvi[[3]][1] != 75 || vvi[[3]][2] != 85 || vvi[[3]][3] != 95)
+{
+  cat("Wrong VectorVectorInt Reference Out!", "\n")
+}
 d = a$testDouble(12.1)
 cat(class(d), "\n")
 if (d != 12.1)
@@ -130,10 +130,10 @@ if (vi[1] != 25.3 || vi[2] != 35.3 || vi[3] != 45.3)
 vd = VectorDouble()
 invisible(a$testVectorDoubleRefOut(vd)) # Output argument
 cat(class(vd), "\n")
-#if (vd[1] != 25.3 || vd[2] != 35.3 || vd[3] != 45.3) # TODO : VectorXXX [] operator doesn't work with Ubuntu 20
-#{
-#  cat("Wrong VectorDouble Reference Out!", "\n")
-#}
+if (vd[1] != 25.3 || vd[2] != 35.3 || vd[3] != 45.3)
+{
+  cat("Wrong VectorDouble Reference Out!", "\n")
+}
 vvd = a$testVVectorDouble(list(c(23.1,33.1,43.1),c(53.1,63.1),c(73.1,83.1,93.1)))
 cat(class(vvd), "\n")
 if (vvd[[1]][1] != 23.1 || vvd[[1]][2] != 33.1 || vvd[[1]][3] != 43.1 ||
@@ -160,13 +160,13 @@ if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
 }
 vvd = VectorVectorDouble()
 invisible(a$testVVectorDoubleRefOut(vvd)) # Output argument
-cat(class(vvd), "\n") # TODO : vvd is a list and not indicable
-#if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
-#    vvd[[2]][1] != 55.3 || vvd[[2]][2] != 65.3 ||
-#    vvd[[3]][1] != 75.3 || vvd[[3]][2] != 85.3 || vvd[[3]][3] != 95.3)
-#{
-#  cat("Wrong VectorVectorDouble Reference Out!", "\n")
-#}
+cat(class(vvd), "\n")
+if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
+    vvd[[2]][1] != 55.3 || vvd[[2]][2] != 65.3 ||
+    vvd[[3]][1] != 75.3 || vvd[[3]][2] != 85.3 || vvd[[3]][3] != 95.3)
+{
+  cat("Wrong VectorVectorDouble Reference Out!", "\n")
+}
 s = a$testString("Str12")
 cat(class(s), "\n")
 if (s != "Str12")
@@ -213,10 +213,10 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 vs = VectorString()
 invisible(a$testVectorStringRefOut(vs)) # Output argument
 cat(class(vs), "\n")
-#if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45") # TODO : VectorXXX [] operator doesn't work with Ubuntu 20
-#{
-#  cat("Wrong VectorString Reference Out!", "\n")
-#}
+if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
+{
+  cat("Wrong VectorString Reference Out!", "\n")
+}
 # No VectorVectorString (doesn't exist in the C++ library)
 v = a$testVectorInt(c()) # Empty vector
 v = a$testVectorInt(101) # Single value

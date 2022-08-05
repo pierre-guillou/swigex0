@@ -193,45 +193,24 @@
 function(x, i)
 {
   idx = as.integer(i)
-  sapply(idx, function(n) {
-    if (n < 1 || n > x$length())
-      stop("Index out of range")
-    x$getAt(n-1)
-  })
-}
-"setitem" <-
-function(x, i, value)
-{
-  idx = as.integer(i)
-  sapply(1:length(i), function(n) {
-    if (i[n] < 1 || i[n] > x$length())
-      stop("Index out of range")
-    x$setAt(i[n]-1, value[n])
-  })
-  x
-}
-"getitem2" <-
-function(x, i)
-{
-  idx = as.integer(i)
   if (length(idx) > 1) {
     sapply(idx, function(n) {
-      cat("n=",n,"\n")
       if (n < 1 || n > x$length())
         stop("Index out of range")
       x$getAt(n-1)
     }) 
   }
   else {
- 	x$getAt(idx-1)
+    x$getAt(idx-1)
   }
 }
-"setitem2" <-
+
+"setitem" <-
 function(x, i, value)
 {
   idx = as.integer(i)
   if (length(idx) > 1) {
-	lapply(1:length(i), function(n) {
+    sapply(1:length(i), function(n) {
       if (i[n] < 1 || i[n] > x$length())
         stop("Index out of range")
       x$setAt(i[n]-1, value[n])
@@ -243,19 +222,19 @@ function(x, i, value)
   x
 }
 
-setMethod('[',   '_p_VectorTT_int_t',                  getitem)
-setMethod('[<-', '_p_VectorTT_int_t',                  setitem)
-setMethod('[',   '_p_VectorTT_double_t',               getitem)
-setMethod('[<-', '_p_VectorTT_double_t',               setitem)
-setMethod('[',   '_p_VectorTT_std__string_t',          getitem)
-setMethod('[<-', '_p_VectorTT_std__string_t',          setitem)
-setMethod('[',   '_p_VectorNumTT_int_t',               getitem)
-setMethod('[<-', '_p_VectorNumTT_int_t',               setitem)
-setMethod('[',   '_p_VectorNumTT_double_t',            getitem)
-setMethod('[<-', '_p_VectorNumTT_double_t',            setitem)
-setMethod('[[',   '_p_VectorTT_VectorNumTT_int_t_t',    getitem2) # TODO : VectorVectorXXX getitem doesn't work yet
-setMethod('[[<-', '_p_VectorTT_VectorNumTT_int_t_t',    setitem2) # TODO : VectorVectorXXX setitem doesn't work yet
-setMethod('[[',   '_p_VectorTT_VectorNumTT_double_t_t', getitem2) # TODO : VectorVectorXXX getitem doesn't work yet
-setMethod('[[<-', '_p_VectorTT_VectorNumTT_double_t_t', setitem2) # TODO : VectorVectorXXX setitem doesn't work yet
+setMethod('[',    '_p_VectorTT_int_t',                  getitem)
+setMethod('[<-',  '_p_VectorTT_int_t',                  setitem)
+setMethod('[',    '_p_VectorTT_double_t',               getitem)
+setMethod('[<-',  '_p_VectorTT_double_t',               setitem)
+setMethod('[',    '_p_VectorTT_std__string_t',          getitem)
+setMethod('[<-',  '_p_VectorTT_std__string_t',          setitem)
+setMethod('[',    '_p_VectorNumTT_int_t',               getitem)
+setMethod('[<-',  '_p_VectorNumTT_int_t',               setitem)
+setMethod('[',    '_p_VectorNumTT_double_t',            getitem)
+setMethod('[<-',  '_p_VectorNumTT_double_t',            setitem)
+setMethod('[[',   '_p_VectorTT_VectorNumTT_int_t_t',    getitem)
+setMethod('[[<-', '_p_VectorTT_VectorNumTT_int_t_t',    setitem)
+setMethod('[[',   '_p_VectorTT_VectorNumTT_double_t_t', getitem)
+setMethod('[[<-', '_p_VectorTT_VectorNumTT_double_t_t', setitem)
 
 %}

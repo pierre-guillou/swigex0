@@ -50,7 +50,7 @@ The objective of this package is to provide an example of wrapping a C++ library
 Note: See shortcuts for 'make' users in Makefile file
 
 ### Configure project
-#### GCC / MinGW
+#### GCC / MinGW / CLang
     cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release
 #### MSVC (Visual)
     cmake -Bbuild -H.
@@ -66,7 +66,7 @@ Note: See shortcuts for 'make' users in Makefile file
 * Only the *shared* library (built by default) is installed.
 
 ### Build static library (and install Python package)
-#### GCC / MinGW
+#### GCC / MinGW / CLang
     cmake --build build --target python_install
 #### MSVC (Visual)
     cmake --build build --target python_install --config Release

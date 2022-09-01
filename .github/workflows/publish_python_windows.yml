@@ -22,8 +22,9 @@ jobs:
     strategy :
       matrix:
        python: 
-       # TODO: to be regularly updated according available pythons
-          - ["cp310","3.10.5"]
+       # TODO: to be regularly updated according available pythons on windows-latest
+       # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software
+          - ["cp310","3.10.6"]
           - ["cp39","3.9.13"]
           - ["cp38","3.8.10"]
           - ["cp37","3.7.9"]

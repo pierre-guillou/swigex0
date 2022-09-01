@@ -25,6 +25,10 @@ The following tools must be available for compiling and installing python packag
 * SWIG 4 or higher
 * Python 3 or higher with *pip*, *numpy* and *pybind11* modules installed
 
+The following tools must be available for compiling and installing R package:
+* SWIG 4 or higher
+* R 4 or higher
+* RTools 4 for Windows user
 
 See [required tools installation](#required-tools-installation) instructions below
 
@@ -91,6 +95,7 @@ Note: See shortcuts for 'make' users in Makefile file
 
     sudo apt install git
     sudo apt install cmake
+    sudo apt install r-base
     sudo apt install python3
     sudo apt install python3-pip
     sudo apt install swig
@@ -107,6 +112,7 @@ Notes:
 
     brew install git
     brew install cmake
+    brew install r
     brew install python3
     brew install swig
     python3 -m ensurepip --upgrade
@@ -133,7 +139,8 @@ Notes:
 
 * You must restart your computer after installing these requirements
 * The *Path* environment variable must be updated to make *swig.exe* (and *python.exe*) available in the batch command line (follow [this guide](https://stackoverflow.com/questions/44272416/how-to-add-a-folder-to-path-environment-variable-in-windows-10-with-screensho) to add *C:\\swigwin-4.0.2* and *C:\\Python39* folder in the *Path* variable and restart Windows)
-* The Windows C++ Compiler used must be the same that the one used for compiling Python (Visual C++). Using another compiler than Visual C++ is not supported.
+* For using Python package, the Windows C++ Compiler used must be the same that the one used for compiling Python (Visual C++). Using another compiler than Visual C++ is not supported.
+* For using R package, the Windows C++ Compiler must be RTools
 
 #### Microsoft Visual Studio
 

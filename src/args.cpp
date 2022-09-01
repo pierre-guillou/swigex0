@@ -153,22 +153,7 @@ void TypeClass::testVectorDoubleRefOut(VectorDouble& a) const
   a = _varVectorDouble;
   std::cout << "Test VectorDouble Reference Out: " << a << std::endl;
 }
-/*
-void TypeClass::testStdVectorDoubleRef(double a)
-{
-  std::cout << "Test testStdVectorDoubleRef [Scalar]: [" << a << "]" << std::endl;
-}
 
-void TypeClass::testStdVectorDoubleRef(const std::vector<double>& a)
-{
-  std::cout << "Test testStdVectorDoubleRef [Vector]: [";
-  for(auto i : a)
-  {
-    std::cout << i << " ";
-  }
-  std::cout << "]" << std::endl;
-}
-*/
 VectorVectorDouble TypeClass::testVVectorDouble(VectorVectorDouble a)
 {
   _varVVectorDouble = a;

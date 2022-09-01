@@ -2,9 +2,9 @@
 #
 #                      MYFIBO C++ Library and Wrappers
 #
-#                   Author: Fabien Ors (MINES Paris - PSL) 
+#                   Author: Fabien Ors (MINES PARIS - PSL) 
 #                   License: MIT
-#                   Date: June 2022
+#                   Date: Sept. 2022
 #
 #
 # 1. Configure project :
@@ -41,8 +41,8 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(myfibo
-  VERSION      0.0.14
-  DESCRIPTION  "Fibonacci simple C++ library and packages"
+  VERSION      0.0.15
+  DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
   HOMEPAGE_URL "https://github.com/fabien-ors/myfibo"
   LANGUAGES    C CXX # Enable C language for third party libraries
 )

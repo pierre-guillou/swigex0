@@ -19,14 +19,14 @@ public:
   const int* testIntPtr(const int* a);                                         //   OK_r1     ## NOK_p1
   void testIntRefOut(int& a) const;                                            //   ## NOK_r4 ## NOK_p3
 
-  VectorInt testVectorInt(VectorInt a);                                        //   OK        OK_p2
-  const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK_p2
-  const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK_p2
+  VectorInt testVectorInt(VectorInt a);                                        //   OK        OK
+  const VectorInt& testVectorIntRef(const VectorInt& a);                       //   OK        OK
+  const VectorInt* testVectorIntPtr(const VectorInt* a);                       //   OK        OK
   void testVectorIntRefOut(VectorInt& a) const;                                //   OK        OK
 
-  VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK_p2
-  const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK_p2
-  const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);          //   OK        OK_p2
+  VectorVectorInt testVVectorInt(VectorVectorInt a);                           //   OK        OK
+  const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);          //   OK        OK
+  const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);          //   OK        OK
   void testVVectorIntRefOut(VectorVectorInt& a) const;                         //   OK        OK
 
   double testDouble(double a);                                                 //   OK        OK
@@ -38,26 +38,24 @@ public:
   const VectorDouble& testVectorDoubleRef(const VectorDouble& a);              //   OK        OK
   const VectorDouble* testVectorDoublePtr(const VectorDouble* a);              //   OK        OK
   void testVectorDoubleRefOut(VectorDouble& a) const;                          //   OK        OK
-  //void testStdVectorDoubleRef(double a);
-  //void testStdVectorDoubleRef(const std::vector<double>& a);
 
   VectorVectorDouble testVVectorDouble(VectorVectorDouble a);                  //   OK        OK
   const VectorVectorDouble& testVVectorDoubleRef(const VectorVectorDouble& a); //   OK        OK
   const VectorVectorDouble* testVVectorDoublePtr(const VectorVectorDouble* a); //   OK        OK
-  void testVVectorDoubleRefOut(VectorVectorDouble& a) const;                   //   OK        ## NOK_p3
+  void testVVectorDoubleRefOut(VectorVectorDouble& a) const;                   //   OK        OK
 
   String testString(String a);                                                 //   OK        OK
   const String& testStringRef(const String& a);                                //   OK        OK
   const String*testStringPtr(const String* a);                                 //   ## NOK_r2 ## NOK_p1
   void testStringRefOut(String& a) const;                                      //   ## NOK_r4 ## NOK_p3
 
-  VectorString testVectorString(VectorString a);                               //   OK        OK
-  const VectorString& testVectorStringRef(const VectorString& a);              //   OK        OK
-  const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK
-  void testVectorStringRefOut(VectorString& a) const;                          //   OK        OK
+  VectorString testVectorString(VectorString a);                               //   OK        OK_p2
+  const VectorString& testVectorStringRef(const VectorString& a);              //   OK        OK_p2
+  const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK_p2
+  void testVectorStringRefOut(VectorString& a) const;                          //   OK        OK_p2
 
   void testIntOverload(int a) const;                                           //   OK_r3     OK
-  void testIntOverload(const VectorInt& a) const;                              //   OK        OK_p2
+  void testIntOverload(const VectorInt& a) const;                              //   OK        OK
   void testDoubleOverload(double a) const;                                     //   OK_r3     OK
   void testDoubleOverload(const VectorDouble& a) const;                        //   OK        OK
   void testStringOverload(String a) const;                                     //   OK_r3     OK
@@ -86,7 +84,7 @@ private:
 
  NOK_p1: TypeError: in method 'testXXXPtr', argument 1 of type 'XXX const *'
 
- OK_p2: Call OK but if argument is a NumPy array, items must be dtype='object' (not integers)
+ OK_p2: Call OK but vector of 1 string item is decomposed in a vector of one character items
 
  NOK_p3: Scalar output reference or pointer arguments are not possible with SWIG
          Instead, we must use %apply output (see https://www.swig.org/Doc4.0/SWIGDocumentation.html#Arguments)

@@ -6,6 +6,12 @@
 //    Specific typemaps and fragments for Python language   //
 //////////////////////////////////////////////////////////////
 
+// For converting NumPy integers to C++ integers
+// https://github.com/swig/swig/issues/888
+%begin %{
+#define SWIG_PYTHON_CAST_MODE
+%}
+
 %fragment("ToCpp", "header")
 {
   int isNumericVector(PyObject* obj)
@@ -44,8 +50,7 @@
   
   template <> int convertToCpp(PyObject* obj, int& value)
   {
-    // TODO : Handle undefined or NA values
-    // TODO : SWIG_AsVal_int fails when PyObject is a NumPy Array item!
+    // TODO : Handle undefined or NA values (but no NA for integers in python)
     return SWIG_AsVal_int(obj, &value);
   }
   template <> int convertToCpp(PyObject* obj, double& value)
@@ -158,7 +163,8 @@
 %fragment("FromCpp", "header")
 {
   template <typename Type> NPY_TYPES numpyType();
-  template <> NPY_TYPES numpyType<int>()    { return NPY_INT; }
+  // Integers in NumPy are all 64 bits by default
+  template <> NPY_TYPES numpyType<int>()    { return NPY_INT64; }
   template <> NPY_TYPES numpyType<double>() { return NPY_DOUBLE; }
   template <> NPY_TYPES numpyType<String>() { return NPY_STRING; }
   
@@ -169,18 +175,19 @@
   template <typename Type> bool hasFixedSize() { return TypeHelper<Type>::hasFixedSize(); }
   
   template <typename InputType> struct OutTraits; // Only used for fixed item size
-  template <> struct OutTraits<int>    { using OutputType = int; };
-  template <> struct OutTraits<double> { using OutputType = double; };
-  template <> struct OutTraits<String> { using OutputType = String; };
+  template <> struct OutTraits<int>     { using OutputType = int64_t; };
+  template <> struct OutTraits<double>  { using OutputType = double; };
+  template <> struct OutTraits<String>  { using OutputType = String; };
+  
   template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(Type value);
-  template <> int convertFromCpp(int value)
+  template <> int64_t convertFromCpp(int value)
   {
     // TODO : handle undefined or NA values
-    return value;
+    return (int64_t)(value);
   }
   template <> double convertFromCpp(double value)
   {
-    // TODO : handle undefined or NA values
+    // TODO : handle undefined or NA values 
     return value;
   }
   template <> String convertFromCpp(String value)
@@ -212,7 +219,7 @@
         myres = SWIG_OK;
       }
     }
-    else // Convert to a tuple
+    else // Convert to a tuple using standard std_vector
     {
       *obj = swig::from(vec.getVector());
       myres = (*obj) == NULL ? SWIG_TypeError : SWIG_OK;

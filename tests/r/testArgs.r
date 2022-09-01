@@ -33,6 +33,7 @@ if (vi[1] != 23 || vi[2] != 33 || vi[3] != 43)
   cat("Wrong VectorInt!", "\n")
 }
 vi = a$testVectorIntRef(c(24,34,44))
+vi = a$testVectorIntRef(vi)
 cat(class(vi), "\n")
 if (vi[1] != 24 || vi[2] != 34 || vi[3] != 44)
 {
@@ -60,6 +61,7 @@ if (vvi[[1]][1] != 23 || vvi[[1]][2] != 33 || vvi[[1]][3] != 43 ||
   cat("Wrong VectorVectorInt!", "\n")
 }
 vvi = a$testVVectorIntRef(list(c(24,34,44),c(54,64),c(74,84,94)))
+vvi = a$testVVectorIntRef(vvi)
 cat(class(vvi), "\n")
 if (vvi[[1]][1] != 24 || vvi[[1]][2] != 34 || vvi[[1]][3] != 44 ||
     vvi[[2]][1] != 54 || vvi[[2]][2] != 64 ||
@@ -116,6 +118,7 @@ if (vi[1] != 23.1 || vi[2] != 33.1 || vi[3] != 43.1)
   cat("Wrong VectorDouble!", "\n")
 }
 vi = a$testVectorDoubleRef(c(24.2,34.2,44.2))
+vi = a$testVectorDoubleRef(vi)
 cat(class(vi), "\n")
 if (vi[1] != 24.2 || vi[2] != 34.2 || vi[3] != 44.2)
 {
@@ -143,6 +146,7 @@ if (vvd[[1]][1] != 23.1 || vvd[[1]][2] != 33.1 || vvd[[1]][3] != 43.1 ||
   cat("Wrong VectorVectorDouble!", "\n")
 }
 vvd = a$testVVectorDoubleRef(list(c(24.2,34.2,44.2),c(54.2,64.2),c(74.2,84.2,94.2)))
+vvd = a$testVVectorDoubleRef(vvd)
 cat(class(vvd), "\n")
 if (vvd[[1]][1] != 24.2 || vvd[[1]][2] != 34.2 || vvd[[1]][3] != 44.2 ||
     vvd[[2]][1] != 54.2 || vvd[[2]][2] != 64.2 ||
@@ -199,6 +203,7 @@ if (vs[1] != "Str23" || vs[2] != "Str33" || vs[3] != "Str43")
   cat("Wrong VectorString!", "\n")
 }
 vs = a$testVectorStringRef(c("Str24","Str34","Str44"))
+vs = a$testVectorStringRef(vs)
 cat(class(vs), "\n")
 if (vs[1] != "Str24" || vs[2] != "Str34" || vs[3] != "Str44")
 {
@@ -218,6 +223,7 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
   cat("Wrong VectorString Reference Out!", "\n")
 }
 # No VectorVectorString (doesn't exist in the C++ library)
+
 v = a$testVectorInt(c()) # Empty vector
 v = a$testVectorInt(101) # Single value
 v = a$testVectorInt(c(102)) # Vector with 1 item
@@ -237,11 +243,11 @@ v = a$testVVectorDouble(c(202.1)) # Only 1 vector with 1 item
 v = a$testVVectorDouble(c(203.1, 204.1)) # Only 1 vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)
 
-invisible(a$testIntOverload(12)) # TODO : Will be seen as a vector (precedence of typecheck?)
+invisible(a$testIntOverload(12))
 invisible(a$testIntOverload(c(13, 14))) 
 
-invisible(a$testDoubleOverload(12.1)) # TODO : Will be seen as a vector (precedence of typecheck?)
+invisible(a$testDoubleOverload(12.1))
 invisible(a$testDoubleOverload(c(13.1, 14.1)))
 
-invisible(a$testStringOverload("Str12.1")) # TODO : Will be seen as a vector (precedence of typecheck?)
+invisible(a$testStringOverload("Str12.1"))
 invisible(a$testStringOverload(c("Str13.1", "Str14.1")))

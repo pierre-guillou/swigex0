@@ -10,7 +10,7 @@ i = a.testIntRef(22)
 print(type(i))
 if (i != 22) :
   print("Wrong int Reference!")
-#i = a.testIntPtr(32) # TODO : pointer scalar argument not yet possible
+#i = a.testIntPtr(32) # TODO : Pointer scalar argument not yet possible
 #print(type(i))
 #if (i != 32) :
 #  print("Wrong int Pointer!")
@@ -20,11 +20,12 @@ if (i != 22) :
 #if (i != 22) :
 #  print("Wrong int Reference Out!")
 
-vi = a.testVectorInt(np.array((23,33,43),dtype='object')) # TODO : From numpy.array (of integers): not yet possible
+vi = a.testVectorInt(np.array((23,33,43)))
 print(type(vi))
 if (vi[0] != 23 or vi[1] != 33 or vi[2] != 43) :
   print("Wrong VectorInt!")
 vi = a.testVectorIntRef([24,34,44]) # From list
+vi = a.testVectorIntRef(vi) # From a numpy array returned by the C++ library
 print(type(vi))
 if (vi[0] != 24 or vi[1] != 34 or vi[2] != 44) :
   print("Wrong VectorInt Reference!")
@@ -45,6 +46,7 @@ if (vvi[0][0] != 23 or vvi[0][1] != 33 or vvi[0][2] != 43 or
     vvi[2][0] != 73 or vvi[2][1] != 83 or vvi[2][2] != 93) :
   print("Wrong VectorVectorInt!")
 vvi = a.testVVectorIntRef([[24,34,44],[54,64,74],[74,84,94]]) # From list
+vvi = a.testVVectorIntRef(vvi) # From a numpy array returned by the C++ library
 print(type(vvi))
 if (vvi[0][0] != 24 or vvi[0][1] != 34 or vvi[0][2] != 44 or
     vvi[1][0] != 54 or vvi[1][1] != 64 or vvi[1][2] != 74 or
@@ -72,7 +74,7 @@ d = a.testDoubleRef(22.2)
 print(type(d))
 if (d != 22.2) :
   print("Wrong double Reference!")
-#d = a.testDoublePtr(32.3) # TODO : pointer scalar argument not yet possible
+#d = a.testDoublePtr(32.3) # TODO : Pointer scalar argument not yet possible
 #print(type(d))
 #if (d != 32.3) :
 #  print("Wrong double Pointer!")
@@ -87,6 +89,7 @@ print(type(vd))
 if (vd[0] != 23.1 or vd[1] != 33.1 or vd[2] != 43.1) :
   print("Wrong VectorDouble!")
 vd = a.testVectorDoubleRef(np.array([24.2,34.2,44.2])) # From numpy.array
+vd = a.testVectorDoubleRef(vd) # From numpy.array returned by the C++ library
 print(type(vd))
 if (vd[0] != 24.2 or vd[1] != 34.2 or vd[2] != 44.2) :
   print("Wrong VectorDouble Reference!")
@@ -100,14 +103,6 @@ print(type(vd))
 if (vd[0] != 25.3 or vd[1] != 35.3 or vd[2] != 45.3) :
   print("Wrong VectorDouble Reference Out!")
 
-#a.testStdVectorDoubleRef(0.0056)
-#a.testStdVectorDoubleRef((24.2,34.2,44.2))
-#vds = myfibo.DoNotUseVectorDoubleStd()
-#vds.push_back(101.1)
-#vds.push_back(202.2)
-#vds.push_back(303.3)
-#a.testStdVectorDoubleRef(vds)
-
 vvd = a.testVVectorDouble(np.array([[23.1,33.1,43.1],[53.1,63.1],[73.1,83.1,93.1]]))  # From numpy.array
 print(type(vvd))
 if (vvd[0][0] != 23.1 or vvd[0][1] != 33.1 or vvd[0][2] != 43.1 or
@@ -115,6 +110,7 @@ if (vvd[0][0] != 23.1 or vvd[0][1] != 33.1 or vvd[0][2] != 43.1 or
     vvd[2][0] != 73.1 or vvd[2][1] != 83.1 or vvd[2][2] != 93.1) :
   print("Wrong VectorVectorDouble!")
 vvd = a.testVVectorDoubleRef([[24.2,34.2,44.2],[54.2,64.2,74.2],[74.2,84.2,94.2]]) # From list
+vvd = a.testVVectorDoubleRef(vvd) # From numpy.array returned by the C++ library
 print(type(vvd))
 if (vvd[0][0] != 24.2 or vvd[0][1] != 34.2 or vvd[0][2] != 44.2 or
     vvd[1][0] != 54.2 or vvd[1][1] != 64.2 or vvd[1][2] != 74.2 or
@@ -142,7 +138,7 @@ s = a.testStringRef("Str22")
 print(type(s))
 if (s != "Str22") :
   print("Wrong String Reference!")
-#s = a.testStringPtr("Str32") # TODO : pointer scalar argument not yet possible
+#s = a.testStringPtr("Str32") # TODO : Pointer scalar argument not yet possible
 #print(type(s))
 #if (s != "Str32") :
 #  print("Wrong String Pointer!")
@@ -157,6 +153,7 @@ print(type(vs))
 if (vs[0] != 'Str23' or vs[1] != 'Str33' or vs[2] != 'Str43') :
   print("Wrong VectorString!")
 vs = a.testVectorStringRef(["Str24","Str34","Str44"]) # From list
+vs = a.testVectorStringRef(vs) # From numpy.array returned by the C++ library
 print(type(vs))
 if (vs[0] != 'Str24' or vs[1] != 'Str34' or vs[2] != 'Str44') :
   print("Wrong VectorString Reference!")
@@ -193,7 +190,7 @@ a.testVVectorDouble((203.1, 204.1)) # Only 1 vector with 2 items
 a.testIntOverload(12)
 a.testIntOverload((13, 14))
 a.testIntOverload([15, 16])
-a.testIntOverload(np.array([17, 18],dtype='object')) # TODO : From numpy.array (of integers): not yet possible
+a.testIntOverload(np.array([17, 18]))
 
 a.testDoubleOverload(12.1)
 a.testDoubleOverload((13.1, 14.1))

@@ -1,2 +1,0 @@
-## Overview
-Fibonacci R package

@@ -101,7 +101,7 @@
                                   VectorDouble, 
                                   VectorString
 {
-  const int errcode = vectorFromCpp(&($result), result);
+  const int errcode = vectorFromCpp(&($result), $1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
@@ -110,7 +110,7 @@
                                   VectorDouble*, VectorDouble&,
                                   VectorString*, VectorString&
 {
-  const int errcode = vectorFromCpp(&($result), *result);
+  const int errcode = vectorFromCpp(&($result), *$1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
@@ -118,7 +118,7 @@
 %typemap(out, fragment="FromCpp") VectorVectorInt, 
                                   VectorVectorDouble
 {
-  const int errcode = vectorVectorFromCpp(&($result), result);
+  const int errcode = vectorVectorFromCpp(&($result), $1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
@@ -126,7 +126,7 @@
 %typemap(out, fragment="FromCpp") VectorVectorInt*,    VectorVectorInt&,
                                   VectorVectorDouble*, VectorVectorDouble&
 {
-  const int errcode = vectorVectorFromCpp(&($result), *result);
+  const int errcode = vectorVectorFromCpp(&($result), *$1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }

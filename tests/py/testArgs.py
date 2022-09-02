@@ -170,21 +170,23 @@ if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
 # No VectorVectorString (doesn't exist in the C++ library)
 a.testVectorInt(()) # Empty vector
 a.testVectorInt(101) # Single value
-a.testVectorInt((102)) # Vector with 1 item
+a.testVectorInt((102,)) # Vector with 1 item
 a.testVectorDouble(()) # Empty vector
 a.testVectorDouble(201.1) # Single value
-a.testVectorDouble((202.1)) # Vector with 1 item
+a.testVectorDouble((202.1,)) # Vector with 1 item
 a.testVectorString(()) # Empty vector
-a.testVectorString('Str301') # Single value             # TODO : String is decomposed in a vector of one character items
-a.testVectorString(("Str302")) # Vector with 1 item     # TODO : String is decomposed in a vector of one character items
+a.testVectorString('Str301') # Single value             # TODO : Will never work: String is decomposed in a vector of one character items. Use ['xxx'] or ('xxx',)
+a.testVectorString(("Str302",)) # Vector with 1 item     
 a.testVVectorInt(()) # Empty vector
 a.testVVectorInt(101) # Single value
-a.testVVectorInt((102)) # Only 1 vector with 1 item
-a.testVVectorInt((103, 104)) # Only 1 vector with 2 items
-a.testVVectorDouble(()) # Empty vector
+a.testVVectorInt(((102,),)) # Only 1 vector with 1 item
+a.testVVectorInt(((103, 104),)) # Only 1 vector with 2 items
+a.testVVectorInt([[103, 104]]) # Should give same results
+a.testVVectorDouble((())) # Empty vector
 a.testVVectorDouble(201.1) # Single value
-a.testVVectorDouble((202.1)) # Only 1 vector with 1 item
-a.testVVectorDouble((203.1, 204.1)) # Only 1 vector with 2 items
+a.testVVectorDouble(((202.1,),)) # Only 1 vector with 1 item
+a.testVVectorDouble(((203.1, 204.1),)) # Only 1 vector with 2 items
+a.testVVectorDouble([[203.1, 204.1]]) # Should give same result
 # No VectorVectorString (doesn't exist in the C++ library)
 
 a.testIntOverload(12)

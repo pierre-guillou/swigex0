@@ -33,7 +33,8 @@ jobs:
     - name : Install wheel and twine
       run: |
        ${{env.PYTHON3}} -m pip install wheel
-       ${{env.PYTHON3}} -m pip install twine 
+       ${{env.PYTHON3}} -m pip install twine
+       ${{env.PYTHON3}} -m pip install numpy 
 
     - name : Build and upload wheel
       run: |

@@ -77,8 +77,11 @@ Test VectorVectorDouble: [[201.1]]
 Test VectorVectorDouble: [[202.1]]
 Test VectorVectorDouble: [[203.1] [204.1]]
 Test int Overload [Scalar]: 12
+Test int Overload [Scalar]: 12
 Test int Overload [Vector]: [13 14]
 Test double Overload [Scalar]: 12.1
+Test double Overload [Scalar]: 12.1
 Test double Overload [Vector]: [13.1 14.1]
+Test String Overload [Single]: Str12.1
 Test String Overload [Single]: Str12.1
 Test String Overload [Vector]: [Str13.1 Str14.1]

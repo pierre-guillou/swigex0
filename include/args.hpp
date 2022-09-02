@@ -54,11 +54,11 @@ public:
   const VectorString* testVectorStringPtr(const VectorString* a);              //   OK        OK_p2
   void testVectorStringRefOut(VectorString& a) const;                          //   OK        OK_p2
 
-  void testIntOverload(int a) const;                                           //   OK_r3     OK
+  void testIntOverload(int a) const;                                           //   OK_r3     OK_p4
   void testIntOverload(const VectorInt& a) const;                              //   OK        OK
-  void testDoubleOverload(double a) const;                                     //   OK_r3     OK
+  void testDoubleOverload(double a) const;                                     //   OK_r3     OK_p4
   void testDoubleOverload(const VectorDouble& a) const;                        //   OK        OK
-  void testStringOverload(String a) const;                                     //   OK_r3     OK
+  void testStringOverload(String a) const;                                     //   OK_r3     OK_p4
   void testStringOverload(const VectorString& a) const;                        //   OK        OK
 
 private:
@@ -88,4 +88,7 @@ private:
 
  NOK_p3: Scalar output reference or pointer arguments are not possible with SWIG
          Instead, we must use %apply output (see https://www.swig.org/Doc4.0/SWIGDocumentation.html#Arguments)
+
+OK_p4: Call OK but a vector with only 1 item will be seen as a scalar
+
 */

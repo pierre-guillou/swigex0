@@ -2,6 +2,10 @@ Test int: 12
 <class 'int'>
 Test int Reference: 22
 <class 'int'>
+Test int Pointer: 32
+<class 'int'>
+Test int Reference Out: 32
+<class 'int'>
 Test VectorInt: [23 33 43]
 <class 'numpy.ndarray'>
 Test VectorInt Reference: [24 34 44]
@@ -23,6 +27,10 @@ Test VectorVectorInt Reference Out: [[25 35 45] [55 65] [75 85 95]]
 Test double: 12.1
 <class 'float'>
 Test double Reference: 22.2
+<class 'float'>
+Test double Pointer: 32.3
+<class 'float'>
+Test Double Reference Out: 32.3
 <class 'float'>
 Test VectorDouble: [23.1 33.1 43.1]
 <class 'numpy.ndarray'>
@@ -55,6 +63,15 @@ Test VectorString Pointer: [Str25 Str35 Str45]
 <class 'tuple'>
 Test VectorString Reference Out: [Str25 Str35 Str45]
 <class 'myfibo.VectorString'>
+Test double: -999.999
+Test double: -999.999
+Test double: -999.999
+nan
+Test VectorDouble: [1 -999.999 3]
+[ 1. nan  3.]
+Test VectorInt: [1 -999 3]
+Test VectorInt: [1 -999 3]
+Test VectorInt: [1 -999 3]
 Test VectorInt: []
 Test VectorInt: [101]
 Test VectorInt: [102]

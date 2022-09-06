@@ -6,25 +6,57 @@
 //       Specific typemaps and fragments for R language     //
 //////////////////////////////////////////////////////////////
 
+%begin %{
+// For isnan
+#include <cmath>
+// For isinf
+#include <math.h>
+// For cout
+#include <iostream>
+%}
+
 %fragment("ToCpp", "header")
 {
-
   template <typename Type> int convertToCpp(SEXP obj, Type& value);
   
   template <> int convertToCpp(SEXP obj, int& value)
   {
-    // TODO : Handle undefined or NA values
-    return SWIG_AsVal_int(obj, &value);
+    int myres = SWIG_AsVal_int(obj, &value);
+    //std::cout << "convertToCpp(int): value=" << value << std::endl;
+    if (!SWIG_IsOK(myres))
+    {
+      // No error if integers are out of range (SWIG_OverflowError)
+      if (myres == SWIG_OverflowError)
+      {
+        myres = SWIG_OK;
+        value = getNAValue<int>();
+      }
+    }
+    else
+    {
+      // In R language, integer NA value is -2^31
+      if (value == std::numeric_limits<int>::min())
+      {
+        value = getNAValue<int>();
+      }
+    }
+    return myres;
   }
   template <> int convertToCpp(SEXP obj, double& value)
   {
-    // TODO : Handle undefined or NA values
-    return SWIG_AsVal_double(obj, &value);
+    int myres = SWIG_AsVal_double(obj, &value);
+    //std::cout << "convertToCpp(double): value=" << value << std::endl;
+    if (SWIG_IsOK(myres) && !isnan(value) && !isinf(value))
+      return myres;
+    value = getNAValue<double>();
+    return myres; 
   }
   template <> int convertToCpp(SEXP obj, String& value)
   {
-    // TODO : Handle undefined or NA values
-    return SWIG_AsVal_std_string(obj, &value);
+    int myres = SWIG_AsVal_std_string(obj, &value);
+    //std::cout << "convertToCpp(String): value=" << value << std::endl;
+    // No undefined
+    return myres;
   }
 
   // Certainly not the most efficient way to convert vectors.
@@ -72,7 +104,7 @@
     }
     return myres;
   }
-  
+
   template <typename VectorVector>
   int vectorVectorToCpp(SEXP obj, VectorVector& vvec)
   {
@@ -80,6 +112,7 @@
     using InputVector = typename VectorVector::value_type;
     
     // Conversion
+    vvec.clear();
     int myres = SWIG_OK;
     int size = (int)Rf_length(obj);
     if (size <= 1)
@@ -107,7 +140,6 @@
 }
 
 // Add typecheck typemaps for dispatching functions
-// TODO : rtypecheck doesn't take into account precedence. Vector with one item will be seen as a single scalar
 %typemap(rtypecheck, noblock=1) const int&, int                   { length($arg) == 1 && (is.integer($arg) || is.numeric($arg)) }
 %typemap(rtypecheck, noblock=1) const double&, double             { length($arg) == 1 &&  is.numeric($arg) }
 %typemap(rtypecheck, noblock=1) const String&, String             { length($arg) == 1 &&  is.character($arg) }
@@ -116,25 +148,81 @@
 %typemap(rtypecheck, noblock=1) const VectorString&, VectorString { length($arg)  > 1 &&  is.character($arg) }
 
 %fragment("FromCpp", "header")
-{
+{  
+  template <typename InputType> struct OutTraits;
+  template <> struct OutTraits<int>     { using OutputType = int; };
+  template <> struct OutTraits<double>  { using OutputType = double; };
+  template <> struct OutTraits<String>  { using OutputType = String; };
+  
+  template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(const Type& value);
+  template <> int convertFromCpp(const int& value)
+  {
+    //std::cout << "convertFromCpp(int): value=" << value << std::endl;
+    if (isNA<int>(value))
+      return std::numeric_limits<int>::min();
+    return value;
+  }
+  template <> double convertFromCpp(const double& value)
+  {
+    //std::cout << "convertFromCpp(double): value=" << value << std::endl;
+    if (isNA<double>(value))
+      return NAN;
+    return value;
+  }
+  template <> String convertFromCpp(const String& value)
+  {
+    //std::cout << "convertFromCpp(String): value=" << value << std::endl;
+    return value; // No special conversion provided
+  }
+  
+  template <typename Type> SEXP objectFromCpp(const Type& value);
+  template <> SEXP objectFromCpp(const int& value)
+  {
+    return Rf_ScalarInteger(convertFromCpp(value));
+  }
+  template <> SEXP objectFromCpp(const double& value)
+  {
+    return Rf_ScalarReal(convertFromCpp(value));
+  }
+  template <> SEXP objectFromCpp(const String& value)
+  {
+    return Rf_ScalarString(Rf_mkChar(convertFromCpp(value).c_str()));
+  }
+  
   template <typename Vector>
   int vectorFromCpp(SEXP* obj, const Vector& vec)
   {
-    *obj = swig::from(vec.getVector());
-    return (*obj) == NULL ? -1 : 0;
+    // Type definitions
+    int myres = SWIG_TypeError;
+    using SizeType = typename Vector::size_type;
+ 
+    // Test NA values
+    auto vec2 = vec.getVector();
+    SizeType size = vec2.size();
+    for(SizeType i = 0; i < size; i++)
+    {
+      vec2[i] = convertFromCpp(vec2[i]);
+    }
+    // Convert to R vector
+    *obj = swig::from(vec2);
+    myres = (*obj) == NULL ? SWIG_TypeError : SWIG_OK;
+    return myres;
   }
 
   template <typename VectorVector>
   int vectorVectorFromCpp(SEXP* obj, const VectorVector& vec)
   {
+    // Type definitions
     int myres = SWIG_TypeError;
+    using SizeType = typename VectorVector::size_type;
+
     // https://cpp.hotexamples.com/examples/-/-/Rf_allocVector/cpp-rf_allocvector-function-examples.html
-    const unsigned int size = vec.size();
+    SizeType size = vec.size();
     PROTECT(*obj = Rf_allocVector(VECSXP, size));
     if(*obj != NULL)
     {
       myres = SWIG_OK;
-      for(unsigned int i = 0; i < size && SWIG_IsOK(myres); i++)
+      for(SizeType i = 0; i < size && SWIG_IsOK(myres); i++)
       {
         SEXP rvec;
         myres = vectorFromCpp(&rvec, vec.at(i));
@@ -147,10 +235,7 @@
   }
 }
 
-%typemap(scoerceout) int,    int*,    int&,
-                     double, double*, double&
- %{    %}
-
+// This for automatically convert R lists to externalptr
 %typemap(scoerceout) VectorInt,    VectorInt*,    VectorInt&,
                      VectorDouble, VectorDouble*, VectorDouble&,
                      VectorString, VectorString*, VectorString&

@@ -41,11 +41,10 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(myfibo
-  VERSION      0.0.15
-  DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
-  HOMEPAGE_URL "https://github.com/fabien-ors/myfibo"
-  LANGUAGES    C CXX # Enable C language for third party libraries
-)
+        VERSION      0.0.15
+        DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
+        HOMEPAGE_URL "https://github.com/fabien-ors/myfibo"
+        LANGUAGES    C CXX) # Enable C language for third party libraries
 
 ####################################################
 ## CONFIGURATION
@@ -84,7 +83,6 @@ include(cmake/cpp.cmake)
 # TODO : Add doxygen feature
 #include(cmake/doxygen.cmake)
 include(cmake/install.cmake)
-
 
 ####################################################
 ## PACKAGES

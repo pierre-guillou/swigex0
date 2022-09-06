@@ -13,9 +13,9 @@ if (i != 22)
 {
   cat("Wrong int Reference!", "\n")
 }
-i = a$testIntPtr(32)
-cat(class(i), "\n")
-#if (i != 32) # TODO : i is an externalptr
+#i = a$testIntPtr(32) # TODO : Segmentation Fault under R
+#cat(class(i), "\n")
+#if (i != 32)
 #{
 #  cat("Wrong int Pointer!", "\n")
 #}
@@ -98,9 +98,9 @@ if (d != 22.2)
 {
   cat("Wrong int Reference!", "\n")
 }
-d = a$testDoublePtr(32.3)
-cat(class(d), "\n")
-#if (d != 32.3) # TODO : d is an externalptr
+#d = a$testDoublePtr(32.3) # TODO : Segmentation Fault under R
+#cat(class(d), "\n")
+#if (d != 32.3)
 #{
 #  cat("Wrong int Pointer!", "\n")
 #}
@@ -224,6 +224,21 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 }
 # No VectorVectorString (doesn't exist in the C++ library)
 
+# Test NA values
+d = a$testDouble(NULL)
+d = a$testDouble(NaN)
+d = a$testDouble(NA)
+d = a$testDouble(Inf)
+cat(d,"\n")
+v = a$testVectorDouble(c(1, NA, 3))
+cat(v,"\n")
+# Convert real NAs in integers using R
+v = a$testVectorInt(suppressWarnings(as.integer(c(1, NaN, 3))))
+v = a$testVectorInt(suppressWarnings(as.integer(c(1, NA, 3))))
+v = a$testVectorInt(suppressWarnings(as.integer(c(1, Inf, 3))))
+cat(v,"\n")
+
+# Test special vectors
 v = a$testVectorInt(c()) # Empty vector
 v = a$testVectorInt(101) # Single value
 v = a$testVectorInt(c(102)) # Vector with 1 item

@@ -6,10 +6,34 @@
 //    Specific typemaps and fragments for Python language   //
 //////////////////////////////////////////////////////////////
 
+%begin %{
 // For converting NumPy integers to C++ integers
 // https://github.com/swig/swig/issues/888
-%begin %{
 #define SWIG_PYTHON_CAST_MODE
+// For isnan
+#include <cmath>
+// For isinf
+#include <math.h>
+// For cout
+#include <iostream>
+
+// Numpy default integer type is different according the OS
+// The NA value for integers is tested differently
+// Remind that there is no standard NaN for integers in python
+
+// Try by executing this:
+// type(np.asarray(np.array([1]), dtype=int)[0])
+// np.asarray(np.array([1, np.NaN, 3]), dtype=int)
+
+#if defined(_WIN32) || defined(_WIN64)
+  #define NPY_INT_IN_TYPE    NPY_INT
+  #define NPY_INT_OUT_TYPE   int
+  #define NPY_INT_IS_NA(r,v) v == std::numeric_limits<NPY_INT_OUT_TYPE>::min()
+#else
+  #define NPY_INT_IN_TYPE    NPY_INT64
+  #define NPY_INT_OUT_TYPE   int64_t
+  #define NPY_INT_IS_NA(r,v) r == SWIG_OverflowError
+#endif
 %}
 
 %fragment("ToCpp", "header")
@@ -33,14 +57,13 @@
   {
     if (PySequence_Check(obj) || PyArray_CheckExact(obj))
     {
-      // TODO : PyString_Check doesn't return true ?
-      //int size = (int)PySequence_Length(obj);
-      //for (int i = 0; i < size; ++i)
-      //{
-      //  PyObject* item = PySequence_GetItem(obj, i);
-      //  if (!PyString_Check(item))
-      //    return SWIG_TypeError;
-      //}
+      int size = (int)PySequence_Length(obj);
+      for (int i = 0; i < size; ++i)
+      {
+        PyObject* item = PySequence_GetItem(obj, i);
+        if (!PyUnicode_Check(item))
+          return SWIG_TypeError;
+      }
       return SWIG_OK;
     }
     return SWIG_TypeError;
@@ -50,18 +73,32 @@
   
   template <> int convertToCpp(PyObject* obj, int& value)
   {
-    // TODO : Handle undefined or NA values (but no NA for integers in python)
-    return SWIG_AsVal_int(obj, &value);
+    // No NaN or infinite value for integers, but numpy converts np.nan in signed int64 minimum (-2^63) (on Linux)
+    // All integers in C++ are 32 bits so all integers outside from ]-2^31, 2^31] are NA 
+    int myres = SWIG_AsVal_int(obj, &value);
+    //std::cout << "convertToCpp(int): value=" << value << std::endl;
+    if (NPY_INT_IS_NA(myres, value))
+    {
+      myres = SWIG_OK;
+      value = getNAValue<int>();
+    }
+    return myres;
   }
   template <> int convertToCpp(PyObject* obj, double& value)
   {
-    // TODO : Handle undefined or NA values
-    return SWIG_AsVal_double(obj, &value);
+    int myres = SWIG_AsVal_double(obj, &value);
+    //std::cout << "convertToCpp(double): value=" << value << std::endl;
+    if (SWIG_IsOK(myres) && !isnan(value) && !isinf(value))
+      return myres;
+    value = getNAValue<double>();
+    return myres; 
   }
   template <> int convertToCpp(PyObject* obj, String& value)
   {
+    int myres = SWIG_AsVal_std_string(obj, &value);
+    //std::cout << "convertToCpp(String): value=" << value << std::endl;
     // No undefined
-    return SWIG_AsVal_std_string(obj, &value);
+    return myres;
   }
   
   template <typename Vector>
@@ -164,7 +201,7 @@
 {
   template <typename Type> NPY_TYPES numpyType();
   // Integers in NumPy are all 64 bits by default
-  template <> NPY_TYPES numpyType<int>()    { return NPY_INT64; }
+  template <> NPY_TYPES numpyType<int>()    { return NPY_INT_IN_TYPE; }
   template <> NPY_TYPES numpyType<double>() { return NPY_DOUBLE; }
   template <> NPY_TYPES numpyType<String>() { return NPY_STRING; }
   
@@ -175,24 +212,47 @@
   template <typename Type> bool hasFixedSize() { return TypeHelper<Type>::hasFixedSize(); }
   
   template <typename InputType> struct OutTraits; // Only used for fixed item size
-  template <> struct OutTraits<int>     { using OutputType = int64_t; };
+  template <> struct OutTraits<int>     { using OutputType = NPY_INT_OUT_TYPE; };
   template <> struct OutTraits<double>  { using OutputType = double; };
-  template <> struct OutTraits<String>  { using OutputType = String; };
+  template <> struct OutTraits<String>  { using OutputType = const char*; };
   
-  template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(Type value);
-  template <> int64_t convertFromCpp(int value)
+  template <typename Type> typename OutTraits<Type>::OutputType convertFromCpp(const Type& value);
+  template <> NPY_INT_OUT_TYPE convertFromCpp(const int& value)
   {
-    // TODO : handle undefined or NA values
-    return (int64_t)(value);
+    //std::cout << "convertFromCpp(int): value=" << value << std::endl;
+    NPY_INT_OUT_TYPE vres = static_cast<NPY_INT_OUT_TYPE>(value);
+    // No NaN or infinite value for integers, but numpy converts np.nan in signed int64 minimum (-2^63) (on Linux)
+    if (isNA<int>(value))
+      vres = std::numeric_limits<NPY_INT_OUT_TYPE>::min();
+    return vres;
   }
-  template <> double convertFromCpp(double value)
+  template <> double convertFromCpp(const double& value)
   {
-    // TODO : handle undefined or NA values 
+    //std::cout << "convertFromCpp(double): value=" << value << std::endl;
+    if (isNA<double>(value))
+    {
+      return std::nan("");
+    }
     return value;
   }
-  template <> String convertFromCpp(String value)
+  template <> const char* convertFromCpp(const String& value)
   {
-    return value; // No special conversion provided
+    //std::cout << "convertFromCpp(String): value=" << value << std::endl;
+    return value.c_str(); // No special conversion provided
+  }
+  
+  template <typename Type> PyObject* objectFromCpp(const Type& value);
+  template <> PyObject* objectFromCpp(const int& value)
+  {
+    return PyLong_FromLongLong(convertFromCpp(value));
+  }
+  template <> PyObject* objectFromCpp(const double& value)
+  {
+    return PyFloat_FromDouble(convertFromCpp(value));
+  }
+  template <> PyObject* objectFromCpp(const String& value)
+  {
+    return PyUnicode_FromString(convertFromCpp(value));
   }
   
   template <typename Vector>

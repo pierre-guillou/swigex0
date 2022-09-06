@@ -1,4 +1,5 @@
-# This Makefile is just a shortcut to cmake commands for make users (Linux-gcc or Windows-msys)
+# This Makefile is just a shortcut to cmake commands
+# for make users (Linux-GCC, MacOS-clang or Windows-Rtools)
 #
 # Call 'make' with one of this target:
 # 
@@ -10,17 +11,15 @@
 #  - install        Install myfibo shared library [and html doxymentation]
 #  - uninstall      Uninstall myfibo shared library [and html doxymentation]
 #
-# Python wrapper (only for Linux-gcc):
+# Python wrapper (only for Linux-GCC or MacOS-clang):
 #  - python_doc     Build python package documentation [optional] [TODO]
 #  - python_build   Build python wrapper [and its documentation]
 #  - python_install Install python package [and its documentation]
-#  - python_upload  Build python package distribution and upload to PyPi [and its documentation] [TODO]
 #
 # R wrapper:
 #  - r_doc          Build R package documentation [optional] [TODO]
 #  - r_build        Build R wrapper [and its documentation]
 #  - r_install      Install R package [and its documentation]
-#  - r_upload       Build R package distribution and upload to CRAN-like [and its documentation] [TODO]
 #
 # Non-regression tests:
 #  - check_cpp      Execute non-regression tests (cpp)
@@ -103,7 +102,7 @@ uninstall:
 
 
 
-.PHONY: python_doc python_build python_install python_upload
+.PHONY: python_doc python_build python_install
 
 python_doc: cmake
 	@echo "Target python_doc not yet implemented"
@@ -114,12 +113,8 @@ python_build: cmake
 python_install: cmake
 	@cmake --build $(BUILD_DIR) --target python_install -- --no-print-directory $(N_PROC_OPT)
 
-python_upload: cmake
-	@echo "Target python_upload not yet implemented"
 
-
-
-.PHONY: r_doc r_build r_install r_upload
+.PHONY: r_doc r_build r_install
 
 r_doc: cmake
 	@echo "Target r_doc not yet implemented"
@@ -129,10 +124,6 @@ r_build: cmake
 
 r_install: cmake
 	@cmake --build $(BUILD_DIR) --target r_install -- --no-print-directory $(N_PROC_OPT)
-
-r_upload: cmake
-	@echo "Target r_upload not yet implemented"
-
 
 
 .PHONY: check_cpp check_py check_r check

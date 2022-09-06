@@ -10,14 +10,14 @@ i = a.testIntRef(22)
 print(type(i))
 if (i != 22) :
   print("Wrong int Reference!")
-#i = a.testIntPtr(32) # TODO : Pointer scalar argument not yet possible
-#print(type(i))
-#if (i != 32) :
-#  print("Wrong int Pointer!")
-#i = 5
-#a.testIntRefOut(i) # TODO : Output argument for scalar not supported
-#print(type(i))
-#if (i != 22) :
+i = a.testIntPtr(32)
+print(type(i))
+if (i != 32) :
+  print("Wrong int Pointer!")
+i = 5
+a.testIntRefOut(i)
+print(type(i))
+#if (i != 32) : # TODO : Output argument for scalar not supported (i still equal to 5)
 #  print("Wrong int Reference Out!")
 
 vi = a.testVectorInt(np.array((23,33,43)))
@@ -74,14 +74,14 @@ d = a.testDoubleRef(22.2)
 print(type(d))
 if (d != 22.2) :
   print("Wrong double Reference!")
-#d = a.testDoublePtr(32.3) # TODO : Pointer scalar argument not yet possible
-#print(type(d))
-#if (d != 32.3) :
-#  print("Wrong double Pointer!")
-#d = 5.0
-#a.testDoubleRefOut(d) # TODO : Output argument for scalar not supported
-#print(type(d))
-#if (d != 22.2) :
+d = a.testDoublePtr(32.3) # TODO : Pointer scalar argument not yet possible
+print(type(d))
+if (d != 32.3) :
+  print("Wrong double Pointer!")
+d = 5.0
+a.testDoubleRefOut(d)
+print(type(d))
+#if (d != 22.2) : # TODO : Output argument for scalar not supported (d still equal to 5.0)
 #  print("Wrong double Reference Out!")
 
 vd = a.testVectorDouble([23.1,33.1,43.1]) # From list
@@ -166,8 +166,22 @@ a.testVectorStringRefOut(vs) # Output argument
 print(type(vs))
 if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
   print("Wrong VectorString Reference Out!")
-  
 # No VectorVectorString (doesn't exist in the C++ library)
+
+# Test NA values
+a.testDouble(np.nan)
+a.testDouble(np.NaN)
+d = a.testDouble(np.inf)
+print(d)
+v = a.testVectorDouble(np.array([1, np.nan, 3]))
+print(v)
+# No NaN for integers in python (so convert using numpy arrays)
+a.testVectorInt(np.asarray(np.array([1, np.nan, 3]), dtype=int))
+a.testVectorInt(np.asarray(np.array([1, np.NaN, 3]), dtype=int))
+v = a.testVectorInt(np.asarray(np.array([1, np.inf, 3]), dtype=int))
+#print(v) // No NaN integer values in Python (convention different by OS)
+
+# Test special vectors
 a.testVectorInt(()) # Empty vector
 a.testVectorInt(101) # Single value
 a.testVectorInt((102,)) # Vector with 1 item

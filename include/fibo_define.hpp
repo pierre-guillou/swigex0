@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 typedef std::string String;
 
 #define DEFAULT_TITLE "Fibonacci List"
@@ -33,4 +34,7 @@ public:
 };
 
 template <typename T> inline T    getNAValue()     { return ValueNA<T>::getNA(); }
-template <typename T> inline bool isNA(const T& v) { return (v == ValueNA<T>::getNA()); }
+template <typename T> inline bool isNA(const T& v) {
+  //std::cout << "isNA called with " << v << std::endl;
+  return (v == ValueNA<T>::getNA());
+}

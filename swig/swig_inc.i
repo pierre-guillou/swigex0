@@ -31,21 +31,22 @@
 // Note : Before including this file :
 //        - vectorToCpp, vectorVectorToCpp and convertToCpp 
 //          functions must be defined in ToCpp fragment
-//        - vectorFromCpp, vectorVectorFromCpp and convertFromCpp 
-//          functions must be defined in FromCpp fragment
 
 // Convert scalar arguments by value
 %typemap(in, fragment="ToCpp") int,
-                               double
+                               double,
+                               String 
 {
   const int errcode = convertToCpp($input, $1);
   if (!SWIG_IsOK(errcode))
     %argument_fail(errcode, "$type", $symname, $argnum);
 }
 
-// Convert scalar argument by reference (cannot convert pointers)
-%typemap(in, fragment="ToCpp") const int&    (int val),
-                               const double& (double val)
+// Convert scalar argument by reference
+%typemap(in, fragment="ToCpp") int*       (int val), const int*       (int val),
+                               int&       (int val), const int&       (int val),
+                               double* (double val), const double* (double val),
+                               double& (double val), const double& (double val) // Don't add String here otherwise "res2 not declared"
 {
   const int errcode = convertToCpp($input, val);
   if (!SWIG_IsOK(errcode))
@@ -97,6 +98,24 @@
 ////////////////////////////////////////////////
 // Conversion C++ => Target language
 
+// Note : Before including this file :
+//        - vectorFromCpp, vectorVectorFromCpp and objectFromCpp 
+//          functions must be defined in FromCpp fragment
+
+%typemap(out, fragment="FromCpp") int,
+                                  double,
+                                  String
+{
+  $result = objectFromCpp($1);
+}
+
+%typemap(out, fragment="FromCpp") int*,    const int*,    int&,    const int&,
+                                  double*, const double*, double&, const double&,
+                                  String*, const String*, String&, const String&
+{
+  $result = objectFromCpp(*$1);
+}
+
 %typemap(out, fragment="FromCpp") VectorInt, 
                                   VectorDouble, 
                                   VectorString
@@ -115,7 +134,7 @@
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
 
-%typemap(out, fragment="FromCpp") VectorVectorInt, 
+%typemap(out, fragment="FromCpp") VectorVectorInt,
                                   VectorVectorDouble
 {
   const int errcode = vectorVectorFromCpp(&($result), $1);

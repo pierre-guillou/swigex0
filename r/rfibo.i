@@ -63,10 +63,10 @@
   // But at least, I can test each value for particular NAs
   SEXP getElem(SEXP obj, int i)
   {
-    if (Rf_isInteger(obj))     return Rf_ScalarInteger(INTEGER(obj)[i]);
-    if (Rf_isReal(obj))        return Rf_ScalarReal(REAL(obj)[i]);
-    if (Rf_isString(obj))      return Rf_ScalarString(STRING_ELT(obj, i));
-    if (TYPEOF(obj) == VECSXP) return VECTOR_ELT(obj, i);
+    if (Rf_isInteger(obj))      return Rf_ScalarInteger(INTEGER(obj)[i]);
+    if (Rf_isReal(obj))         return Rf_ScalarReal(REAL(obj)[i]);
+    if (Rf_isString(obj))       return Rf_ScalarString(STRING_ELT(obj, i));
+    if (TYPEOF(obj) == VECSXP)  return VECTOR_ELT(obj, i);
     return SEXP();
   }
   

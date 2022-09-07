@@ -2,13 +2,13 @@
 #include <iostream>
 
 #if defined(_WIN32) || defined(_WIN64)
-#  include <windows.h>
-#  include <io.h>
-#  include <fcntl.h>
+#include <windows.h>
+#include <io.h>
+#include <fcntl.h>
 #endif
 
 StdoutRedirect::StdoutRedirect(const String& file) :
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
   _old_stdout(0)
 #else
   _coutbuf(nullptr),
@@ -31,19 +31,19 @@ StdoutRedirect::~StdoutRedirect()
  */
 void StdoutRedirect::start(const String& file)
 {
-  #ifdef _WIN32
-    // https://stackoverflow.com/questions/54094127/redirecting-stdout-in-win32-does-not-redirect-stdout/54096218
-    _old_stdout = GetStdHandle(STD_OUTPUT_HANDLE);
-    HANDLE new_stdout = CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    SetStdHandle(STD_OUTPUT_HANDLE, new_stdout);
-    int fd = _open_osfhandle((intptr_t)new_stdout, _O_WRONLY|_O_TEXT);
-    _dup2(fd, _fileno(stdout));
-    _close(fd);
-  #else
-    _coutbuf = std::cout.rdbuf();
-    _out.open(file, std::fstream::out | std::fstream::trunc);
-    std::cout.rdbuf(_out.rdbuf());
-  #endif
+#if defined(_WIN32) || defined(_WIN64)
+  // https://stackoverflow.com/questions/54094127/redirecting-stdout-in-win32-does-not-redirect-stdout/54096218
+  _old_stdout = GetStdHandle(STD_OUTPUT_HANDLE);
+  HANDLE new_stdout = CreateFileA(file.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+  SetStdHandle(STD_OUTPUT_HANDLE, new_stdout);
+  int fd = _open_osfhandle((intptr_t)new_stdout, _O_WRONLY|_O_TEXT);
+  _dup2(fd, _fileno(stdout));
+  _close(fd);
+#else
+  _coutbuf = std::cout.rdbuf();
+  _out.open(file, std::fstream::out | std::fstream::trunc);
+  std::cout.rdbuf(_out.rdbuf());
+#endif
 }
 
 /**
@@ -51,14 +51,14 @@ void StdoutRedirect::start(const String& file)
  */
 void StdoutRedirect::stop()
 {
-  #ifdef _WIN32
-    // https://stackoverflow.com/questions/32185512/output-to-console-from-a-win32-gui-application-on-windows-10
-    SetStdHandle(STD_OUTPUT_HANDLE, _old_stdout);
-    int fd = _open_osfhandle((intptr_t)_old_stdout, _O_WRONLY|_O_TEXT);
-    FILE* fp = _fdopen(fd, "w");
-    freopen_s( &fp, "CONOUT$", "w", stdout);
-  #else
-    std::cout.rdbuf(_coutbuf);
-    _out.close();
-  #endif
+#if defined(_WIN32) || defined(_WIN64)
+  // https://stackoverflow.com/questions/32185512/output-to-console-from-a-win32-gui-application-on-windows-10
+  SetStdHandle(STD_OUTPUT_HANDLE, _old_stdout);
+  int fd = _open_osfhandle((intptr_t)_old_stdout, _O_WRONLY|_O_TEXT);
+  FILE* fp = _fdopen(fd, "w");
+  freopen_s( &fp, "CONOUT$", "w", stdout);
+#else
+  std::cout.rdbuf(_coutbuf);
+  _out.close();
+#endif
 }

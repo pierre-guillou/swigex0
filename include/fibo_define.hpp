@@ -18,7 +18,7 @@ template<typename T> class ValueNA;
 template <> class ValueNA<int>
 {
 public:
-    static inline int getNA() { return INT_NA; }
+  static inline int getNA() { return INT_NA; }
 };
 
 // Define NA value for double

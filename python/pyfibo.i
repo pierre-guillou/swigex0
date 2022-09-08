@@ -85,7 +85,7 @@
     //std::cout << "convertToCpp(int): v=" << v << std::endl;
     if (SWIG_IsOK(myres) || myres == SWIG_OverflowError)
     {
-      if (myres == SWIG_OverflowError || v == NPY_INT_NA) // NaN, Inf or out of bound value is NA
+      if (myres == SWIG_OverflowError || v == NPY_INT_NA) // NaN, Inf or out of bound value becomes NA
       {
         myres = SWIG_OK;
         value = getNA<int>();
@@ -397,6 +397,17 @@ import numpy as np
 
 ## Integer NaN custom value
 inan = np.asarray(np.array([np.nan]), dtype=int)[0]
+
+## isNaN custom function
+def isNaN(value):
+  if (type(value).__module__ == np.__name__): # Numpy type
+    if (np.dtype(value) == 'intc' or np.dtype(value) == 'int64' or np.dtype(value) == 'int32'):
+      return value == mf.inan
+  else:
+    if (type(value).__name__ == 'int'):
+      return value == mf.inan
+  return np.isnan(value)
+
 
 ## Add operator [] to VectorXXX R class [1-based index] ##
 ## ---------------------------------------------------- ##

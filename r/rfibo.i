@@ -26,7 +26,7 @@
     {
       myres = SWIG_AsVal_int(obj, &value);
       //std::cout << "convertToCpp(int): value=" << value << std::endl;
-      if (SWIG_IsOK(myres) && value == R_NaInt) // NA, NaN, Inf or out of bounds value
+      if (SWIG_IsOK(myres) && value == R_NaInt) // NA, NaN, Inf or out of bounds value becomes NA
         value = getNA<int>();
     }
     return myres;
@@ -38,7 +38,7 @@
     {
        myres = SWIG_AsVal_double(obj, &value);
       //std::cout << "convertToCpp(double): value=" << value << std::endl;
-      if (SWIG_IsOK(myres) && !R_finite(value)) // NA, NaN, Inf or out of bounds value
+      if (SWIG_IsOK(myres) && !R_finite(value)) // NA, NaN, Inf or out of bounds value becomes NA
         value = getNA<double>();
     }
     return myres; 

@@ -69,12 +69,18 @@ Test double: -999.999
 nan
 Test double: -999.999
 nan
-Test int: -999
-Test int: -999
-Test int: -999
 Test VectorDouble: [1.2 -999.999 3.3]
 [ 1.2 nan  3.3]
-Test VectorInt: [1 -999 3]
+Test int: -999
+nan
+Test int: -999
+nan
+Test int: -999
+nan
+Test int: -999
+nan
+Test VectorInt: [-999]
+[nan]
 Test VectorInt: []
 Test VectorInt: [101]
 Test VectorInt: [102]

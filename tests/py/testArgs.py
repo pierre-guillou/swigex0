@@ -173,12 +173,15 @@ if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
 print(a.testDouble(np.nan))
 print(a.testDouble(np.inf))
 print(a.testDouble(2e505)) # Overflow becomes NA
-#print(a.testInt(None)) # None is forbidden
-a.testInt(np.nan) # Cannot print NA for int as it is different between platforms
-a.testInt(np.inf)
-a.testInt(1111111111111111111111111111111111111) # Overflow becomes NA
 print(a.testVectorDouble(np.array((1.2, np.nan, 3.3))))
-a.testVectorInt(np.asarray(np.array([1, np.inf, 3]), dtype=int))
+
+# Cannot print NA for int as it is different between platforms (use isNaN from myfibo)
+#print(a.testInt(None)) # None is forbidden
+print("nan") if (myfibo.isNaN(a.testInt(np.nan))) else print("oups") # This works even for integers
+print("nan") if (myfibo.isNaN(a.testInt(myfibo.inan))) else print("oups") # Custom value for Python integer NaN
+print("nan") if (myfibo.isNaN(a.testInt(np.inf))) else print("oups")
+print("nan") if (myfibo.isNaN(a.testInt(1111111111111111111111111111111111111))) else print("oups") # Overflow becomes NA
+print("[nan]") if (myfibo.isNaN(a.testVectorInt(myfibo.inan)[0])) else print("oups")
 
 # Test special vectors
 a.testVectorInt(()) # Empty vector

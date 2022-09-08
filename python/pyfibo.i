@@ -14,6 +14,8 @@
 #include <cmath>
 // For isinf
 #include <math.h>
+// For numeric_limits
+#include <limits>
 // For cout
 #include <iostream>
 

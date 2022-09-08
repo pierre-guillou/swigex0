@@ -2,6 +2,8 @@
 
 #include <string>
 #include <iostream>
+#include <cmath>
+#include <math.h>
 typedef std::string String;
 
 #define DEFAULT_TITLE "Fibonacci List"
@@ -36,7 +38,24 @@ public:
 };
 
 // Generic functions
-template <typename T> inline T    getNA()          { return ValueNA<T>::getNA(); }
-template <typename T> inline bool isNA(const T& v) { return (v == getNA<T>()); }
+template <typename T> inline T getNA()
+{
+  return ValueNA<T>::getNA();
+}
+
+template <typename T> inline bool isNA(const T& v);
+template <> inline bool isNA(const double& v)
+{
+  return (std::isnan(v) || std::isinf(v) ||
+          v == getNA<double>());
+}
+template <> inline bool isNA(const int& v)
+{
+  return (v == getNA<int>());
+}
+template <> inline bool isNA(const String& v)
+{
+  return (v == getNA<String>());
+}
 
 #endif // SWIG

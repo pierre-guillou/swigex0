@@ -225,18 +225,18 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 # No VectorVectorString (doesn't exist in the C++ library)
 
 # Test NA values
-d = a$testDouble(NULL)
-d = a$testDouble(NaN)
-d = a$testDouble(NA)
-d = a$testDouble(Inf)
-cat(d,"\n")
-v = a$testVectorDouble(c(1, NA, 3))
-cat(v,"\n")
-# Convert real NAs in integers using R
-v = a$testVectorInt(suppressWarnings(as.integer(c(1, NaN, 3))))
-v = a$testVectorInt(suppressWarnings(as.integer(c(1, NA, 3))))
-v = a$testVectorInt(suppressWarnings(as.integer(c(1, Inf, 3))))
-cat(v,"\n")
+#a$testDouble(NULL) # NULL is forbidden
+a$testDouble(NaN)
+a$testDouble(NA)
+a$testDouble(Inf)
+suppressWarnings(a$testDouble(2e505)) # Overflow becomes NA # Generate warning 'NAs introduced...'
+#a$testInt(NULL) # NULL is forbidden
+a$testInt(NaN) 
+a$testInt(NA)
+suppressWarnings(a$testInt(Inf)) # Generate warning 'NAs introduced...'
+suppressWarnings(a$testInt(1111111111111111111111111111111111111)) # Overflow becomes NA # Generate warning 'NAs introduced...'
+a$testVectorDouble(c(1.2, NA, 3.3))
+a$testVectorInt(suppressWarnings(as.integer(c(1, NA, 3)))) # Generate warning 'NAs introduced...'
 
 # Test special vectors
 v = a$testVectorInt(c()) # Empty vector

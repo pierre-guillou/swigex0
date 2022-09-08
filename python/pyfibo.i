@@ -17,22 +17,29 @@
 // For cout
 #include <iostream>
 
-// Numpy default integer type is different according the OS
-// The NA value for integers is tested differently
-// Remind that there is no standard NaN for integers in python
-
-// Try by executing this:
+// Numpy default integer type could be different according the OS (int64 or int32)
+// https://stackoverflow.com/questions/36278590/numpy-array-dtype-is-coming-as-int32-by-default-in-a-windows-10-64-bit-machine
+// Remind that there is no standard NaN for integers in Python
+// We cannot use std::numeric_limits<int>::quiet_NaN() in C++
+// But numpy converts np.nan in signed int64 minimum value (-2^63) or int32 minimum value (-2^31)
+// https://stackoverflow.com/questions/62302903/numpy-check-for-integer-nan
+// All integers in C++ are 32 bits (4 bytes) so :
+//  - all integers equal to -2^63 are NA (Linux / MacOS)
+//  - all integers equal to -2^31 are NA (Windows)
+    
+// You could try by executing this:
 // type(np.asarray(np.array([1]), dtype=int)[0])
-// np.asarray(np.array([1, np.NaN, 3]), dtype=int)
+// np.asarray(np.array([1, np.nan, 3]), dtype=int)
+// np.asarray(np.array([np.nan]), dtype=int)[0]
 
 #if defined(_WIN32) || defined(_WIN64)
-  #define NPY_INT_IN_TYPE    NPY_INT
+  #define NPY_INT_TYPE       NPY_INT32
   #define NPY_INT_OUT_TYPE   int
-  #define NPY_INT_IS_NA(r,v) v == std::numeric_limits<NPY_INT_OUT_TYPE>::min()
-#else
-  #define NPY_INT_IN_TYPE    NPY_INT64
+  #define NPY_INT_NA         std::numeric_limits<NPY_INT_OUT_TYPE>::min()
+#else // Linux or MacOS
+  #define NPY_INT_TYPE       NPY_INT64
   #define NPY_INT_OUT_TYPE   int64_t
-  #define NPY_INT_IS_NA(r,v) r == SWIG_OverflowError
+  #define NPY_INT_NA         std::numeric_limits<NPY_INT_OUT_TYPE>::min()
 #endif
 %}
 
@@ -73,14 +80,18 @@
   
   template <> int convertToCpp(PyObject* obj, int& value)
   {
-    // No NaN or infinite value for integers, but numpy converts np.nan in signed int64 minimum (-2^63) (on Linux)
-    // All integers in C++ are 32 bits so all integers outside from ]-2^31, 2^31] are NA 
-    int myres = SWIG_AsVal_int(obj, &value);
-    //std::cout << "convertToCpp(int): value=" << value << std::endl;
-    if (NPY_INT_IS_NA(myres, value))
+    long long v = 0; // Biggest integer type whatever the platform
+    int myres = SWIG_AsVal_long_SS_long(obj, &v);
+    //std::cout << "convertToCpp(int): v=" << v << std::endl;
+    if (SWIG_IsOK(myres) || myres == SWIG_OverflowError)
     {
-      myres = SWIG_OK;
-      value = getNAValue<int>();
+      if (myres == SWIG_OverflowError || v == NPY_INT_NA) // NaN, Inf or out of bound value is NA
+      {
+        myres = SWIG_OK;
+        value = getNA<int>();
+      }
+      else
+        myres = SWIG_AsVal_int(obj, &value);
     }
     return myres;
   }
@@ -88,9 +99,11 @@
   {
     int myres = SWIG_AsVal_double(obj, &value);
     //std::cout << "convertToCpp(double): value=" << value << std::endl;
-    if (SWIG_IsOK(myres) && !isnan(value) && !isinf(value))
-      return myres;
-    value = getNAValue<double>();
+    if (SWIG_IsOK(myres))
+    {
+      if (isnan(value) || isinf(value))
+        value = getNA<double>();
+    }
     return myres; 
   }
   template <> int convertToCpp(PyObject* obj, String& value)
@@ -200,8 +213,7 @@
 %fragment("FromCpp", "header")
 {
   template <typename Type> NPY_TYPES numpyType();
-  // Integers in NumPy are all 64 bits by default
-  template <> NPY_TYPES numpyType<int>()    { return NPY_INT_IN_TYPE; }
+  template <> NPY_TYPES numpyType<int>()    { return NPY_INT_TYPE; }
   template <> NPY_TYPES numpyType<double>() { return NPY_DOUBLE; }
   template <> NPY_TYPES numpyType<String>() { return NPY_STRING; }
   
@@ -211,7 +223,7 @@
   template <> struct TypeHelper<String> { static bool hasFixedSize() { return false; } };
   template <typename Type> bool hasFixedSize() { return TypeHelper<Type>::hasFixedSize(); }
   
-  template <typename InputType> struct OutTraits; // Only used for fixed item size
+  template <typename InputType> struct OutTraits;
   template <> struct OutTraits<int>     { using OutputType = NPY_INT_OUT_TYPE; };
   template <> struct OutTraits<double>  { using OutputType = double; };
   template <> struct OutTraits<String>  { using OutputType = const char*; };
@@ -221,18 +233,15 @@
   {
     //std::cout << "convertFromCpp(int): value=" << value << std::endl;
     NPY_INT_OUT_TYPE vres = static_cast<NPY_INT_OUT_TYPE>(value);
-    // No NaN or infinite value for integers, but numpy converts np.nan in signed int64 minimum (-2^63) (on Linux)
     if (isNA<int>(value))
-      vres = std::numeric_limits<NPY_INT_OUT_TYPE>::min();
+      vres = NPY_INT_NA;
     return vres;
   }
   template <> double convertFromCpp(const double& value)
   {
     //std::cout << "convertFromCpp(double): value=" << value << std::endl;
     if (isNA<double>(value))
-    {
-      return std::nan("");
-    }
+      return std::numeric_limits<double>::quiet_NaN();
     return value;
   }
   template <> const char* convertFromCpp(const String& value)
@@ -281,6 +290,14 @@
     }
     else // Convert to a tuple using standard std_vector
     {
+      // Test NA values
+      auto vec2 = vec.getVector();
+      SizeType size = vec2.size();
+      for(SizeType i = 0; i < size; i++)
+      {
+        vec2[i] = convertFromCpp(vec2[i]);
+      }
+      // Convert to tuple
       *obj = swig::from(vec.getVector());
       myres = (*obj) == NULL ? SWIG_TypeError : SWIG_OK;
     }
@@ -376,6 +393,10 @@
 %pythoncode %{
 
 import myfibo as mf
+import numpy as np
+
+## Integer NaN custom value
+inan = np.asarray(np.array([np.nan]), dtype=int)[0]
 
 ## Add operator [] to VectorXXX R class [1-based index] ##
 ## ---------------------------------------------------- ##

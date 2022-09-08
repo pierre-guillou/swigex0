@@ -169,17 +169,16 @@ if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
 # No VectorVectorString (doesn't exist in the C++ library)
 
 # Test NA values
-a.testDouble(np.nan)
-a.testDouble(np.NaN)
-d = a.testDouble(np.inf)
-print(d)
-v = a.testVectorDouble(np.array([1, np.nan, 3]))
-print(v)
-# No NaN for integers in python (so convert using numpy arrays)
-a.testVectorInt(np.asarray(np.array([1, np.nan, 3]), dtype=int))
-a.testVectorInt(np.asarray(np.array([1, np.NaN, 3]), dtype=int))
-v = a.testVectorInt(np.asarray(np.array([1, np.inf, 3]), dtype=int))
-#print(v) // No NaN integer values in Python (convention different by OS)
+#print(a.testDouble(None)) # None is forbidden
+print(a.testDouble(np.nan))
+print(a.testDouble(np.inf))
+print(a.testDouble(2e505)) # Overflow becomes NA
+#print(a.testInt(None)) # None is forbidden
+a.testInt(np.nan) # Cannot print NA for int as it is different between platforms
+a.testInt(np.inf)
+a.testInt(1111111111111111111111111111111111111) # Overflow becomes NA
+print(a.testVectorDouble(np.array((1.2, np.nan, 3.3))))
+a.testVectorInt(np.asarray(np.array([1, np.inf, 3]), dtype=int))
 
 # Test special vectors
 a.testVectorInt(()) # Empty vector

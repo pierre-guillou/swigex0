@@ -35,7 +35,7 @@
 // Convert scalar arguments by value
 %typemap(in, fragment="ToCpp") int,
                                double,
-                               String 
+                               String
 {
   int errcode = convertToCpp($input, $1);
   if (!SWIG_IsOK(errcode))

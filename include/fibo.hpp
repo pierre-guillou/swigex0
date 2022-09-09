@@ -17,6 +17,9 @@ class MYFIBO_EXPORT Fibo
     Fibo (int n, const String& title = "");
     virtual ~Fibo();
 
+    void resetFromFiboVal(Fibo fib);        // In order to test class argument as value
+    void resetFromFiboRef(const Fibo& fib); //  In order to test class argument as reference
+
     void display(bool showTitle = true) const;
 
     VectorInt get() const;

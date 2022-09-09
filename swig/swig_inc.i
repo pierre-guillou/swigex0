@@ -37,7 +37,7 @@
                                double,
                                String 
 {
-  const int errcode = convertToCpp($input, $1);
+  int errcode = convertToCpp($input, $1);
   if (!SWIG_IsOK(errcode))
     %argument_fail(errcode, "$type", $symname, $argnum);
 }
@@ -48,51 +48,119 @@
                                double* (double val), const double* (double val),
                                double& (double val), const double& (double val) // Don't add String here otherwise "res2 not declared"
 {
-  const int errcode = convertToCpp($input, val);
+  int errcode = convertToCpp($input, val);
   if (!SWIG_IsOK(errcode))
     %argument_fail(errcode, "$type", $symname, $argnum);
   $1 = &val;
 }
 
-%typemap(in, fragment="ToCpp") VectorInt,
-                               VectorDouble,
-                               VectorString
+%typemap(in, fragment="ToCpp") VectorInt    (void *argp),
+                               VectorDouble (void *argp),
+                               VectorString (void *argp)
 { 
-  const int errcode = vectorToCpp($input, $1);
+  // Try to convert from any target language vector
+  int errcode = vectorToCpp($input, $1);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
+  {
+    // Try direct conversion of Vectors by value (see swigtypes.swg)
+    errcode = SWIG_ConvertPtr($input, &argp, $&descriptor, %convertptr_flags);
+    if (SWIG_IsOK(errcode))
+    {
+      if (!argp) {
+        %argument_nullref("$type", $symname, $argnum);
+      }
+      else {
+        $&ltype temp = %reinterpret_cast(argp, $&ltype);
+        $1 = *temp;
+        if (SWIG_IsNewObj(errcode)) %delete(temp);
+      }
+    }
+    else
+      %argument_fail(errcode, "$type", $symname, $argnum);
+  }
 }
 
-%typemap(in, fragment="ToCpp") VectorVectorInt,
-                               VectorVectorDouble
-{ 
-  const int errcode = vectorVectorToCpp($input, $1);
-  if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-}
-
-%typemap(in, fragment="ToCpp") const VectorInt&    (VectorInt vec),
-                               const VectorInt*    (VectorInt vec),
-                               const VectorDouble& (VectorDouble vec),
-                               const VectorDouble* (VectorDouble vec),
-                               const VectorString& (VectorString vec),
-                               const VectorString* (VectorString vec)
+%typemap(in, fragment="ToCpp") VectorVectorInt    (void *argp),
+                               VectorVectorDouble (void *argp)
 {
-  const int errcode = vectorToCpp($input, vec);
+  // Try to convert from any target language vector
+  int errcode = vectorVectorToCpp($input, $1);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-  $1 = &vec;
+  {
+    // Try direct conversion of VectorVectors by value (see swigtypes.swg)
+    errcode = SWIG_ConvertPtr($input, &argp, $&descriptor, %convertptr_flags);
+    if (SWIG_IsOK(errcode))
+    {
+      if (!argp) {
+        %argument_nullref("$type", $symname, $argnum);
+      }
+      else {
+        $&ltype temp = %reinterpret_cast(argp, $&ltype);
+        $1 = *temp;
+        if (SWIG_IsNewObj(errcode)) %delete(temp);
+      }
+    }
+    else {
+      %argument_fail(errcode, "$type", $symname, $argnum);
+    }
+  }
 }
 
-%typemap(in, fragment="ToCpp") const VectorVectorInt&    (VectorVectorInt vec),
-                               const VectorVectorInt*    (VectorVectorInt vec),
-                               const VectorVectorDouble& (VectorVectorDouble vec),
-                               const VectorVectorDouble* (VectorVectorDouble vec)
+%typemap(in, fragment="ToCpp") const VectorInt&    (void *argp, VectorInt vec),
+                               const VectorInt*    (void *argp, VectorInt vec),
+                               const VectorDouble& (void *argp, VectorDouble vec),
+                               const VectorDouble* (void *argp, VectorDouble vec),
+                               const VectorString& (void *argp, VectorString vec),
+                               const VectorString* (void *argp, VectorString vec)
 {
-  const int errcode = vectorVectorToCpp($input, vec);
+  // Try to convert from any target language vector
+  int errcode = vectorToCpp($input, vec);
   if (!SWIG_IsOK(errcode))
-    %argument_fail(errcode, "$type", $symname, $argnum);
-  $1 = &vec;
+  {
+    // Try direct conversion of Vectors by reference/pointer (see swigtypes.swg)
+    errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
+    if (SWIG_IsOK(errcode))
+    {
+      if (!argp) {
+        %argument_nullref("$type", $symname, $argnum);
+      }
+      $1 = %reinterpret_cast(argp, $ltype);
+    }
+    else {
+      %argument_fail(errcode, "$type", $symname, $argnum);
+    }
+  }
+  else {
+    $1 = &vec;
+  }
+}
+
+%typemap(in, fragment="ToCpp") const VectorVectorInt&    (void *argp, VectorVectorInt vec),
+                               const VectorVectorInt*    (void *argp, VectorVectorInt vec),
+                               const VectorVectorDouble& (void *argp, VectorVectorDouble vec),
+                               const VectorVectorDouble* (void *argp, VectorVectorDouble vec)
+{
+  // Try to convert from any target language vector
+  int errcode = vectorVectorToCpp($input, vec);
+  if (!SWIG_IsOK(errcode))
+  {
+    // Try direct conversion of VectorVectors by reference/pointer (see swigtypes.swg)
+    errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
+    if (SWIG_IsOK(errcode))
+    {
+      if (!argp) {
+        %argument_nullref("$type", $symname, $argnum);
+      }
+      $1 = %reinterpret_cast(argp, $ltype);
+    }
+    else {
+      %argument_fail(errcode, "$type", $symname, $argnum);
+    }
+  }
+  else
+  {
+    $1 = &vec;
+  }
 }
 
 ////////////////////////////////////////////////
@@ -120,7 +188,7 @@
                                   VectorDouble, 
                                   VectorString
 {
-  const int errcode = vectorFromCpp(&($result), $1);
+  int errcode = vectorFromCpp(&($result), $1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
@@ -129,7 +197,7 @@
                                   VectorDouble*, VectorDouble&,
                                   VectorString*, VectorString&
 {
-  const int errcode = vectorFromCpp(&($result), *$1);
+  int errcode = vectorFromCpp(&($result), *$1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
@@ -137,7 +205,7 @@
 %typemap(out, fragment="FromCpp") VectorVectorInt,
                                   VectorVectorDouble
 {
-  const int errcode = vectorVectorFromCpp(&($result), $1);
+  int errcode = vectorVectorFromCpp(&($result), $1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }
@@ -145,7 +213,7 @@
 %typemap(out, fragment="FromCpp") VectorVectorInt*,    VectorVectorInt&,
                                   VectorVectorDouble*, VectorVectorDouble&
 {
-  const int errcode = vectorVectorFromCpp(&($result), *$1);
+  int errcode = vectorVectorFromCpp(&($result), *$1);
   if (!SWIG_IsOK(errcode))
     SWIG_exception_fail(SWIG_ArgError(errcode), "in method $symname, wrong return value: $type");
 }

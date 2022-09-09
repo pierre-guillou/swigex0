@@ -82,6 +82,9 @@
   
   template <> int convertToCpp(PyObject* obj, int& value)
   {
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+
     long long v = 0; // Biggest integer type whatever the platform
     int myres = SWIG_AsVal_long_SS_long(obj, &v);
     //std::cout << "convertToCpp(int): v=" << v << std::endl;
@@ -99,6 +102,9 @@
   }
   template <> int convertToCpp(PyObject* obj, double& value)
   {
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+
     int myres = SWIG_AsVal_double(obj, &value);
     //std::cout << "convertToCpp(double): value=" << value << std::endl;
     if (SWIG_IsOK(myres))
@@ -110,6 +116,9 @@
   }
   template <> int convertToCpp(PyObject* obj, String& value)
   {
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+      
     int myres = SWIG_AsVal_std_string(obj, &value);
     //std::cout << "convertToCpp(String): value=" << value << std::endl;
     // No undefined
@@ -121,9 +130,12 @@
   {
     // Type definitions
     using ValueType = typename Vector::value_type;
-    
-    // Conversion
     vec.clear();
+
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+
+    // Conversion
     int myres = SWIG_OK;
     int size = (int)PySequence_Length(obj);
     if (size < 0)
@@ -158,9 +170,12 @@
   {
     // Type definitions
     using InputVector = typename VectorVector::value_type;
-    
-    // Conversion
     vvec.clear();
+
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+
+    // Conversion
     int myres = SWIG_OK;
     int size = (int)PySequence_Length(obj);
     if (size < 0)

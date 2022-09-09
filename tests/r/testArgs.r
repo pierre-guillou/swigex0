@@ -45,10 +45,14 @@ if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
 {
   cat("Wrong VectorInt Pointer!", "\n")
 }
-vi = VectorInt()
+vi = VectorInt(c(26,36))
+invisible(a$testVectorInt(vi)) # Test true vector by value
+invisible(a$testVectorIntRef(vi)) # Test true vector by reference
+invisible(a$testVectorIntPtr(vi)) # Test true vector by pointer
+invisible(vi$clear())
 invisible(a$testVectorIntRefOut(vi)) # Output argument
 cat(class(vi), "\n")
-if (vi[1] != 25 || vi[2] != 35 || vi[3] != 45)
+if (vi[1] != 26 || vi[2] != 36)
 {
   cat("Wrong VectorInt Reference Out!", "\n")
 }
@@ -77,12 +81,18 @@ if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
 {
   cat("Wrong VectorVectorInt Pointer!", "\n")
 }
+#vvi = VectorVectorInt(list(c(26,36),c(56,66))) # TODO : This constructor doesn't work yet
 vvi = VectorVectorInt()
+invisible(vvi$push_back(VectorInt(c(26,36)))) # TODO : push_back requires real Vectors only
+invisible(vvi$push_back(VectorInt(c(56,66)))) # TODO : push_back requires real Vectors only
+invisible(a$testVVectorInt(vvi)) # Test true vector of vectors by value
+invisible(a$testVVectorIntRef(vvi)) # Test true vector of vectors by reference
+invisible(a$testVVectorIntPtr(vvi)) # Test true vector of vectors by pointer
+invisible(vvi$clear())
 invisible(a$testVVectorIntRefOut(vvi)) # Output argument
 cat(class(vvi), "\n")
-if (vvi[[1]][1] != 25 || vvi[[1]][2] != 35 || vvi[[1]][3] != 45 ||
-    vvi[[2]][1] != 55 || vvi[[2]][2] != 65 ||
-    vvi[[3]][1] != 75 || vvi[[3]][2] != 85 || vvi[[3]][3] != 95)
+if (vvi[[1]][1] != 26 || vvi[[1]][2] != 36 ||
+    vvi[[2]][1] != 56 || vvi[[2]][2] != 66)
 {
   cat("Wrong VectorVectorInt Reference Out!", "\n")
 }
@@ -130,10 +140,14 @@ if (vi[1] != 25.3 || vi[2] != 35.3 || vi[3] != 45.3)
 {
   cat("Wrong VectorDouble Pointer!", "\n")
 }
-vd = VectorDouble()
+vd = VectorDouble(c(26.3,36.3))
+invisible(a$testVectorDouble(vd)) # Test true vector by value
+invisible(a$testVectorDoubleRef(vd)) # Test true vector by reference
+invisible(a$testVectorDoublePtr(vd)) # Test true vector by pointer
+invisible(vd$clear())
 invisible(a$testVectorDoubleRefOut(vd)) # Output argument
 cat(class(vd), "\n")
-if (vd[1] != 25.3 || vd[2] != 35.3 || vd[3] != 45.3)
+if (vd[1] != 26.3 || vd[2] != 36.3)
 {
   cat("Wrong VectorDouble Reference Out!", "\n")
 }
@@ -162,12 +176,18 @@ if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
 {
   cat("Wrong VectorVectorDouble Pointer!", "\n")
 }
+#vvd = VectorVectorDouble(list(c(26.3,36.3),(56.3,66.3))) # TODO : This constructor doesn't work yet
 vvd = VectorVectorDouble()
+invisible(vvd$push_back(VectorDouble(c(26.3,36.3)))) # TODO : push_back requires real Vectors only
+invisible(vvd$push_back(VectorDouble(c(56.3,66.3)))) # TODO : push_back requires real Vectors only
+invisible(a$testVVectorDouble(vvd)) # Test true vector of vectors by value
+invisible(a$testVVectorDoubleRef(vvd)) # Test true vector of vectors by reference
+invisible(a$testVVectorDoublePtr(vvd)) # Test true vector of vectors by pointer
+invisible(vvd$clear())
 invisible(a$testVVectorDoubleRefOut(vvd)) # Output argument
 cat(class(vvd), "\n")
-if (vvd[[1]][1] != 25.3 || vvd[[1]][2] != 35.3 || vvd[[1]][3] != 45.3 ||
-    vvd[[2]][1] != 55.3 || vvd[[2]][2] != 65.3 ||
-    vvd[[3]][1] != 75.3 || vvd[[3]][2] != 85.3 || vvd[[3]][3] != 95.3)
+if (vvd[[1]][1] != 26.3 || vvd[[1]][2] != 36.3 ||
+    vvd[[2]][1] != 56.3 || vvd[[2]][2] != 66.3)
 {
   cat("Wrong VectorVectorDouble Reference Out!", "\n")
 }
@@ -215,10 +235,17 @@ if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
 {
   cat("Wrong VectorString Pointer!", "\n")
 }
+#vs = VectorString(c("Str26", "Str36")) # TODO : This constructor doesn't work yet
 vs = VectorString()
+invisible(vs$push_back("Str26"))
+invisible(vs$push_back("Str36"))
+invisible(a$testVectorString(vs)) # Test true vector by value
+invisible(a$testVectorStringRef(vs)) # Test true vector by reference
+invisible(a$testVectorStringRef(vs)) # Test true vector by pointer
+invisible(vs$clear())
 invisible(a$testVectorStringRefOut(vs)) # Output argument
 cat(class(vs), "\n")
-if (vs[1] != "Str25" || vs[2] != "Str35" || vs[3] != "Str45")
+if (vs[1] != "Str26" || vs[2] != "Str36")
 {
   cat("Wrong VectorString Reference Out!", "\n")
 }

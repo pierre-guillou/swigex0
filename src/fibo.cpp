@@ -87,6 +87,28 @@ Fibo::~Fibo()
 }
 
 /**
+ * Reset the Fibonacci list from another one
+ *
+ * @param fibo Source Fibonacci list
+ */
+void Fibo::resetFromFiboVal(Fibo fibo)
+{
+  _title = fibo._title;
+  _n = fibo._n;
+}
+
+/**
+ * Reset the Fibonacci list from another one
+ *
+ * @param fibo Source Fibonacci list
+ */
+void Fibo::resetFromFiboRef(const Fibo& fibo)
+{
+  _title = fibo._title;
+  _n = fibo._n;
+}
+
+/**
  * Write the Fibonacci list to standard output
  *
  * @param showTitle Flag for printing the title
@@ -110,4 +132,3 @@ VectorInt Fibo::get() const
 {
   return fib(_n);
 }
-

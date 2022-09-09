@@ -33,12 +33,16 @@ vi = a.testVectorIntPtr((25,35,45)) # From tuple
 print(type(vi))
 if (vi[0] != 25 or vi[1] != 35 or vi[2] != 45) :
   print("Wrong VectorInt Pointer!")
-vi = myfibo.VectorInt()
+vi = myfibo.VectorInt([26,36])
+a.testVectorInt(vi) # Test true vector by value
+a.testVectorIntRef(vi) # Test true vector by reference
+a.testVectorIntPtr(vi) # Test true vector by pointer
+vi.clear()
 a.testVectorIntRefOut(vi) # Output argument
 print(type(vi))
-if (vi[0] != 25 or vi[1] != 35 or vi[2] != 45) :
+if (vi[0] != 26 or vi[1] != 36) :
   print("Wrong VectorInt Reference Out!")
-  
+
 vvi = a.testVVectorInt(np.array([[23,33,43],[53,63],[73,83,93]], dtype='object')) # From numpy.array: possible because dtype='object' (sub-vector sizes are not the same)
 print(type(vvi))
 if (vvi[0][0] != 23 or vvi[0][1] != 33 or vvi[0][2] != 43 or
@@ -58,12 +62,18 @@ if (vvi[0][0] != 25 or vvi[0][1] != 35 or vvi[0][2] != 45 or
     vvi[1][0] != 55 or vvi[1][1] != 65 or
     vvi[2][0] != 75 or vvi[2][1] != 85 or vvi[2][2] != 95) :
   print("Wrong VectorVectorInt Pointer!")
+#vvi = myfibo.VectorVectorInt([[26,36],[56,66]]) # TODO : This constructor doesn't work yet
 vvi = myfibo.VectorVectorInt()
+vvi.push_back(myfibo.VectorInt([26,36])) # TODO : push_back requires real Vectors only
+vvi.push_back(myfibo.VectorInt([56,66])) # TODO : push_back requires real Vectors only
+a.testVVectorInt(vvi) # Test true vector of vectors by value
+a.testVVectorIntRef(vvi) # Test true vector of vectors by reference
+a.testVVectorIntPtr(vvi) # Test true vector of vectors by pointer
+vvi.clear()
 a.testVVectorIntRefOut(vvi) # Output argument
 print(type(vvi))
-if (vvi[0][0] != 25 or vvi[0][1] != 35 or vvi[0][2] != 45 or
-    vvi[1][0] != 55 or vvi[1][1] != 65 or
-    vvi[2][0] != 75 or vvi[2][1] != 85 or vvi[2][2] != 95) :
+if (vvi[0][0] != 26 or vvi[0][1] != 36 or
+    vvi[1][0] != 56 or vvi[1][1] != 66) :
   print("Wrong VectorVectorInt Reference Out!")
   
 d = a.testDouble(12.1)
@@ -97,10 +107,14 @@ vd = a.testVectorDoublePtr((25.3,35.3,45.3)) # From tuple
 print(type(vd))
 if (vd[0] != 25.3 or vd[1] != 35.3 or vd[2] != 45.3) :
   print("Wrong VectorDouble Pointer!")
-vd = myfibo.VectorDouble()
+vd = myfibo.VectorDouble([26.3,36.3])
+a.testVectorDouble(vd) # Test true vector by value
+a.testVectorDoubleRef(vd) # Test true vector by reference
+a.testVectorDoublePtr(vd) # Test true vector by pointer
+vd.clear()
 a.testVectorDoubleRefOut(vd) # Output argument
 print(type(vd))
-if (vd[0] != 25.3 or vd[1] != 35.3 or vd[2] != 45.3) :
+if (vd[0] != 26.3 or vd[1] != 36.3) :
   print("Wrong VectorDouble Reference Out!")
 
 vvd = a.testVVectorDouble(np.array([[23.1,33.1,43.1],[53.1,63.1],[73.1,83.1,93.1]]))  # From numpy.array
@@ -122,12 +136,18 @@ if (vvd[0][0] != 25.3 or vvd[0][1] != 35.3 or vvd[0][2] != 45.3 or
     vvd[1][0] != 55.3 or vvd[1][1] != 65.3 or
     vvd[2][0] != 75.3 or vvd[2][1] != 85.3 or vvd[2][2] != 95.3) :
   print("Wrong VectorVectorDouble Pointer!")
+#vvd = myfibo.VectorVectorDouble([[26.3,36.3],[56.3,66.3]]) # TODO : This constructor doesn't work yet
 vvd = myfibo.VectorVectorDouble()
+vvd.push_back(myfibo.VectorDouble([26.3,36.3])) # TODO : push_back requires real Vectors only
+vvd.push_back(myfibo.VectorDouble([56.3,66.3])) # TODO : push_back requires real Vectors only
+a.testVVectorDouble(vvd) # Test true vector of vectors by value
+a.testVVectorDoubleRef(vvd) # Test true vector of vectors by reference
+a.testVVectorDoublePtr(vvd) # Test true vector of vectors by pointer
+vvd.clear()
 a.testVVectorDoubleRefOut(vvd) # Output argument
 print(type(vvd))
-if (vvd[0][0] != 25.3 or vvd[0][1] != 35.3 or vvd[0][2] != 45.3 or
-    vvd[1][0] != 55.3 or vvd[1][1] != 65.3 or
-    vvd[2][0] != 75.3 or vvd[2][1] != 85.3 or vvd[2][2] != 95.3) :
+if (vvd[0][0] != 26.3 or vvd[0][1] != 36.3 or
+    vvd[1][0] != 56.3 or vvd[1][1] != 66.3) :
   print("Wrong VectorVectorDouble Reference Out!")
   
 s = a.testString("Str12")
@@ -161,10 +181,14 @@ vs = a.testVectorStringPtr(("Str25","Str35","Str45")) # From tuple
 print(type(vs))
 if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
   print("Wrong VectorString Pointer!")
-vs = myfibo.VectorString()
+vs = myfibo.VectorString(['Str26', 'Str36'])
+a.testVectorString(vs) # Test true vector by value
+a.testVectorStringRef(vs) # Test true vector by reference
+a.testVectorStringRef(vs) # Test true vector by pointer
+vs.clear()
 a.testVectorStringRefOut(vs) # Output argument
 print(type(vs))
-if (vs[0] != 'Str25' or vs[1] != 'Str35' or vs[2] != 'Str45') :
+if (vs[0] != 'Str26' or vs[1] != 'Str36') :
   print("Wrong VectorString Reference Out!")
 # No VectorVectorString (doesn't exist in the C++ library)
 

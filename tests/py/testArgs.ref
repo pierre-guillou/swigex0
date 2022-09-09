@@ -13,7 +13,10 @@ Test VectorInt Reference: [24 34 44]
 <class 'numpy.ndarray'>
 Test VectorInt Pointer: [25 35 45]
 <class 'numpy.ndarray'>
-Test VectorInt Reference Out: [25 35 45]
+Test VectorInt: [26 36]
+Test VectorInt Reference: [26 36]
+Test VectorInt Pointer: [26 36]
+Test VectorInt Reference Out: [26 36]
 <class 'myfibo.VectorInt'>
 Test VectorVectorInt: [[23 33 43] [53 63] [73 83 93]]
 <class 'list'>
@@ -22,7 +25,10 @@ Test VectorVectorInt Reference: [[24 34 44] [54 64 74] [74 84 94]]
 <class 'numpy.ndarray'>
 Test VectorVectorInt Pointer: [[25 35 45] [55 65] [75 85 95]]
 <class 'list'>
-Test VectorVectorInt Reference Out: [[25 35 45] [55 65] [75 85 95]]
+Test VectorVectorInt: [[26 36] [56 66]]
+Test VectorVectorInt Reference: [[26 36] [56 66]]
+Test VectorVectorInt Pointer: [[26 36] [56 66]]
+Test VectorVectorInt Reference Out: [[26 36] [56 66]]
 <class 'myfibo.VectorVectorInt'>
 Test double: 12.1
 <class 'float'>
@@ -39,7 +45,10 @@ Test VectorDouble Reference: [24.2 34.2 44.2]
 <class 'numpy.ndarray'>
 Test VectorDouble Pointer: [25.3 35.3 45.3]
 <class 'numpy.ndarray'>
-Test VectorDouble Reference Out: [25.3 35.3 45.3]
+Test VectorDouble: [26.3 36.3]
+Test VectorDouble Reference: [26.3 36.3]
+Test VectorDouble Pointer: [26.3 36.3]
+Test VectorDouble Reference Out: [26.3 36.3]
 <class 'myfibo.VectorDouble'>
 Test VectorVectorDouble: [[23.1 33.1 43.1] [53.1 63.1] [73.1 83.1 93.1]]
 <class 'list'>
@@ -48,7 +57,10 @@ Test VectorVectorDouble Reference: [[24.2 34.2 44.2] [54.2 64.2 74.2] [74.2 84.2
 <class 'numpy.ndarray'>
 Test VectorVectorDouble Pointer: [[25.3 35.3 45.3] [55.3 65.3] [75.3 85.3 95.3]]
 <class 'list'>
-Test VectorVectorDouble Reference Out: [[25.3 35.3 45.3] [55.3 65.3] [75.3 85.3 95.3]]
+Test VectorVectorDouble: [[26.3 36.3] [56.3 66.3]]
+Test VectorVectorDouble Reference: [[26.3 36.3] [56.3 66.3]]
+Test VectorVectorDouble Pointer: [[26.3 36.3] [56.3 66.3]]
+Test VectorVectorDouble Reference Out: [[26.3 36.3] [56.3 66.3]]
 <class 'myfibo.VectorVectorDouble'>
 Test String: Str12
 <class 'str'>
@@ -61,7 +73,10 @@ Test VectorString Reference: [Str24 Str34 Str44]
 <class 'tuple'>
 Test VectorString Pointer: [Str25 Str35 Str45]
 <class 'tuple'>
-Test VectorString Reference Out: [Str25 Str35 Str45]
+Test VectorString: [Str26 Str36]
+Test VectorString Reference: [Str26 Str36]
+Test VectorString Reference: [Str26 Str36]
+Test VectorString Reference Out: [Str26 Str36]
 <class 'myfibo.VectorString'>
 Test double: -999.999
 nan

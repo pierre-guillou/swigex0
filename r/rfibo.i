@@ -21,6 +21,9 @@
   
   template <> int convertToCpp(SEXP obj, int& value)
   {
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+
     int myres = SWIG_TypeError;
     if (Rf_length(obj) > 0) // Prevent NULL value from becoming NA
     {
@@ -33,6 +36,9 @@
   }
   template <> int convertToCpp(SEXP obj, double& value)
   {
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+      
     int myres = SWIG_TypeError;
     if (Rf_length(obj) > 0) // Prevent NULL value from becoming NA
     {
@@ -45,6 +51,9 @@
   }
   template <> int convertToCpp(SEXP obj, String& value)
   {
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+      
     int myres = SWIG_TypeError;
     if (Rf_length(obj) > 0) // Prevent NULL value from being accepted
     {
@@ -71,14 +80,17 @@
   {
     // Type definitions
     using ValueType = typename Vector::value_type;
-    
-    // Conversion
     vec.clear();
+    
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+
+    // Conversion
     int myres = SWIG_OK;
     int size = (int)Rf_length(obj);
     if (size < 0)
     {
-      // Not a vector
+      // Not a vector (TODO : we never pass here)
       ValueType value;
       // Try to convert
       myres = convertToCpp(obj, value);
@@ -91,7 +103,7 @@
       vec.reserve(size);
       for (int i = 0; i < size && SWIG_IsOK(myres); i++)
       {
-        SEXP item = getElem(obj,i);
+        SEXP item = getElem(obj,i); // item could be NULL
         ValueType value;
         myres = convertToCpp(item, value);
         if (SWIG_IsOK(myres))
@@ -107,9 +119,12 @@
   {
     // Type definitions
     using InputVector = typename VectorVector::value_type;
-    
-    // Conversion
     vvec.clear();
+    
+    // Test argument
+    if (obj == NULL) return SWIG_TypeError;
+      
+    // Conversion
     int myres = SWIG_OK;
     int size = (int)Rf_length(obj);
     if (size <= 1)

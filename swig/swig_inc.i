@@ -117,8 +117,8 @@
   int errcode = vectorToCpp($input, vec);
   if (!SWIG_IsOK(errcode))
   {
-    //try
-    //{
+    try
+    {
       // Try direct conversion of Vectors by reference/pointer (see swigtypes.swg)
       errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
       if (SWIG_IsOK(errcode))
@@ -131,11 +131,11 @@
       else {
         %argument_fail(errcode, "$type", $symname, $argnum);
       }
-    //}
-    //catch(...)
-    //{
-    //  %argument_fail(errcode, "$type", $symname, $argnum);
-    //}
+    }
+    catch(...)
+    {
+      %argument_fail(errcode, "$type", $symname, $argnum);
+    }
   }
   else {
     $1 = &vec;

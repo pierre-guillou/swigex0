@@ -72,6 +72,7 @@
     if (Rf_isReal(obj))         return Rf_ScalarReal(REAL(obj)[i]);
     if (Rf_isString(obj))       return Rf_ScalarString(STRING_ELT(obj, i));
     if (TYPEOF(obj) == VECSXP)  return VECTOR_ELT(obj, i);
+    std::cout << "Fail to getElem #" << i << " in SEXP of type " << TYPEOF(obj) << std::endl;
     return SEXP();
   }
   
@@ -84,26 +85,19 @@
     
     // Test argument
     if (obj == NULL) return SWIG_TypeError;
+    if (TYPEOF(obj) == EXTPTRSXP) return SWIG_TypeError;
 
     // Conversion
     int myres = SWIG_OK;
     int size = (int)Rf_length(obj);
-    if (size < 0)
-    {
-      // Not a vector (TODO : we never pass here)
-      ValueType value;
-      // Try to convert
-      myres = convertToCpp(obj, value);
-      if (SWIG_IsOK(myres))
-        vec.push_back(value);
-    }
-    else if (size > 0)
+    if (size > 0)
     {
       // Real vector
       vec.reserve(size);
       for (int i = 0; i < size && SWIG_IsOK(myres); i++)
       {
-        SEXP item = getElem(obj,i); // item could be NULL
+        SEXP item = getElem(obj,i); // item could be NULL or NIL
+        if (TYPEOF(item) == NILSXP) continue; // If NIL, no error
         ValueType value;
         myres = convertToCpp(item, value);
         if (SWIG_IsOK(myres))
@@ -123,11 +117,12 @@
     
     // Test argument
     if (obj == NULL) return SWIG_TypeError;
-      
+    if (TYPEOF(obj) == EXTPTRSXP) return SWIG_TypeError;
+
     // Conversion
     int myres = SWIG_OK;
     int size = (int)Rf_length(obj);
-    if (size <= 1)
+    if (size == 1)
     {
       // Not a vector (or a single value)
       InputVector vec;
@@ -147,17 +142,22 @@
           vvec.push_back(vec);
       }
     }
+    // else length = 0, empty vector
     return myres;
   }
 }
 
 // Add typecheck typemaps for dispatching functions
-%typemap(rtypecheck, noblock=1) const int&, int                   { length($arg) == 1 && (is.integer($arg) || is.numeric($arg)) }
-%typemap(rtypecheck, noblock=1) const double&, double             { length($arg) == 1 &&  is.numeric($arg) }
-%typemap(rtypecheck, noblock=1) const String&, String             { length($arg) == 1 &&  is.character($arg) }
-%typemap(rtypecheck, noblock=1) const VectorInt&, VectorInt       { length($arg)  > 1 && (is.integer($arg) || is.numeric($arg)) }
-%typemap(rtypecheck, noblock=1) const VectorDouble&, VectorDouble { length($arg)  > 1 &&  is.numeric($arg) }
-%typemap(rtypecheck, noblock=1) const VectorString&, VectorString { length($arg)  > 1 &&  is.character($arg) }
+%typemap(rtypecheck, noblock=1) const int&, int                               { length($arg) == 1 && (is.integer(unlist($arg)) || is.numeric(unlist($arg))) }
+%typemap(rtypecheck, noblock=1) const double&, double                         { length($arg) == 1 &&  is.numeric(unlist($arg)) }
+%typemap(rtypecheck, noblock=1) const String&, String                         { length($arg) == 1 &&  is.character(unlist($arg)) }
+%typemap(rtypecheck, noblock=1) const VectorInt&, VectorInt                   { length($arg) == 0 || (length($arg) > 0 && (is.integer(unlist($arg)) || is.numeric(unlist($arg)))) }
+%typemap(rtypecheck, noblock=1) const VectorDouble&, VectorDouble             { length($arg) == 0 || (length($arg) > 0 && is.numeric(unlist($arg))) }
+%typemap(rtypecheck, noblock=1) const VectorString&, VectorString             { length($arg) == 0 || (length($arg) > 0 && is.character(unlist($arg))) }
+%typemap(rtypecheck, noblock=1) const VectorVectorInt&, VectorVectorInt       { length($arg) == 0 || (length($arg) > 0 && 
+                                                                               (length($arg[[1]]) == 0 || (length($arg[[1]]) > 0 && (is.integer(unlist($arg[[1]])) || is.numeric(unlist($arg[[1]])))))) }
+%typemap(rtypecheck, noblock=1) const VectorVectorDouble&, VectorVectorDouble { length($arg) == 0 || (length($arg) > 0 && 
+                                                                               (length($arg[[1]]) == 0 || (length($arg[[1]]) > 0 && is.numeric(unlist($arg[[1]]))))) }
 
 %fragment("FromCpp", "header")
 {  

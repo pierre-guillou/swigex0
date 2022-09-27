@@ -26,6 +26,8 @@ if (i != 22)
 #{
 #  cat("Wrong int Reference Out!", "\n")
 #}
+invisible(a$testIntRefDef())
+invisible(a$testIntRefDef(3))
 vi = a$testVectorInt(c(23,33,43))
 cat(class(vi), "\n")
 if (vi[1] != 23 || vi[2] != 33 || vi[3] != 43)
@@ -56,6 +58,11 @@ if (vi[1] != 26 || vi[2] != 36)
 {
   cat("Wrong VectorInt Reference Out!", "\n")
 }
+invisible(a$testVectorIntRefDef())
+invisible(a$testVectorIntRefDef(c()))
+invisible(a$testVectorIntRefDef(list()))
+invisible(a$testVectorIntRefDef(c(3)))
+invisible(a$testVectorIntRefDef(list(3)))
 vvi = a$testVVectorInt(list(c(23,33,43),c(53,63),c(73,83,93)))
 cat(class(vvi), "\n")
 if (vvi[[1]][1] != 23 || vvi[[1]][2] != 33 || vvi[[1]][3] != 43 ||
@@ -96,6 +103,14 @@ if (vvi[[1]][1] != 26 || vvi[[1]][2] != 36 ||
 {
   cat("Wrong VectorVectorInt Reference Out!", "\n")
 }
+invisible(a$testVVectorIntRefDef())
+invisible(a$testVVectorIntRefDef(3))
+invisible(a$testVVectorIntRefDef(c()))
+invisible(a$testVVectorIntRefDef(list()))
+invisible(a$testVVectorIntRefDef(c(3,4)))
+invisible(a$testVVectorIntRefDef(list(c(3))))
+invisible(a$testVVectorIntRefDef(list(c())))
+invisible(a$testVVectorIntRefDef(list(c(6,7),c(8,9))))
 d = a$testDouble(12.1)
 cat(class(d), "\n")
 if (d != 12.1)
@@ -121,6 +136,8 @@ if (d != 22.2)
 #{
 #  cat("Wrong double Reference Out!", "\n")
 #}
+invisible(a$testDoubleRefDef())
+invisible(a$testDoubleRefDef(3.1))
 vi = a$testVectorDouble(c(23.1,33.1,43.1))
 cat(class(vi), "\n")
 if (vi[1] != 23.1 || vi[2] != 33.1 || vi[3] != 43.1)
@@ -151,6 +168,11 @@ if (vd[1] != 26.3 || vd[2] != 36.3)
 {
   cat("Wrong VectorDouble Reference Out!", "\n")
 }
+invisible(a$testVectorDoubleRefDef())
+invisible(a$testVectorDoubleRefDef(c()))
+invisible(a$testVectorDoubleRefDef(list()))
+invisible(a$testVectorDoubleRefDef(c(3.1)))
+invisible(a$testVectorDoubleRefDef(list(3.1)))
 vvd = a$testVVectorDouble(list(c(23.1,33.1,43.1),c(53.1,63.1),c(73.1,83.1,93.1)))
 cat(class(vvd), "\n")
 if (vvd[[1]][1] != 23.1 || vvd[[1]][2] != 33.1 || vvd[[1]][3] != 43.1 ||
@@ -191,6 +213,14 @@ if (vvd[[1]][1] != 26.3 || vvd[[1]][2] != 36.3 ||
 {
   cat("Wrong VectorVectorDouble Reference Out!", "\n")
 }
+invisible(a$testVVectorDoubleRefDef())
+invisible(a$testVVectorDoubleRefDef(3.1))
+invisible(a$testVVectorDoubleRefDef(c()))
+invisible(a$testVVectorDoubleRefDef(list()))
+invisible(a$testVVectorDoubleRefDef(c(3.1,4.1)))
+invisible(a$testVVectorDoubleRefDef(list(c(3.1))))
+invisible(a$testVVectorDoubleRefDef(list(c())))
+invisible(a$testVVectorDoubleRefDef(list(c(6.1,7.1),c(8.1,9.1))))
 s = a$testString("Str12")
 cat(class(s), "\n")
 if (s != "Str12")
@@ -216,6 +246,8 @@ if (s != "Str22")
 #{
 #  cat("Wrong String Reference Out!", "\n")
 #}
+invisible(a$testStringRefDef())
+invisible(a$testStringRefDef("Str3"))
 vs = a$testVectorString(c("Str23","Str33","Str43"))
 cat(class(vs), "\n")
 if (vs[1] != "Str23" || vs[2] != "Str33" || vs[3] != "Str43")
@@ -249,6 +281,11 @@ if (vs[1] != "Str26" || vs[2] != "Str36")
 {
   cat("Wrong VectorString Reference Out!", "\n")
 }
+invisible(a$testVectorStringRefDef())
+invisible(a$testVectorStringRefDef(c()))
+invisible(a$testVectorStringRefDef(list()))
+invisible(a$testVectorStringRefDef(c("Str3")))
+invisible(a$testVectorStringRefDef(list("Str3")))
 # No VectorVectorString (doesn't exist in the C++ library)
 
 # Test NA values
@@ -285,14 +322,14 @@ v = a$testVVectorDouble(c(202.1)) # Only 1 vector with 1 item
 v = a$testVVectorDouble(c(203.1, 204.1)) # Only 1 vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)
 
-invisible(a$testIntOverload(12))
-invisible(a$testIntOverload((12))) # TODO : Vector with 1 item seen as a scalar
+invisible(a$testIntOverload(12)) # 1 value seen as a vector with 1 item
+invisible(a$testIntOverload((12)))
 invisible(a$testIntOverload(c(13, 14))) 
 
-invisible(a$testDoubleOverload(12.1))
-invisible(a$testDoubleOverload((12.1))) # TODO : Vector with 1 item seen as a scalar
+invisible(a$testDoubleOverload(12.1)) # 1 value seen as a vector with 1 item
+invisible(a$testDoubleOverload((12.1)))
 invisible(a$testDoubleOverload(c(13.1, 14.1)))
 
-invisible(a$testStringOverload("Str12.1"))
-invisible(a$testStringOverload(("Str12.1"))) # TODO : Vector with 1 item seen as a scalar
+invisible(a$testStringOverload("Str12.1")) # 1 value seen as a vector with 1 item
+invisible(a$testStringOverload(("Str12.1")))
 invisible(a$testStringOverload(c("Str13.1", "Str14.1")))

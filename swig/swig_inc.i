@@ -117,18 +117,25 @@
   int errcode = vectorToCpp($input, vec);
   if (!SWIG_IsOK(errcode))
   {
-    // Try direct conversion of Vectors by reference/pointer (see swigtypes.swg)
-    errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
-    if (SWIG_IsOK(errcode))
-    {
-      if (!argp) {
-        %argument_nullref("$type", $symname, $argnum);
+    //try
+    //{
+      // Try direct conversion of Vectors by reference/pointer (see swigtypes.swg)
+      errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
+      if (SWIG_IsOK(errcode))
+      {
+        if (!argp) {
+          %argument_nullref("$type", $symname, $argnum);
+        }
+        $1 = %reinterpret_cast(argp, $ltype);
       }
-      $1 = %reinterpret_cast(argp, $ltype);
-    }
-    else {
-      %argument_fail(errcode, "$type", $symname, $argnum);
-    }
+      else {
+        %argument_fail(errcode, "$type", $symname, $argnum);
+      }
+    //}
+    //catch(...)
+    //{
+    //  %argument_fail(errcode, "$type", $symname, $argnum);
+    //}
   }
   else {
     $1 = &vec;
@@ -144,16 +151,23 @@
   int errcode = vectorVectorToCpp($input, vec);
   if (!SWIG_IsOK(errcode))
   {
-    // Try direct conversion of VectorVectors by reference/pointer (see swigtypes.swg)
-    errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
-    if (SWIG_IsOK(errcode))
+    try
     {
-      if (!argp) {
-        %argument_nullref("$type", $symname, $argnum);
+      // Try direct conversion of VectorVectors by reference/pointer (see swigtypes.swg)
+      errcode = SWIG_ConvertPtr($input, &argp, $descriptor, %convertptr_flags);
+      if (SWIG_IsOK(errcode))
+      {
+        if (!argp) {
+          %argument_nullref("$type", $symname, $argnum);
+        }
+        $1 = %reinterpret_cast(argp, $ltype);
       }
-      $1 = %reinterpret_cast(argp, $ltype);
+      else {
+        %argument_fail(errcode, "$type", $symname, $argnum);
+      }
     }
-    else {
+    catch(...)
+    {
       %argument_fail(errcode, "$type", $symname, $argnum);
     }
   }

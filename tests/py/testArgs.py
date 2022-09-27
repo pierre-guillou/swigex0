@@ -19,6 +19,8 @@ a.testIntRefOut(i)
 print(type(i))
 #if (i != 32) : # TODO : Output argument for scalar not supported (i still equal to 5)
 #  print("Wrong int Reference Out!")
+a.testIntRefDef()
+a.testIntRefDef(3)
 
 vi = a.testVectorInt(np.array((23,33,43)))
 print(type(vi))
@@ -42,6 +44,11 @@ a.testVectorIntRefOut(vi) # Output argument
 print(type(vi))
 if (vi[0] != 26 or vi[1] != 36) :
   print("Wrong VectorInt Reference Out!")
+a.testVectorIntRefDef()
+a.testVectorIntRefDef(np.array([]))
+a.testVectorIntRefDef([])
+a.testVectorIntRefDef(())
+a.testVectorIntRefDef((3))
 
 vvi = a.testVVectorInt(np.array([[23,33,43],[53,63],[73,83,93]], dtype='object')) # From numpy.array: possible because dtype='object' (sub-vector sizes are not the same)
 print(type(vvi))
@@ -75,7 +82,16 @@ print(type(vvi))
 if (vvi[0][0] != 26 or vvi[0][1] != 36 or
     vvi[1][0] != 56 or vvi[1][1] != 66) :
   print("Wrong VectorVectorInt Reference Out!")
-  
+a.testVVectorIntRefDef()
+a.testVVectorIntRefDef((3))
+a.testVVectorIntRefDef(np.array([]))
+a.testVVectorIntRefDef([])
+a.testVVectorIntRefDef(())
+a.testVVectorIntRefDef([3,4])
+a.testVVectorIntRefDef([(3)])
+a.testVVectorIntRefDef([()])
+a.testVVectorIntRefDef([(6,7),(8,9)])
+
 d = a.testDouble(12.1)
 print(type(d))
 if (d != 12.1) :
@@ -93,6 +109,8 @@ a.testDoubleRefOut(d)
 print(type(d))
 #if (d != 22.2) : # TODO : Output argument for scalar not supported (d still equal to 5.0)
 #  print("Wrong double Reference Out!")
+a.testDoubleRefDef()
+a.testDoubleRefDef(3.1)
 
 vd = a.testVectorDouble([23.1,33.1,43.1]) # From list
 print(type(vd))
@@ -116,6 +134,11 @@ a.testVectorDoubleRefOut(vd) # Output argument
 print(type(vd))
 if (vd[0] != 26.3 or vd[1] != 36.3) :
   print("Wrong VectorDouble Reference Out!")
+a.testVectorDoubleRefDef()
+a.testVectorDoubleRefDef(np.array([]))
+a.testVectorDoubleRefDef([])
+a.testVectorDoubleRefDef(())
+a.testVectorDoubleRefDef((3.1))
 
 vvd = a.testVVectorDouble(np.array([[23.1,33.1,43.1],[53.1,63.1],[73.1,83.1,93.1]]))  # From numpy.array
 print(type(vvd))
@@ -149,7 +172,16 @@ print(type(vvd))
 if (vvd[0][0] != 26.3 or vvd[0][1] != 36.3 or
     vvd[1][0] != 56.3 or vvd[1][1] != 66.3) :
   print("Wrong VectorVectorDouble Reference Out!")
-  
+a.testVVectorDoubleRefDef()
+a.testVVectorDoubleRefDef((3.1))
+a.testVVectorDoubleRefDef(np.array([]))
+a.testVVectorDoubleRefDef([])
+a.testVVectorDoubleRefDef(())
+a.testVVectorDoubleRefDef([3.1,4.1])
+a.testVVectorDoubleRefDef([(3.1)])
+a.testVVectorDoubleRefDef([()])
+a.testVVectorDoubleRefDef([(6.1,7.1),(8.1,9.1)])
+
 s = a.testString("Str12")
 print(type(s))
 if (s != "Str12") :
@@ -167,6 +199,8 @@ if (s != "Str22") :
 #print(type(s))
 #if (s != "Str22") :
 #  print("Wrong String Reference Out!")
+a.testStringRefDef()
+a.testStringRefDef("Str3")
 
 vs = a.testVectorString(np.array(("Str23","Str33","Str43"))) # From numpy.array
 print(type(vs))
@@ -190,6 +224,11 @@ a.testVectorStringRefOut(vs) # Output argument
 print(type(vs))
 if (vs[0] != 'Str26' or vs[1] != 'Str36') :
   print("Wrong VectorString Reference Out!")
+a.testVectorStringRefDef()
+a.testVectorStringRefDef(np.array([]))
+a.testVectorStringRefDef([])
+a.testVectorStringRefDef(())
+a.testVectorStringRefDef(["Str3"])
 # No VectorVectorString (doesn't exist in the C++ library)
 
 # Test NA values

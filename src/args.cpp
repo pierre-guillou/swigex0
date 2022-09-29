@@ -46,10 +46,10 @@ void TypeClass::testIntRefOut(int& a) const
   std::cout << "Test int Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testIntRefDef(const int& a)
+void TypeClass::testIntRefDef(const int& a, const int& b)
 {
   _varInt = a;
-  std::cout << "Test int Reference Def: " << a << std::endl;
+  std::cout << "Test int Reference Def: " << a << " - " << b << std::endl;
 }
 
 VectorInt TypeClass::testVectorInt(VectorInt a)
@@ -79,10 +79,10 @@ void TypeClass::testVectorIntRefOut(VectorInt& a) const
   std::cout << "Test VectorInt Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testVectorIntRefDef(const VectorInt& a)
+void TypeClass::testVectorIntRefDef(const VectorInt& a, const VectorInt& b)
 {
   _varVectorInt = a;
-  std::cout << "Test VectorInt Reference Def: " << a << std::endl;
+  std::cout << "Test VectorInt Reference Def: " << a << " - " << b << std::endl;
 }
 
 VectorVectorInt TypeClass::testVVectorInt(VectorVectorInt a)
@@ -112,10 +112,10 @@ void TypeClass::testVVectorIntRefOut(VectorVectorInt& a) const
   std::cout << "Test VectorVectorInt Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testVVectorIntRefDef(const VectorVectorInt& a)
+void TypeClass::testVVectorIntRefDef(const VectorVectorInt& a, const VectorVectorInt& b)
 {
   _varVVectorInt = a;
-  std::cout << "Test VectorVectorInt Reference Def: " << a << std::endl;
+  std::cout << "Test VectorVectorInt Reference Def: " << a << " - " << b << std::endl;
 }
 
 double TypeClass::testDouble(double a)
@@ -145,10 +145,10 @@ void TypeClass::testDoubleRefOut(double& a) const
   std::cout << "Test Double Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testDoubleRefDef(const double& a)
+void TypeClass::testDoubleRefDef(const double& a, const double& b)
 {
   _varDouble = a;
-  std::cout << "Test Double Reference Def: " << a << std::endl;
+  std::cout << "Test Double Reference Def: " << a << " - " << b << std::endl;
 }
 
 VectorDouble TypeClass::testVectorDouble(VectorDouble a)
@@ -178,10 +178,10 @@ void TypeClass::testVectorDoubleRefOut(VectorDouble& a) const
   std::cout << "Test VectorDouble Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testVectorDoubleRefDef(const VectorDouble& a)
+void TypeClass::testVectorDoubleRefDef(const VectorDouble& a, const VectorDouble& b)
 {
   _varVectorDouble = a;
-  std::cout << "Test VectorDouble Reference Def: " << a << std::endl;
+  std::cout << "Test VectorDouble Reference Def: " << a << " - " << b << std::endl;
 }
 
 VectorVectorDouble TypeClass::testVVectorDouble(VectorVectorDouble a)
@@ -211,10 +211,10 @@ void TypeClass::testVVectorDoubleRefOut(VectorVectorDouble& a) const
   std::cout << "Test VectorVectorDouble Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testVVectorDoubleRefDef(const VectorVectorDouble& a)
+void TypeClass::testVVectorDoubleRefDef(const VectorVectorDouble& a, const VectorVectorDouble& b)
 {
   _varVVectorDouble = a;
-  std::cout << "Test VectorVectorDouble Reference Def: " << a << std::endl;
+  std::cout << "Test VectorVectorDouble Reference Def: " << a << " - " << b << std::endl;
 }
 
 String TypeClass::testString(String a)
@@ -244,10 +244,10 @@ void TypeClass::testStringRefOut(String& a) const
   std::cout << "Test String Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testStringRefDef(const String& a)
+void TypeClass::testStringRefDef(const String& a, const String& b)
 {
   _varString = a;
-  std::cout << "Test String Reference Def: " << a << std::endl;
+  std::cout << "Test String Reference Def: " << a << " - " << b << std::endl;
 }
 
 VectorString TypeClass::testVectorString(VectorString a)
@@ -277,10 +277,10 @@ void TypeClass::testVectorStringRefOut(VectorString& a) const
   std::cout << "Test VectorString Reference Out: " << a << std::endl;
 }
 
-void TypeClass::testVectorStringRefDef(const VectorString& a)
+void TypeClass::testVectorStringRefDef(const VectorString& a, const VectorString& b)
 {
   _varVectorString = a;
-  std::cout << "Test VectorString Reference Def: " << a << std::endl;
+  std::cout << "Test VectorString Reference Def: " << a << " - " << b << std::endl;
 }
 
 void TypeClass::testIntOverload(int a) const

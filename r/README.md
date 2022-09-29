@@ -1,6 +1,6 @@
 # MYFIBO R Package
 
-* Author: Fabien Ors (MINES PARIS - PSL) 
+* Author: Fabien Ors (MINES PARIS - PSL University) 
 * License: GPL v3
 * Date: Sept. 2022
 

@@ -1,6 +1,6 @@
 # MYFIBO Python Package
 
-* Author: Fabien Ors (MINES PARIS - PSL) 
+* Author: Fabien Ors (MINES PARIS - PSL University) 
 * License: MIT
 * Date: Sept. 2022
 

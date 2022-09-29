@@ -1,10 +1,40 @@
 # MYFIBO C++ Library and Wrappers
 
-* Author: Fabien Ors (MINES PARIS - PSL) 
+* Author: Fabien Ors (MINES PARIS - PSL University) 
 * License: MIT
 * Date: Sept. 2022
 
-Example of a C++ library exported in R and python using SWIG and CMake
+Example of a cross-platform C++ library exported in Python and R using SWIG and CMake. Following features are tested:
+* Non regression tests in C++, Python and R (using CTest and automatic github actions)
+* Python and R packages local installation through CMake
+* Python and R packages deployment on TestPyPi and CRAN (not yet available) (using manual github actions)
+* Simple C++ class export (see testFibo)
+* Special classes for handling *vectors* and *numerical vectors* based on std::vector (see VectorT.hpp and VectorNumT.hpp) which permits to:
+  * Extend std::vector capabilities (stream, numerical operators,...)
+  * Handle *undefined values* of any types
+* Use of typemaps for testing *arguments* wrapping (see testArgs):
+  * For C++ types: int, double, std::string, Vector\*, VectorVector\*
+  * Passed by input value, input reference, input pointers and output pointers
+  * Possibly having C++ default values (argument naming is not yet possible in R)
+* *Inheritance* in target language (see testPolymorph) (still in development)
+
+* C++ Vector\* class is converted:
+|        | from C++    | to C++                   |
+|--------|-------------|--------------------------|
+| Python | numpy.array | tuple, list, numpy.array |
+| R      | vector      | vector, list             |
+
+* C++ VectorVector\* class is converted:
+|        | from C++                    | to C++                                               |
+|--------|-----------------------------|------------------------------------------------------|
+| Python | numpy.array of numpy.arrays | list or numpy.array of tuples, lists or numpy.arrays |
+| R      | list of vectors             | list of vectors                                      |
+  
+A lot of CMake and SWIG instructions in this project have been used to solve issues I encountered. There certainly exist smarter and simpler ways to accomplish all the stuff. Feel free to suggest any simplifications in order to make myfibo as simple as possible!
+
+Look for 'TODO' keyword for remaining issues.
+
+## Prerequisites
 
 This library has been successfully tested with Ubuntu 16/18/20 LTS and Windows 10 (MacOS: not tested).
 
@@ -13,7 +43,7 @@ For compiling and installing *myfibo* C++ Library, the following tools must be a
 * Git client
 * CMake tool 3.20 or higher
 * A C++ compiler:
-  * Linux/MacOS:
+  * Linux:
     * GCC compiler 5.4 or higher
   * Windows:
     * Microsoft Visual Studio C++ 14 or higher
@@ -21,7 +51,7 @@ For compiling and installing *myfibo* C++ Library, the following tools must be a
   * MacOS (not tested):
     * Clang 12 or higher
 
-The following tools must be available for compiling and installing python package:
+The following tools must be available for compiling and installing Python package:
 * SWIG 4 or higher
 * Python 3 or higher with *pip*, *numpy* and *pybind11* modules installed
 
@@ -36,7 +66,7 @@ See [required tools installation](#required-tools-installation) instructions bel
 
 For getting the sources files, just clone the github repository:
 
-    git clone https://github.com/myfibo/myfibo.git
+    git clone https://github.com/fabien-ors/myfibo
     cd myfibo
 
 Notes:
@@ -45,9 +75,9 @@ Notes:
 
 ## Usage
 
-The objective of this package is to provide an example of wrapping a C++ library in R and Python using CMake and Swig. Derivative usage instructions will come soon.
+The objective of this package is to provide an example of wrapping a C++ library in R and Python using CMake and SWIG. Derivative usage instructions will come soon.
 
-Note: See shortcuts for 'make' users in Makefile file
+Note: See shortcuts for 'make' users in *Makefile* file
 
 ### Configure project
 #### GCC / MinGW / CLang
@@ -62,8 +92,8 @@ Note: See shortcuts for 'make' users in Makefile file
     * Define the `MYFIBO_INSTALL_DIR` environment variable or
     * Add `-DMYFIBO_INSTALL_DIR=<path/of/myfibo/install/dir>` to the first cmake command above
 * If you want to build and install the *Debug* version, you must replace `Release` by `Debug` above (GCC/MinGW) and below (MSVC)
-* The *static* version of the library is mandatory for creating [python package]
-* Only the *shared* library (built by default) is installed.
+* The *static* version of the library is mandatory for creating [Python package]
+* Only the *shared* library (built by default) is installed by the 'install' target.
 
 ### Build static library (and install Python package)
 #### GCC / MinGW / CLang

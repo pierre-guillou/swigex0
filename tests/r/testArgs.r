@@ -28,6 +28,8 @@ if (i != 22)
 #}
 invisible(a$testIntRefDef())
 invisible(a$testIntRefDef(3))
+#invisible(a$testIntRefDef(b=5)) # TODO :Argument naming is impossible when using default C++ values
+
 vi = a$testVectorInt(c(23,33,43))
 cat(class(vi), "\n")
 if (vi[1] != 23 || vi[2] != 33 || vi[3] != 43)
@@ -63,6 +65,7 @@ invisible(a$testVectorIntRefDef(c()))
 invisible(a$testVectorIntRefDef(list()))
 invisible(a$testVectorIntRefDef(c(3)))
 invisible(a$testVectorIntRefDef(list(3)))
+
 vvi = a$testVVectorInt(list(c(23,33,43),c(53,63),c(73,83,93)))
 cat(class(vvi), "\n")
 if (vvi[[1]][1] != 23 || vvi[[1]][2] != 33 || vvi[[1]][3] != 43 ||
@@ -111,6 +114,7 @@ invisible(a$testVVectorIntRefDef(c(3,4)))
 invisible(a$testVVectorIntRefDef(list(c(3))))
 invisible(a$testVVectorIntRefDef(list(c())))
 invisible(a$testVVectorIntRefDef(list(c(6,7),c(8,9))))
+
 d = a$testDouble(12.1)
 cat(class(d), "\n")
 if (d != 12.1)
@@ -138,6 +142,7 @@ if (d != 22.2)
 #}
 invisible(a$testDoubleRefDef())
 invisible(a$testDoubleRefDef(3.1))
+
 vi = a$testVectorDouble(c(23.1,33.1,43.1))
 cat(class(vi), "\n")
 if (vi[1] != 23.1 || vi[2] != 33.1 || vi[3] != 43.1)
@@ -173,6 +178,7 @@ invisible(a$testVectorDoubleRefDef(c()))
 invisible(a$testVectorDoubleRefDef(list()))
 invisible(a$testVectorDoubleRefDef(c(3.1)))
 invisible(a$testVectorDoubleRefDef(list(3.1)))
+
 vvd = a$testVVectorDouble(list(c(23.1,33.1,43.1),c(53.1,63.1),c(73.1,83.1,93.1)))
 cat(class(vvd), "\n")
 if (vvd[[1]][1] != 23.1 || vvd[[1]][2] != 33.1 || vvd[[1]][3] != 43.1 ||
@@ -221,6 +227,7 @@ invisible(a$testVVectorDoubleRefDef(c(3.1,4.1)))
 invisible(a$testVVectorDoubleRefDef(list(c(3.1))))
 invisible(a$testVVectorDoubleRefDef(list(c())))
 invisible(a$testVVectorDoubleRefDef(list(c(6.1,7.1),c(8.1,9.1))))
+
 s = a$testString("Str12")
 cat(class(s), "\n")
 if (s != "Str12")
@@ -248,6 +255,7 @@ if (s != "Str22")
 #}
 invisible(a$testStringRefDef())
 invisible(a$testStringRefDef("Str3"))
+
 vs = a$testVectorString(c("Str23","Str33","Str43"))
 cat(class(vs), "\n")
 if (vs[1] != "Str23" || vs[2] != "Str33" || vs[3] != "Str43")

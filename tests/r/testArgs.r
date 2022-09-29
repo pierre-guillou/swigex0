@@ -1,4 +1,4 @@
-library(myfibo)
+library(swigex)
 
 a = TypeClass()
 i = a$testInt(12)

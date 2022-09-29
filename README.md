@@ -1,4 +1,4 @@
-# MYFIBO C++ Library and Wrappers
+# swigex C++ Library and Wrappers
 
 * Author: Fabien Ors (MINES PARIS - PSL University) 
 * License: MIT
@@ -30,7 +30,7 @@ Example of a cross-platform C++ library exported in Python and R using SWIG and 
 | Python | numpy.array of numpy.arrays | list or numpy.array of tuples, lists or numpy.arrays |
 | R      | list of vectors             | list of vectors                                      |
   
-A lot of CMake and SWIG instructions in this project have been used to solve issues I encountered. There certainly exist smarter and simpler ways to accomplish all the stuff. Feel free to suggest any simplifications in order to make myfibo as simple as possible!
+A lot of CMake and SWIG instructions in this project have been used to solve issues I encountered. There certainly exist smarter and simpler ways to accomplish all the stuff. Feel free to suggest any simplifications in order to make swigex as simple as possible!
 
 Look for 'TODO' keyword for remaining issues.
 
@@ -38,7 +38,7 @@ Look for 'TODO' keyword for remaining issues.
 
 This library has been successfully tested with Ubuntu 16/18/20 LTS and Windows 10 (MacOS: not tested).
 
-For compiling and installing *myfibo* C++ Library, the following tools must be available (See [required tools installation](#required-tools-installation) instructions below):
+For compiling and installing *swigex* C++ Library, the following tools must be available (See [required tools installation](#required-tools-installation) instructions below):
 
 * Git client
 * CMake tool 3.20 or higher
@@ -66,12 +66,12 @@ See [required tools installation](#required-tools-installation) instructions bel
 
 For getting the sources files, just clone the github repository:
 
-    git clone https://github.com/fabien-ors/myfibo
-    cd myfibo
+    git clone https://github.com/fabien-ors/swigex
+    cd swigex
 
 Notes:
 
-* In the following, all instructions must be executed from a command prompt inside this *root* directory (thus the last command `cd myfibo` above)
+* In the following, all instructions must be executed from a command prompt inside this *root* directory (thus the last command `cd swigex` above)
 
 ## Usage
 
@@ -88,9 +88,9 @@ Note: See shortcuts for 'make' users in *Makefile* file
 ### Important Notes
 
 * Using MingGW on a Windows where Visual Studio is also installed may need to add `-G "MSYS Makefiles"` in the command above.
-* The default installation directory named *myfibo_install* is located in your *Home*. If you want to change it, you can either:
-    * Define the `MYFIBO_INSTALL_DIR` environment variable or
-    * Add `-DMYFIBO_INSTALL_DIR=<path/of/myfibo/install/dir>` to the first cmake command above
+* The default installation directory named *swigex_install* is located in your *Home*. If you want to change it, you can either:
+    * Define the `swigex_INSTALL_DIR` environment variable or
+    * Add `-Dswigex_INSTALL_DIR=<path/of/swigex/install/dir>` to the first cmake command above
 * If you want to build and install the *Debug* version, you must replace `Release` by `Debug` above (GCC/MinGW) and below (MSVC)
 * The *static* version of the library is mandatory for creating [Python package]
 * Only the *shared* library (built by default) is installed by the 'install' target.

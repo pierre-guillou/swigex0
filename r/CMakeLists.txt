@@ -22,7 +22,7 @@ include(${SWIG_USE_FILE})
 # WRAPPER GENERATION & BUILD
 
 # R package interface file
-set(SRC rfibo.i)
+set(SRC rswigex.i)
 
 # Generation folders
 if (CMAKE_CONFIGURATION_TYPES)
@@ -46,7 +46,7 @@ set_source_files_properties(${SRC} PROPERTIES
   # Swig wrapper will be regenerated if C++ headers are changed
   # https://stackoverflow.com/a/70375654/3952924 (CMake 3.20 minimum)
   USE_SWIG_DEPENDENCIES TRUE
-  # myfibo C++ headers will be found by %import swig directive
+  # swigex C++ headers will be found by %import swig directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
 )
 

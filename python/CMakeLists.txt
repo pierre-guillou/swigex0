@@ -23,7 +23,7 @@ include(${SWIG_USE_FILE})
 # WRAPPER GENERATION & BUILD
 
 # Python package interface file
-set(SRC pyfibo.i) 
+set(SRC pyswigex.i) 
 
 # Generation folders
 if (CMAKE_CONFIGURATION_TYPES)
@@ -44,7 +44,7 @@ set_source_files_properties(${SRC} PROPERTIES
   # Swig wrapper will be regenerated if C++ headers are changed
   # https://stackoverflow.com/a/70375654/3952924 (CMake 3.20 minimum)
   USE_SWIG_DEPENDENCIES TRUE
-  # myfibo C++ headers will be found by %import swig directive
+  # swigex C++ headers will be found by %import swig directive
   USE_TARGET_INCLUDE_DIRECTORIES TRUE
   # Python package name will be the name of the installed folder (no module)
   SWIG_MODULE_NAME __init__

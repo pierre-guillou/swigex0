@@ -1,12 +1,12 @@
 #pragma once
 
-#include "myfibo_export.hpp"
-#include "fibo_define.hpp"
+#include "swigex_export.hpp"
+#include "swigex_define.hpp"
 
 /**
  * Base class for testing polymorphism in target language
  */
-class MYFIBO_EXPORT AParent
+class SWIGEX_EXPORT AParent
 {
   public:
     AParent() {};
@@ -18,7 +18,7 @@ class MYFIBO_EXPORT AParent
 /**
  * Concrete class for testing polymorphism in target language
  */
-class MYFIBO_EXPORT ChildOne : public AParent
+class SWIGEX_EXPORT ChildOne : public AParent
 {
   public:
     ChildOne() {};
@@ -28,6 +28,6 @@ class MYFIBO_EXPORT ChildOne : public AParent
 };
 
 /// Global function for testing polymorphism
-MYFIBO_EXPORT void showHello(AParent* parent);
+SWIGEX_EXPORT void showHello(AParent* parent);
 
 

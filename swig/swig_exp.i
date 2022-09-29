@@ -5,8 +5,8 @@
 // You must cite below each single header file that you want to export!
 // Put low level headers in first positions (otherwise Syntax error in input(1).)
 
-%include myfibo_export.hpp // Do not forget this file in priority (for SWIG preprocessor)
-%include fibo_define.hpp
+%include swigex_export.hpp // Do not forget this file in priority (for SWIG preprocessor)
+%include swigex_define.hpp
 
 // Export VectorXXX classes
 %include VectorT.hpp

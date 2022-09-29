@@ -1,4 +1,4 @@
-import myfibo as mf
+import swigex as mf
 
 ap = mf.AParent()
 mf.showHello(ap)

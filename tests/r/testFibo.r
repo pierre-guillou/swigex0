@@ -1,4 +1,4 @@
-library(myfibo)
+library(swigex)
 
 f1 = Fibo(50)
 invisible(f1$display(FALSE))

@@ -1,4 +1,4 @@
-%module(directors="1") myfibo
+%module(directors="1") swigex
 
 // Note : Keep order in this file!
 
@@ -411,7 +411,7 @@
 
 %pythoncode %{
 
-import myfibo as mf
+import swigex as mf
 import numpy as np
 
 ## Integer NaN custom value

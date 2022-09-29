@@ -1,7 +1,7 @@
 #pragma once
 
-#include "myfibo_export.hpp"
-#include "fibo_define.hpp"
+#include "swigex_export.hpp"
+#include "swigex_define.hpp"
 
 #include <vector>
 #include <sstream>
@@ -17,7 +17,7 @@
  **
  ***************************************************************************/
 template <typename T>
-class MYFIBO_EXPORT VectorT
+class SWIGEX_EXPORT VectorT
 {
 public:
   typedef std::vector<T> Vector;
@@ -270,9 +270,9 @@ VectorT<T>& VectorT<T>::operator<<(const VectorT<T>& v)
 #ifdef _MSC_VER
   // Do not export VectorXXX to SWIG (no more instantiation needed)
   #ifndef SWIG
-    MYFIBO_TEMPLATE_EXPORT template class VectorT<int>;
-    MYFIBO_TEMPLATE_EXPORT template class VectorT<double>;
-    MYFIBO_TEMPLATE_EXPORT template class VectorT<String>;
+SWIGEX_TEMPLATE_EXPORT template class VectorT<int>;
+SWIGEX_TEMPLATE_EXPORT template class VectorT<double>;
+SWIGEX_TEMPLATE_EXPORT template class VectorT<String>;
   #endif
 #endif
 

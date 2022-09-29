@@ -1,4 +1,4 @@
-%module(directors="1") myfibo
+%module(directors="1") swigex
 
 // Note : Keep order in this file!
 

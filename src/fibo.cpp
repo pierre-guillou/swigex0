@@ -74,7 +74,7 @@ Fibo::Fibo(int n, const String& title)
   if (_title.empty())
   {
     std::stringstream sstr;
-    sstr << DEFAULT_TITLE << " (" << MYFIBO_RELEASE << " - " << MYFIBO_DATE << ")";
+    sstr << DEFAULT_TITLE << " (" << SWIGEX_RELEASE << " - " << SWIGEX_DATE << ")";
     _title = sstr.str();
   }
 }

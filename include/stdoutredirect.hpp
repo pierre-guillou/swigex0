@@ -1,13 +1,13 @@
 #pragma once
 
-#include "myfibo_export.hpp"
-#include "fibo_define.hpp"
+#include "swigex_export.hpp"
+#include "swigex_define.hpp"
 
 #include <fstream>
 
 // Standard output stream redirection
 
-class MYFIBO_EXPORT StdoutRedirect {
+class SWIGEX_EXPORT StdoutRedirect {
 public:
   StdoutRedirect(const String& file = "");
   ~StdoutRedirect();

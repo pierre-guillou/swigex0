@@ -1,9 +1,9 @@
-import myfibo
+import swigex
 
-f1 = myfibo.Fibo(50)
+f1 = swigex.Fibo(50)
 f1.display(False)
-f2 = myfibo.Fibo(100, "Test 100")
+f2 = swigex.Fibo(100, "Test 100")
 f2.display()
 
-vec = myfibo.fib(40)
+vec = swigex.fib(40)
 print(vec)

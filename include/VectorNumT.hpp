@@ -1,7 +1,7 @@
 #pragma once
 
-#include "myfibo_export.hpp"
-#include "fibo_define.hpp"
+#include "swigex_export.hpp"
+#include "swigex_define.hpp"
 
 #include "VectorT.hpp"
 
@@ -20,7 +20,7 @@
  **
  ***************************************************************************/
 template <typename T>
-class MYFIBO_EXPORT VectorNumT : public VectorT<T>
+class SWIGEX_EXPORT VectorNumT : public VectorT<T>
 {
 public:
   typedef VectorT<T> Parent;
@@ -212,10 +212,10 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
 #ifdef _MSC_VER
   // Do not export VectorNumXXX to SWIG (no more instantiation needed)
   #ifndef SWIG
-    MYFIBO_TEMPLATE_EXPORT template class VectorNumT<int>;
-    MYFIBO_TEMPLATE_EXPORT template class VectorNumT<double>;
-    MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<int> >;
-    MYFIBO_TEMPLATE_EXPORT template class VectorT<VectorNumT<double> >;
+SWIGEX_TEMPLATE_EXPORT template class VectorNumT<int>;
+SWIGEX_TEMPLATE_EXPORT template class VectorNumT<double>;
+SWIGEX_TEMPLATE_EXPORT template class VectorT<VectorNumT<int> >;
+SWIGEX_TEMPLATE_EXPORT template class VectorT<VectorNumT<double> >;
   #endif
 #endif
 

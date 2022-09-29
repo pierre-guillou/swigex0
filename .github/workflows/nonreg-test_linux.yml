@@ -14,7 +14,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    #container: ndesassis/test_ubuntu-16 # If restored, github workflow cannot change to myfibo/build directory !!!
+    #container: ndesassis/test_ubuntu-16 # If restored, github workflow cannot change to swigex/build directory !!!
 
     steps:
     - uses: actions/checkout@v2

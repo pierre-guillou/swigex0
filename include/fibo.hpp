@@ -1,17 +1,17 @@
 #pragma once
 
-#include "myfibo_export.hpp"
-#include "fibo_define.hpp"
+#include "swigex_export.hpp"
+#include "swigex_define.hpp"
 #include "VectorNumT.hpp"
 
 /// Global functions
-MYFIBO_EXPORT int fibn(int n);
-MYFIBO_EXPORT VectorInt fib(int n);
+SWIGEX_EXPORT int fibn(int n);
+SWIGEX_EXPORT VectorInt fib(int n);
 
 /**
  * Class which handles Fibonacci integers list
  */
-class MYFIBO_EXPORT Fibo
+class SWIGEX_EXPORT Fibo
 {
   public:
     Fibo (int n, const String& title = "");

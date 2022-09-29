@@ -1,6 +1,6 @@
 ##########################################################################################
 #
-#                      MYFIBO C++ Library and Wrappers
+#                      SWIGEX C++ Library and Wrappers
 #
 #                   Author: Fabien Ors (MINES PARIS - PSL) 
 #                   License: MIT
@@ -40,10 +40,10 @@ cmake_minimum_required(VERSION 3.20)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Define project here
-project(myfibo
+project(swigex
         VERSION      0.0.15
         DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
-        HOMEPAGE_URL "https://github.com/fabien-ors/myfibo"
+        HOMEPAGE_URL "https://github.com/fabien-ors/swigex"
         LANGUAGES    C CXX) # Enable C language for third party libraries
 
 ####################################################

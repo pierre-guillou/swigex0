@@ -1,4 +1,4 @@
-library(myfibo)
+library(swigex)
 
 ap = AParent()
 invisible(showHello(ap))

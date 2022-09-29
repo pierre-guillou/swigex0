@@ -1,13 +1,13 @@
 #pragma once
 
-#include "myfibo_export.hpp"
-#include "fibo_define.hpp"
+#include "swigex_export.hpp"
+#include "swigex_define.hpp"
 
 #include "VectorT.hpp"
 #include "VectorNumT.hpp"
 
 
-class MYFIBO_EXPORT TypeClass
+class SWIGEX_EXPORT TypeClass
 {
 public:
   TypeClass();

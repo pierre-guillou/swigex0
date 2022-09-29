@@ -4,12 +4,12 @@
 # Call 'make' with one of this target:
 # 
 # C++ Library:
-#  - shared         Build myfibo shared library
-#  - static         Build myfibo static library
+#  - shared         Build swigex shared library
+#  - static         Build swigex static library
 #  - build_tests    Build non-regression tests executables
 #  - doxygen        Build doxygen documentation [optional] [TODO]
-#  - install        Install myfibo shared library [and html doxymentation]
-#  - uninstall      Uninstall myfibo shared library [and html doxymentation]
+#  - install        Install swigex shared library [and html doxymentation]
+#  - uninstall      Uninstall swigex shared library [and html doxymentation]
 #
 # Python wrapper (only for Linux-GCC or MacOS-clang):
 #  - python_doc     Build python package documentation [optional] [TODO]

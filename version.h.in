@@ -2,5 +2,5 @@
 
 /* Version and date */
 
-#define MYFIBO_RELEASE "@myfibo_VERSION@"
-#define MYFIBO_DATE    "@myfibo_DATE@"
+#define SWIGEX_RELEASE "@swigex_VERSION@"
+#define SWIGEX_DATE    "@swigex_DATE@"

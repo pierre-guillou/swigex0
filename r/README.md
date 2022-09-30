@@ -1,4 +1,4 @@
-# SWIGEX R Package
+# swigex R Package
 
 * Author: Fabien Ors (MINES PARIS - PSL University) 
 * License: GPL v3

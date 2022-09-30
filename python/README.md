@@ -1,4 +1,4 @@
-# SWIGEX Python Package
+# swigex Python Package
 
 * Author: Fabien Ors (MINES PARIS - PSL University) 
 * License: MIT

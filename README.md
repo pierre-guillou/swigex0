@@ -81,10 +81,10 @@ The objective of this package is to provide an example of wrapping a C++ library
 
 Note: See shortcuts for 'make' users in *Makefile* file
 
-### Configure project {.tabset}
-#### GCC / MinGW / CLang {.active}
+### Configure project
+=== "GCC / MinGW / CLang"
     cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release
-#### MSVC (Visual)
+=== "MSVC (Visual)"
     cmake -Bbuild -H.
 
 ### Important Notes

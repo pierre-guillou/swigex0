@@ -26,6 +26,7 @@ Example of a cross-platform C++ library exported in Python and R using SWIG and 
 | R      | vector      | vector, list             |
 
 * C++ VectorVector\* class is converted:
+
 |        | from C++                    | to C++                                               |
 |--------|-----------------------------|------------------------------------------------------|
 | Python | numpy.array of numpy.arrays | list or numpy.array of tuples, lists or numpy.arrays |
@@ -165,7 +166,7 @@ Download and install the following tools:
 * Pybind11 and numpy python modules by running following instruction in a command prompt:
 
     python -m pip install "pybind11[global]" numpy
-    
+
 Notes:
 
 * You must restart your computer after installing these requirements

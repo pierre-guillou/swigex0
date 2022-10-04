@@ -19,6 +19,7 @@ Example of a cross-platform C++ library exported in Python and R using SWIG and 
 * *Inheritance* in target language (see testPolymorph) (still in development)
 
 * C++ Vector\* class is converted:
+
 |        | from C++    | to C++                   |
 |--------|-------------|--------------------------|
 | Python | numpy.array | tuple, list, numpy.array |

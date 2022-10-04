@@ -81,8 +81,8 @@ The objective of this package is to provide an example of wrapping a C++ library
 
 Note: See shortcuts for 'make' users in *Makefile* file
 
-### Configure project
-#### GCC / MinGW / CLang
+### Configure project {.tabset}
+#### GCC / MinGW / CLang {.active}
     cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release
 #### MSVC (Visual)
     cmake -Bbuild -H.
@@ -94,8 +94,8 @@ Note: See shortcuts for 'make' users in *Makefile* file
     * Define the `swigex_INSTALL_DIR` environment variable or
     * Add `-Dswigex_INSTALL_DIR=<path/of/swigex/install/dir>` to the first cmake command above
 * If you want to build and install the *Debug* version, you must replace `Release` by `Debug` above (GCC/MinGW) and below (MSVC)
-* The *static* version of the library is mandatory for creating [Python package]
-* Only the *shared* library (built by default) is installed by the 'install' target.
+* The *static* version of the library is mandatory for creating Python and R packages
+* Only the *shared* library (built by default) is installed by the 'install' target
 
 ### Build static library (and install Python package)
 #### GCC / MinGW / CLang

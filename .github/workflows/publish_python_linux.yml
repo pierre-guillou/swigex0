@@ -17,10 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy :
       matrix:
-    #   python: ["py35",'py36',"py37","py38","py39","py310"]
        python: ["3.7","3.8","3.9","3.10"]
-    #container:
-    #  image: ndesassis/test_ubuntu-16
  
     steps:
    

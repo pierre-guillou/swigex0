@@ -1,4 +1,4 @@
-name: non-reg_tests_windows-latest-visual
+name: non-reg-tests_windows-latest-visual
 
 on:
   push:

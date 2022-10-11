@@ -191,6 +191,16 @@ Notes:
 * You must restart your computer after installing these requirements
 * RTools is not the unique way to install MinGW on Windows, but it is our preferred way as we can handle R packages compilation
 
+## Known caveats
+
+If you experience the following error while importing *swigex* Package under Python:
+
+    RuntimeError: module compiled against API version 0x10 but this version of numpy is 0xe
+
+... you may need to upgrade numpy:
+
+    python -m pip install --upgrade numpy
+
 ---
 
 ## License

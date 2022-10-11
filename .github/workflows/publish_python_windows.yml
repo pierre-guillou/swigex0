@@ -6,14 +6,12 @@ on:
       logLevel:
         description: 'Manual'
         required: false
-        default: ''  
+        default: ''
+
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
-  DOXYGEN_ROOT : Doxygen
-  DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.3.windows.x64.bin.zip
   COMPILE_VERSION : '"Visual Studio 17 2022"' #Because cmake -G needs " "
-  PYTHON3_PREF : C:\\hostedtoolcache\\windows\\Python
   
 jobs:
    
@@ -21,63 +19,32 @@ jobs:
     runs-on: windows-latest 
     strategy :
       matrix:
-       python: 
-       # TODO: to be regularly updated according available pythons on windows-latest
-       # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software
-          - ["cp310","3.10.7"]
-          - ["cp39","3.9.13"]
-          - ["cp38","3.8.10"]
-          - ["cp37","3.7.9"]
-       windows-type:
-          - ["win_amd64", "x64","x64"]
-          - ["win32","x86","Win32"]
-          
-    
-    steps:
-    - name : Dir
-      run : |
-        cd ${{env.PYTHON3_PREF}}
-        dir
-        cd ${{matrix.python[1]}}
-        dir 
-        cd x86
-        dir
-        cd lib
-        dir
+       python: ["3.7","3.8","3.9","3.10"]
 
+    steps:
     - uses: actions/checkout@v2
 
-    - name : Create PYTHONPATH
-      run : |
-        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ matrix.python[1] }}\\${{matrix.windows-type[1] }}")>> $env:GITHUB_ENV
-      
-    - name : Setup python.exe 
-      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python3.exe") >> $env:GITHUB_ENV
- 
-    - name : Modify PATH #to avoid a warning at cmake configuration
-      run : |
-        echo "${{env.PYTHONPATH}}\\Scripts" >> $GITHUB_PATH
+    - name: Setup Python Version
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{matrix.python}}
 
     - name: Install Python dependencies
       run: |
-       ${{env.PYTHON3}} -m pip install wheel
-       ${{env.PYTHON3}} -m pip install twine 
-       ${{env.PYTHON3}} -m pip install numpy
+        python -m pip install --upgrade pip
+        python -m pip install numpy twine wheel
 
-    - name : Configure Cmake
+    - name : Create Wheels
       run : |
-        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A ${{matrix.windows-type[2]}}  -DPython3_ROOT_DIR=${{env.PYTHONPATH}}
-
-    - name : Library compilation
-      run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
- 
-    - name : Build and upload wheel
-      run: |
+        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DCMAKE_BUILD_TYPE:STRING=${{env.BUILD_TYPE}}
+        cmake --build ${{env.BUILD_DIR}} --target python_build
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=${{matrix.python[0]}} --plat-name=${{matrix.windows-type[0]}}
-        ${{env.PYTHON3}} -m twine upload dist\*
+        # Note: wheel must be declared pure (see setup.py)
+        python setup.py bdist_wheel --plat-name=win_amd64
+
+    - name : Upload
+      run : python -m twine upload cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}\dist\*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_PYPI_PWD }}
         TWINE_REPOSITORY: pypi
-

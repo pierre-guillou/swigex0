@@ -19,7 +19,6 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
-    #container: ndesassis/test_ubuntu-16 # If restored, github workflow cannot change to swigex/build directory !!!
 
     steps:
     - uses: actions/checkout@v2
@@ -38,4 +37,4 @@ jobs:
       run: cmake -B ${{github.workspace}}/${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       
     - name: Compile, install packages and execute non-regression tests
-      run: cmake --build ${{github.workspace}}/${{env.BUILD_DIR}} --config ${{env.BUILD_TYPE}} --target check
+      run: cmake --build ${{github.workspace}}/${{env.BUILD_DIR}} --target check

@@ -11,6 +11,7 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
+  BUILD_PLAT: manylinux1_x86_64
 
 jobs:
   build:
@@ -38,7 +39,7 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --target python_build
         cd ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}
         # Note: wheel must be declared pure (see setup.py)
-        python setup.py bdist_wheel --plat-name=manylinux1_x86_64
+        python setup.py bdist_wheel --plat-name=${{env.BUILD_PLAT}}
 
     - name : Upload
       run : python -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*

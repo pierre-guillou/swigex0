@@ -2,21 +2,18 @@ name: non-reg-tests_windows-latest-visual
 
 on:
   # Deactivate the workflow
-  push:
-    branches-ignore:
-      - '**'
   #push:
-  #  branches: [ main ]
-  #pull_request:
-  #  branches: [ main ]
+  #  branches-ignore:
+  #    - '**'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-  PYTHON3_PREF : C:\\hostedtoolcache\\windows\\Python
-  # TODO: to be regularly updated according available pythons on windows-latest
-  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#preinstalled-software
-  PYTHON3_VERSION : 3.10.7
+  BUILD_DIR : build
 
 jobs:
   
@@ -25,24 +22,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name : Create PYTHONPATH
-      run : |
-        echo ("PYTHONPATH=${{ env.PYTHON3_PREF }}\\${{ env.PYTHON3_VERSION }}\\x64")>> $env:GITHUB_ENV
-      
-    - name : Setup python.exe 
-      run : echo ("PYTHON3=${{env.PYTHONPATH}}\\python3.exe") >> $env:GITHUB_ENV
- 
-    - name : Modify PATH #to avoid a warning at cmake configuration
-      run : |
-        echo "${{env.PYTHONPATH}}\\Scripts" >> $GITHUB_PATH
 
     - name: Install Python dependency
-      run: ${{env.PYTHON3}} -m pip install numpy
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install numpy
 
     - name: Configure cmake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-      
+      run: cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DPython3_ROOT_DIR="${{ env.pythonLocation }}"
+
     - name: Compile, install packages and execute non-regression tests
-      # Execute tests defined by the CMake configuration.  
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check
+      # Execute tests defined by the CMake configuration.
+      run: cmake --build ${{github.workspace}}/${{env.BUILD_DIR}} --config ${{env.BUILD_TYPE}} --target check

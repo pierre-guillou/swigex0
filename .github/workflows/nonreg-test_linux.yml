@@ -2,17 +2,18 @@ name: non-reg-tests_ubuntu-latest
 
 on:
   # Deactivate the workflow
-  push:
-    branches-ignore:
-      - '**'
   #push:
-  #  branches: [ main ]
-  #pull_request:
-  #  branches: [ main ]
+  #  branches-ignore:
+  #    - '**'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  BUILD_DIR : build
 
 jobs:
   
@@ -26,7 +27,7 @@ jobs:
     - name: Install Python dependency
       run: sudo apt-get update && sudo apt-get install -yq python3-numpy
       
-    - name: Install R dependencies
+    - name: Install R dependency
       run: sudo apt-get install r-base
       
     - name: Setup personal R libraries directory
@@ -34,7 +35,7 @@ jobs:
       run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
 
     - name: Configure cmake
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
       
     - name: Compile, install packages and execute non-regression tests
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target check
+      run: cmake --build ${{github.workspace}}/${{env.BUILD_DIR}} --config ${{env.BUILD_TYPE}} --target check

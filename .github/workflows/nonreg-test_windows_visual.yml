@@ -1,4 +1,4 @@
-name: non regression tests under Windows (Visual)
+name: non-reg_tests_windows-latest-visual
 
 on:
   push:

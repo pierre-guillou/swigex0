@@ -34,10 +34,12 @@ jobs:
         ls -ls $(which python)
         which python3
         ls -ls $(which python3)
-        echo ${{env.PYTHON3}}
-        ls -ls ${{env.PYTHON3}}
         python -m pip install --upgrade pip
         python -m pip install numpy twine wheel
+        python -c """
+        import numpy as np
+        np.get_include()
+        """
 
     - name : Create Wheels
       run : |

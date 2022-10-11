@@ -1,4 +1,4 @@
-name: non_reg_tests_ubuntu-latest
+name: non-reg_tests_ubuntu-latest
 
 on:
   push:

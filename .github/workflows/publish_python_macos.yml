@@ -30,6 +30,12 @@ jobs:
     
     - name: Install Python dependencies
       run: |
+        which python
+        ls -ls $(which python)
+        which python3
+        ls -ls $(which python)
+        which ${{env.PYTHON3}}
+        ls -ls ${{env.PYTHON3}}
         python -m pip install --upgrade pip
         python -m pip install numpy twine wheel
 

@@ -1,4 +1,4 @@
-name: publish_python_linux
+name: publish_python_ubuntu-latest
 
 on:
   workflow_dispatch:
@@ -17,9 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy :
       matrix:
-       python: ["py35",'py36',"py37","py38","py39","py310"]
-    container:
-      image: ndesassis/test_ubuntu-16
+    #   python: ["py35",'py36',"py37","py38","py39","py310"]
+       python: ["py37","py38","py39","py310"]
+    #container:
+    #  image: ndesassis/test_ubuntu-16
  
     steps:
    

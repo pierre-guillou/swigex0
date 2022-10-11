@@ -28,7 +28,8 @@ jobs:
     
     - name: Look for all pythons
       run: |
-        env
+        ls /opt
+        ls /opt/python
         which python3
 
     - name: Install Python dependency

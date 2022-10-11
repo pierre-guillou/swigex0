@@ -249,7 +249,7 @@ a.testVectorStringRefDef(b=[""])
 
 # Test NA values
 #print(a.testDouble(None)) # None is forbidden
-print(a.testDouble(np.nan))
+print(a.testDouble(np.nan)) # equivalent to float('nan')
 print(a.testDouble(np.inf))
 print(a.testDouble(2e505)) # Overflow becomes NA
 print(a.testVectorDouble(np.array((1.2, np.nan, 3.3))))
@@ -284,19 +284,19 @@ a.testVVectorDouble(((203.1, 204.1),)) # Only 1 vector with 2 items
 a.testVVectorDouble([[203.1, 204.1]]) # Should give same result
 # No VectorVectorString (doesn't exist in the C++ library)
 
-a.testIntOverload(12)
+a.testIntOverload(12) # TODO : Behavior different from R
 a.testIntOverload((12))
 a.testIntOverload((13, 14))
 a.testIntOverload([15, 16])
 a.testIntOverload(np.array([17, 18]))
 
-a.testDoubleOverload(12.1)
+a.testDoubleOverload(12.1) # TODO : Behavior different from R
 a.testDoubleOverload((12.1))
 a.testDoubleOverload((13.1, 14.1))
 a.testDoubleOverload([15.1, 16.1])
 a.testDoubleOverload(np.array([17.1, 18.1]))
 
-a.testStringOverload("Str12.1")
+a.testStringOverload("Str12.1") # TODO : Behavior different from R
 a.testStringOverload(("Str12.1"))
 a.testStringOverload(("Str13.1", "Str14.1"))
 a.testStringOverload(["Str15.1", "Str16.1"])

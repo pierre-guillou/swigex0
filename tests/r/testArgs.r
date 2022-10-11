@@ -330,14 +330,14 @@ v = a$testVVectorDouble(c(202.1)) # Only 1 vector with 1 item
 v = a$testVVectorDouble(c(203.1, 204.1)) # Only 1 vector with 2 items
 # No VectorVectorString (doesn't exist in the C++ library)
 
-invisible(a$testIntOverload(12)) # 1 value seen as a vector with 1 item
-invisible(a$testIntOverload((12)))
+invisible(a$testIntOverload(12)) # 1 value seen as a vector with 1 item  # TODO : Behavior different from Python
+invisible(a$testIntOverload(c(12)))
 invisible(a$testIntOverload(c(13, 14))) 
 
-invisible(a$testDoubleOverload(12.1)) # 1 value seen as a vector with 1 item
-invisible(a$testDoubleOverload((12.1)))
+invisible(a$testDoubleOverload(12.1)) # 1 value seen as a vector with 1 item  # TODO : Behavior different from Python
+invisible(a$testDoubleOverload(c(12.1)))
 invisible(a$testDoubleOverload(c(13.1, 14.1)))
 
-invisible(a$testStringOverload("Str12.1")) # 1 value seen as a vector with 1 item
-invisible(a$testStringOverload(("Str12.1")))
+invisible(a$testStringOverload("Str12.1")) # 1 value seen as a vector with 1 item  # TODO : Behavior different from Python
+invisible(a$testStringOverload(c("Str12.1")))
 invisible(a$testStringOverload(c("Str13.1", "Str14.1")))

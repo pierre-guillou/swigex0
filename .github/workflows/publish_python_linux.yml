@@ -26,6 +26,11 @@ jobs:
    
     - uses: actions/checkout@v2
     
+    - name: Look for all pythons
+      run: |
+        sudo apt-get update && sudo apt-get install -yq locate
+        updatedb && locate bin/python3
+
     - name: Install Python dependency
       run: sudo apt-get update && sudo apt-get install -yq python3-numpy
       

@@ -11,8 +11,8 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
- 
-jobs:   
+
+jobs:
   build:
     runs-on: macos-latest
     strategy :

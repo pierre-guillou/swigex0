@@ -18,7 +18,7 @@ jobs:
     strategy :
       matrix:
     #   python: ["py35",'py36',"py37","py38","py39","py310"]
-       python: ["py37","py38","py39","py310"]
+       python: ["3.7","3.8","3.9","3.10"]
     #container:
     #  image: ndesassis/test_ubuntu-16
  
@@ -26,27 +26,29 @@ jobs:
    
     - uses: actions/checkout@v2
     
-    - name: Look for all pythons
-      run: |
-        ls /opt
-        ls /opt/python
-        which python3
+    - name: Setup Python Version
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{matrix.python}}
 
     - name: Install Python dependency
-      run: sudo apt-get update && sudo apt-get install -yq python3-numpy
+      run: |
+        which python
+        which python3
+        python -m pip install --upgrade pip
+        python -m pip install numpy twine wheel
       
     - name : Create Wheels
       run : |
-        export PATH=/opt/python/${{matrix.python}}/bin:$PATH
         cmake -Bbuild -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
-        cmake --build build --target python_build -- -j8
+        cmake --build build --target python_build
         cd ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}
         # Note: wheel must be declared pure (see setup.py)
-        python3 setup.py bdist_wheel --plat-name=manylinux1_x86_64
+        python setup.py bdist_wheel --plat-name=manylinux1_x86_64
 
     - name : Upload
       run : |
-        /opt/python/${{matrix.python}}/bin/python3 -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
+        python -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}

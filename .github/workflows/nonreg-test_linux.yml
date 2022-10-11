@@ -1,4 +1,4 @@
-name: non regression tests under Linux (gcc)
+name: non_reg_tests_ubuntu-latest
 
 on:
   push:

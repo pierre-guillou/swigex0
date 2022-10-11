@@ -1,8 +1,7 @@
 # swigex C++ Library and Wrappers
 
 * Author: Fabien Ors (MINES PARIS - PSL University) 
-* License: MIT
-* Date: Sept. 2022
+* Date: Oct. 2022
 
 Example of a cross-platform C++ library exported in Python and R using SWIG and CMake. Following features are tested:
 * Non regression tests in C++, Python and R (using CTest and automatic github actions)
@@ -191,3 +190,9 @@ Notes:
 
 * You must restart your computer after installing these requirements
 * RTools is not the unique way to install MinGW on Windows, but it is our preferred way as we can handle R packages compilation
+
+---
+
+## License
+MIT
+2022 Fabien Ors

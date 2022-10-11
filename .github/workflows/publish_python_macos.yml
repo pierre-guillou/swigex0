@@ -4,42 +4,50 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Manual'     
+        description: 'Manual'
         required: false
-        default: ''  
+        default: ''
+
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
-  PYTHON3 : python3
-  PROG_ROOT : '/Users/runner/work/'
  
 jobs:   
   build:
-    runs-on: macos-11 
+    runs-on: macos-latest
+    strategy :
+      matrix:
+       python: ["3.7","3.8","3.9","3.10"]
+ 
     steps:
+   
     - uses: actions/checkout@v2
     
-    - name : Install wheel and twine
+    - name: Setup Python Version
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{matrix.python}}
+    
+    - name: Install Python dependencies
       run: |
-       ${{env.PYTHON3}} -m pip install wheel
-       ${{env.PYTHON3}} -m pip install twine
-       ${{env.PYTHON3}} -m pip install numpy 
+        python -m pip install --upgrade pip
+        python -m pip install numpy twine wheel
 
-    - name : Configure Cmake
-      run : cmake -B${{env.BUILD_DIR}} -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DBoost_ROOT=${{env.BOOST_ROOT}} -DHDF5_ROOT:PATH=${{env.PROG_ROOT}}/${{env.HDF5_ROOT}}  -DCMAKE_C_FLAGS="-DH5_USE_110_API"  
-
-    - name : Build python package
-      run : cmake --build ${{env.BUILD_DIR}} --target python_install --config Release
-
-    - name : Build and upload wheel
-      run: |
+    - name : Create Wheels
+      run : |
+        cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE:STRING=${{env.BUILD_TYPE}}
+        cmake --build ${{env.BUILD_DIR}} --target python_build
         cd ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}
-        ${{env.PYTHON3}} setup.py bdist_wheel --python-tag=cp39 --plat-name=macosx_10_15_x86_64
-        ${{env.PYTHON3}} -m twine upload dist/*
+        # Note: wheel must be declared pure (see setup.py)
+        python setup.py bdist_wheel --plat-name=macosx_10_15_x86_64
+
+    - name : Upload
+      run : |
+        python -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*
       env:
         TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.TWINE_TEST_TOKEN }}
-        TWINE_REPOSITORY: testpypi
+        TWINE_PASSWORD: ${{ secrets.TWINE_PYPI_PWD }}
+        TWINE_REPOSITORY: pypi
 
 #--plat-name=macosx_11
     

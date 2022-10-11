@@ -11,8 +11,8 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
+  
 jobs:
-   
   build:
     runs-on: ubuntu-latest
     strategy :
@@ -28,17 +28,15 @@ jobs:
       with:
         python-version: ${{matrix.python}}
 
-    - name: Install Python dependency
+    - name: Install Python dependencies
       run: |
-        which python
-        which python3
         python -m pip install --upgrade pip
         python -m pip install numpy twine wheel
       
     - name : Create Wheels
       run : |
-        cmake -Bbuild -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
-        cmake --build build --target python_build
+        cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE:STRING=${{env.BUILD_TYPE}}
+        cmake --build ${{env.BUILD_DIR}} --target python_build
         cd ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}
         # Note: wheel must be declared pure (see setup.py)
         python setup.py bdist_wheel --plat-name=manylinux1_x86_64

@@ -43,7 +43,7 @@ jobs:
         python setup.py bdist_wheel --plat-name=win_amd64
 
     - name : Upload
-      run : python -m twine upload cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}\dist\*
+      run : python -m twine upload ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}\dist\*
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.TWINE_PYPI_PWD }}

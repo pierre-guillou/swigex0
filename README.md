@@ -81,10 +81,11 @@ The objective of this package is to provide an example of wrapping a C++ library
 Note: See shortcuts for 'make' users in *Makefile* file
 
 ### Configure project
+Depending on the package you want to build you must adapt the command below:
 #### GCC / MinGW / CLang
-    cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release
+    cmake -Bbuild -H. -DCMAKE_BUILD_TYPE=Release -DBUILD_PYTHON=ON -DBUILD_R=ON
 #### MSVC (Visual)
-    cmake -Bbuild -H.
+    cmake -Bbuild -H. -DBUILD_PYTHON=ON -DBUILD_R=ON
 
 ### Important Notes
 
@@ -121,6 +122,8 @@ Note: See shortcuts for 'make' users in *Makefile* file
     cmake --build build --target check --config Release
 
 ## Required tools installation
+
+Depending on the package you want to build, all dependencies are not mandatory (R and Python)
 
 ### Linux (Ubuntu):
 

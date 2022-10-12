@@ -404,6 +404,7 @@
 //                    Add C++ extension                     //
 //////////////////////////////////////////////////////////////
 
+// TODO : Use pybind11 for printing text directly to jupyter notebook output cells
 
 //////////////////////////////////////////////////////////////
 //       Add target language additional features below      //
@@ -411,7 +412,7 @@
 
 %pythoncode %{
 
-import swigex as mf
+import swigex as se
 import numpy as np
 
 ## Integer NaN custom value
@@ -421,10 +422,10 @@ inan = np.asarray(np.array([np.nan]), dtype=int)[0]
 def isNaN(value):
   if (type(value).__module__ == np.__name__): # Numpy type
     if (np.dtype(value) == 'intc' or np.dtype(value) == 'int64' or np.dtype(value) == 'int32'):
-      return value == mf.inan
+      return value == se.inan
   else:
     if (type(value).__name__ == 'int'):
-      return value == mf.inan
+      return value == se.inan
   return np.isnan(value)
 
 
@@ -441,14 +442,14 @@ def getitem(self, idx):
     raise IndexError("Index out or range")
   return self.getAt(idx)
 
-setattr(mf.VectorDouble,       "__getitem__", getitem)
-setattr(mf.VectorDouble,       "__setitem__", setitem)
-setattr(mf.VectorInt,          "__getitem__", getitem)
-setattr(mf.VectorInt,          "__setitem__", setitem)
-setattr(mf.VectorString,       "__getitem__", getitem)
-setattr(mf.VectorString,       "__setitem__", setitem)
-setattr(mf.VectorVectorDouble, "__getitem__", getitem)
-setattr(mf.VectorVectorDouble, "__setitem__", setitem)
-setattr(mf.VectorVectorInt,    "__getitem__", getitem)
-setattr(mf.VectorVectorInt,    "__setitem__", setitem)
+setattr(se.VectorDouble,       "__getitem__", getitem)
+setattr(se.VectorDouble,       "__setitem__", setitem)
+setattr(se.VectorInt,          "__getitem__", getitem)
+setattr(se.VectorInt,          "__setitem__", setitem)
+setattr(se.VectorString,       "__getitem__", getitem)
+setattr(se.VectorString,       "__setitem__", setitem)
+setattr(se.VectorVectorDouble, "__getitem__", getitem)
+setattr(se.VectorVectorDouble, "__setitem__", setitem)
+setattr(se.VectorVectorInt,    "__getitem__", getitem)
+setattr(se.VectorVectorInt,    "__setitem__", setitem)
 %}

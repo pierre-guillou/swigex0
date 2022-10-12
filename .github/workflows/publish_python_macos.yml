@@ -1,4 +1,4 @@
-name: publish_python_macos-latest
+name: publish_python_macos-10-11
 
 on:
   workflow_dispatch:
@@ -11,14 +11,20 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
-  BUILD_PLAT: macosx_10_15_x86_64
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ${{matrix.os}}
     strategy :
       matrix:
        python: ["3.7","3.8","3.9","3.10"]
+       os : [macos-10.15,macos-11]
+       include :
+       - os :  macos-10.15
+         TAG : "macosx_10_15_x86_64"
+
+       - os  : macos-11
+         TAG : "macosx_11_0_arm64"
 
     steps:
     - uses: actions/checkout@v2
@@ -40,7 +46,7 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --target python_build
         cd ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}
         # Note: wheel must be declared pure (see setup.py)
-        python setup.py bdist_wheel --plat-name=${{env.BUILD_PLAT}}
+        python setup.py bdist_wheel --plat-name=${{matrix.TAG}}
 
     - name : Upload
       run : python -m twine upload ${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*

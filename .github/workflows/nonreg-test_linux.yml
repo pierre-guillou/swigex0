@@ -5,8 +5,10 @@ on:
   #push:
   #  branches-ignore:
   #    - '**'
+  # Activate the workflow at each push on main branch
   push:
     branches: [ main ]
+  # Activate the workflow at each pull request on main branch
   pull_request:
     branches: [ main ]
 
@@ -16,18 +18,14 @@ env:
   BUILD_DIR : build
 
 jobs:
-  
   build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
       
-    - name: Install Python dependency
-      run: sudo apt-get update && sudo apt-get install -yq python3-numpy
-      
-    - name: Install R dependency
-      run: sudo apt-get install r-base
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -yq python3-numpy r-base
       
     - name: Setup personal R libraries directory
       # Beware : ~/ is Linux only. For a potential windows a solution must be found yet

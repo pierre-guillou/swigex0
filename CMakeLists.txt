@@ -41,7 +41,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(swigex
-        VERSION      0.0.18
+        VERSION      0.0.19
         DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
         HOMEPAGE_URL "https://github.com/fabien-ors/swigex"
         LANGUAGES    C CXX) # Enable C language for third party libraries
@@ -62,8 +62,8 @@ configure_file(version.h.in version.h)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Options
-option(BUILD_PYTHON "Build Python package" ON)
-option(BUILD_R      "Build R package"      ON)
+option(BUILD_PYTHON "Build Python package" OFF)
+option(BUILD_R      "Build R package"      OFF)
 if (MINGW)
   set(BUILD_PYTHON OFF)
 endif()
@@ -80,8 +80,6 @@ message(STATUS "BUILD_R="      ${BUILD_R})
 ## BUILD & INSTALL
 
 include(cmake/cpp.cmake)
-# TODO : Add doxygen feature
-#include(cmake/doxygen.cmake)
 include(cmake/install.cmake)
 
 ####################################################

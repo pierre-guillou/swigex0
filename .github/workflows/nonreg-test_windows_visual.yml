@@ -9,6 +9,13 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  # Permit manual trigger
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'
+        required: false
+        default: ''
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

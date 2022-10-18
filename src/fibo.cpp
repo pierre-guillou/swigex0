@@ -71,6 +71,10 @@ Fibo::Fibo(int n, const String& title)
     std::cout << "Fibonacci class must be initialized with a strict positive integer. N is set to 50." << std::endl;
     _n = 50;
   }
+
+  // Test static_assert compilation
+  static_assert( true, "Class cannot be cloned as it is abstract" );
+
   if (_title.empty())
   {
     std::stringstream sstr;

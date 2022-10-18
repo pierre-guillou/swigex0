@@ -2,11 +2,12 @@ name: non-reg-tests_windows-latest-visual
 
 on:
   # Deactivate the workflow
-  push:
-    branches-ignore:
-      - '**'
   #push:
-  #  branches: [ main ]
+  #  branches-ignore:
+  #    - '**'
+  # Activate the workflow at each push on main branch
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
   # Permit manual trigger

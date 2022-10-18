@@ -77,7 +77,7 @@ Fibo::Fibo(int n, const String& title)
   static_assert( true, "Class cannot be cloned as it is abstract" );
   // Test isnan
   double a = 5.5;
-  if (isnan(a))
+  if (std::isnan(a))
     std::cout << "a is nan" << std::endl;
 
   if (_title.empty())

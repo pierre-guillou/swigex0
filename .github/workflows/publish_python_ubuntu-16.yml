@@ -20,7 +20,7 @@ jobs:
       image: ndesassis/test_ubuntu-16
     strategy :
       matrix:
-        python: ["py35","py36","py37","py38"]
+        python: ["py35","py36","py37","py38","py39","py310"]
 
     steps:
     - uses: actions/checkout@v2

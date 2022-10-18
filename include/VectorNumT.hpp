@@ -36,7 +36,7 @@ public:
   inline VectorNumT()                                              : Parent() { }
   inline VectorNumT(const Vector& vec)                             : Parent(vec) { }
   inline VectorNumT(size_type count, const T& value = T())         : Parent(count, value) { }
-  //template< class InputIt >
+  //template< class InputIt > // Conflict with previous constructor compiling with MSVC
   //inline VectorNumT(InputIt first, InputIt last)                   : Parent(first, last) { }
   inline VectorNumT(const VectorNumT& other) = default;
 #ifndef SWIG

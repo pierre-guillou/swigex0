@@ -2,12 +2,12 @@ name: non-reg-tests_ubuntu-latest
 
 on:
   # Deactivate the workflow
-  push:
-    branches-ignore:
-      - '**'
-  # Activate the workflow at each push on main branch
   #push:
-  #  branches: [ main ]
+  #  branches-ignore:
+  #    - '**'
+  # Activate the workflow at each push on main branch
+  push:
+    branches: [ main ]
   # Activate the workflow at each pull request on main branch
   pull_request:
     branches: [ main ]
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v
       
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -yq python3-numpy r-base

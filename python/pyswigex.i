@@ -109,7 +109,7 @@
     //std::cout << "convertToCpp(double): value=" << value << std::endl;
     if (SWIG_IsOK(myres))
     {
-      if (isnan(value) || isinf(value))
+      if (std::isnan(value) || std::isinf(value))
         value = getNA<double>();
     }
     return myres; 

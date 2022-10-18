@@ -27,7 +27,7 @@ jobs:
          TAG : "macosx_11_0_arm64"
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup Python Version
       uses: actions/setup-python@v4

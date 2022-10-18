@@ -21,7 +21,7 @@ setup(
     name="@PYTHON_PACKAGE_NAME@",
     version="@PROJECT_VERSION@",
     author="Fabien Ors",
-    author_email="fabien.ors@mines-paristech.fr",
+    author_email="fabien.ors@minesparis.psl.eu",
     description="@PROJECT_DESCRIPTION@",
     long_description=get_long_description(),
     long_description_content_type="text/markdown",

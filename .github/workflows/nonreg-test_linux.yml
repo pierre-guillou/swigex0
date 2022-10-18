@@ -2,12 +2,12 @@ name: non-reg-tests_ubuntu-latest
 
 on:
   # Deactivate the workflow
-  #push:
-  #  branches-ignore:
-  #    - '**'
-  # Activate the workflow at each push on main branch
   push:
-    branches: [ main ]
+    branches-ignore:
+      - '**'
+  # Activate the workflow at each push on main branch
+  #push:
+  #  branches: [ main ]
   # Activate the workflow at each pull request on main branch
   pull_request:
     branches: [ main ]

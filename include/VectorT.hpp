@@ -31,7 +31,8 @@ public:
 public:
   inline VectorT()                                                    : _v(std::make_shared<Vector>()) { }
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
-  inline VectorT(size_type count, const T& value = T())               : _v(std::make_shared<Vector>(count, value)) { }
+  template< class InputIt >
+  inline VectorT(InputIt first, InputIt last)                         : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const T* first, const T* last)                       : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const VectorT& other) = default;
 #ifndef SWIG
@@ -126,7 +127,12 @@ public:
   inline void swap(VectorT& other);
   inline bool contains(const T& value) const;
   inline void fill(const T& value, size_type size = -1);
-  inline void assign(const T* first, const T* last);
+  template< class InputIt >
+  inline void assign(InputIt first, InputIt last)
+  {
+    _detach();
+    _v->assign(first, last);
+  }
 
   inline String toString() const;
 
@@ -213,13 +219,6 @@ void VectorT<T>::fill(const T& value, size_type size)
   _detach();
   resize(size);
   std::fill(begin(), end(), value);
-}
-
-template <typename T>
-void VectorT<T>::assign(const T* first, const T* last)
-{
-  _detach();
-  _v->assign(first, last);
 }
 
 template <typename T>

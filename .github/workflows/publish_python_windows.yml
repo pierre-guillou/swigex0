@@ -16,11 +16,11 @@ env:
 jobs:
 
   build:
-    runs-on: windows-2019 
-    strategy :
+    runs-on: windows-2019
+    strategy:
       matrix:
-       python: ["3.7","3.8","3.9","3.10"]
-       arch:
+        python: ["3.7","3.8","3.9","3.10"]
+        arch:
           - ["win_amd64", "x64", "x64"]
           - ["win32",     "x86", "Win32"]
 
@@ -44,7 +44,7 @@ jobs:
         cmake --build ${{env.BUILD_DIR}} --target python_build --config ${{env.BUILD_TYPE}}
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
         # Note: wheel must be declared pure (see setup.py)
-        python setup.py bdist_wheel  --plat-name=${{matrix.arch[0]}}
+        python setup.py bdist_wheel --plat-name=${{matrix.arch[0]}}
 
     - name : Upload
       run : python -m twine upload ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}\dist\*

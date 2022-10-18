@@ -33,7 +33,6 @@ public:
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
   template< class InputIt >
   inline VectorT(InputIt first, InputIt last)                         : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
-  inline VectorT(const T* first, const T* last)                       : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const VectorT& other) = default;
 #ifndef SWIG
   inline VectorT(std::initializer_list<T> init)                       : _v(std::make_shared<Vector>(init)) { }

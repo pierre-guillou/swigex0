@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 /**
  * Return the Nth Fibonacci number, -1 in case of error
@@ -74,6 +75,10 @@ Fibo::Fibo(int n, const String& title)
 
   // Test static_assert compilation
   static_assert( true, "Class cannot be cloned as it is abstract" );
+  // Test isnan
+  double a = 5.5;
+  if (isnan(a))
+    std::cout << "a is nan" << std::endl;
 
   if (_title.empty())
   {

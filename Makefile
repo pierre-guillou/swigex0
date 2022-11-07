@@ -1,5 +1,5 @@
 # This Makefile is just a shortcut to cmake commands
-# for make users (Linux-GCC, MacOS-clang or Windows-Rtools)
+# for make users (Linux-GCC, MacOS-clang or Windows-mingGW)
 #
 # Call 'make' with one of this target:
 # 

@@ -44,7 +44,7 @@ jobs:
         python -m pip install numpy
 
     - name: Install SWIG dependencies
-            # See nuget.yml in SWIG github repo 
+            # See nuget.yml in SWIG github repo
       shell: powershell
       run: |
           nuget install Bison -Version 3.7.4 -OutputDirectory C:\Tools\bison
@@ -58,12 +58,7 @@ jobs:
         cd swig
         $env:PATH="C:\Tools\bison\Bison.3.7.4\bin;" + $env:PATH
         $PCRE_ROOT="C:\Tools\pcre2\PCRE2.10.39.0"
-        cmake -Bbuild
-          -DCMAKE_INSTALL_PREFIX:PATH=${{env.SWIG_ROOT}} 
-          -DCMAKE_C_FLAGS="/DPCRE2_STATIC" `
-          -DCMAKE_CXX_FLAGS="/DPCRE2_STATIC" `
-          -DPCRE2_INCLUDE_DIR="$PCRE_ROOT/include" `
-          -DPCRE2_LIBRARY="$PCRE_ROOT/lib/pcre2-8-static.lib" `
+        cmake -Bbuild -DCMAKE_INSTALL_PREFIX:PATH=${{env.SWIG_ROOT}} -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_C_FLAGS="/DPCRE2_STATIC" -DCMAKE_CXX_FLAGS="/DPCRE2_STATIC" -DPCRE2_INCLUDE_DIR="$PCRE_ROOT/include" -DPCRE2_LIBRARY="$PCRE_ROOT/lib/pcre2-8-static.lib"
         cd build
         make
         make install

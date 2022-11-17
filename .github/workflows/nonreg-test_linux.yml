@@ -37,7 +37,8 @@ jobs:
 
     - name: Compile and install [customized] SWIG 4.2.0
       run: |
-        cd ${{github.workspace}}
+        mkdir swig_src
+        cd swig_src
         git clone https://github.com/fabien-ors/swig.git
         cd swig
         cmake -Bbuild -DCMAKE_INSTALL_PREFIX:PATH=${{env.SWIG_ROOT}} -DCMAKE_BUILD_TYPE:STRING=Release 

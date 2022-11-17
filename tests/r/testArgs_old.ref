@@ -33,6 +33,14 @@ Test VectorVectorInt Reference: [[26 36] [56 66]]
 Test VectorVectorInt Pointer: [[26 36] [56 66]]
 Test VectorVectorInt Reference Out: [[26 36] [56 66]]
 _p_VectorTT_VectorNumTT_int_t_t 
+Test VectorVectorInt Reference Def: [[4 5] [6 7]] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [[3]] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [[3] [4]] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [[3]] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [[]] - [[8 9] [10 11]]
+Test VectorVectorInt Reference Def: [[6 7] [8 9]] - [[8 9] [10 11]]
 Test double: 12.1
 numeric
 Test double Reference: 22.2
@@ -68,6 +76,14 @@ Test VectorVectorDouble Reference: [[26.3 36.3] [56.3 66.3]]
 Test VectorVectorDouble Pointer: [[26.3 36.3] [56.3 66.3]]
 Test VectorVectorDouble Reference Out: [[26.3 36.3] [56.3 66.3]]
 _p_VectorTT_VectorNumTT_double_t_t 
+Test VectorVectorDouble Reference Def: [[4.1 5.1] [6.1 7.1]] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [[3.1]] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [[3.1] [4.1]] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [[3.1]] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [[]] - [[8.1 9.1] [10.1 11.1]]
+Test VectorVectorDouble Reference Def: [[6.1 7.1] [8.1 9.1]] - [[8.1 9.1] [10.1 11.1]]
 Test String: Str12
 character
 Test String Reference: Str22
@@ -86,6 +102,11 @@ Test VectorString Reference: [Str26 Str36]
 Test VectorString Reference: [Str26 Str36]
 Test VectorString Reference Out: [Str26 Str36]
 _p_VectorTT_std__string_t
+Test VectorString Reference Def: [Str4 Str5] - [Str6 Str7]
+Test VectorString Reference Def: [] - [Str6 Str7]
+Test VectorString Reference Def: [] - [Str6 Str7]
+Test VectorString Reference Def: [Str3] - [Str6 Str7]
+Test VectorString Reference Def: [Str3] - [Str6 Str7]
 Test double: -999.999
 [1] NA
 Test double: -999.999
@@ -123,3 +144,12 @@ Test VectorVectorDouble: []
 Test VectorVectorDouble: [[201.1]]
 Test VectorVectorDouble: [[202.1]]
 Test VectorVectorDouble: [[203.1] [204.1]]
+Test int Overload [Vector]: [12]
+Test int Overload [Vector]: [12]
+Test int Overload [Vector]: [13 14]
+Test double Overload [Vector]: [12.1]
+Test double Overload [Vector]: [12.1]
+Test double Overload [Vector]: [13.1 14.1]
+Test String Overload [Vector]: [Str12.1]
+Test String Overload [Vector]: [Str12.1]
+Test String Overload [Vector]: [Str13.1 Str14.1]

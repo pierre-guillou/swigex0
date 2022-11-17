@@ -31,7 +31,7 @@ public:
   const VectorVectorInt& testVVectorIntRef(const VectorVectorInt& a);                  //   OK        OK
   const VectorVectorInt* testVVectorIntPtr(const VectorVectorInt* a);                  //   OK        OK
   void testVVectorIntRefOut(VectorVectorInt& a) const;                                 //   OK        OK
-  void testVVectorIntRefDef(const VectorVectorInt& a =                                 //   OK        OK
+  void testVVectorIntRefDef(const VectorVectorInt& a =                                 //   ## NOK    OK
                                   VectorVectorInt({{4,5},{6,7}}),
                             const VectorVectorInt& b =
                                   VectorVectorInt({{8,9},{10,11}}));
@@ -53,7 +53,7 @@ public:
   const VectorVectorDouble& testVVectorDoubleRef(const VectorVectorDouble& a);         //   OK        OK
   const VectorVectorDouble* testVVectorDoublePtr(const VectorVectorDouble* a);         //   OK        OK
   void testVVectorDoubleRefOut(VectorVectorDouble& a) const;                           //   OK        OK
-  void testVVectorDoubleRefDef(const VectorVectorDouble& a =                           //   OK        OK
+  void testVVectorDoubleRefDef(const VectorVectorDouble& a =                           //   ## NOK    OK
                                      VectorVectorDouble({{4.1,5.1},{6.1,7.1}}),
                                const VectorVectorDouble& b =
                                      VectorVectorDouble({{8.1,9.1},{10.1,11.1}}));
@@ -68,17 +68,17 @@ public:
   const VectorString& testVectorStringRef(const VectorString& a);                      //   OK        OK
   const VectorString* testVectorStringPtr(const VectorString* a);                      //   OK        OK
   void testVectorStringRefOut(VectorString& a) const;                                  //   OK        OK
-  void testVectorStringRefDef(const VectorString& a =                                  //   OK        OK
+  void testVectorStringRefDef(const VectorString& a =                                  //   ## NOK    OK
                                     VectorString({"Str4","Str5"}),
                               const VectorString& b =
                                     VectorString({"Str6","Str7"}));
 
-  void testIntOverload(int a) const;                                                   //   OK        OK
-  void testIntOverload(const VectorInt& a) const;                                      //   OK        OK
-  void testDoubleOverload(double a) const;                                             //   OK        OK
-  void testDoubleOverload(const VectorDouble& a) const;                                //   OK        OK
-  void testStringOverload(String a) const;                                             //   OK        OK
-  void testStringOverload(const VectorString& a) const;                                //   OK        OK
+  void testIntOverload(int a) const;                                                   //   ## NOK    OK
+  void testIntOverload(const VectorInt& a) const;                                      //   ## NOK    OK
+  void testDoubleOverload(double a) const;                                             //   ## NOK    OK
+  void testDoubleOverload(const VectorDouble& a) const;                                //   ## NOK    OK
+  void testStringOverload(String a) const;                                             //   ## NOK    OK
+  void testStringOverload(const VectorString& a) const;                                //   ## NOK    OK
 
 private:
   int                _varInt;

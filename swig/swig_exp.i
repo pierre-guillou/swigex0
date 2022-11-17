@@ -16,8 +16,8 @@
 %template(VectorString)       VectorT< String >;
 %template(VectorInt)          VectorNumT< int >;
 %template(VectorDouble)       VectorNumT< double >;
-%template(VectorVectorInt)    VectorT< VectorNumT< int > >;
-%template(VectorVectorDouble) VectorT< VectorNumT< double > >;
+%template(VectorVectorInt)    VectorT< VectorInt >;
+%template(VectorVectorDouble) VectorT< VectorDouble >;
 
 %include fibo.hpp
 %include args.hpp

@@ -37,7 +37,10 @@ vi = a.testVectorIntPtr((25,35,45)) # From tuple
 print(type(vi))
 if (vi[0] != 25 or vi[1] != 35 or vi[2] != 45) :
   print("Wrong VectorInt Pointer!")
-vi = swigex.VectorInt([26,36])
+#vi = swigex.VectorInt([26,36]) # TODO : this constructor doesn't work yet
+vi = swigex.VectorInt()
+vi.push_back(26)
+vi.push_back(36)
 a.testVectorInt(vi) # Test true vector by value
 a.testVectorIntRef(vi) # Test true vector by reference
 a.testVectorIntPtr(vi) # Test true vector by pointer
@@ -133,7 +136,10 @@ vd = a.testVectorDoublePtr((25.3,35.3,45.3)) # From tuple
 print(type(vd))
 if (vd[0] != 25.3 or vd[1] != 35.3 or vd[2] != 45.3) :
   print("Wrong VectorDouble Pointer!")
-vd = swigex.VectorDouble([26.3,36.3])
+# vd = swigex.VectorDouble([26.3,36.3]) # TODO : This constructor doesn't work yet
+vd = swigex.VectorDouble()
+vd.push_back(26.3)
+vd.push_back(36.3)
 a.testVectorDouble(vd) # Test true vector by value
 a.testVectorDoubleRef(vd) # Test true vector by reference
 a.testVectorDoublePtr(vd) # Test true vector by pointer

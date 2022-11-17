@@ -220,7 +220,7 @@ SWIGEX_TEMPLATE_EXPORT template class VectorT<VectorNumT<double> >;
   #endif
 #endif
 
-typedef VectorNumT<int>              VectorInt;
-typedef VectorNumT<double>           VectorDouble;
-typedef VectorT<VectorNumT<int> >    VectorVectorInt;
-typedef VectorT<VectorNumT<double> > VectorVectorDouble;
+typedef VectorNumT<int>       VectorInt;
+typedef VectorNumT<double>    VectorDouble;
+typedef VectorT<VectorInt>    VectorVectorInt;
+typedef VectorT<VectorDouble> VectorVectorDouble;

@@ -71,7 +71,7 @@ jobs:
 #      run: cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=ON -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
 #
     - name: Configure cmake
-      run: cmake -B${{env.BUILD_DIR}} -G -G ${{env.COMPILE_VERSION}} -DBUILD_PYTHON=ON
+      run: cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBUILD_PYTHON=ON
 
     - name: Compile, install packages and execute non-regression tests
       # Execute tests defined by the CMake configuration.

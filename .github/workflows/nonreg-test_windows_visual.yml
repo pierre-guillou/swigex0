@@ -42,8 +42,18 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install numpy
 
+    - name: Compile and install [customized] SWIG 4.2.0
+      run: |
+        ls
+        git clone https://github.com/fabien-ors/swig
+        cd swig
+        cmake -Bbuild -H. -DCMAKE_INSTALL_PREFIX:PATH=${{env.PROG_ROOT}}/${{env.SWIG_ROOT}} -DCMAKE_BUILD_TYPE:STRING=Release 
+        cd build
+        make
+        make install
+
     - name: Configure cmake
-      run: cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=ON
+      run: cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=ON -DSWIG_EXECUTABLE=${{env.PROG_ROOT}}/${{env.SWIG_ROOT}}/bin/swig
 
     - name: Compile, install packages and execute non-regression tests
       # Execute tests defined by the CMake configuration.

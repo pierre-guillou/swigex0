@@ -290,7 +290,7 @@
 ## Add operator [] to VectorXXX R class [1-based index] ##
 ## ---------------------------------------------------- ##
 
-"getitem" <-
+"getVitem" <-
 function(x, i)
 {
   idx = as.integer(i)
@@ -306,7 +306,7 @@ function(x, i)
   }
 }
 
-"setitem" <-
+"setVitem" <-
 function(x, i, value)
 {
   idx = as.integer(i)
@@ -323,19 +323,19 @@ function(x, i, value)
   x
 }
 
-setMethod('[',    '_p_VectorTT_int_t',                  getitem)
-setMethod('[<-',  '_p_VectorTT_int_t',                  setitem)
-setMethod('[',    '_p_VectorTT_double_t',               getitem)
-setMethod('[<-',  '_p_VectorTT_double_t',               setitem)
-setMethod('[',    '_p_VectorTT_std__string_t',          getitem)
-setMethod('[<-',  '_p_VectorTT_std__string_t',          setitem)
-setMethod('[',    '_p_VectorNumTT_int_t',               getitem)
-setMethod('[<-',  '_p_VectorNumTT_int_t',               setitem)
-setMethod('[',    '_p_VectorNumTT_double_t',            getitem)
-setMethod('[<-',  '_p_VectorNumTT_double_t',            setitem)
-setMethod('[[',   '_p_VectorTT_VectorNumTT_int_t_t',    getitem)
-setMethod('[[<-', '_p_VectorTT_VectorNumTT_int_t_t',    setitem)
-setMethod('[[',   '_p_VectorTT_VectorNumTT_double_t_t', getitem)
-setMethod('[[<-', '_p_VectorTT_VectorNumTT_double_t_t', setitem)
+setMethod('[',    '_p_VectorTT_int_t',                  getVitem)
+setMethod('[<-',  '_p_VectorTT_int_t',                  setVitem)
+setMethod('[',    '_p_VectorTT_double_t',               getVitem)
+setMethod('[<-',  '_p_VectorTT_double_t',               setVitem)
+setMethod('[',    '_p_VectorTT_std__string_t',          getVitem)
+setMethod('[<-',  '_p_VectorTT_std__string_t',          setVitem)
+setMethod('[',    '_p_VectorNumTT_int_t',               getVitem)
+setMethod('[<-',  '_p_VectorNumTT_int_t',               setVitem)
+setMethod('[',    '_p_VectorNumTT_double_t',            getVitem)
+setMethod('[<-',  '_p_VectorNumTT_double_t',            setVitem)
+setMethod('[[',   '_p_VectorTT_VectorNumTT_int_t_t',    getVitem)
+setMethod('[[<-', '_p_VectorTT_VectorNumTT_int_t_t',    setVitem)
+setMethod('[[',   '_p_VectorTT_VectorNumTT_double_t_t', getVitem)
+setMethod('[[<-', '_p_VectorTT_VectorNumTT_double_t_t', setVitem)
 
 %}

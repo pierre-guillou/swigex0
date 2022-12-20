@@ -9,7 +9,9 @@
 #
 # 1. Configure project :
 #
-#                      cmake -Bbuild -H.
+#    C/C++ only:       cmake -Bbuild -H.
+#    Python:           cmake -Bbuild -H. -DBUILD_PYTHON=ON
+#    R:                cmake -Bbuild -H. -DBUILD_R=ON
 #
 #
 # 2a. Build static library (and install Python package)
@@ -41,7 +43,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(swigex
-        VERSION      0.0.22
+        VERSION      0.0.23
         DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
         HOMEPAGE_URL "https://github.com/fabien-ors/swigex"
         LANGUAGES    C CXX) # Enable C language for third party libraries

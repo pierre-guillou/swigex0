@@ -1,5 +1,5 @@
 # This Makefile is just a shortcut to cmake commands
-# for make users (Linux-GCC, MacOS-clang or Windows-mingGW)
+# for make users (Linux-GCC, MacOS-clang or Windows-Rtools)
 #
 # Call 'make' with one of this target:
 # 
@@ -7,12 +7,12 @@
 #  - shared         Build swigex shared library
 #  - static         Build swigex static library
 #  - build_tests    Build non-regression tests executables
-#  - install        Install swigex shared library [and html doxymentation]
-#  - uninstall      Uninstall swigex shared library [and html doxymentation]
+#  - install        Install swigex shared library
+#  - uninstall      Uninstall swigex shared library
 #
 # Python wrapper (only for Linux-GCC or MacOS-clang):
-#  - python_build   Build python wrapper [and its documentation]
-#  - python_install Install python package [and its documentation]
+#  - python_build   Build python wrapper
+#  - python_install Install python package
 #
 # R wrapper:
 #  - r_build        Build R wrapper [and its documentation]
@@ -40,8 +40,10 @@
 #
 
 ifeq ($(OS),Windows_NT)
+  # Assume MinGW (via RTools) => so MSYS Makefiles
   GENERATOR = -G"MSYS Makefiles"
 else
+  # Standard GNU UNIX Makefiles otherwise
   GENERATOR = -G"Unix Makefiles"
 endif
 
@@ -53,6 +55,7 @@ endif
 
 ifndef BUILD_DIR
   ifeq ($(OS),Windows_NT)
+    # Assume MinGW (via RTools) => so MSYS build folder
     BUILD_DIR = build_msys
   else
     BUILD_DIR = build
@@ -61,7 +64,7 @@ endif
 
 ifdef N_PROC
   ifeq ($(OS),Windows_NT)
-    # Otherwise, undefined reference when compiling (don't know why)
+    # Otherwise, tons of undefined references when compiling (don't know why)
     N_PROC_OPT = -j1
   else
     N_PROC_OPT = -j$(N_PROC)

@@ -415,8 +415,8 @@
 import swigex as se
 import numpy as np
 
-from se.version import __version__
-from se.version import __author__
+from swigex.version import __version__
+from swigex.version import __author__
 
 ## Integer NaN custom value
 inan = np.asarray(np.array([np.nan]), dtype=int)[0]

@@ -57,11 +57,11 @@ a.testVectorIntRefDef((3))
 a.testVectorIntRefDef(b=10)
 a.testVectorIntRefDef(b=[10,np.nan])
 
-vvi = a.testVVectorInt(np.array([[23,33,43],[53,63],[73,83,93]], dtype='object')) # From numpy.array: possible because dtype='object' (sub-vector sizes are not the same)
+vvi = a.testVVectorInt(np.array([[23,33,43],[53,63,73],[83,93,103]])) # From numpy.array
 print(type(vvi))
 if (vvi[0][0] != 23 or vvi[0][1] != 33 or vvi[0][2] != 43 or
-    vvi[1][0] != 53 or vvi[1][1] != 63 or
-    vvi[2][0] != 73 or vvi[2][1] != 83 or vvi[2][2] != 93) :
+    vvi[1][0] != 53 or vvi[1][1] != 63 or vvi[1][2] != 73 or
+    vvi[2][0] != 83 or vvi[2][1] != 93 or vvi[2][2] != 103) :
   print("Wrong VectorVectorInt!")
 vvi = a.testVVectorIntRef([[24,34,44],[54,64,74],[74,84,94]]) # From list
 vvi = a.testVVectorIntRef(vvi) # From a numpy array returned by the C++ library
@@ -70,11 +70,11 @@ if (vvi[0][0] != 24 or vvi[0][1] != 34 or vvi[0][2] != 44 or
     vvi[1][0] != 54 or vvi[1][1] != 64 or vvi[1][2] != 74 or
     vvi[2][0] != 74 or vvi[2][1] != 84 or vvi[2][2] != 94) :
   print("Wrong VectorVectorInt Reference!")
-vvi = a.testVVectorIntPtr(((25,35,45),(55,65),(75,85,95))) # From tuple
+vvi = a.testVVectorIntPtr(((25,35,45),(55,65,75),(85,95,105))) # From tuple
 print(type(vvi))
 if (vvi[0][0] != 25 or vvi[0][1] != 35 or vvi[0][2] != 45 or
-    vvi[1][0] != 55 or vvi[1][1] != 65 or
-    vvi[2][0] != 75 or vvi[2][1] != 85 or vvi[2][2] != 95) :
+    vvi[1][0] != 55 or vvi[1][1] != 65 or vvi[1][2] != 75 or
+    vvi[2][0] != 85 or vvi[2][1] != 95 or vvi[2][2] != 105) :
   print("Wrong VectorVectorInt Pointer!")
 #vvi = swigex.VectorVectorInt([[26,36],[56,66]]) # TODO : This constructor doesn't work yet
 vvi = swigex.VectorVectorInt()
@@ -156,11 +156,11 @@ a.testVectorDoubleRefDef((3.1))
 a.testVectorDoubleRefDef(b=10.1)
 a.testVectorDoubleRefDef(b=(10.1,np.nan))
 
-vvd = a.testVVectorDouble(np.array([[23.1,33.1,43.1],[53.1,63.1],[73.1,83.1,93.1]]))  # From numpy.array
+vvd = a.testVVectorDouble(np.array([[23.1,33.1,43.1],[53.1,63.1,73.1],[83.1,93.1,103.1]]))  # From numpy.array
 print(type(vvd))
 if (vvd[0][0] != 23.1 or vvd[0][1] != 33.1 or vvd[0][2] != 43.1 or
-    vvd[1][0] != 53.1 or vvd[1][1] != 63.1 or
-    vvd[2][0] != 73.1 or vvd[2][1] != 83.1 or vvd[2][2] != 93.1) :
+    vvd[1][0] != 53.1 or vvd[1][1] != 63.1 or vvd[1][2] != 73.1 or
+    vvd[2][0] != 83.1 or vvd[2][1] != 93.1 or vvd[2][2] != 103.1) :
   print("Wrong VectorVectorDouble!")
 vvd = a.testVVectorDoubleRef([[24.2,34.2,44.2],[54.2,64.2,74.2],[74.2,84.2,94.2]]) # From list
 vvd = a.testVVectorDoubleRef(vvd) # From numpy.array returned by the C++ library
@@ -169,11 +169,11 @@ if (vvd[0][0] != 24.2 or vvd[0][1] != 34.2 or vvd[0][2] != 44.2 or
     vvd[1][0] != 54.2 or vvd[1][1] != 64.2 or vvd[1][2] != 74.2 or
     vvd[2][0] != 74.2 or vvd[2][1] != 84.2 or vvd[2][2] != 94.2) :
   print("Wrong VectorVectorDouble Reference!")
-vvd = a.testVVectorDoublePtr(((25.3,35.3,45.3),(55.3,65.3),(75.3,85.3,95.3))) # From tuple 
+vvd = a.testVVectorDoublePtr(((25.3,35.3,45.3),(55.3,65.3,75.3),(85.3,95.3,105.3))) # From tuple 
 print(type(vvd))
 if (vvd[0][0] != 25.3 or vvd[0][1] != 35.3 or vvd[0][2] != 45.3 or
-    vvd[1][0] != 55.3 or vvd[1][1] != 65.3 or
-    vvd[2][0] != 75.3 or vvd[2][1] != 85.3 or vvd[2][2] != 95.3) :
+    vvd[1][0] != 55.3 or vvd[1][1] != 65.3 or vvd[1][2] != 75.3  or
+    vvd[2][0] != 85.3 or vvd[2][1] != 95.3 or vvd[2][2] != 105.3) :
   print("Wrong VectorVectorDouble Pointer!")
 #vvd = swigex.VectorVectorDouble([[26.3,36.3],[56.3,66.3]]) # TODO : This constructor doesn't work yet
 vvd = swigex.VectorVectorDouble()

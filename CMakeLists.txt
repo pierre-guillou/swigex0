@@ -43,7 +43,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define project here
 project(swigex
-        VERSION      0.0.23
+        VERSION      0.0.24
         DESCRIPTION  "C++ library and SWIG wrappers (R & Python)"
         HOMEPAGE_URL "https://github.com/fabien-ors/swigex"
         LANGUAGES    C CXX) # Enable C language for third party libraries

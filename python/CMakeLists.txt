@@ -75,7 +75,7 @@ if (APPLE)
 endif()
 
 # Link to static library
-target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static)
+target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static Python3::NumPy)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
 set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
@@ -100,10 +100,10 @@ set_target_properties(python_build PROPERTIES
 target_include_directories(python_build PRIVATE ${Python3_INCLUDE_DIRS})
 
 if (MSVC OR APPLE)
-  # Link to python's libraries and to NumPy library (needed for MSVC and MacOS)
+  # Link to python's libraries (needed for MSVC and MacOS)
   # Prefer using Python3::Module (which works for MacOS) in place of ${Python3_LIBRARIES}
   # https://gitlab.kitware.com/cmake/cmake/-/issues/17664
-  target_link_libraries(python_build PRIVATE Python3::Module Python3::NumPy)
+  target_link_libraries(python_build PRIVATE Python3::Module)
 endif()
 
 

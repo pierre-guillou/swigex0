@@ -54,14 +54,14 @@ For compiling and installing *swigex* C++ Library, the following tools must be a
 
 The following tools must be available for compiling and installing Python package:
 * SWIG 4 or higher
-* Python 3 or higher with *pip*, *numpy* and *pybind11* modules installed
+* Python 3 or higher with *pip* and *numpy* modules installed
 
 The following tools must be available for compiling and installing R package:
-* SWIG 4 or higher
+* SWIG 4.2.0 **customized by Fabien Ors** (not the official version!)
 * R 4 or higher
 * RTools 4 for Windows user
 
-See [required tools installation](#required-tools-installation) instructions below
+See [required tools installation](#required-tools-installation) instructions below.
 
 ## Get the sources
 
@@ -125,74 +125,154 @@ Depending on the package you want to build you must adapt the command below:
 
 Depending on the package you want to build, all dependencies are not mandatory (R and Python)
 
-### Linux (Ubuntu):
+### Linux (Ubuntu)
 
-    sudo apt install git
-    sudo apt install cmake
-    sudo apt install r-base
-    sudo apt install python3
-    sudo apt install python3-pip
-    sudo apt install swig
-    python3 -m ensurepip --upgrade
-    python3 -m pip install pybind11 numpy
+1. (For R users only) - Remove any previous installation of SWIG (if any)
+
+2. Then, execute the following commands:
+
+````
+sudo apt install git
+sudo apt install cmake
+sudo apt install r-base
+sudo apt install python3
+sudo apt install python3-pip
+sudo apt install bison
+sudo apt install pcre2-devel # Ubuntu 18
+sudo apt install libpcre2-dev # Ubuntu 20
+python3 -m ensurepip --upgrade
+python3 -m pip install numpy
+````
+
+3. In a folder of your own, compile and install SWIG 4.2.0 [customized] by executing following commands:
+
+````
+git clone https://github.com/fabien-ors/swig.git
+cd swig
+cmake -Bbuild
+cd build
+make
+sudo make install
+````
 
 Notes:
 
 * Under Linux, the GCC compiler and GNU make is already installed
 * If your Linux distribution repositories don't provide minimum required versions, please install the tools manually (see provider website)
-* According your Linux distribution you may have to replace `pybind11` by the quoted string `"pybind11[global]"`
 
-### MacOS:
+### MacOS
 
-    brew install git
-    brew install cmake
-    brew install r
-    brew install python3
-    brew install swig
-    python3 -m ensurepip --upgrade
-    python3 -m pip install pybind11 numpy
-    
+1. (For R users only) - Remove any previous installation of SWIG (if any)
+
+2. Then, execute the following commands (Not tested):
+
+````
+brew install git
+brew install cmake
+brew install r
+brew install bison
+brew install pcre2-devel
+brew install python3
+python3 -m ensurepip --upgrade
+python3 -m pip install numpy
+````
+
+3. In a folder of your own, compile and install SWIG 4.2.0 [customized] by executing following commands:
+
+````
+git clone https://github.com/fabien-ors/swig.git
+cd swig
+cmake -Bbuild
+cd build
+make
+make install
+````
+
 Notes:
 
 * Under MacOS, the GCC (or Clang) compiler and GNU make is already installed
 * If your MacOS repositories don't provide minimum required versions, please install the tools manually (see provider website)
   
-### Windows:
+### Windows - Microsoft Visual Studio
 
-Download and install the following tools:
+These requirements are also recommended to people who wants to compile *swigex* Python package. If you want to compile *swigex* R package under Windows, you should look at the next section.
 
-* Git client [from here](https://gitforwindows.org) (Use default options during installation)
-* CMake tool [from here](https://cmake.org/download) (Check the 'Add CMake to the Path' option during installation)
-* Python 3+ [from here](https://www.python.org/downloads) (which comes with pip and which is installed in *C:\\Python39* for example)
-* SWIG 4+ [from here](http://www.swig.org/download.html) (extract the archive in a directory of yours, let's say *C:\\swigwin-4.0.2*, see Notes below)
-* Pybind11 and numpy python modules by running following instruction in a command prompt:
+1. Download and install the following tools using default options during installation:
 
-    python -m pip install "pybind11[global]" numpy
+* Git client [from here](https://gitforwindows.org) (*Setup program* [exe])
+* CMake tool [from here](https://cmake.org/download) (*Windows Installer* [msi], check the *'Add CMake to the system PATH for all users'* option during installation)
+* Microsoft Visual Studio (Community) [from here](https://visualstudio.microsoft.com/fr/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false) (*VisualStudioSetup.exe* - only select the *Visual Studio Desktop C++* component)
+* Python 3+ [from here](https://www.python.org/downloads) (*Windows installer* [exe] - check 'Add python.exe to PATH' in the first panel)
+* SWIG 4+ [from here](http://www.swig.org/download.html) (*swigwin archive* [zip], Archive file [zip] to be extracted in a folder of your own - and remind that folder)
+
+2. Then, install additional Python modules by running following instructions in a command prompt:
+
+````
+python -m pip install numpy
+````
 
 Notes:
 
+* The *Path* environment variable (**System variables**) must be updated to make *swig.exe* available in the batch command line (follow [this guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10) to add *SWIG* installation folders in the *Path* variable and restart Windows)
+* The Windows C++ Compiler used must be the same that the one used for compiling Python (Visual C++). Using another compiler than Visual C++ is not supported.
 * You must restart your computer after installing these requirements
-* The *Path* environment variable must be updated to make *swig.exe* (and *python.exe*) available in the batch command line (follow [this guide](https://stackoverflow.com/questions/44272416/how-to-add-a-folder-to-path-environment-variable-in-windows-10-with-screensho) to add *C:\\swigwin-4.0.2* and *C:\\Python39* folder in the *Path* variable and restart Windows)
-* For using Python package, the Windows C++ Compiler used must be the same that the one used for compiling Python (Visual C++). Using another compiler than Visual C++ is not supported.
-* For using R package, the Windows C++ Compiler must be RTools
 
-#### Microsoft Visual Studio
+### Windows - MinGW (via RTools)
 
-Download and install the following tools:
+These requirements are also recommended to people who wants to compile *swigex* R package. If you want to compile *swigex* Python package under Windows, you should look at the previous section. This is not the only way to install MinGW. But using MinGW provided with RTools permits us to also handle *swigex* R package compilation.
 
-* Microsoft Visual Studio C++ 14+ [from here](https://visualstudio.microsoft.com/fr/vs/features/cplusplus/)
+#### Install R and RTools
 
-#### MingGW (RTools)
+Download and install the following tools using default option during installation:
 
-Download and install the following tools:
+* R [from here](https://cran.r-project.org/bin/windows/base) (*Setup program* [exe] - remind the installation folder, assume it is `C:\Program Files\R\R-4.2.2`)
+* RTools [from here](https://cran.r-project.org/bin/windows/Rtools) (RTools *Installer* [exe] - remind the installation folder, assume it is `C:\rtools42`)
 
-* R 4 or higher [from here](https://cran.r-project.org)
-* RTools 4 [from here](https://cran.r-project.org/bin/windows/Rtools/rtools40.html)
-  
 Notes:
 
-* You must restart your computer after installing these requirements
+* Choose the corresponding RTools version according to the R version installed
+* Instructions in this section are **valid since R v4.2** (for older versions please contact us)
 * RTools is not the unique way to install MinGW on Windows, but it is our preferred way as we can handle R packages compilation
+* The *Path* environment variable (*System variables*) must be updated to make *R.exe* available in the batch command line (follow [this guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10) to add `bin` directory from the *R* installation folder in the *Path* variable and restart Windows, ie: `C:\Program Files\R\R-4.2.2\bin`)
+
+#### Add MSYS2 Required Packages
+
+1. Edit the `etc/pacman.conf` file in the RTools installation directory (ie: `C:\rtools42`) by changing the `SigLevel` variable to `Never` (otherwise, *git* cannot be installed using *pacman*):
+
+````
+SigLevel=Never
+````
+
+2. Edit the `mingw64.ini` file in the RTools installation directory (ie: `C:\rtools42`) by un-commenting the following line (remove '#' character at the beginning):
+
+````
+MSYS2_PATH_TYPE=inherit
+````
+
+3. Launch *mingw64.exe* in RTools installation directory (ie: `C:\rtools42`) and pin the icon to the task bar
+
+4. From the *mingw64* shell command prompt, execute following instructions:
+
+````
+pacman -Sy git
+pacman -Sy mingw-w64-x86_64-cmake
+pacman -Sy mingw-w64-x86_64-gcc
+pacman -Sy bison
+pacman -Sy mingw-w64-x86_64-pcre2
+````
+
+#### Install customized SWIG 4.2.0
+
+In a directory of your own, compile and install SWIG 4.2.0 [customized] by executing following commands from the *mingw64* shell command prompt:
+
+````
+git clone https://github.com/fabien-ors/swig.git
+cd swig
+cmake -G "MSYS Makefiles" -Bbuild -DCMAKE_INSTALL_PREFIX:PATH=/mingw64/
+cd build
+make
+make install
+````
 
 ## Known caveats
 

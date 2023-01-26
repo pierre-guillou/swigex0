@@ -19,21 +19,7 @@
 // For cout
 #include <iostream>
 
-// Numpy default integer type could be different according the OS (int64 or int32)
-// https://stackoverflow.com/questions/36278590/numpy-array-dtype-is-coming-as-int32-by-default-in-a-windows-10-64-bit-machine
-// Remind that there is no standard NaN for integers in Python
-// We cannot use std::numeric_limits<int>::quiet_NaN() in C++
-// But numpy converts np.nan in signed int64 minimum value (-2^63) or int32 minimum value (-2^31)
-// https://stackoverflow.com/questions/62302903/numpy-check-for-integer-nan
-// All integers in C++ are 32 bits (4 bytes) so :
-//  - all integers equal to -2^63 are NA (Linux / MacOS)
-//  - all integers equal to -2^31 are NA (Windows)
-    
-// You could try by executing this:
-// type(np.asarray(np.array([1]), dtype=int)[0])
-// np.asarray(np.array([1, np.nan, 3]), dtype=int)
-// np.asarray(np.array([np.nan]), dtype=int)[0]
-
+// Look below (python code) for integer NaN (inan definition)
 #if defined(_WIN32) || defined(_WIN64)
   #define NPY_INT_TYPE       NPY_INT32
   #define NPY_INT_OUT_TYPE   int
@@ -44,6 +30,8 @@
   #define NPY_INT_NA         std::numeric_limits<NPY_INT_OUT_TYPE>::min()
 #endif
 %}
+
+#define NPY_DOUBLE_NA        std::numeric_limits<double>::quiet_NaN()
 
 %fragment("ToCpp", "header")
 {
@@ -260,7 +248,7 @@
   {
     //std::cout << "convertFromCpp(double): value=" << value << std::endl;
     if (isNA<double>(value))
-      return std::numeric_limits<double>::quiet_NaN();
+      return NPY_DOUBLE_NA;
     return value;
   }
   template <> const char* convertFromCpp(const String& value)
@@ -414,12 +402,23 @@
 
 import swigex as se
 import numpy as np
+import sys
 
 from swigex.version import __version__
 from swigex.version import __author__
 
+## Numpy default integer type could be different according the OS (int64 or int32)
+## https://stackoverflow.com/questions/36278590/numpy-array-dtype-is-coming-as-int32-by-default-in-a-windows-10-64-bit-machine
+## Remind that there is no standard NaN for integers in Python
+## We cannot use std::numeric_limits<int>::quiet_NaN() in C++
+## But we can use the minimum signed integer value as follow
+
+import os
 ## Integer NaN custom value
-inan = np.asarray(np.array([np.nan]), dtype=int)[0]
+if os.name == 'nt':         # Windows
+  inan = -2147483648
+else:                       # Others
+  inan = -sys.maxsize - 1
 
 ## isNaN custom function
 def isNaN(value):

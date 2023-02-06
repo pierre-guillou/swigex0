@@ -28,7 +28,7 @@ if (i != 22)
 #}
 invisible(a$testIntRefDef())
 invisible(a$testIntRefDef(3))
-#invisible(a$testIntRefDef(b=5)) # TODO :Argument naming is impossible when using default C++ values
+invisible(a$testIntRefDef(b=5))
 
 vi = a$testVectorInt(c(23,33,43))
 cat(class(vi), "\n")

@@ -4,6 +4,7 @@ Test int Reference: 22
 integer
 Test int Reference Def: 2 - 3
 Test int Reference Def: 3 - 3
+Test int Reference Def: 2 - 5
 Test VectorInt: [23 33 43]
 integer
 Test VectorInt Reference: [24 34 44]

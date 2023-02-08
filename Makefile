@@ -4,11 +4,11 @@
 # Call 'make' with one of this target:
 # 
 # C++ Library:
-#  - shared         Build swigex shared library
-#  - static         Build swigex static library
+#  - shared         Build shared library
+#  - static         Build static library
 #  - build_tests    Build non-regression tests executables
-#  - install        Install swigex shared library
-#  - uninstall      Uninstall swigex shared library
+#  - install        Install shared library
+#  - uninstall      Uninstall shared library
 #
 # Python wrapper (only for Linux-GCC or MacOS-clang):
 #  - python_build   Build python wrapper

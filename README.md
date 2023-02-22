@@ -1,7 +1,7 @@
 # swigex C++ Library and Wrappers
 
 * Author: Fabien Ors (MINES PARIS - PSL University) 
-* Date: Oct. 2022
+* Date: Feb. 2023
 
 Example of a cross-platform C++ library exported in Python and R using SWIG and CMake. Following features are tested:
 * Non regression tests in C++, Python and R (using CTest and automatic github actions)

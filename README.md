@@ -140,7 +140,6 @@ sudo apt install python3-pip
 sudo apt install bison
 sudo apt install pcre2-devel # Ubuntu 18
 sudo apt install libpcre2-dev # Ubuntu 20
-python3 -m ensurepip --upgrade
 python3 -m pip install numpy
 ````
 
@@ -174,7 +173,6 @@ brew install r
 brew install bison
 brew install pcre2-devel
 brew install python3
-python3 -m ensurepip --upgrade
 python3 -m pip install numpy
 ````
 

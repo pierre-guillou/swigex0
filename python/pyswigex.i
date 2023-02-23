@@ -1,3 +1,4 @@
+// Keep sync with PYTHON_PACKAGE_NAME in CMakeLists.txt
 %module(directors="1") swigex
 
 // Note : Keep order in this file!

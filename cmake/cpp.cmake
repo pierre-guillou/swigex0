@@ -1,5 +1,5 @@
 # Make Release version the default (only for single configuration generators)
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+if(NOT CMAKE_BUILD_TYPE AND NOT IS_MULTI_CONFIG)
   message(STATUS "Setting build type to 'Release' as none was specified")
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
   # Set the possible values of build type for cmake-gui

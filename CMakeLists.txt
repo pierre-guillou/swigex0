@@ -38,9 +38,6 @@
 # For recent UseSWIG
 cmake_minimum_required(VERSION 3.20)
 
-# Verbose makefiles
-#set(CMAKE_VERBOSE_MAKEFILE ON)
-
 # Define project here
 project(swigex
         VERSION      0.0.24
@@ -59,6 +56,9 @@ string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UP)
 
 # Fix version.h automatically
 configure_file(version.h.in version.h)
+
+# Detect presence of multi configuration generators
+get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 
 # Activate verbose mode
 #set(CMAKE_VERBOSE_MAKEFILE ON)

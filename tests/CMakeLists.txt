@@ -6,7 +6,7 @@ add_custom_target(check)
 
 # Define ctest command # TODO : really needed ? (yaml use --target check)
 #set(VERBOSE_TEST --verbose)
-if (MSVC) # TODO use IS_MULTI_CONFIG
+if (IS_MULTI_CONFIG)
   # Need configuration to be tested
   set(CONFIG_TEST -C $<CONFIG>)
 endif()

@@ -4,7 +4,7 @@
 #
 #                   Author: Fabien Ors (MINES PARIS - PSL) 
 #                   License: MIT
-#                   Date: Oct. 2022
+#                   Date: Feb. 2023
 #
 #
 # 1. Configure project :
@@ -62,6 +62,8 @@ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 
 # Activate verbose mode
 #set(CMAKE_VERBOSE_MAKEFILE ON)
+# Debug find package instruction
+#set(CMAKE_FIND_DEBUG_MODE TRUE)
 
 # Options
 option(BUILD_PYTHON "Build Python package" OFF)

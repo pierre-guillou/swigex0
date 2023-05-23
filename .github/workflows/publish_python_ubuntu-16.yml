@@ -17,7 +17,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ndesassis/test_ubuntu-16
+      image: fabienors/test_ubuntu-16
     strategy :
       matrix:
         python: ["py38","py39","py310","py311"]

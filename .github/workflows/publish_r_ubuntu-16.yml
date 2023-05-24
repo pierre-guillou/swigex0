@@ -36,7 +36,7 @@ jobs:
         host: ${{ secrets.CG_HOST }}
         username: ${{ secrets.CG_USR }}
         password: ${{ secrets.CG_PWD }}
-        source: ${{env.BUILD_DIR}}/r/${{env.BUILD_TYPE}}/swigex0*.tar.gz
+        source: ${{env.BUILD_DIR}}/r/${{env.BUILD_TYPE}}/swigex*.tar.gz
         target: /var/www/html/cran/src/contrib/
         strip_components: 3
 

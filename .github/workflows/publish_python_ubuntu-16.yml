@@ -20,8 +20,7 @@ jobs:
       image: fabienors/test_ubuntu-16
     strategy :
       matrix:
-        #python: ["py38","py39","py310","py311"]
-        python: ["py39","py310","py311"]
+        python: ["py38","py39","py310","py311"]
 
     steps:
     - uses: actions/checkout@v3

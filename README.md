@@ -41,7 +41,7 @@ From a shell command prompt:
 ### R Package
 From an R command prompt:
 
-    install.package("swigex", repos="http://51.83.45.127/cran")
+    install.package("swigex", repos="https://fabien-ors.github.io/drat/")
 
 ## Usage
 This library implements a Fibonacci list C++ object exported to Python and R via SWIG using numerical vector class. Here is an example usage in Python:

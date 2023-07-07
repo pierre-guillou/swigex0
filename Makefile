@@ -1,3 +1,9 @@
+####################################################################
+#
+#               C++ Library and Packages Example
+#
+####################################################################
+#
 # This Makefile is just a shortcut to cmake commands
 # for make users (Linux-GCC, MacOS-clang or Windows-Rtools)
 #
@@ -6,8 +12,9 @@
 # C++ Library:
 #  - shared         Build shared library
 #  - static         Build static library
-#  - install        Install shared library
-#  - uninstall      Uninstall shared library
+#  - doxygen        Build doxygen documentation [optional]
+#  - install        Install shared library [and html doxymentation]
+#  - uninstall      Uninstall shared library [and html doxymentation]
 #
 # Python wrapper (only for Linux-GCC or MacOS-clang):
 #  - python_build   Build python wrapper
@@ -34,7 +41,7 @@
 #  - DEBUG=1            Build the debug version of the library and tests (default =0)
 #  - N_PROC=N           Use more CPUs for building procedure (default =1)
 #  - BUILD_DIR=<path>   Define a specific build directory (default =build[_msys])
-#  - TEST=<test-target> Name of the test target to be launched (e.g. test_Model_py)
+#  - TEST=<test-target> Name of the test target to be launched (e.g. testFibo_py)
 #
 # Usage example:
 #
@@ -76,22 +83,26 @@ else
 endif
 
 
+CMAKE_DEFINES = -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 
-.PHONY: all cmake cmake-python cmake-r cmake-python-r static shared build_tests doxygen install uninstall
+.PHONY: all cmake cmake-python cmake-r cmake-python-r cmake-doxygen static shared build_tests doxygen install uninstall
 
 all: shared install
 
 cmake:
-	@cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B$(BUILD_DIR) -H. $(GENERATOR)
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES)
 
 cmake-python:
-	@cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B$(BUILD_DIR) -H. $(GENERATOR) -DBUILD_PYTHON=ON
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON
 
 cmake-r:
-	@cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B$(BUILD_DIR) -H. $(GENERATOR) -DBUILD_R=ON
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_R=ON
 
 cmake-python-r:
-	@cmake -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) -B$(BUILD_DIR) -H. $(GENERATOR) -DBUILD_PYTHON=ON -DBUILD_R=ON
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON -DBUILD_R=ON
+
+cmake-doxygen:
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOXYGEN=ON
 
 static: cmake
 	@cmake --build $(BUILD_DIR) --target static -- --no-print-directory $(N_PROC_OPT)
@@ -101,6 +112,9 @@ shared: cmake
 
 build_tests: cmake
 	@cmake --build $(BUILD_DIR) --target build_tests -- --no-print-directory $(N_PROC_OPT)
+
+doxygen: cmake-doxygen
+	@cmake --build $(BUILD_DIR) --target doxygen -- --no-print-directory $(N_PROC_OPT)
 
 install: cmake
 	@cmake --build $(BUILD_DIR) --target install -- --no-print-directory $(N_PROC_OPT)
@@ -143,7 +157,7 @@ check: cmake-python-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check -- --no-print-directory $(N_PROC_OPT)
 
 check_test: cmake-python-r
-	@cd $(BUILD_DIR); ctest -R $(TEST)
+	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)
 
 
 .PHONY: clean clean_all

@@ -1,0 +1,44 @@
+name: publish_doxygen
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Manual'
+        required: false
+        default: ''
+
+env:
+  BUILD_TYPE: Release
+  BUILD_DIR : build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build doxygen documentation and save generated folder name in the environment
+      run: |
+        cmake -B${{env.BUILD_DIR}} -DBUILD_DOXYGEN=ON
+        cmake --build ${{env.BUILD_DIR}} --target doxygen
+        echo "HTML_FOLDER=$(ls ${{env.BUILD_DIR}}/doxygen/html)" >> "$GITHUB_ENV"
+
+    - uses: actions/upload-artifact@v3 
+      with:
+        name: doxygen-documentation
+        path: ${{ env.HTML_FOLDER }}
+
+  publish:
+    needs: build
+    # Only ubuntu can upload to CRAN easily (ssh)
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: fabien-ors/cran-publish-action@v1
+      with:
+        host: ${{ secrets.CG_HOST }}
+        username: ${{ secrets.CG_USR }}
+        password: ${{ secrets.CG_PWD }}
+        repo-path: "/var/www/html/swigex"

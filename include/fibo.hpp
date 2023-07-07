@@ -4,7 +4,6 @@
 #include "swigex_define.hpp"
 #include "VectorNumT.hpp"
 
-/// Global functions
 SWIGEX_EXPORT int fibn(int n);
 SWIGEX_EXPORT VectorInt fib(int n);
 
@@ -17,15 +16,16 @@ class SWIGEX_EXPORT Fibo
     Fibo (int n, const String& title = "");
     virtual ~Fibo();
 
-    void resetFromFiboVal(Fibo fib);        // In order to test class argument as value
-    void resetFromFiboRef(const Fibo& fib); //  In order to test class argument as reference
+    void resetFromFiboVal(Fibo fib);
+    void resetFromFiboRef(const Fibo& fib);
 
     void display(bool showTitle = true) const;
 
     VectorInt get() const;
+    std::string getTitle() const;
 
   protected:
-    int    _n;     /// Maximum integer of the list
-    String _title; /// Title to be shown when displaying the list
+    int    _n;     ///< Maximum integer of the Fibonacci list
+    String _title; ///< Title to be shown when displaying the list
 };
 

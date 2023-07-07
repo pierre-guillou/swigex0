@@ -84,7 +84,7 @@ endif()
 target_link_libraries(r_build PUBLIC ${PROJECT_NAME}::static)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
-set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-unused-parameter -Wno-free-nonheap-object -Wno-cast-function-type") # Prevent some SWIG C++/R warnings
+set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE -Wno-unused-parameter -Wno-uninitialized -Wno-free-nonheap-object -Wno-cast-function-type") # Prevent some SWIG C++/R warnings
 
 # Set some properties on SWIG target
 set_target_properties(r_build PROPERTIES
@@ -140,8 +140,13 @@ if (MINGW)
   set(ARCHIVE_FILE_NAME     "${PROJECT_NAME}_${PROJECT_VERSION}.zip")
   set(DST_ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}.zip")
 else()
-  set(ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}_R_x86_64-pc-linux-gnu.tar.gz")
-  set(DST_ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}.tar.gz")
+  if(APPLE)
+    set(ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}.tgz")
+    set(DST_ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}.tgz")
+  else()
+    set(ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}_R_x86_64-pc-linux-gnu.tar.gz")
+    set(DST_ARCHIVE_FILE_NAME "${PROJECT_NAME}_${PROJECT_VERSION}.tar.gz")
+  endif()
 endif()
 add_custom_target(r_install
   COMMAND ${CMAKE_COMMAND} -E touch ${R_PACKAGE_SRC_FOLDER}/Makevars

@@ -66,16 +66,18 @@ get_property(IS_MULTI_CONFIG GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
 #set(CMAKE_FIND_DEBUG_MODE TRUE)
 
 # Options
-option(BUILD_PYTHON "Build Python package" OFF)
-option(BUILD_R      "Build R package"      OFF)
+option(BUILD_PYTHON "Build Python package"         OFF)
+option(BUILD_R      "Build R package"              OFF)
+option(BUILD_DOXYGEN "Build Doxygen documentation" OFF)
 if (MINGW)
   set(BUILD_PYTHON OFF)
 endif()
 if (MSVC)
   set(BUILD_R OFF)
 endif()
-message(STATUS "BUILD_PYTHON=" ${BUILD_PYTHON})
-message(STATUS "BUILD_R="      ${BUILD_R})
+message(STATUS "BUILD_PYTHON="  ${BUILD_PYTHON})
+message(STATUS "BUILD_R="       ${BUILD_R})
+message(STATUS "BUILD_DOXYGEN=" ${BUILD_DOXYGEN})
 
 # Universal binary for Mac (TODO : doesn't work for customized R)
 #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "Build architectures for Mac OS X" FORCE)
@@ -84,6 +86,7 @@ message(STATUS "BUILD_R="      ${BUILD_R})
 ## BUILD & INSTALL
 
 include(cmake/cpp.cmake)
+include(cmake/doxygen.cmake)
 include(cmake/install.cmake)
 
 ####################################################

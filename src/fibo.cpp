@@ -7,6 +7,7 @@
 
 /**
  * Return the Nth Fibonacci number, -1 in case of error
+ * (Global functions in C-style)
  *
  * @param n: index of the value
  */
@@ -33,7 +34,9 @@ int fibn(int n)
 }
 
 /**
- * Print Fibonacci numbers up to the provided value
+ * Return the Fibonacci numbers up to the provided integer value
+ * in a vector of integers
+ * (Global functions in C-style)
  *
  * @param n: maximum value to be generated
  */
@@ -58,10 +61,10 @@ VectorInt fib(int n)
 }
 
 /**
- * Default constructor of a class which handle Fibonacci integer list up to n
+ * Default constructor of a class which handle Fibonacci integers list up to n
  * 
- * @param n     Strict Positive Integer
- * @param title Title to be printed
+ * @param n     Strict positive Integer
+ * @param title Title to be printed (optional)
  */
 Fibo::Fibo(int n, const String& title)
 : _n(n)
@@ -97,6 +100,7 @@ Fibo::~Fibo()
 
 /**
  * Reset the Fibonacci list from another one
+ * (In order to test class argument as value)
  *
  * @param fibo Source Fibonacci list
  */
@@ -108,6 +112,7 @@ void Fibo::resetFromFiboVal(Fibo fibo)
 
 /**
  * Reset the Fibonacci list from another one
+ * (In order to test class argument as reference)
  *
  * @param fibo Source Fibonacci list
  */
@@ -133,11 +138,22 @@ void Fibo::display(bool showTitle) const
 }
 
 /**
- * Return the Fibonacci list as a vector of integer
+ * Return the Fibonacci list as a vector of integers
  *
- * @return Fibonacci integer vector
+ * @return Fibonacci integers vector
  */
 VectorInt Fibo::get() const
 {
+  // Make a copy of the vector
   return fib(_n);
+}
+
+/**
+ * Return the Fibo object title (including version and date by default)
+ *
+ * @return title
+ */
+std::string Fibo::getTitle() const
+{
+  return _title;
 }

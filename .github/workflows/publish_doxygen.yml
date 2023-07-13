@@ -26,7 +26,9 @@ jobs:
       run: |
         cmake -B${{env.BUILD_DIR}} -DBUILD_DOXYGEN=ON
         cmake --build ${{env.BUILD_DIR}} --target doxygen
+        PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         echo "HTML_FOLDER=${{env.BUILD_DIR}}/doxygen/html" >> "$GITHUB_ENV"
+        echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_ENV"
 
     - uses: actions/upload-artifact@v3 
       with:
@@ -44,4 +46,4 @@ jobs:
         host: ${{ secrets.CG_HOST }}
         username: ${{ secrets.CG_USR }}
         password: ${{ secrets.CG_PWD }}
-        dest-path: "/var/www/html/swigex/doxygen"
+        dest-path: "/var/www/html/swigex/doxygen-${{ env.PROJECT_VERSION }}"

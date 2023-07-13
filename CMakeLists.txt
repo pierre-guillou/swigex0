@@ -85,6 +85,7 @@ message(STATUS "BUILD_DOXYGEN=" ${BUILD_DOXYGEN})
 ####################################################
 ## BUILD & INSTALL
 
+include(cmake/version.cmake)
 include(cmake/cpp.cmake)
 include(cmake/doxygen.cmake)
 include(cmake/install.cmake)

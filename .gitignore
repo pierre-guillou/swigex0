@@ -8,3 +8,4 @@ tests/*/main.out
 .pydevproject
 .settings
 *.Rout
+.ipynb_checkpoints

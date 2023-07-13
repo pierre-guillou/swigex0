@@ -35,6 +35,10 @@
 #  - check          Execute non-regression tests (C++ + python + R)
 #  - check_test     Execute a single test (set $TEST variable)
 #
+# Demonstration scripts:
+#  - check_ipynb    Execute demonstration scripts (jupyter notebooks)
+#  - check_rmd      Execute demonstration scripts (R Markdown)
+#
 # Clean:
 #  - clean          Clean generated files
 #  - clean_all      Clean the build directory
@@ -148,7 +152,7 @@ r_install: r_build
 	@cmake --build $(BUILD_DIR) --target r_install -- --no-print-directory $(N_PROC_OPT)
 
 
-.PHONY: check_cpp check_py check_r check check_test
+.PHONY: check_cpp check_py check_r check check_ipynb check_rmd check_test
 
 check_cpp: cmake
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_cpp -- --no-print-directory $(N_PROC_OPT)
@@ -161,6 +165,12 @@ check_r: cmake-r
 
 check: cmake-python-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check -- --no-print-directory $(N_PROC_OPT)
+
+check_ipynb: cmake-python
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- --no-print-directory $(N_PROC_OPT)
+
+check_rmd: cmake-r
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
 
 check_test: cmake-python-r
 	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)

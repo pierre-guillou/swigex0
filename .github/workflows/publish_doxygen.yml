@@ -30,6 +30,9 @@ jobs:
         echo "HTML_FOLDER=${{env.BUILD_DIR}}/doxygen/html" >> "$GITHUB_ENV"
         echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_ENV"
 
+    - name: Print version
+      run: echo "PROJECT_VERSION=${{ env.PROJECT_VERSION }}"
+
     - uses: actions/upload-artifact@v3 
       with:
         name: doxygen-documentation

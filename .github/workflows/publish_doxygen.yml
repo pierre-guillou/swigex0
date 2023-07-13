@@ -35,7 +35,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3 
       with:
-        name: doxygen-documentation
+        name: doxygen-${{ env.PROJECT_VERSION }}
         path: ${{ env.HTML_FOLDER }}
 
   publish:
@@ -44,9 +44,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: fabien-ors/files-publish-action@v1
+    - uses: fabien-ors/folder-publish-action@v1
       with:
         host: ${{ secrets.CG_HOST }}
         username: ${{ secrets.CG_USR }}
         password: ${{ secrets.CG_PWD }}
-        dest-path: "/var/www/html/swigex/doxygen-${{ env.PROJECT_VERSION }}"
+        dest-path: "/var/www/html/swigex/doxygen"

@@ -44,6 +44,10 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install numpy jupyter nbconvert
 
+    - name: Setup personal R libraries directory
+      # Beware : ~/ is Linux only. For a potential windows a solution must be found yet
+      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
+      
     - name: Install R dependencies
       # Beware : ~/ is Linux only. For a potential windows a solution must be found yet
       run: |

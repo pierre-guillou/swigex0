@@ -12,20 +12,10 @@ endif()
 cmake_path(APPEND PROJECT_SOURCE_DIR doc demo python
            OUTPUT_VARIABLE DEMO_DIR)
 file(GLOB DEMO_SOURCES ${DEMO_DIR}/*.ipynb)
-cmake_path(APPEND PROJECT_SOURCE_DIR doc courses python
-           OUTPUT_VARIABLE COURSES_DIR)
-file(GLOB COURSES_SOURCES ${COURSES_DIR}/*.ipynb)
 set(TEST_SOURCES ${DEMO_SOURCES})
-list(APPEND TEST_SOURCES ${COURSES_SOURCES})
 # Without GLOB:
 #set(TEST_SOURCES
-#    ../../doc/demo/python/Tuto_SSDV.ipynb)
-
-# Remove Tuto_SPDE and Tuto_SpatioTemp under MSVC (because scikits-sparse)
-if (MSVC)
-  list(FILTER TEST_SOURCES EXCLUDE REGEX ".*/Tuto_SPDE.ipynb")
-  list(FILTER TEST_SOURCES EXCLUDE REGEX ".*/Tuto_SpatioTemp.ipynb")
-endif()
+#    ../../doc/demo/python/testFibo.ipynb)
 
 # Generation folder
 if (IS_MULTI_CONFIG)

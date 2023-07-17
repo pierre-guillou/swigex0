@@ -5,19 +5,28 @@ library("callr")
 args   <- commandArgs(trailingOnly = TRUE)
 script <- args[1]
 outdir <- args[2]
+out_type = "R"
+if (length(args) > 2) {
+  out_type = args[3]
+}
 
 scriptname = basename(script)
 scriptname = tools::file_path_sans_ext(scriptname)
 
-outscript = file.path(outdir, paste0(scriptname, ".R"))
+outscript = file.path(outdir, paste0(scriptname, ".", out_type))
 outpath   = file.path(outdir, paste0(scriptname, ".out"))
 
-# 1. Convert Rmd to R script (no documentation)
-# https://stackoverflow.com/questions/71183578/how-to-extract-all-code-from-an-rmarkdown-rmd-file
-knitr::purl(input = script, output = outscript, documentation = 0)
+if (out_type == 'R') {
+  # 1. Convert Rmd to R script (no documentation)
+  # https://stackoverflow.com/questions/71183578/how-to-extract-all-code-from-an-rmarkdown-rmd-file
+  knitr::purl(input = script, output = outscript, documentation = 0)
 
-# 2. Execute R script and dump output in a text file
-# https://callr.r-lib.org/reference/rscript.html
-rscript(outscript, stdout=outpath)
-
+  # 2. Execute R script and dump output in a text file
+  # https://callr.r-lib.org/reference/rscript.html
+  rscript(outscript, stdout=outpath)
+} else if (out_type == "html") {
+  rmarkdown::render(script, output_format='html_document', quiet=TRUE, output_dir=outdir)
+} else {
+  cat("Hun ?\n")
+}
 

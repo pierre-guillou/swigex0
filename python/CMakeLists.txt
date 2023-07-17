@@ -80,6 +80,8 @@ target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static Python3::NumPy
 set(COMP_FLAGS "-D${PROJECT_NAME_UP}_STATIC_DEFINE")
 if (MSVC)
   set(COMP_FLAGS "${COMP_FLAGS} /wd4706 /wd4456 /wd4127 /wd4100") # SWIG generated code warnings
+else ()
+  set(COMP_FLAGS "${COMP_FLAGS} -Wno-unused-parameter -Wno-free-nonheap-object") # Prevent some SWIG C++/Python warnings
 endif()
 
 # Set some properties on SWIG target

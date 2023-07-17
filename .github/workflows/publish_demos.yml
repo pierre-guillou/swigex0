@@ -57,6 +57,8 @@ jobs:
     - name: Build demonstration HTMLs and save generated folder name in the environment
       run: |
         cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_PYTHON=ON -DBUILD_R=ON -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
+        cmake --build ${{env.BUILD_DIR}} --target python_install
+        cmake --build ${{env.BUILD_DIR}} --target r_install
         cmake --build ${{env.BUILD_DIR}} --target build_demos
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         echo "DEMO_FOLDER=${{env.BUILD_DIR}}/demo" >> "$GITHUB_ENV"

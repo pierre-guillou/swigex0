@@ -44,7 +44,7 @@ add_dependencies(check_rmd r_install)
 
 
 # Rmd script test runner path
-cmake_path(APPEND CMAKE_CURRENT_SOURCE_DIR run_test_rmd.R
+cmake_path(APPEND CMAKE_SOURCE_DIR r run_test_rmd.R
            OUTPUT_VARIABLE RUN_TEST_SCRIPT)
            
 # Display test output in case of failure

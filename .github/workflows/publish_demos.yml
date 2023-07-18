@@ -55,16 +55,14 @@ jobs:
         Rscript -e "install.packages (c('knitr', 'rmarkdown'), lib='~/r_libs', repos='https://cloud.r-project.org/')"
 
     - name: Build demonstration HTMLs and save generated folder name in the environment
+      # TODO : Don't know why I must launch all dependency targets before build_demos
       run: |
         cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_PYTHON=ON -DBUILD_R=ON -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
         cmake --build ${{env.BUILD_DIR}} --target python_install
-        python -c "import swigex; print('Swigex is ok:', swigex.fib(40))"
+        cmake --build ${{env.BUILD_DIR}} --target r_install
         cmake --build ${{env.BUILD_DIR}} --target prepare_build_demos_py
-        ls ${{env.BUILD_DIR}}
-        ls ${{env.BUILD_DIR}}/demo
-        ls ${{env.BUILD_DIR}}/demo/python
+        cmake --build ${{env.BUILD_DIR}} --target prepare_build_demos_r
         cmake --build ${{env.BUILD_DIR}} --target build_demos
-        ls ${{env.BUILD_DIR}}/demo/r
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         echo "DEMO_FOLDER=${{env.BUILD_DIR}}/demo" >> "$GITHUB_ENV"
         echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_ENV"

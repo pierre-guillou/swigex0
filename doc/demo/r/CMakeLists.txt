@@ -24,7 +24,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${DEMO_DIR})
 
 # Create the output directory for html
 add_custom_target(prepare_build_demos_r
-                  COMMAND ${CMAKE_COMMAND} -E make_directory "${DEMO_DIR}")
+                  COMMAND ${CMAKE_COMMAND} -E make_directory "${DEMO_DIR}"
+                  COMMENT "Creating ${DEMO_DIR}")
 
 # Create build_demos_r target + add dependencies
 add_custom_target(build_demos_r)

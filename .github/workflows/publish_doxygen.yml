@@ -35,6 +35,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3 
       with:
+        # This will become the folder name in the server
         name: doxygen-${{ env.PROJECT_VERSION }}
         path: ${{ env.HTML_FOLDER }}
 

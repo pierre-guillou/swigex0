@@ -52,7 +52,7 @@ jobs:
       # Beware : ~/ is Linux only. For a potential windows a solution must be found yet
       run: |
         sudo apt-get install -yq r-base
-        Rscript -e "inst --target python_installall.packages (c('knitr', 'rmarkdown'), lib='~/r_libs', repos='https://cloud.r-project.org/')"
+        Rscript -e "install.packages (c('knitr', 'rmarkdown'), lib='~/r_libs', repos='https://cloud.r-project.org/')"
 
     - name: Build demonstration HTMLs and save generated folder name in the environment
       run: |
@@ -71,6 +71,7 @@ jobs:
 
     - uses: actions/upload-artifact@v3 
       with:
+        # This will become the folder name in the server
         name: demos-${{ env.PROJECT_VERSION }}
         path: ${{ env.DEMO_FOLDER }}
 

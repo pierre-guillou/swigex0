@@ -58,7 +58,7 @@ jobs:
       run: |
         cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_PYTHON=ON -DBUILD_R=ON -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
         cmake --build ${{env.BUILD_DIR}} --target python_install
-        python -c "import swigex"
+        python -c "import swigex; print('Swigex is ok:', swigex.fib(40))"
         cmake --build ${{env.BUILD_DIR}} --target build_demos
         ls ${{env.BUILD_DIR}}
         ls ${{env.BUILD_DIR}}/demo

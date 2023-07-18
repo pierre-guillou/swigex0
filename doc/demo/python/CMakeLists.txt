@@ -17,13 +17,8 @@ set(DEMO_SOURCES ${DEMO_SOURCES})
 #    ../../doc/demo/python/testFibo.ipynb)
 
 # Generation folder
-if (IS_MULTI_CONFIG)
-  cmake_path(APPEND CMAKE_BINARY_DIR demo python
-             OUTPUT_VARIABLE DEMO_DIR)
-else()
-  cmake_path(APPEND CMAKE_BINARY_DIR demo python
-             OUTPUT_VARIABLE DEMO_DIR)
-endif()
+cmake_path(APPEND CMAKE_BINARY_DIR demo python
+           OUTPUT_VARIABLE DEMO_DIR)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${DEMO_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${DEMO_DIR})
 

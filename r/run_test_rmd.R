@@ -27,6 +27,6 @@ if (out_type == 'R') {
 } else if (out_type == "html") {
   rmarkdown::render(script, output_format='html_document', quiet=FALSE, output_dir=outdir)
 } else {
-  cat("Hun ?\n")
+  stop("Hun ?\n")
 }
 

@@ -174,7 +174,7 @@ check_rmd: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
 
 build_demos: cmake-python-r
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target build_demos -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target build_demos -- --no-print-directory $(N_PROC_OPT)
 
 check_test: cmake-python-r
 	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)

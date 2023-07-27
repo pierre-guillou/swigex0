@@ -38,7 +38,7 @@
 # Demonstration scripts:
 #  - check_ipynb    Execute demonstration scripts (jupyter notebooks) and test output
 #  - check_rmd      Execute demonstration scripts (R Markdown) and test output
-#  - build_demos    Execute demonstration scripts (jupyter and R) and build HTMLs 
+#  - build_demos    Execute demonstration scripts (jupyter and R Markdown) and build HTMLs
 #
 # Clean:
 #  - clean          Clean generated files
@@ -173,12 +173,11 @@ check_ipynb: cmake-python
 check_rmd: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
 
-build_demos: cmake-python-r
-	@cmake --build $(BUILD_DIR) --target build_demos -- --no-print-directory $(N_PROC_OPT)
-
 check_test: cmake-python-r
 	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)
 
+build_demos: cmake-python-r
+	@cmake --build $(BUILD_DIR) --target build_demos -- --no-print-directory $(N_PROC_OPT)
 
 .PHONY: clean clean_all
 

@@ -43,10 +43,12 @@ foreach(DEMO_SOURCE_FILE ${DEMO_SOURCES})
     cmake_path(APPEND CMAKE_CURRENT_SOURCE_DIR ${DEMO_SOURCE_FILE}
                OUTPUT_VARIABLE DEMO_SOURCE_FILE)
     # Run the demo (and generate html in ${DEMO_DIR})
+    # https://stackoverflow.com/a/30554504/3952924
     add_custom_target(${DEMO_NAME}_rmd_html
                       COMMAND mkfifo fifo
                       COMMAND cat fifo &
-                      COMMAND ${R_EXECUTABLE} CMD BATCH --no-save --no-restore "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT} fifo)
+                      COMMAND ${R_EXECUTABLE} CMD BATCH --no-save --no-restore "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT} fifo
+                      COMMAND rm fifo)
 
     # Add dependency for the Rmd
     add_dependencies(${DEMO_NAME}_rmd_html prepare_build_demos_r)

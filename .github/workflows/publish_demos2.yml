@@ -22,6 +22,10 @@ jobs:
       
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Setup personal R libraries directory
+      # Beware : ~/ is Linux only. For a potential windows a solution must be found yet
+      run: mkdir -p ~/r_libs & echo ".libPaths('~/r_libs')" > ~/.Rprofile
 
     - name: Build demonstration HTMLs and save generated folder name in the environment
       run: |

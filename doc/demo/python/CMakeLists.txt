@@ -2,10 +2,6 @@ if(NOT BUILD_PYTHON)
   return()
 endif()
 
-add_custom_target(print_coucou_py
-                  COMMAND ${CMAKE_COMMAND} -E echo "Coucou_py"
-                  COMMENT "Printing coucou_py !!!")
-
 # TODO : CMakeLists.txt for non-regression test scripts (py, R, ipynb, rmd) are similar (factorization ?)
 # Jupyter notebooks are located in doc/ folder
 

@@ -2,10 +2,6 @@ if(NOT BUILD_R)
   return()
 endif()
 
-add_custom_target(print_coucou_r
-                  COMMAND ${CMAKE_COMMAND} -E echo "Coucou_r"
-                  COMMENT "Printing coucou_r !!!")
-                  
 # TODO : CMakeLists.txt for non-regression test scripts (py, R, ipynb, rmd) are similar (factorization ?)
 # R Markdown are located in doc/ folder
 
@@ -48,8 +44,9 @@ foreach(DEMO_SOURCE_FILE ${DEMO_SOURCES})
                OUTPUT_VARIABLE DEMO_SOURCE_FILE)
     # Run the demo (and generate html in ${DEMO_DIR})
     add_custom_target(${DEMO_NAME}_rmd_html
-                      #COMMAND ${R_EXECUTABLE} CMD BATCH --no-save --no-restore "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT})
-                      COMMAND ${R_EXECUTABLE} CMD BATCH "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT})
+                      COMMAND mkfifo fifo
+                      COMMAND cat fifo &
+                      COMMAND ${R_EXECUTABLE} CMD BATCH --no-save --no-restore "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT} fifo)
 
     # Add dependency for the Rmd
     add_dependencies(${DEMO_NAME}_rmd_html prepare_build_demos_r)

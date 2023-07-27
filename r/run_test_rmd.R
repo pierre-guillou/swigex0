@@ -25,7 +25,7 @@ if (out_type == 'R') {
   # https://callr.r-lib.org/reference/rscript.html
   rscript(outscript, stdout=outpath)
 } else if (out_type == "html") {
-  rmarkdown::render(script, output_format='html_document', quiet=TRUE, output_dir=outdir)
+  rmarkdown::render(script, output_format='html_document', quiet=FALSE, output_dir=outdir)
 } else {
   cat("Hun ?\n")
 }

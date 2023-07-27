@@ -2,10 +2,9 @@ if(NOT BUILD_PYTHON)
   return()
 endif()
 
-add_custom_target(print_coucou2
-                  COMMAND ${CMAKE_COMMAND} -E echo "Coucou2"
-                  COMMENT "Printing coucou2 !!!")
-
+add_custom_target(print_coucou_py
+                  COMMAND ${CMAKE_COMMAND} -E echo "Coucou_py"
+                  COMMENT "Printing coucou_py !!!")
 
 # TODO : CMakeLists.txt for non-regression test scripts (py, R, ipynb, rmd) are similar (factorization ?)
 # Jupyter notebooks are located in doc/ folder
@@ -31,10 +30,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${DEMO_DIR})
 add_custom_target(prepare_build_demos_py
                   COMMAND ${CMAKE_COMMAND} -E make_directory "${DEMO_DIR}"
                   COMMENT "Creating ${DEMO_DIR}")
+add_dependencies(prepare_build_demos_py python_install)
 
 # Create build_demos_py target + add dependencies
 add_custom_target(build_demos_py)
-add_dependencies(build_demos_py python_install prepare_build_demos_py)
+add_dependencies(build_demos_py prepare_build_demos_py)
 
 # Jupyter notebook script runner path
 cmake_path(APPEND CMAKE_SOURCE_DIR python run_test_ipynb.py
@@ -54,6 +54,9 @@ foreach(DEMO_SOURCE_FILE ${DEMO_SOURCES})
     add_custom_target(${DEMO_NAME}_ipynb_html
                       COMMAND ${Python3_EXECUTABLE} ${RUN_DEMO_SCRIPT} ${DEMO_SOURCE_FILE} ${DEMO_DIR} html)
                       
+    # Add dependency
+    add_dependencies(${DEMO_NAME}_ipynb_html prepare_build_demos_py)
+
     # Add dependency
     add_dependencies(build_demos_py ${DEMO_NAME}_ipynb_html)
     

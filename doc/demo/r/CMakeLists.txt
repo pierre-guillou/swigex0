@@ -2,6 +2,10 @@ if(NOT BUILD_R)
   return()
 endif()
 
+add_custom_target(print_coucou_r
+                  COMMAND ${CMAKE_COMMAND} -E echo "Coucou_r"
+                  COMMENT "Printing coucou_r !!!")
+                  
 # TODO : CMakeLists.txt for non-regression test scripts (py, R, ipynb, rmd) are similar (factorization ?)
 # R Markdown are located in doc/ folder
 
@@ -26,10 +30,10 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${DEMO_DIR})
 add_custom_target(prepare_build_demos_r
                   COMMAND ${CMAKE_COMMAND} -E make_directory "${DEMO_DIR}"
                   COMMENT "Creating ${DEMO_DIR}")
+add_dependencies(prepare_build_demos_r r_install)
 
 # Create build_demos_r target + add dependencies
 add_custom_target(build_demos_r)
-add_dependencies(build_demos_r r_install prepare_build_demos_r)
 
 # R Markdown script runner path
 cmake_path(APPEND CMAKE_SOURCE_DIR r run_test_rmd.R
@@ -44,9 +48,13 @@ foreach(DEMO_SOURCE_FILE ${DEMO_SOURCES})
                OUTPUT_VARIABLE DEMO_SOURCE_FILE)
     # Run the demo (and generate html in ${DEMO_DIR})
     add_custom_target(${DEMO_NAME}_rmd_html
-                      COMMAND ${R_EXECUTABLE} CMD BATCH --no-save --no-restore "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT})
-                      
-    # Add dependency
+                      #COMMAND ${R_EXECUTABLE} CMD BATCH --no-save --no-restore "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT})
+                      COMMAND ${R_EXECUTABLE} CMD BATCH "--args ${DEMO_SOURCE_FILE} ${DEMO_DIR} html" ${RUN_DEMO_SCRIPT})
+
+    # Add dependency for the Rmd
+    add_dependencies(${DEMO_NAME}_rmd_html prepare_build_demos_r)
+    
+    # Add the Rmd to global dependency
     add_dependencies(build_demos_r ${DEMO_NAME}_rmd_html)
     
 endforeach(DEMO_SOURCE_FILE ${TEST_SOURCES})

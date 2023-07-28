@@ -1,4 +1,8 @@
 cat("Hello World\n")
+install.packages ('gstlearn', repos='https://soft.mines-paristech.fr/cran')
+library(gstlearn)
+acknowledge_gstlearn()
+
 #library("knitr")
 #library("callr")
 #

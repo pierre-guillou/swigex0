@@ -18,7 +18,7 @@ jobs:
     container:
       # Corresponding docker file comes from:
       # https://github.com/fabien-ors/docker-generate
-      image: fabienors/ubuntu-16-demos-rmd-ipynb2
+      image: fabienors/ubuntu-16-demos-rmd-ipynb
       
     steps:
     - uses: actions/checkout@v3

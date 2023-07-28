@@ -41,8 +41,6 @@ add_custom_target(check_rmd
 # Add dependency for check_rmd
 add_dependencies(check_rmd r_install)
 
-
-
 # Rmd script test runner path
 cmake_path(APPEND CMAKE_SOURCE_DIR r run_test_rmd.R
            OUTPUT_VARIABLE RUN_TEST_SCRIPT)

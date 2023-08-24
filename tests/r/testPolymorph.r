@@ -1,7 +1,8 @@
 library(swigex)
 
-ap = AParent()
-invisible(showHello(ap))
+#pa = AParent() # AParent is a pure abstract class
+#invisible(showHello(pa))
+
 co = ChildOne()
 invisible(showHello(co))
 
@@ -10,6 +11,7 @@ invisible(showHello(co))
 #class(ct) <- c("ChildTwo", "AParent")
 #getHello.ChildTwo <- function(obj)
 #{
-#  return "ChildTwo - Hello"
+#  return("ChildTwo - Hello")
 #}
+#
 #showHello(ct)

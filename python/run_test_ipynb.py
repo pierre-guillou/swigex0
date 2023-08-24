@@ -54,11 +54,7 @@ if (out_type == "asciidoc"):
     # Remove all graphical 3D object identifiers from the output ascii file, i.e. :
     # [[e43b6f2f-ba2b-47f7-8a13-2336077446d1]]
     notebook_node = re.sub("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}", "XXX", notebook_node)
-    
-    # Remove a specific warning in Tuto_SpatioTemp.ipynb, i.e. :
-    # /tmp/ipykernel_24563/4216505814.py:15: CholmodTypeConversionWarning: converting matrix of class csr_matrix to CSC format
-    notebook_node = re.sub(".*CholmodTypeConversionWarning", "XXX: CholmodTypeConversionWarning", notebook_node)
-    
+
     # Remove panda frame decoration that can vary according the version/OS i.e. :
     notebook_node = re.sub("\\|====+", "|===", notebook_node)
 

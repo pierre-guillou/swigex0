@@ -2,8 +2,11 @@
 
 #include <iostream>
 
- void showHello(AParent* parent)
+ void showHello(const AParent* parent)
 {
-  std::cout << parent->getHello() << std::endl;
+  //const AParent* pa = dynamic_cast<const AParent*>(parent->clone());
+  //std::cout << pa->getHello() << std::endl;
+  //delete pa;
+   std::cout << parent->getHello() << std::endl;
 }
 

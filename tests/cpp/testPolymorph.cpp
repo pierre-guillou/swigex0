@@ -9,18 +9,17 @@ public:
   ChildTwo(): AParent() {}
   virtual ~ChildTwo() {}
 
-  virtual String getHello() const override
-  {
-    return "ChildTwo in C++ - Hello";
-  }
+  virtual String getHello() const override { return "ChildTwo in C++ - Hello"; }
+
+  //virtual ICloneable* clone() const override { return new ChildTwo(); }
 };
 
 int main()
 {
   StdoutRedirect sr("testPolymorph.out");
   
-  AParent ap;
-  showHello(&ap);
+  // AParent pa;
+  // showHello(&pa);
   ChildOne co;
   showHello(&co);
   ChildTwo ct;

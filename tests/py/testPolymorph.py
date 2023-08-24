@@ -1,17 +1,23 @@
 import swigex as mf
 
-ap = mf.AParent()
-mf.showHello(ap)
+#pa = mf.AParent() # AParent is a pure abstract class
+#mf.showHello(pa)
+
 co = mf.ChildOne()
 mf.showHello(co)
 
-# TODO : Cannot inherits from AParent in Python
-#class ChildTwo(mf.AParent):
-#    def __init__(self):
-#        pass
-#    
-#    def getHello(self):
-#        return "ChildTwo in Python - Hello"
-#ct = ChildTwo()
-#mf.showHello(ct)
+# This class is also pure abstract (should override clone)
+# But it works !!!
+class ChildTwo(mf.AParent):
+    def __init__(self):
+        super(ChildTwo,self).__init__()
+    
+    def getHello(self):
+        return "ChildTwo in Python - Hello"
+    
+    #def clone(self):
+    #    return ChildTwo()
+
+ct = ChildTwo()
+mf.showHello(ct)
 

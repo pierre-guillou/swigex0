@@ -1,5 +1,11 @@
-// TODO : Unable director feature for polymorphism doesn't work
+%feature(director) ICloneable;
 %feature(director) AParent;
+
+//%include <std_shared_ptr.i>
+
+//%shared_ptr(AGrandParent)
+//%shared_ptr(AParent)
+//%shared_ptr(ChildOne)
 
 %{
   #include "swigex_export.hpp"

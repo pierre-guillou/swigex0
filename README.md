@@ -5,7 +5,7 @@
 
 The *swigex* C++ library is a derivative work based on the *swigex0* project: [https://github.com/fabien-ors/swigex0](https://github.com/fabien-ors/swigex0)
 
-*swigex0* is an example of a cross-platform C++ library exported in Python and R using CMake and SWIG. **Additional following features** are tested:
+*swigex* is an example of a cross-platform C++ library exported in Python and R using CMake and SWIG. **Additional following features** are tested:
 * Special classes for handling *vectors* and *numerical vectors* based on std::vector (see VectorT.hpp and VectorNumT.hpp) which permits to:
   * Extend std::vector capabilities (stream, numerical operators,...)
   * Handle *undefined values* of any types

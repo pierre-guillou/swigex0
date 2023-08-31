@@ -28,7 +28,10 @@ jobs:
       
     - name: Install Python dependencies
       # Test also official gstlearn
-      run: python3 -m pip install plotly gstlearn
+      run: |
+        python3 --version
+        python3 -m pip install --upgrade pip
+        python3 -m pip install plotly gstlearn
 
     - name: Setup personal R libraries directory
       # Beware : ~/ is Linux only. For a potential windows a solution must be found yet

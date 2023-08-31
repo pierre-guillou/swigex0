@@ -23,10 +23,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install dependencies
+      run: sudo apt-get install -yq python3-pip
+      
     - name: Install Python dependencies
       # Test also official gstlearn
-      run: |
-        python3 -m pip install plotly gstlearn
+      run: python3 -m pip install plotly gstlearn
 
     - name: Setup personal R libraries directory
       # Beware : ~/ is Linux only. For a potential windows a solution must be found yet

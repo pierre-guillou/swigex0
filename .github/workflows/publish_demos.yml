@@ -22,15 +22,11 @@ jobs:
       
     steps:
     - uses: actions/checkout@v3
-
-    - name: Install dependencies
-      run: apt-get install -yq python3-pip
       
     - name: Install Python dependencies
       # Test also official gstlearn
       run: |
-        python3 --version
-        python3 -m pip install --upgrade pip
+        export PATH=/opt/python/py311/bin:$PATH
         python3 -m pip install plotly gstlearn
 
     - name: Setup personal R libraries directory

@@ -57,7 +57,83 @@ This library has been successfully tested with Ubuntu 16/18/20 LTS and Windows 1
 
 For installing from source, you must follow instructions from [https://github.com/fabien-ors/swigex0](https://github.com/fabien-ors/swigex0).
 
-The only additional prerequisite is to have *numpy* package installed with your Python.
+## Additional Requirements
+
+The only additional prerequisites are:
+* [All users] : *doxygen* 1.8.3 or higher
+* [Python users] : *numpy*
+
+### Linux (Ubuntu)
+
+```
+sudo apt install doxygen
+python3 -m pip install numpy
+```
+
+### MacOS
+
+```
+brew install doxygen
+python3 -m pip install numpy
+```
+
+Notes:
+
+* These instructions for MacOS are currently not tested - above packages may not exist
+  
+### Windows - Microsoft Visual Studio
+
+These requirements are recommended to people who wants to compile *swigex* Python package. If you want to compile *swigex* R package under Windows, you should look at the next section.
+
+#### Install additionnal tools
+
+Download and install the following tool using default options during installation:
+
+1. Doxygen [from here](https://www.doxygen.nl/download.html) (*Binary distribution* [setup.exe] - remind the installation folder, we assume it is `C:\Program Files\doxygen`)
+2. Install additional Python modules by running following instructions in a command prompt:
+
+````
+python -m pip install numpy
+````
+
+#### Update the Path environment variable
+
+The *Path* environment variable (*System variables*) must be updated to make *doxygen.exe* available in the batch command line:
+
+1. Follow [this guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10) to add *bin* directory from the *Doxygen* installation folder in the *Path* System variable (i.e: `C:\Program Files\doxygen\bin`)
+2. Restart Windows
+
+
+### Windows - MinGW (via RTools):
+
+These requirements are recommended to people who wants to compile *swigex* R package. If you want to compile *swigex* Python package under Windows, you should look at the previous section. This is not the only way to install MinGW. But using MinGW provided with RTools permits us to also handle *swigex* R package compilation.
+
+* From the *mingw64* shell command prompt, execute following instructions:
+
+````
+pacman -Sy mingw-w64-x86_64-doxygen
+````
+
+## Generate the Documentation
+
+The Doxygen HTML documentation is optional (not included in the installation by default). If you want to generate it, execute the command:
+
+```
+cmake -Bbuild -H. -DBUILD_DOXYGEN=ON
+cmake --build build --target doxygen
+```
+
+or faster (for Makefile user):
+
+```
+make doxygen
+```
+
+The documentation is then available by opening the following HTML file with your favorite web-browser:
+
+```
+firefox build/doxygen/html/index.html
+```
 
 ## Known caveats
 
@@ -69,6 +145,8 @@ If you experience the following error while importing *swigex* Package under Pyt
 
     python -m pip install --upgrade numpy
 
+* You may need to precise the location of Doxygen installation directory. In that case, add the following variable in the first cmake command (configuration):
+  * `-DDoxygen_ROOT="path/to/doxygen"`
 ---
 
 ## License

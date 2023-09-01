@@ -50,6 +50,13 @@ install(
   DESTINATION include/${PROJECT_NAME}
 )
 
+# Install doxygen html directories (optional)
+install(
+  DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doxygen/html/
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/doxygen/html
+  OPTIONAL
+)
+
 # Export the shared library cmake configuration (See above for corelibs definition)
 install(
   EXPORT ${PROJECT_NAME}_corelibs

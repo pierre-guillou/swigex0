@@ -22,7 +22,7 @@ class SWIGEX_EXPORT Fibo
     void display(bool showTitle = true) const;
 
     VectorInt get() const;
-    std::string getTitle() const;
+    String getTitle() const;
 
   protected:
     int    _n;     ///< Maximum integer of the Fibonacci list

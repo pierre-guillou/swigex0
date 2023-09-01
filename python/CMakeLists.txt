@@ -17,6 +17,29 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module NumPy)
 find_package(SWIG 4.0 REQUIRED)
 include(${SWIG_USE_FILE})
 
+######################################  
+# DOCUMENTATION
+
+# Ensure documentation.i is existing
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
+  COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
+  COMMENT "Ensure that documentation.i exists")
+
+# Generate python documentation (before wrapper)
+# TODO : Do not regenerate python documentation if doxygen output is up to date
+add_custom_target(python_doc
+  COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/doc/doxy2swig.py -q
+    ${PROJECT_BINARY_DIR}/doxygen/xml/index.xml
+    ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
+  COMMENT "Generate python documentation from doxygen output"
+)
+
+# Doxygen is optional
+if (BUILD_DOXYGEN)
+  add_dependencies(python_doc doxygen)
+endif()
+
 ######################################
 # WRAPPER GENERATION & BUILD
 
@@ -53,6 +76,7 @@ set_property(SOURCE ${SRC} PROPERTY
   DEPENDS
     ${PROJECT_SOURCE_DIR}/swig/swig_exp.i
     ${PROJECT_SOURCE_DIR}/swig/swig_inc.i
+    ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
 )
 
 # SWIG flags

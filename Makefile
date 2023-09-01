@@ -20,6 +20,7 @@
 #  - uninstall      Uninstall shared library [and html doxymentation]
 #
 # Python wrapper (only for Linux-GCC or MacOS-clang):
+#  - python_doc     Build python package documentation [optional]
 #  - python_build   Build python wrapper
 #  - python_install Install python package
 #
@@ -112,6 +113,9 @@ cmake-python-r:
 cmake-doxygen:
 	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOXYGEN=ON
 
+cmake-python-doxygen:
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON
+
 print_version: cmake
 	@cmake --build $(BUILD_DIR) --target print_version -- --no-print-directory
 
@@ -135,7 +139,10 @@ uninstall:
 
 
 
-.PHONY: python_build python_install
+.PHONY: python_doc python_build python_install
+
+python_doc: cmake-python-doxygen
+	@cmake --build $(BUILD_DIR) --target python_doc -- --no-print-directory $(N_PROC_OPT)
 
 python_build: cmake-python
 	@cmake --build $(BUILD_DIR) --target python_build -- --no-print-directory $(N_PROC_OPT)

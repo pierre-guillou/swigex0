@@ -21,8 +21,9 @@ include(${SWIG_USE_FILE})
 # DOCUMENTATION
 
 # Ensure documentation.i is existing
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
-  COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
+# TODO : put documentation.i out of the source (be careful of pyswigex.i)
+add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
+  COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
   COMMENT "Ensure that documentation.i exists")
 
 # Generate python documentation (before wrapper)
@@ -31,7 +32,7 @@ add_custom_target(python_doc
   COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/doc/doxy2swig.py -q
     ${PROJECT_BINARY_DIR}/doxygen/xml/index.xml
-    ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
+    ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
   COMMENT "Generate python documentation from doxygen output"
 )
 
@@ -76,7 +77,7 @@ set_property(SOURCE ${SRC} PROPERTY
   DEPENDS
     ${PROJECT_SOURCE_DIR}/swig/swig_exp.i
     ${PROJECT_SOURCE_DIR}/swig/swig_inc.i
-    ${CMAKE_CURRENT_BINARY_DIR}/documentation.i
+    ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
 )
 
 # SWIG flags

@@ -98,7 +98,7 @@ if (APPLE)
   set_target_properties(python_build PROPERTIES SUFFIX ".so")
 endif()
 
-# Link to static library
+# Link to static library and NumPy
 target_link_libraries(python_build PUBLIC ${PROJECT_NAME}::static Python3::NumPy)
 
 # Transmit the fact that we are linking to static ${PROJECT_NAME} library
@@ -180,4 +180,3 @@ add_custom_target(python_install
 
 # Tell to CMake that python package must be built before installation [python_doc is optional]
 add_dependencies(python_install python_build)
-

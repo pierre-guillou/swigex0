@@ -21,12 +21,13 @@
 #
 # Python wrapper (only for Linux-GCC or MacOS-clang):
 #  - python_doc     Build python package documentation [optional]
-#  - python_build   Build python wrapper
-#  - python_install Install python package
+#  - python_build   Build python wrapper [and its documentation]
+#  - python_install Install python package [and its documentation]
 #
 # R wrapper:
-#  - r_build        Build R wrapper
-#  - r_install      Install R package
+#  - r_doc          Build R package documentation [optional]
+#  - r_build        Build R wrapper [and its documentation]
+#  - r_install      Install R package [and its documentation]
 #
 # Non-regression tests:
 #  - build_tests    Build non-regression tests C++ executables
@@ -37,8 +38,8 @@
 #  - check_test     Execute a single test (set $TEST variable)
 #
 # Demonstration scripts:
-#  - check_ipynb    Execute demonstration scripts (jupyter notebooks) and test output
-#  - check_rmd      Execute demonstration scripts (R Markdown) and test output
+#  - check_ipynb    Execute demonstration scripts (jupyter notebooks) and check output
+#  - check_rmd      Execute demonstration scripts (R Markdown) and check output
 #  - build_demos    Execute demonstration scripts (jupyter and R Markdown) and build HTMLs
 #
 # Clean:
@@ -116,6 +117,9 @@ cmake-doxygen:
 cmake-python-doxygen:
 	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON
 
+cmake-r-doxygen:
+	@cmake -B$(BUILD_DIR) -H. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_R=ON -DBUILD_DOXYGEN=ON
+
 print_version: cmake
 	@cmake --build $(BUILD_DIR) --target print_version -- --no-print-directory
 
@@ -147,13 +151,16 @@ python_doc: cmake-python-doxygen
 python_build: cmake-python
 	@cmake --build $(BUILD_DIR) --target python_build -- --no-print-directory $(N_PROC_OPT)
 
-python_install: python_build
+python_install: cmake-python
 	@cmake --build $(BUILD_DIR) --target python_install -- --no-print-directory $(N_PROC_OPT)
 
 
-.PHONY: r_build r_install
+.PHONY: r_doc r_build r_install
 
-r_build: cmake-r
+r_doc: cmake-r #cmake-r-doxygen
+	@cmake --build $(BUILD_DIR) --target r_doc -- --no-print-directory $(N_PROC_OPT)
+
+r_build: cmake-r #cmake-r-doxygen
 	@cmake --build $(BUILD_DIR) --target r_build -- --no-print-directory $(N_PROC_OPT)
 
 r_install: r_build
@@ -168,7 +175,7 @@ check_cpp: cmake
 check_py: cmake-python
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_py -- --no-print-directory $(N_PROC_OPT)
 
-check_r: cmake-r
+check_r: cmake-r #cmake-r-doxygen
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_r -- --no-print-directory $(N_PROC_OPT)
 
 check: cmake-python-r
@@ -177,7 +184,7 @@ check: cmake-python-r
 check_ipynb: cmake-python
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- --no-print-directory $(N_PROC_OPT)
 
-check_rmd: cmake-r
+check_rmd: cmake-r #cmake-r-doxygen
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
 
 check_test: cmake-python-r

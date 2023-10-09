@@ -39,7 +39,12 @@ jobs:
         python-version: ${{env.PYTHON_VERSION}}
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -yq r-base
+      run: |
+        sudo apt-get update
+        sudo apt-get install -yq libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
+        sudo apt-get install -yq libfontconfig1-dev libxml2-dev libfreetype6-dev
+        sudo apt-get install -yq libpng-dev libjpeg-dev libtiff5-dev
+        sudo apt-get install -yq r-base
 
     - name: Install Python dependencies
       run: |

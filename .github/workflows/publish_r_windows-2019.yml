@@ -15,7 +15,9 @@ env:
   SWIG_ROOT  : ${{github.workspace}}/swig_420b
   PCRE2_ROOT : ${{github.workspace}}/pcre2
   BISON_ROOT : ${{github.workspace}}/bison
-
+  DOXYGEN_ROOT : Doxygen
+  DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.8.windows.x64.bin.zip
+  
 jobs:
   
   build:
@@ -32,6 +34,15 @@ jobs:
       uses: r-lib/actions/setup-r@v2
       with:
         r-version: ${{matrix.r_version}}
+
+    - name : Download and install Doxygen
+      run: |
+        mkdir ${{env.DOXYGEN_ROOT}}
+        cd ${{env.DOXYGEN_ROOT}}
+        mkdir bin
+        cd .. 
+        curl --progress-bar --output ${{env.DOXYGEN_ROOT}}/download.zip ${{env.DOXYGEN_URL}}
+        7z -o${{env.DOXYGEN_ROOT}}/bin x ${{env.DOXYGEN_ROOT}}/download.zip
 
     - name: Install SWIG dependencies
       # See nuget.yml in SWIG github repo

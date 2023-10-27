@@ -119,7 +119,7 @@ pacman -Sy mingw-w64-x86_64-doxygen
 The Doxygen HTML documentation is optional (not included in the installation by default). If you want to generate it, execute the command:
 
 ```
-cmake -Bbuild -H. -DBUILD_DOXYGEN=ON
+cmake -Bbuild -S. -DBUILD_DOXYGEN=ON
 cmake --build build --target doxygen
 ```
 

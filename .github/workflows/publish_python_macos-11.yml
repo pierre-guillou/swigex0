@@ -17,6 +17,7 @@ jobs:
     runs-on: ${{matrix.os[0]}}
     strategy :
       matrix:
+        # Python version + Numpy version
         python:
           - ["3.8",  "1.20.3"]
           - ["3.9",  "1.20.3"]
@@ -33,13 +34,13 @@ jobs:
       with:
         python-version: ${{matrix.python[0]}}
         
-    - name : Download and install Doxygen
-      run: brew install doxygen
-
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install numpy==${{matrix.python[1]}} twine wheel
+
+    - name : Download and install Doxygen
+      run: brew install doxygen
 
     - name : Create Wheels
       run : |

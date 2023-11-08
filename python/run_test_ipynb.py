@@ -34,6 +34,7 @@ ep.preprocess(nb)
 if (out_type == "asciidoc"):
     exporter = ASCIIDocExporter()
     exporter.exclude_input = True
+    exporter.exclude_input_prompt = True
     exporter.exclude_markdown = True
     exporter.exclude_raw = True
     exporter.exclude_unknown = True
@@ -60,6 +61,10 @@ if (out_type == "asciidoc"):
 
     # Remove panda frame decoration that can vary according the version/OS i.e. :
     notebook_node = re.sub("\\|====+", "|===", notebook_node)
+    
+    # Remove pip install output
+    notebook_node = re.sub(".*site-packages is not writeable", "XXX", notebook_node)
+    notebook_node = re.sub("Requirement already satisfied.*", "XXX", notebook_node)
 
 # Write to output file
 with open(test_output, "w", encoding='utf8') as f:

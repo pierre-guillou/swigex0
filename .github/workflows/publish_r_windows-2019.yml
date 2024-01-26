@@ -10,13 +10,11 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug)
-  BUILD_TYPE: Release
+  BUILD_TYPE : Release
   BUILD_DIR : build
-  SWIG_ROOT  : ${{github.workspace}}/swig_420b
-  PCRE2_ROOT : ${{github.workspace}}/pcre2
-  BISON_ROOT : ${{github.workspace}}/bison
-  DOXYGEN_ROOT : Doxygen
-  DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.8.windows.x64.bin.zip
+  SWIG_ROOT : ${{github.workspace}}\swig_420b
+  DOXYGEN_ROOT : ${{github.workspace}}\doxygen
+  DOXYGEN_VERSION : "1.9.8"
   
 jobs:
   
@@ -35,39 +33,17 @@ jobs:
       with:
         r-version: ${{matrix.r_version}}
 
-    - name : Download and install Doxygen
-      run: |
-        mkdir ${{env.DOXYGEN_ROOT}}
-        cd ${{env.DOXYGEN_ROOT}}
-        mkdir bin
-        cd .. 
-        curl --progress-bar --output ${{env.DOXYGEN_ROOT}}/download.zip ${{env.DOXYGEN_URL}}
-        7z -o${{env.DOXYGEN_ROOT}}/bin x ${{env.DOXYGEN_ROOT}}/download.zip
+    - name: Install Doxygen under windows
+      uses: fabien-ors/install-doxygen-windows-action@v1
+      with:
+        doxygen-root: ${{env.DOXYGEN_ROOT}}
+        doxygen-version: ${{env.DOXYGEN_VERSION}}
 
-    - name: Install SWIG dependencies
-      # See nuget.yml in SWIG github repo
-      shell: powershell
-      run: |
-          nuget install Bison -Version 3.7.4 -OutputDirectory ${{env.BISON_ROOT}}
-          nuget install PCRE2 -Version 10.39 -OutputDirectory ${{env.PCRE2_ROOT}}
-
-    - name: Install R dependencies
-      run: Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)"
-      
-    - name: Compile and install [customized] SWIG 4.2.0b
-      shell: powershell
-      # TODO : Use a tagged realease (not the master branch)
-      run: |
-        mkdir swig_src
-        cd swig_src
-        git clone https://github.com/fabien-ors/swig.git
-        cd swig
-        $env:PATH="${{env.BISON_ROOT}}\Bison.3.7.4\bin;" + $env:PATH
-        $PCRE_PATH="${{env.PCRE2_ROOT}}\PCRE2.10.39.0"
-        cmake -B${{env.BUILD_DIR}} -G "Visual Studio 16 2019" -DCMAKE_INSTALL_PREFIX:PATH=${{env.SWIG_ROOT}} -DCMAKE_C_FLAGS="/DPCRE2_STATIC" -DCMAKE_CXX_FLAGS="/DPCRE2_STATIC" -DPCRE2_INCLUDE_DIR="$PCRE_PATH/include" -DPCRE2_LIBRARY="$PCRE_PATH/lib/pcre2-8-static.lib"
-        cmake --build ${{env.BUILD_DIR}} --config Release
-        cmake --install ${{env.BUILD_DIR}} --config Release
-
+    - name: Install the customized SWIG from source under windows
+      uses: fabien-ors/install-swig-windows-action@v2
+      with:
+        swig-root: ${{env.SWIG_ROOT}}
+        
     - name : Build the package and save generated file name in the environment
       run : |
         cmake -B${{env.BUILD_DIR}} -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE:STRING=${{env.BUILD_TYPE}} -DBUILD_R=ON -DBUILD_PYTHON=OFF -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} 

@@ -61,13 +61,15 @@ For installing from source, you must follow instructions from [https://github.co
 
 The only additional prerequisites are:
 * [All users] : *doxygen* 1.8.3 or higher
-* [Python users] : *numpy*
+* [Python users] : *numpy* package
+* [R users] : *devtools* R package (for generating R documentation)
 
 ### Linux (Ubuntu)
 
 ```
 sudo apt install doxygen
 python3 -m pip install numpy
+Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
 ```
 
 ### MacOS
@@ -75,6 +77,7 @@ python3 -m pip install numpy
 ```
 brew install doxygen
 python3 -m pip install numpy
+Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
 ```
 
 Notes:
@@ -112,6 +115,7 @@ These requirements are recommended to people who wants to compile *swigex* R pac
 
 ````
 pacman -Sy mingw-w64-x86_64-doxygen
+Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
 ````
 
 ## Generate the Documentation

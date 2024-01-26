@@ -10,7 +10,7 @@ index.xml is your doxygen generated XML file and pkg_dir is
 the root directory of your R package (in which the man directory will be filled).
 """
 # The current version of this code is hosted on a github repository:
-#   https://github.com/fabien.ors/doxy2rd
+#   https://github.com/fabien.ors/doxy2rd (DO NOT EXIST YET)
 #
 # This code is derivative work of the doxy2swig script from Prabhu Ramachandran & Michael Thon
 # which is available here:
@@ -21,8 +21,8 @@ the root directory of your R package (in which the man directory will be filled)
 # License: BSD style
 #
 # Changes:
-# October 2023 (Fabien Ors):
-#   - Generate Rd files for R platform (no more docstring for Python)
+# October 2023 (Fabien Ors):  WORK IN PROGRESS !!!
+#   - Generate Rd files for R platform (no more docstring for Python) 
 #
 
 from xml.dom import minidom

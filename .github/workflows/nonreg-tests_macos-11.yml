@@ -1,4 +1,4 @@
-name: nonreg-tests_ubuntu-latest
+name: nonreg-tests_macos-11
 
 on:
   # Activate the workflow at each push on main branch
@@ -22,11 +22,11 @@ env:
   PYTHON_VERSION : "3.11"
   NUMPY_VERSION : "1.23.5"
   R_VERSION : "4.1.0"
-  SWIG_ROOT : ${{github.workspace}}/swig_420b
-
+  SWIG_ROOT : ${{github.workspace}}\swig_420b
+  
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-11
 
     steps:
     - uses: actions/checkout@v3

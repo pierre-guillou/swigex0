@@ -36,7 +36,7 @@ add_custom_target(python_doc
   COMMENT "Generate python documentation from doxygen output"
 )
 
-# Doxygen is optional
+# Tell that we need to generate doxymentation before building python package
 if (BUILD_DOXYGEN)
   add_dependencies(python_doc doxygen)
 endif()
@@ -129,6 +129,10 @@ if (MSVC OR APPLE)
   target_link_libraries(python_build PRIVATE Python3::Module)
 endif()
 
+# Tell that we need to generate docstring files before building python package (if required)
+if (BUILD_DOXYGEN)
+  add_dependencies(python_build python_doc)
+endif()
 
 ########################################
 # PACKAGING (target independent)
@@ -178,5 +182,5 @@ add_custom_target(python_install
   VERBATIM
 )
 
-# Tell to CMake that python package must be built before installation [python_doc is optional]
+# Tell to CMake that python package must be built before installation
 add_dependencies(python_install python_build)

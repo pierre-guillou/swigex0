@@ -49,9 +49,6 @@ set(R_PACKAGE_SRC_FOLDER           ${R_PACKAGE_DESTINATION_FOLDER}/src)
 #    ${CMAKE_CURRENT_SOURCE_DIR}/doc/documentation.i
 #  COMMENT "Generate python documentation from doxygen output"
 #)
-#
-# Tell that we need to generate doxymentation before building python package
-#add_dependencies(python_doc doxygen)
 
 add_custom_target(r_doc
   COMMAND ${R_EXECUTABLE} CMD BATCH --no-echo --no-timing --no-save --no-restore ${CMAKE_CURRENT_SOURCE_DIR}/doc/create_doc.R ${R_PACKAGE_ROOT_FOLDER}/create_doc.out
@@ -62,8 +59,9 @@ add_custom_target(r_doc
 )
 
 # Tell that we need to generate doxymentation before building R package
-# (not yet)
-#add_dependencies(r_doc doxygen)
+if (BUILD_DOXYGEN)
+  add_dependencies(r_doc doxygen)
+endif()
 
 ######################################
 # WRAPPER GENERATION & BUILD
@@ -136,8 +134,10 @@ target_include_directories(r_build PRIVATE ${R_INCLUDE_DIRS})
 # Link to R's libraries (needed for MSYS and MacOS)
 target_link_libraries(r_build PRIVATE ${R_LIBRARIES})
 
-# Tell that we need to generate Rd files before building R package
-add_dependencies(r_build r_doc)
+# Tell that we need to generate Rd files before building R package (if required)
+if (BUILD_DOXYGEN)
+  add_dependencies(r_build r_doc)
+endif()
 
 ########################################
 # PACKAGING
@@ -205,7 +205,7 @@ add_custom_target(r_install
   VERBATIM
 )
 
-# Add r_build target dependency to install target
+# Tell to CMake that R package must be built before installation
 add_dependencies(r_install r_build)
 
 

@@ -47,6 +47,9 @@ jobs:
       with:
         r-version: ${{matrix.r_version}}
 
+    - name: Install devtools
+      run: Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/')"
+
     - name: Install Doxygen under windows
       uses: fabien-ors/install-doxygen-windows-action@v1
       with:

@@ -48,17 +48,6 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
-    - name: Install devtools dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -yq libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
-        sudo apt-get install -yq libfontconfig1-dev libxml2-dev libfreetype6-dev
-        sudo apt-get install -yq libpng-dev libjpeg-dev libtiff5-dev
-        sudo apt-get install -yq r-base
-        
-    - name: Install devtools
-      run: Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/')"
-
     - name: Compile and install [customized] SWIG 4.2.0
       run: |
         mkdir swig_src

@@ -47,9 +47,6 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
-    - name: Install devtools
-      run: Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/')"
-
     - name: Compile and install [customized] SWIG 4.2.0
       run: |
         mkdir swig_src

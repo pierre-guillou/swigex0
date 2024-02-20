@@ -1,12 +1,14 @@
-name: nonreg-tests_macos-11
+name: nonreg-tests_ubuntu-latest
 
 on:
+  # Permit calling trigger
+  workflow_call:
   # Activate the workflow at each push on main branch
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
   # Activate the workflow at each pull request on main branch
-  pull_request:
-    branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
   # Permit manual trigger
   workflow_dispatch:
     inputs:
@@ -21,12 +23,12 @@ env:
   BUILD_DIR : build
   PYTHON_VERSION : "3.11"
   NUMPY_VERSION : "1.23.5"
-  R_VERSION : "4.1.0"
-  SWIG_ROOT : ${{github.workspace}}\swig_420b
-  
+  R_VERSION : "4.3.2"
+  SWIG_ROOT : ${{github.workspace}}/swig_420b
+
 jobs:
   build:
-    runs-on: macos-11
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -46,6 +48,14 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
+    - name: Install devtools dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -yq libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
+        sudo apt-get install -yq libfontconfig1-dev libxml2-dev libfreetype6-dev
+        sudo apt-get install -yq libpng-dev libjpeg-dev libtiff5-dev
+        sudo apt-get install -yq r-base
+        
     - name: Install devtools
       run: Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/')"
 

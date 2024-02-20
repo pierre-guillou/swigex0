@@ -1,12 +1,14 @@
-name: nonreg-tests_windows-2019-msvc
+name: nonreg-tests_windows-latest-msvc
 
 on:
+  # Permit calling trigger
+  workflow_call:
   # Activate the workflow at each push on main branch
-  push:
-    branches: [ main ]
+  #push:
+  #  branches: [ main ]
   # Activate the workflow at each pull request on main branch
-  pull_request:
-    branches: [ main ]
+  #pull_request:
+  #  branches: [ main ]
   # Permit manual trigger
   workflow_dispatch:
     inputs:
@@ -21,12 +23,11 @@ env:
   BUILD_DIR : build
   PYTHON_VERSION : "3.11"
   NUMPY_VERSION : "1.23.5"
-  COMPILE_VERSION : '"Visual Studio 16 2019"' #Because cmake -G needs " "
 
 jobs:
   
   build:
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -42,7 +43,7 @@ jobs:
         python -m pip install numpy==${{env.NUMPY_VERSION}}
 
     - name: Configure CMake
-      run: cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -DBUILD_PYTHON=ON
+      run: cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=ON
 
     - name: Compile, install packages and execute non-regression tests
       run: cmake --build ${{env.BUILD_DIR}} --config ${{env.BUILD_TYPE}} --target check

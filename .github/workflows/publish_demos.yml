@@ -24,10 +24,9 @@ jobs:
     - uses: actions/checkout@v3
       
     - name: Install Python dependencies
-      # Test also official gstlearn
       run: |
         export PATH=/opt/python/py311/bin:$PATH
-        python3 -m pip install plotly gstlearn
+        python3 -m pip install plotly
 
     - name: Build demonstration HTMLs and save generated folder name in the environment
       run: |
@@ -39,13 +38,13 @@ jobs:
         echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_ENV"
 
     - name: Print version
-      run: echo "PROJECT_VERSION=${{ env.PROJECT_VERSION }}"
+      run: echo "PROJECT_VERSION=${{env.PROJECT_VERSION}}"
 
     - uses: actions/upload-artifact@v3 
       with:
         # This will become the folder name in the server
-        name: demos-${{ env.PROJECT_VERSION }}
-        path: ${{ env.DEMO_FOLDER }}
+        name: demos-${{env.PROJECT_VERSION}}
+        path: ${{env.DEMO_FOLDER}}
 
   publish:
     needs: build
@@ -55,9 +54,9 @@ jobs:
     steps:
     - uses: fabien-ors/folder-publish-action@v1
       with:
-        host: ${{ secrets.CG_HOST }}
-        username: ${{ secrets.CG_USR }}
-        password: ${{ secrets.CG_PWD }}
+        host: ${{secrets.CG_HOST}}
+        username: ${{secrets.CG_USR}}
+        password: ${{secrets.CG_PWD}}
         dest-path: "/var/www/html/swigex"
         
     # Delete the artifacts (for freeing storage space under github)

@@ -1,6 +1,15 @@
-name: publish_r_ubuntu-16
+name: publish_r_ubuntu
 
 on:
+  # Permit calling the workflow from outside (https://github.com/actions/runner/discussions/1884)
+  workflow_call:
+    inputs:
+      external_call:
+        description: 'To distinguish workflow_call from other events'
+        type: boolean
+        required: false
+        default: true
+  # Permit manual trigger
   workflow_dispatch:
     inputs:
       logLevel:
@@ -32,19 +41,21 @@ jobs:
     - uses: actions/upload-artifact@v3 
       with:
         name: ubuntu-package
-        path: ${{ env.MY_PKG }}
+        path: ${{env.MY_PKG}}
 
   publish:
     needs: build
+    if: ${{inputs.external_call == false}}
+    
     # Only ubuntu can upload to CRAN easily (ssh)
     runs-on: ubuntu-latest
     
     steps:
     - uses: fabien-ors/cran-publish-action@v1
       with:
-        host: ${{ secrets.CG_HOST }}
-        username: ${{ secrets.CG_USR }}
-        password: ${{ secrets.CG_PWD }}
+        host: ${{secrets.CG_HOST}}
+        username: ${{secrets.CG_USR}}
+        password: ${{secrets.CG_PWD}}
         repo-path: "/var/www/html/cran"
 
     # Delete the artifacts (for freeing storage space under github)

@@ -1,13 +1,27 @@
-name: publish_python_windows-2019
+name: publish_python_windows
 
 on:
+  # Permit calling the workflow from outside (https://github.com/actions/runner/discussions/1884)
+  workflow_call:
+    inputs:
+      external_call:
+        description: 'To distinguish workflow_call from other events'
+        type: boolean
+        required: false
+        default: true
+  # Permit manual trigger
   workflow_dispatch:
     inputs:
       logLevel:
         description: 'Manual'
         required: false
         default: ''
-
+      external_call:
+        description: 'To distinguish workflow_call from other events'
+        type: boolean
+        required: false
+        default: false
+        
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
@@ -23,19 +37,20 @@ jobs:
       matrix:
         # Python version + Numpy version
         python:
-          - ["3.8",  "1.20.3"]
-          - ["3.9",  "1.20.3"]
-          - ["3.10", "1.21.6"]
-          - ["3.11", "1.23.5"]
+          - ["3.8",  1.20.3]
+          - ["3.9",  1.20.3]
+          - ["3.10", 1.21.6]
+          - ["3.11", 1.23.5]
+          - ["3.12", 1.26.3]
         arch:
-          - ["win_amd64", "x64", "x64"]
-          - ["win32",     "x86", "Win32"]
+          - [win_amd64, x64, x64]
+          - [win32,     x86, Win32] # TODO : Win32 to be removed ?
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Setup Python Version
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v3
       with:
         python-version: ${{matrix.python[0]}}
         architecture: ${{matrix.arch[1]}}
@@ -44,7 +59,7 @@ jobs:
       # Force specific old version for Numpy
       run: |
         python -m pip install --upgrade pip
-        python -m pip install numpy==${{matrix.python[1]}} twine wheel
+        python -m pip install numpy==${{matrix.python[1]}} twine wheel setuptools
 
     - name : Download and install Doxygen
       run: |
@@ -57,11 +72,11 @@ jobs:
 
     - name : Create Wheels
       run : |
-        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A ${{matrix.arch[2]}} -DPython3_ROOT_DIR="${{env.pythonLocation}}" -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}} -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON
+        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A ${{matrix.arch[2]}} -DPython3_ROOT_DIR="${{env.pythonLocation}}" -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
         cmake --build ${{env.BUILD_DIR}} --target python_doc --config ${{env.BUILD_TYPE}}
         cmake --build ${{env.BUILD_DIR}} --target python_build --config ${{env.BUILD_TYPE}}
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
-        # Note: wheel must be declared pure (see setup.py)
+        # Note: wheel must be declared not pure (see setup.py)
         python setup.py bdist_wheel --plat-name=${{matrix.arch[0]}}
 
     - name : Upload

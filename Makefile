@@ -157,10 +157,10 @@ python_install: cmake-python
 
 .PHONY: r_doc r_build r_install
 
-r_doc: cmake-r #cmake-r-doxygen
+r_doc: cmake-r-doxygen
 	@cmake --build $(BUILD_DIR) --target r_doc -- --no-print-directory $(N_PROC_OPT)
 
-r_build: cmake-r #cmake-r-doxygen
+r_build: cmake-r
 	@cmake --build $(BUILD_DIR) --target r_build -- --no-print-directory $(N_PROC_OPT)
 
 r_install: r_build
@@ -175,7 +175,7 @@ check_cpp: cmake
 check_py: cmake-python
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_py -- --no-print-directory $(N_PROC_OPT)
 
-check_r: cmake-r #cmake-r-doxygen
+check_r: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_r -- --no-print-directory $(N_PROC_OPT)
 
 check: cmake-python-r
@@ -184,7 +184,7 @@ check: cmake-python-r
 check_ipynb: cmake-python
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- --no-print-directory $(N_PROC_OPT)
 
-check_rmd: cmake-r #cmake-r-doxygen
+check_rmd: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
 
 check_test: cmake-python-r

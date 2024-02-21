@@ -25,7 +25,7 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
-  COMPILE_VERSION : '"Visual Studio 16 2019"' #Because cmake -G needs " "
+  GENERATOR : "Visual Studio 16 2019"
   DOXYGEN_ROOT : Doxygen
   DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.8.windows.x64.bin.zip
   
@@ -72,7 +72,7 @@ jobs:
 
     - name : Create Wheels
       run : |
-        cmake -B${{env.BUILD_DIR}} -G ${{env.COMPILE_VERSION}} -A ${{matrix.arch[2]}} -DPython3_ROOT_DIR="${{env.pythonLocation}}" -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
+        cmake -B${{env.BUILD_DIR}} -G "${{env.GENERATOR}}" -A ${{matrix.arch[2]}} -DPython3_ROOT_DIR="${{env.pythonLocation}}" -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
         cmake --build ${{env.BUILD_DIR}} --target python_build --config ${{env.BUILD_TYPE}}
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
         # Note: wheel must be declared not pure (see setup.py)

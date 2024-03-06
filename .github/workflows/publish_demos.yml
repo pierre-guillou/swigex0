@@ -43,7 +43,7 @@ jobs:
     - uses: actions/upload-artifact@v3 
       with:
         # This will become the folder name in the server
-        name: demos
+        name: ${{env.PROJECT_VERSION}}/demos
         path: ${{env.DEMO_FOLDER}}
 
   publish:
@@ -57,7 +57,7 @@ jobs:
         host: ${{secrets.CG_HOST}}
         username: ${{secrets.CG_USR}}
         password: ${{secrets.CG_PWD}}
-        dest-path: "/var/www/html/swigex/${{env.PROJECT_VERSION}}"
+        dest-path: "/var/www/html/swigex"
         
     # Delete the artifacts (for freeing storage space under github)
     - uses: geekyeggo/delete-artifact@v2

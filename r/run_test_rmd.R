@@ -25,6 +25,8 @@ if (out_type == 'R') {
   rscript(outscript, stdout=outpath)
 } else if (out_type == "html") {
   library("knitr")
+  
+  # Execute Rmd script and dump output in a html file (self_contained see html header in Rmd)
   rmarkdown::render(script, output_format='html_document', quiet=FALSE, output_dir=outdir)
 } else {
   stop("Hun ?\n")

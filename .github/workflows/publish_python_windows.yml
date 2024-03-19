@@ -26,8 +26,8 @@ env:
   BUILD_TYPE: Release
   BUILD_DIR : build
   GENERATOR : "Visual Studio 16 2019"
-  DOXYGEN_ROOT : Doxygen
-  DOXYGEN_URL : https://www.doxygen.nl/files/doxygen-1.9.8.windows.x64.bin.zip
+  DOXYGEN_ROOT : ${{github.workspace}}\doxygen
+  DOXYGEN_VERSION : "1.9.8"
 
 jobs:
   build:

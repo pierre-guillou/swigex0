@@ -52,11 +52,12 @@ jobs:
       with:
         r-version: ${{matrix.r_version}}
         
-    - name : Download and install Doxygen
-      run: brew install doxygen
-
-    - name: Install R dependencies
-      run: Rscript -e "install.packages(c('systemfonts', 'ragg', 'pkgdown', 'devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)"
+    # Not yet operational (devtools cannot be installed) => BUILD_DOXYGEN=OFF
+    #- name : Download and install Doxygen
+    #  run: brew install doxygen
+    #
+    #- name: Install R dependencies
+    #  run: Rscript -e "install.packages(c('systemfonts', 'ragg', 'pkgdown', 'devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)"
 
     - name: Install the customized SWIG from source
       uses: fabien-ors/install-swig-unix-action@v1
@@ -66,7 +67,7 @@ jobs:
 
     - name : Build the package and save generated file name in the environment
       run : |
-        cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE:STRING=${{env.BUILD_TYPE}} -DBUILD_R=ON -DBUILD_PYTHON=OFF -DBUILD_DOXYGEN=ON -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
+        cmake -B${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE:STRING=${{env.BUILD_TYPE}} -DBUILD_R=ON -DBUILD_PYTHON=OFF -DBUILD_DOXYGEN=OFF -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
         cmake --build ${{env.BUILD_DIR}} --target r_install
         echo "MY_PKG=$(ls ${{env.BUILD_DIR}}/r/${{env.BUILD_TYPE}}/swigex_*.tgz)" >> "$GITHUB_ENV"
 

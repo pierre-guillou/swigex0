@@ -51,12 +51,32 @@
 #  - DEBUG=1            Build the debug version of the library and tests (default =0)
 #  - N_PROC=N           Use more CPUs for building procedure (default =1)
 #  - BUILD_DIR=<path>   Define a specific build directory (default =build[_msys])
-#  - TEST=<test-target> Name of the test target to be launched (e.g. testFibo_py)
+#  - BUILD_PYTHON=1     Configure cmake to build python wrapper (default =0, see target python_*)
+#  - BUILD_R=1          Configure cmake to build R wrapper (default =0, see target r_*)
+#  - TEST=<test-target> Name of the test target to be launched (e.g. test_Model_py)
 #
 # Usage example:
 #
 #  make check N_PROC=2
 #
+
+ifndef BUILD_PYTHON
+  BUILD_PYTHON = 0
+endif
+ifeq ($(BUILD_PYTHON), 1)
+  BUILD_PYTHON = ON
+ else
+  BUILD_PYTHON = OFF 
+endif
+
+ifndef BUILD_R
+  BUILD_R = 0
+endif
+ifeq ($(BUILD_R), 1)
+  BUILD_R = ON
+ else
+  BUILD_R = OFF 
+endif
 
 ifeq ($(OS),Windows_NT)
   # Assume MinGW (via RTools) => so MSYS Makefiles
@@ -64,6 +84,8 @@ ifeq ($(OS),Windows_NT)
 else
   # Standard GNU UNIX Makefiles otherwise
   GENERATOR = -G"Unix Makefiles"
+  # Set OS also for Linux or Darwin
+  OS := $(shell uname -s)
 endif
 
 ifeq ($(DEBUG), 1)
@@ -95,51 +117,39 @@ endif
 
 CMAKE_DEFINES = -DCMAKE_BUILD_TYPE=$(BUILD_TYPE)
 
-.PHONY: all cmake cmake-python cmake-r cmake-python-r cmake-doxygen print_version static shared build_tests doxygen install uninstall
+.PHONY: all cmake cmake-python cmake-r cmake-python-r cmake-doxygen cmake-python-doxygen cmake-r-doxygen cmake-python-r-doxygen print_version static shared build_tests doxygen install uninstall
 
 all: shared install
 
 cmake:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES)
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=$(BUILD_R)
 
 cmake-python:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=$(BUILD_R)
 
 cmake-r:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_R=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=ON
 
 cmake-python-r:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON -DBUILD_R=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=ON
 
 cmake-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=$(BUILD_R) -DBUILD_DOXYGEN=ON
 
 cmake-python-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=$(BUILD_R) -DBUILD_DOXYGEN=ON
 
 cmake-r-doxygen:
-	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_R=ON -DBUILD_DOXYGEN=ON
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=$(BUILD_PYTHON) -DBUILD_R=ON         -DBUILD_DOXYGEN=ON
+
+cmake-python-r-doxygen:
+	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=ON         -DBUILD_DOXYGEN=ON
 
 print_version: cmake
 	@cmake --build $(BUILD_DIR) --target print_version -- --no-print-directory
 
-static: cmake
-	@cmake --build $(BUILD_DIR) --target static -- --no-print-directory $(N_PROC_OPT)
-
-shared: cmake
-	@cmake --build $(BUILD_DIR) --target shared -- --no-print-directory $(N_PROC_OPT)
-
-build_tests: cmake
-	@cmake --build $(BUILD_DIR) --target build_tests -- --no-print-directory $(N_PROC_OPT)
-
-doxygen: cmake-doxygen
-	@cmake --build $(BUILD_DIR) --target doxygen -- --no-print-directory $(N_PROC_OPT)
-
-install: cmake
-	@cmake --build $(BUILD_DIR) --target install -- --no-print-directory $(N_PROC_OPT)
-
-uninstall: 
-	@cmake --build $(BUILD_DIR) --target uninstall -- --no-print-directory $(N_PROC_OPT)
+static shared build_tests install uninstall: cmake-doxygen
+	@cmake --build $(BUILD_DIR) --target $@ -- --no-print-directory $(N_PROC_OPT)
 
 
 
@@ -178,19 +188,19 @@ check_py: cmake-python
 check_r: cmake-r
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_r -- --no-print-directory $(N_PROC_OPT)
 
-check: cmake-python-r
+check: cmake-python-r-doxygen
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check -- --no-print-directory $(N_PROC_OPT)
 
-check_ipynb: cmake-python
+check_ipynb: cmake-python-doxygen
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- --no-print-directory $(N_PROC_OPT)
 
-check_rmd: cmake-r
+check_rmd: cmake-r-doxygen
 	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
 
 check_test: cmake-python-r
 	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)
 
-build_demos: cmake-python-r
+build_demos: cmake-python-r-doxygen
 	@cmake --build $(BUILD_DIR) --target build_demos -- --no-print-directory $(N_PROC_OPT)
 
 .PHONY: clean clean_all

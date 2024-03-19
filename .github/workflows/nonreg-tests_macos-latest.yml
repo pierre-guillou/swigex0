@@ -24,14 +24,14 @@ env:
   NUMPY_VERSION : "1.23.5"
   R_VERSION : "4.3.2"
   SWIG_ROOT : ${{github.workspace}}/swig_420b
-  
+
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
-
+    
     - name: Setup Python Version
       uses: actions/setup-python@v4
       with:

@@ -63,6 +63,12 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install numpy==${{matrix.python.nu}} twine wheel setuptools
 
+    - name: Install Doxygen under windows
+      uses: fabien-ors/install-doxygen-windows-action@v1
+      with:
+        doxygen-root: ${{env.DOXYGEN_ROOT}}
+        doxygen-version: ${{env.DOXYGEN_VERSION}}
+
     - name : Create Wheels
       run : |
         cmake -B${{env.BUILD_DIR}} -G "${{env.GENERATOR}}" -A ${{matrix.arch.of}} -DPython3_ROOT_DIR="${{env.pythonLocation}}" -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}

@@ -1,8 +1,8 @@
-+#NO_DIFF#XXX+
+#NO_DIFF#XXX
 ----['Longitude', 'Latitude', 'Elevation', 'January_temp']----
 
 
-+#NO_DIFF#XXX+
+#NO_DIFF#XXX
 ----[['372.1', '658.9', '255', '1.7'],
  ['303.5', '665.9', '125', '2'],
  ['218.4', '597.9', '8', '4.6'],

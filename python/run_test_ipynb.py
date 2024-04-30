@@ -113,8 +113,8 @@ if (out_type == "asciidoc"):
     notebook_node = re.sub("\[notice\].*", "#NO_DIFF#XXX", notebook_node)
     notebook_node = re.sub(".*site-packages is not writeable", "#NO_DIFF#XXX", notebook_node)
     notebook_node = re.sub("Requirement already satisfied.*", "#NO_DIFF#XXX", notebook_node)
-    # Remove this: *Out[3]:*
-    notebook_node = re.sub("\*Out\[[0-9]+\]:\*", "#NO_DIFF#XXX", notebook_node)
+    # Remove this: +*Out[3]:*+
+    notebook_node = re.sub("\+\*Out\[[0-9]+\]:\*\+", "#NO_DIFF#XXX", notebook_node)
     # Remove this: [png]
     notebook_node = re.sub("\!\[png\].*", "#NO_DIFF#XXX", notebook_node)
 

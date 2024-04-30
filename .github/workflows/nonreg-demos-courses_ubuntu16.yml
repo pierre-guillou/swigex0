@@ -39,8 +39,9 @@ jobs:
 
     - name: Install gstlearn
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install gstlearn
+        export PATH=/opt/python/py311/bin:$PATH
+        python3 -m pip install --upgrade pip
+        python3 -m pip install gstlearn
 
     - name: Compile and execute demos and courses tests
       run: |

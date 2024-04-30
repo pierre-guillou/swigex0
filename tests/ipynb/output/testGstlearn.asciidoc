@@ -25,5 +25,5 @@ Spectrum Tolerance        = 1e-05
 ----
 
 
-[[XXX]]
+
 ----

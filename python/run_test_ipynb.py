@@ -77,7 +77,7 @@ if (out_type == "asciidoc"):
     # [[e43b6f2f-ba2b-47f7-8a13-2336077446d1]]
     # -----<matplotlib.collections.QuadMesh at 0x7f3a056e6320>
     # ----[<matplotlib.lines.Line2D at 0x7f3918a78550>]
-    notebook_node = re.sub("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}", "XXX", notebook_node)
+    notebook_node = re.sub("\[\[[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}\]\]", "", notebook_node)
     notebook_node = re.sub("----<matplotlib.*", "XXX", notebook_node)
     notebook_node = re.sub("----\[<matplotlib.*", "XXX", notebook_node)
     

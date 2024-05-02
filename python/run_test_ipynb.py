@@ -108,6 +108,7 @@ if (out_type == "asciidoc"):
     
     # Remove panda frame decoration that can vary according the version/OS i.e. :
     notebook_node = re.sub("\\|====+", "|===", notebook_node)
+    notebook_node = re.sub("\[.*options=\"header\"\,]", "", notebook_node)
     
     # Remove pip install output
     notebook_node = re.sub("\[notice\].*", "#NO_DIFF#XXX", notebook_node)

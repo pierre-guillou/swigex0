@@ -25,3 +25,8 @@ invisible(f2$display())
 vec = fib(40)
 print(vec)
 ```
+
+```{r fourth_display}
+vec = fib(40)
+plot(seq(length(vec)), vec)
+```

@@ -1,7 +1,5 @@
 build*
 python/doc/documentation.i
-python/setup.py
-tests/*/main.out
 .RData
 .Rhistory
 .project
@@ -10,3 +8,4 @@ tests/*/main.out
 .settings
 *.Rout
 .ipynb_checkpoints
+*.html

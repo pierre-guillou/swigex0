@@ -4,3 +4,4 @@
 
 #define SWIGEX_RELEASE "@swigex_VERSION@"
 #define SWIGEX_DATE    "@swigex_DATE@"
+#define SWIGEX_COMMIT  "@swigex_COMMIT@"

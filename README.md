@@ -62,14 +62,14 @@ For installing from source, you must follow instructions from [https://github.co
 The only additional prerequisites are:
 * [All users] : *doxygen* 1.8.3 or higher
 * [Python users] : *numpy*, *notebook* and *nbconvert* package
-* [R users] : *devtools* R package (for generating R documentation)
+* [R users] : *roxygen2* R package (for generating R documentation)
 
 ### Linux (Ubuntu)
 
 ```
 sudo apt install doxygen
 python3 -m pip install numpy notebook nbconvert
-Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
+Rscript -e 'install.packages(c("roxygen2"),repos="https://cloud.r-project.org")'
 ```
 
 ### MacOS
@@ -77,7 +77,7 @@ Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
 ```
 brew install doxygen
 python3 -m pip install numpy notebook nbconvert
-Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
+Rscript -e 'install.packages(c("roxygen2"),repos="https://cloud.r-project.org")'
 ```
 
 Notes:
@@ -115,7 +115,7 @@ These requirements are recommended to people who wants to compile *swigex* R pac
 
 ````
 pacman -Sy mingw-w64-x86_64-doxygen
-Rscript -e 'install.packages(c("devtools"),repos="https://cloud.r-project.org")'
+Rscript -e 'install.packages(c("roxygen2"),repos="https://cloud.r-project.org")'
 ````
 
 ## Generate the Documentation

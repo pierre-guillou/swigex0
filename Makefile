@@ -82,8 +82,13 @@ ifeq ($(OS),Windows_NT)
   # Assume MinGW (via RTools) => so MSYS Makefiles
   GENERATOR = -G"MSYS Makefiles"
 else
-  # Standard GNU UNIX Makefiles otherwise
-  GENERATOR = -G"Unix Makefiles"
+  ifeq (, $(shell which ninja))
+    # Standard GNU UNIX Makefiles otherwise
+    GENERATOR = -G "Unix Makefiles"
+  else
+    # Standard GNU UNIX Makefiles otherwise
+    GENERATOR = -G "Ninja"
+  endif
   # Set OS also for Linux or Darwin
   OS := $(shell uname -s)
 endif
@@ -146,67 +151,67 @@ cmake-python-r-doxygen:
 	@cmake -B$(BUILD_DIR) -S. $(GENERATOR) $(CMAKE_DEFINES) -DBUILD_PYTHON=ON              -DBUILD_R=ON         -DBUILD_DOXYGEN=ON
 
 print_version: cmake
-	@cmake --build $(BUILD_DIR) --target print_version -- --no-print-directory
+	@cmake --build $(BUILD_DIR) --target print_version --
 
 static shared build_tests install uninstall: cmake-doxygen
-	@cmake --build $(BUILD_DIR) --target $@ -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target $@ -- $(N_PROC_OPT)
 
 
 
 .PHONY: python_doc python_build python_install
 
 python_doc: cmake-python-doxygen
-	@cmake --build $(BUILD_DIR) --target python_doc -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target python_doc -- $(N_PROC_OPT)
 
 python_build: cmake-python
-	@cmake --build $(BUILD_DIR) --target python_build -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target python_build -- $(N_PROC_OPT)
 
 python_install: cmake-python
-	@cmake --build $(BUILD_DIR) --target python_install -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target python_install -- $(N_PROC_OPT)
 
 
 .PHONY: r_doc r_build r_install
 
 r_doc: cmake-r-doxygen
-	@cmake --build $(BUILD_DIR) --target r_doc -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target r_doc -- $(N_PROC_OPT)
 
 r_build: cmake-r
-	@cmake --build $(BUILD_DIR) --target r_build -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target r_build -- $(N_PROC_OPT)
 
 r_install: r_build
-	@cmake --build $(BUILD_DIR) --target r_install -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target r_install -- $(N_PROC_OPT)
 
 
 .PHONY: check_cpp check_py check_r check check_ipynb check_rmd check_test build_demos
 
 check_cpp: cmake
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_cpp -- --no-print-directory $(N_PROC_OPT)
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_cpp -- $(N_PROC_OPT)
 
 check_py: cmake-python
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_py -- --no-print-directory $(N_PROC_OPT)
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_py -- $(N_PROC_OPT)
 
 check_r: cmake-r
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_r -- --no-print-directory $(N_PROC_OPT)
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_r -- $(N_PROC_OPT)
 
 check: cmake-python-r-doxygen
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check -- --no-print-directory $(N_PROC_OPT)
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check -- $(N_PROC_OPT)
 
 check_ipynb: cmake-python-doxygen
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- --no-print-directory $(N_PROC_OPT)
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_ipynb -- $(N_PROC_OPT)
 
 check_rmd: cmake-r-doxygen
-	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- --no-print-directory $(N_PROC_OPT)
+	@CTEST_OUTPUT_ON_FAILURE=1 cmake --build $(BUILD_DIR) --target check_rmd -- $(N_PROC_OPT)
 
 check_test: cmake-python-r
 	@cd $(BUILD_DIR); CTEST_OUTPUT_ON_FAILURE=1 ctest -R $(TEST)
 
 build_demos: cmake-python-r-doxygen
-	@cmake --build $(BUILD_DIR) --target build_demos -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target build_demos -- $(N_PROC_OPT)
 
 .PHONY: clean clean_all
 
 clean: 
-	@cmake --build $(BUILD_DIR) --target clean -- --no-print-directory $(N_PROC_OPT)
+	@cmake --build $(BUILD_DIR) --target clean -- $(N_PROC_OPT)
 
 clean_all:
 	@rm -rf $(BUILD_DIR)

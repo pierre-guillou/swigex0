@@ -12,8 +12,7 @@ if (IS_MULTI_CONFIG)
 endif()
 set(MY_CTEST_COMMAND ${CMAKE_CTEST_COMMAND} ${VERBOSE_TEST} ${CONFIG_TEST} --output-on-failure)
 
-add_subdirectory(cpp)
-set(CHECK_DEP check_cpp)
+set(CHECK_DEP "")
 
 if (BUILD_PYTHON)
   add_subdirectory(py)
@@ -28,5 +27,9 @@ if (BUILD_R)
   add_subdirectory(rmd)
   #list(APPEND CHECK_DEP check_rmd)
 endif()
+
+# include check_cpp last to be executed first (MSYS/R)...
+add_subdirectory(cpp)
+list(APPEND CHECK_DEP check_cpp)
 
 add_dependencies(check ${CHECK_DEP})

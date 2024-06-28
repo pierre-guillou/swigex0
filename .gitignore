@@ -6,6 +6,7 @@ python/doc/documentation.i
 .cproject
 .pydevproject
 .settings
+.cache
 *.Rout
 .ipynb_checkpoints
 *.html

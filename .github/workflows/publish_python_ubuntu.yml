@@ -39,6 +39,7 @@ jobs:
         python: [py38, py39, py310, py311, py312]
 
     steps:
+    - run: ldd --version
     - uses: actions/checkout@v3
 
     - name: Install Python dependencies

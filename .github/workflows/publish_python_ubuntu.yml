@@ -1,6 +1,8 @@
 name: publish_python_ubuntu
 
 on:
+  push:
+    branches: [ main ]
   # Permit calling the workflow from outside (https://github.com/actions/runner/discussions/1884)
   workflow_call:
     inputs:
@@ -40,6 +42,8 @@ jobs:
 
     steps:
     - run: ldd --version
+    - run: |
+        node --version
     - uses: actions/checkout@v2
 
     - name: Install Python dependencies

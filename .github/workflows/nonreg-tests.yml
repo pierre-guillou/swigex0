@@ -2,8 +2,6 @@ name: nonreg-tests
 
 on:
   # Activate the workflow at each push on main branch
-  push:
-    branches: [ main ]
   # Activate the workflow at each pull request on main branch
   pull_request:
     branches: [ main ]

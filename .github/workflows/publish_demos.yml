@@ -36,7 +36,7 @@ jobs:
     outputs:
       # https://docs.github.com/en/actions/using-jobs/defining-outputs-for-jobs
       project_version: ${{ steps.main_step.outputs.PROJECT_VERSION }}
-      
+
     steps:
     - uses: actions/checkout@v3
 
@@ -80,7 +80,7 @@ jobs:
           -DBUILD_R=ON \
           -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
 
-    - name: Compile swigex
+    - name: Compile the package
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3
 
@@ -102,7 +102,7 @@ jobs:
     needs: build
     if: ${{inputs.dry_publish == false}}
     
-    # Only ubuntu can upload to CRAN easily (ssh)
+    # Only ubuntu can upload to a server easily (ssh)
     runs-on: ubuntu-latest
     
     steps:

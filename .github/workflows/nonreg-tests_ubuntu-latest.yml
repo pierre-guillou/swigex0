@@ -19,7 +19,7 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+  BUILD_TYPE : Release
   BUILD_DIR : build
   PYTHON_VERSION : "3.11"
   NUMPY_VERSION : "1.23.5"

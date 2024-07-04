@@ -63,10 +63,10 @@ jobs:
         sudo apt install swig
         sudo apt install doxygen
 
-    - name : Configure CMake
+    - name : Configure build directory
       run : |
         cmake \
-          -B${{env.BUILD_DIR}} \
+          -B${{ env.BUILD_DIR }} \
           -DPython3_ROOT_DIR="${{env.pythonLocation}}" \
           -DBUILD_PYTHON=ON \
           -DBUILD_R=OFF \
@@ -76,7 +76,7 @@ jobs:
       run : |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target python_build
 
-    - name : Create Wheels
+    - name : Create Wheel
       run : |
         cd ${{env.BUILD_DIR}}/python/${{env.CMAKE_BUILD_TYPE}}
         # Note: wheel must be declared not pure (see setup.py)
@@ -89,14 +89,14 @@ jobs:
       with:
         name: ubuntu-python-package-${{matrix.os}}-${{matrix.python.py}}
         path: ${{env.MY_PKG}}
-    
+
   publish:
     needs: build
     if: ${{inputs.dry_publish == false}}
-    
+
     # Only ubuntu can upload via ssh
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: fabien-ors/pypi-publish-action@v1
       with:

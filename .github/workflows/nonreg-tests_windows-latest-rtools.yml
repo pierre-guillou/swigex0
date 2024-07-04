@@ -25,7 +25,7 @@ env:
   SWIG_ROOT : ${{github.workspace}}\swig_420b
 
 jobs:
-  
+
   build:
     runs-on: windows-latest
 

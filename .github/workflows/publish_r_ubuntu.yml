@@ -84,10 +84,10 @@ jobs:
   publish:
     needs: build
     if: ${{inputs.dry_publish == false}}
-    
+
     # Only ubuntu can upload to CRAN easily (ssh)
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: fabien-ors/cran-publish-action@v3
       with:

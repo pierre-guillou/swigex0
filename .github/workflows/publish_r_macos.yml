@@ -82,21 +82,21 @@ jobs:
     - name : Build the package and save generated file name in the environment
       run : |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target r_install
-        echo "MY_PKG=$(ls ${{env.BUILD_DIR}}/r/${{env.BUILD_TYPE}}/swigex_*.tgz)" >> "$GITHUB_ENV"
+        echo "MY_PKG=$(ls ${{env.BUILD_DIR}}/r/${{env.CMAKE_BUILD_TYPE}}/swigex_*.tgz)" >> "$GITHUB_ENV"
 
     - uses: actions/upload-artifact@v3
       # Use specific artifact identifier for publishing all versions
       with:
         name: macos-r-package-${{matrix.arch.os}}-${{matrix.r_version}}
         path: ${{env.MY_PKG}}
-    
+
   publish:
     needs: build
     if: ${{inputs.dry_publish == false}}
-    
+
     # Only ubuntu can upload via ssh
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: fabien-ors/cran-publish-action@v3
       with:

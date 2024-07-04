@@ -87,3 +87,16 @@ jobs:
     - name: Execute Python demos and courses
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_ipynb
+
+    - name: Compress output logs
+      if: success() || failure()
+      run: |
+        cd ${{env.BUILD_DIR}}/tests
+        find . -type f \( -name "*.asciidoc" -o -name "*.out" \) -print0 | tar -czvf ubuntu-logs.tar.gz --null -T -
+
+    - name: Publish output logs as artefact
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: demos-courses-logs
+        path: ${{env.BUILD_DIR}}/tests/demos-courses-logs.tar.gz

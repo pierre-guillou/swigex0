@@ -67,7 +67,7 @@ jobs:
     - name: Build demonstration HTMLs and save generated folder name in the environment
       id: main_step
       run: |
-        cmake --build ${{env.BUILD_DIR}} --target build_demos --parallel 3
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target build_demos
         PROJECT_VERSION=$(cmake --build ${{env.BUILD_DIR}} --target print_version | grep PROJECT_VERSION | cut -d "=" -f2 | xargs)
         echo "DEMO_FOLDER=${{env.BUILD_DIR}}/demo" >> "$GITHUB_ENV"
         echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_OUTPUT"

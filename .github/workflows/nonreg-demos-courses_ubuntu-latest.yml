@@ -86,7 +86,7 @@ jobs:
 
     - name: Execute Python demos and courses
       run: |
-        cmake --build ${{env.BUILD_DIR}} --parallel 3  --target check_ipynb
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_ipynb
 
     - name: Compress output logs
       if: success() || failure()

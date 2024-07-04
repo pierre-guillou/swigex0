@@ -39,7 +39,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install swigex
 
-    - name: Run the python test
+    - name: Run the python tests
       run: |
         python tests/py/testArgs.py
         python tests/py/testFibo.py

@@ -43,7 +43,7 @@ jobs:
     - name: Install swigex
       run: Rscript -e "install.packages(c('swigex'), repos='https://soft.mines-paristech.fr/cran/', dependencies = TRUE)"
 
-    - name: Run the r test
+    - name: Run the r tests
       run: |
         Rscript tests/r/testArgs.r
         Rscript tests/r/testFibo.r

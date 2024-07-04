@@ -1,7 +1,7 @@
 # swigex C++ Library and Wrappers
 
 * Author: Fabien Ors (MINES Paris - PSL University) 
-* Date: February 2024
+* Date: July 2024
 
 The *swigex* C++ library is a derivative work based on the *swigex0* project: [https://github.com/fabien-ors/swigex0](https://github.com/fabien-ors/swigex0)
 

@@ -35,7 +35,7 @@ jobs:
         image: fabienors/ubuntu-16-demos-rmd-ipynb
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
     - name: Install gstlearn
       run: |

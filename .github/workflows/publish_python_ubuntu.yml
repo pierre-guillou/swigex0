@@ -39,7 +39,7 @@ jobs:
         python: [py38, py39, py310, py311, py312]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
     - name: Install Python dependencies
       run: |

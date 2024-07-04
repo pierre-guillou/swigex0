@@ -92,7 +92,7 @@ jobs:
       if: success() || failure()
       run: |
         cd ${{env.BUILD_DIR}}/tests
-        find . -type f \( -name "*.asciidoc" -o -name "*.out" \) -print0 | tar -czvf ubuntu-logs.tar.gz --null -T -
+        find . -type f \( -name "*.asciidoc" -o -name "*.out" \) -print0 | tar -czvf demos-courses-logs.tar.gz --null -T -
 
     - name: Publish output logs as artefact
       if: always()

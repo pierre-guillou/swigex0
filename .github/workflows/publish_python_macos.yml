@@ -73,7 +73,9 @@ jobs:
         cmake \
           -B${{env.BUILD_DIR}} \
           -DBUILD_PYTHON=ON \
-          -DBUILD_DOXYGEN=ON
+          -DBUILD_R=OFF \
+          -DBUILD_DOXYGEN=ON \
+          -DPython3_ROOT_DIR="${{env.pythonLocation}}"
 
     - name : Build the package
       run : |

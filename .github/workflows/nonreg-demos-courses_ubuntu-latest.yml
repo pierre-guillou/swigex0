@@ -22,7 +22,7 @@ on:
         default: ''
 
 env:
-  CMAKE_BUILD_TYPE: Release
+  CMAKE_BUILD_TYPE : Release
   BUILD_DIR : build
   PYTHON_VERSION : "3.11"
   NUMPY_VERSION : "1.23.5"
@@ -71,22 +71,23 @@ jobs:
     - name: Configure build directory
       run: |
         cmake \
-          -B ${{env.BUILD_DIR}} \
+          -B${{ env.BUILD_DIR }} \
           -DBUILD_PYTHON=ON \
           -DBUILD_R=ON \
           -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
 
-    - name: Compile the package
+    - name: Build the package
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3
-
-    - name: Execute R demos and courses
-      run: |
-        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_rmd
 
     - name: Execute Python demos and courses
       run: |
         cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_ipynb
+
+    - name: Execute R demos and courses
+      if: success() || failure()
+      run: |
+        cmake --build ${{env.BUILD_DIR}} --parallel 3 --target check_rmd
 
     - name: Compress output logs
       if: success() || failure()

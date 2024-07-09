@@ -8,6 +8,11 @@ on:
         description: 'Manual'
         required: false
         default: ''
+      dry_publish:
+        description: 'Dry publish (no upload)'
+        type: boolean
+        required: false
+        default: false
 
 env:
   BUILD_TYPE: Release
@@ -22,7 +27,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Get project version
       id: main_step
       run: |

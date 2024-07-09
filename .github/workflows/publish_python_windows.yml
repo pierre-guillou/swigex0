@@ -25,7 +25,7 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIR : build
-  GENERATOR : "Visual Studio 16 2019"
+  CMAKE_GENERATOR : "Visual Studio 16 2019"
   DOXYGEN_ROOT : ${{github.workspace}}\doxygen
   DOXYGEN_VERSION : "1.9.8"
 
@@ -69,10 +69,21 @@ jobs:
         doxygen-root: ${{env.DOXYGEN_ROOT}}
         doxygen-version: ${{env.DOXYGEN_VERSION}}
 
+    - name : Configure build directory
+      run : |
+        cmake `
+          -B${{env.BUILD_DIR}} `
+          -A ${{matrix.arch.of}} `
+          -DPython3_ROOT_DIR="${{env.pythonLocation}}" `
+          -DBUILD_PYTHON=ON `
+          -DBUILD_DOXYGEN=ON `
+
+    - name : Build the package
+      run : |
+        cmake --build ${{env.BUILD_DIR}} --target python_build --config ${{env.BUILD_TYPE}}
+
     - name : Create Wheels
       run : |
-        cmake -B${{env.BUILD_DIR}} -G "${{env.GENERATOR}}" -A ${{matrix.arch.of}} -DPython3_ROOT_DIR="${{env.pythonLocation}}" -DBUILD_PYTHON=ON -DBUILD_DOXYGEN=ON -DDoxygen_ROOT=${{env.DOXYGEN_ROOT}}
-        cmake --build ${{env.BUILD_DIR}} --target python_build --config ${{env.BUILD_TYPE}}
         cd ${{env.BUILD_DIR}}\python\${{env.BUILD_TYPE}}
         # Note: wheel must be declared not pure (see setup.py)
         python -m build --wheel -C="--build-option=--plat-name=${{matrix.arch.pl}}"
@@ -85,14 +96,14 @@ jobs:
       with:
         name: windows-python-package-${{matrix.arch.ar}}-${{matrix.python.py}}
         path: ${{env.MY_PKG}}
-    
+
   publish:
     needs: build
     if: ${{inputs.dry_publish == false}}
-    
+
     # Only ubuntu can upload via ssh
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: fabien-ors/pypi-publish-action@v1
       with:
@@ -101,8 +112,7 @@ jobs:
         password: ${{secrets.TWINE_PYPI_PWD}}
         pattern: windows-python-package-*
 
-    # Delete the artifacts (for freeing storage space under github)
+    # Delete the artifacts (for freeing storage space under github)
     - uses: geekyeggo/delete-artifact@v2
       with:
         name: windows-python-package-*
-

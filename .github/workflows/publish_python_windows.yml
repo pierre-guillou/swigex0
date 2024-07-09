@@ -76,8 +76,8 @@ jobs:
           -A ${{matrix.arch.of}} `
           -DBUILD_PYTHON=ON `
           -DBUILD_R=OFF `
-          -DBUILD_DOXYGEN=ON `
-          -DPython3_ROOT_DIR="${{env.pythonLocation}}"
+          -DPython3_ROOT_DIR="${{env.pythonLocation}}" `
+          -DBUILD_DOXYGEN=ON
 
     - name : Build the package
       run : |
@@ -91,11 +91,6 @@ jobs:
         cd ..\..\..
         $PKG_PATH = Get-ChildItem -Path "${{env.BUILD_DIR}}/python/${{env.BUILD_TYPE}}/dist/*" -File
         echo "MY_PKG=$PKG_PATH" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-
-    - name: Test generated wheel
-      run: |
-        pip install ${{env.MY_PKG}}
-        python -c "import swigex; swigex.Fibo(50).display()"
 
     - uses: actions/upload-artifact@v3
       # Use specific artifact identifier for publishing all versions

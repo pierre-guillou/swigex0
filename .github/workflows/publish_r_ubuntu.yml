@@ -70,8 +70,8 @@ jobs:
           -B${{env.BUILD_DIR}} \
           -DBUILD_PYTHON=OFF \
           -DBUILD_R=ON \
-          -DBUILD_DOXYGEN=ON \
-          -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
+          -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig \
+          -DBUILD_DOXYGEN=ON
 
     - name : Build the package and save generated file name in the environment
       run : |

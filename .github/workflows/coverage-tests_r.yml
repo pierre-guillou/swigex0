@@ -45,7 +45,7 @@ jobs:
 
     - name: Run the r tests
       run: |
-        Rscript tests/r/testArgs.r
         Rscript tests/r/testFibo.r
+        Rscript tests/r/testArgs.r
         Rscript tests/r/testPolymorph.r
 

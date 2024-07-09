@@ -41,6 +41,6 @@ jobs:
 
     - name: Run the python tests
       run: |
-        python tests/py/testArgs.py
         python tests/py/testFibo.py
+        python tests/py/testArgs.py
         python tests/py/testPolymorph.py

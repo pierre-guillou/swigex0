@@ -28,7 +28,7 @@ jobs:
           
     steps:
     - uses: actions/checkout@v3
-      
+
     - name: Setup Python
       uses: actions/setup-python@v3
       with:
@@ -44,4 +44,3 @@ jobs:
         python tests/py/testArgs.py
         python tests/py/testFibo.py
         python tests/py/testPolymorph.py
-      

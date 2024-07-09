@@ -31,7 +31,7 @@ jobs:
             r_version: 4.0.5
           - os: windows-2022
             r_version: 4.1.3
-          
+
     steps:
     - uses: actions/checkout@v3
 
@@ -48,4 +48,4 @@ jobs:
         Rscript tests/r/testArgs.r
         Rscript tests/r/testFibo.r
         Rscript tests/r/testPolymorph.r
-      
+

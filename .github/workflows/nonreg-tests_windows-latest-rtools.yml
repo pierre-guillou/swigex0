@@ -49,7 +49,7 @@ jobs:
         swig-root: ${{env.SWIG_ROOT}}
         generator: "Visual Studio 17 2022"
 
-    - name: Configure CMake
+    - name: Configure build directory
       run: cmake -B${{env.BUILD_DIR}} -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_R=ON -DBUILD_PYTHON=OFF -DSWIG_EXECUTABLE=${{env.SWIG_ROOT}}/bin/swig
 
     - name: Compile, install packages and execute non-regression tests

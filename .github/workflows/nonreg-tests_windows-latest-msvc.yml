@@ -42,7 +42,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install numpy==${{env.NUMPY_VERSION}}
 
-    - name: Configure CMake
+    - name: Configure build directory
       run: cmake -B${{env.BUILD_DIR}} -DBUILD_PYTHON=ON
 
     - name: Compile, install packages and execute non-regression tests

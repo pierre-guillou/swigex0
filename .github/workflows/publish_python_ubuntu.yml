@@ -47,6 +47,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -yq \
+          swig \
+          doxygen
+
     - name: Setup Python Version
       uses: actions/setup-python@v4
       with:
@@ -58,16 +65,10 @@ jobs:
         python -m pip install numpy==${{matrix.python.nu}}
         python -m pip install build
 
-    - name: Install dependencies
-      run: |
-        sudo apt install swig
-        sudo apt install doxygen
-
     - name : Configure build directory
       run : |
         cmake \
           -B${{ env.BUILD_DIR }} \
-          -DPython3_ROOT_DIR="${{env.pythonLocation}}" \
           -DBUILD_PYTHON=ON \
           -DBUILD_R=OFF \
           -DBUILD_DOXYGEN=ON

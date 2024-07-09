@@ -71,7 +71,7 @@ jobs:
     - name : Configure build directory
       run : |
         cmake \
-          -B${{env.BUILD_DIR}} \
+          -B${{ env.BUILD_DIR }} \
           -DBUILD_PYTHON=ON \
           -DBUILD_R=OFF \
           -DBUILD_DOXYGEN=ON \

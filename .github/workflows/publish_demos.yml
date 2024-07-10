@@ -38,10 +38,10 @@ jobs:
       project_version: ${{ steps.main_step.outputs.PROJECT_VERSION }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup Python Version
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{env.PYTHON_VERSION}}
 
@@ -92,7 +92,7 @@ jobs:
         echo "DEMO_FOLDER=${{env.BUILD_DIR}}/demo" >> "$GITHUB_ENV"
         echo "PROJECT_VERSION=${PROJECT_VERSION}" >> "$GITHUB_OUTPUT"
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         # This will become the folder name in the server
         name: demos
@@ -116,6 +116,6 @@ jobs:
           dest-path: "/var/www/html/swigex/${{ env.PROJECT_VERSION }}"
 
       # Delete the artifacts (for freeing storage space under github)
-      - uses: geekyeggo/delete-artifact@v2
+      - uses: geekyeggo/delete-artifact@v5
         with:
           name: demos

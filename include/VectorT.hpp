@@ -271,14 +271,4 @@ std::ostream& operator<<(std::ostream &os, const VectorT<T> &vec) {
   return os;
 }
 
-// Force instantiation for VectorT (for Windows MSVC export)
-#ifdef _MSC_VER
-  // Do not export VectorXXX to SWIG (no more instantiation needed)
-  #ifndef SWIG
-SWIGEX_TEMPLATE_EXPORT template class VectorT<int>;
-SWIGEX_TEMPLATE_EXPORT template class VectorT<double>;
-SWIGEX_TEMPLATE_EXPORT template class VectorT<String>;
-  #endif
-#endif
-
 typedef VectorT<String> VectorString;

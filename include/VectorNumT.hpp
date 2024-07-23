@@ -222,17 +222,6 @@ std::ostream &operator<<(std::ostream &os,
   return os;
 }
 
-// Force instantiation for VectorNumT (for Windows MSVC export)
-#ifdef _MSC_VER
-  // Do not export VectorNumXXX to SWIG (no more instantiation needed)
-  #ifndef SWIG
-SWIGEX_TEMPLATE_EXPORT template class VectorNumT<int>;
-SWIGEX_TEMPLATE_EXPORT template class VectorNumT<double>;
-SWIGEX_TEMPLATE_EXPORT template class VectorT<VectorNumT<int> >;
-SWIGEX_TEMPLATE_EXPORT template class VectorT<VectorNumT<double> >;
-  #endif
-#endif
-
 typedef VectorNumT<int>       VectorInt;
 typedef VectorNumT<double>    VectorDouble;
 typedef VectorT<VectorInt>    VectorVectorInt;

@@ -18,9 +18,7 @@ set(DOXYGEN_EXCLUDE ${CMAKE_SOURCE_DIR}/include/args.hpp
                     ${CMAKE_SOURCE_DIR}/include/VectorT.hpp
                     ${CMAKE_SOURCE_DIR}/src/args.cpp
                     ${CMAKE_SOURCE_DIR}/src/polymorph.cpp
-                    ${CMAKE_SOURCE_DIR}/src/stdoutredirect.cpp
-                    ${CMAKE_SOURCE_DIR}/src/VectorNumT.cpp
-                    ${CMAKE_SOURCE_DIR}/src/VectorT.cpp)
+                    ${CMAKE_SOURCE_DIR}/src/stdoutredirect.cpp)
 set(DOXYGEN_VERBATIM_HEADERS NO)
 set(DOXYGEN_GENERATE_HTML YES)
 set(DOXYGEN_HTML_TIMESTAMP YES)

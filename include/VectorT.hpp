@@ -17,7 +17,7 @@
  **
  ***************************************************************************/
 template <typename T>
-class SWIGEX_EXPORT VectorT
+class VectorT
 {
 public:
   typedef std::vector<T> Vector;
@@ -245,6 +245,7 @@ void VectorT<T>::_detach()
 }
 
 #ifndef SWIG
+// TODO : Warning : Do not use under Windows and Mac (doesn't link)
 template <typename T>
 VectorT<T>& VectorT<T>::operator<<(const T& value)
 {
@@ -264,6 +265,11 @@ VectorT<T>& VectorT<T>::operator<<(const VectorT<T>& v)
 }
 #endif
 
+template <typename T>
+std::ostream& operator<<(std::ostream &os, const VectorT<T> &vec) {
+  os << vec.toString();
+  return os;
+}
 
 // Force instantiation for VectorT (for Windows MSVC export)
 #ifdef _MSC_VER
@@ -276,7 +282,3 @@ SWIGEX_TEMPLATE_EXPORT template class VectorT<String>;
 #endif
 
 typedef VectorT<String> VectorString;
-
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const VectorT<T>& vec);
-

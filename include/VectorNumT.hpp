@@ -20,7 +20,7 @@
  **
  ***************************************************************************/
 template <typename T>
-class SWIGEX_EXPORT VectorNumT : public VectorT<T>
+class VectorNumT : public VectorT<T>
 {
 public:
   typedef VectorT<T> Parent;
@@ -207,6 +207,19 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
     throw("VectorNumT<T>::divide: division by 0");
   std::for_each(VectorNumT::begin(), VectorNumT::end(), [v](T& d) { d /= v;});
   return *this;
+}
+
+template <typename T>
+std::ostream &operator<<(std::ostream &os,
+                         const VectorT<VectorNumT<T>> &vec) {
+  os << "[";
+  for (int i = 0, n = (int)vec.size(); i < n; i++) {
+    os << vec.at(i).toString();
+    if (i != n - 1)
+      os << " ";
+  }
+  os << "]";
+  return os;
 }
 
 // Force instantiation for VectorNumT (for Windows MSVC export)

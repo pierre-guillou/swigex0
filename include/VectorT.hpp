@@ -263,12 +263,12 @@ VectorT<T>& VectorT<T>::operator<<(const VectorT<T>& v)
                 { push_back(value); });
   return (*this);
 }
-#endif
 
 template <typename T>
 std::ostream& operator<<(std::ostream &os, const VectorT<T> &vec) {
   os << vec.toString();
   return os;
 }
+#endif
 
 typedef VectorT<String> VectorString;

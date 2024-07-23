@@ -1,13 +1,8 @@
 #pragma once
 
-#include "swigex_export.hpp"
-#include "swigex_define.hpp"
-
 #include "VectorT.hpp"
 
 #include <vector>
-#include <sstream>
-#include <memory>
 #include <limits>
 #include <algorithm>
 #include <cmath>

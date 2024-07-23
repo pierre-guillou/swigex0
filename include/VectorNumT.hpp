@@ -31,8 +31,8 @@ public:
   inline VectorNumT()                                              : Parent() { }
   inline VectorNumT(const Vector& vec)                             : Parent(vec) { }
   inline VectorNumT(size_type count, const T& value = T())         : Parent(count, value) { }
-  //template< class InputIt > // Conflict with previous constructor compiling with MSVC
-  //inline VectorNumT(InputIt first, InputIt last)                   : Parent(first, last) { }
+  template< class InputIt >
+  inline VectorNumT(InputIt first, InputIt last)                   : Parent(first, last) { }
   inline VectorNumT(const VectorNumT& other) = default;
 #ifndef SWIG
   inline VectorNumT(std::initializer_list<T> init)                 : Parent(init) { }
@@ -205,13 +205,14 @@ const VectorNumT<T>& VectorNumT<T>::divide(const T& v)
 }
 
 template <typename T>
-std::ostream &operator<<(std::ostream &os,
-                         const VectorT<VectorNumT<T>> &vec) {
+std::ostream& operator<<(std::ostream& os,
+                         const VectorT<VectorNumT<T>>& vec)
+{
   os << "[";
-  for (int i = 0, n = (int)vec.size(); i < n; i++) {
+  for (int i = 0, n = (int)vec.size(); i < n; i++)
+  {
     os << vec.at(i).toString();
-    if (i != n - 1)
-      os << " ";
+    if (i != n - 1) os << " ";
   }
   os << "]";
   return os;

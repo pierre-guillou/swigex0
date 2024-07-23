@@ -30,8 +30,8 @@ public:
   inline VectorT()                                                    : _v(std::make_shared<Vector>()) { }
   inline VectorT(const Vector& vec)                                   : _v(std::make_shared<Vector>(vec)) { }
   inline VectorT(size_type count, const T& value = T())               : _v(std::make_shared<Vector>(count, value)) { }
-  //template< class InputIt > // Conflict with previous constructor compiling with MSVC
-  //inline VectorT(InputIt first, InputIt last)                         : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
+  template< class InputIt >
+  inline VectorT(InputIt first, InputIt last)                         : _v(std::make_shared<Vector>()) { _v->assign(first, last); }
   inline VectorT(const VectorT& other) = default;
 #ifndef SWIG
   inline VectorT(std::initializer_list<T> init)                       : _v(std::make_shared<Vector>(init)) { }
@@ -80,6 +80,9 @@ public:
   inline const T* data() const                                        { return _v->data(); }
   inline const T* constData() const                                   { return _v->data(); }
 
+  inline T* subdata(size_type i = 0)                                  { _detach(); return _v->data() + i; }
+  inline const T* subdata(size_type i = 0) const                      { return _v->data() + i; }
+
   inline bool empty() const                                           { return _v->empty(); }
   inline size_type size() const                                       { return _v->size(); }
   inline void reserve(size_type new_cap)                              { _v->reserve(new_cap); }
@@ -124,7 +127,7 @@ public:
 
   inline void swap(VectorT& other);
   inline bool contains(const T& value) const;
-  inline void fill(const T& value, size_type size = -1);
+  inline void fill(const T& value, size_type size = 0);
   template< class InputIt >
   inline void assign(InputIt first, InputIt last)
   {
@@ -215,7 +218,7 @@ template <typename T>
 void VectorT<T>::fill(const T& value, size_type size)
 {
   _detach();
-  resize(size);
+  if (size > 0) resize(size);
   std::fill(begin(), end(), value);
 }
 
@@ -243,7 +246,6 @@ void VectorT<T>::_detach()
 }
 
 #ifndef SWIG
-// TODO : Warning : Do not use under Windows and Mac (doesn't link)
 template <typename T>
 VectorT<T>& VectorT<T>::operator<<(const T& value)
 {

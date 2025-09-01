@@ -25,7 +25,7 @@ endif()
 if(CMAKE_COMPILER_IS_GNUCC AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.0)
   set(Boost_USE_STATIC_LIBS ON) # mandatory for GCC < 9 (provided that boost is -fPIC)
 endif()
-find_package(Boost REQUIRED CONFIG COMPONENTS filesystem system)
+find_package(Boost REQUIRED COMPONENTS filesystem)
 message(STATUS "Found Boost: ${Boost_INCLUDE_DIRS} (found version \"${Boost_VERSION}\")")
 
 # Warning fiesta!
@@ -86,7 +86,7 @@ foreach(FLAVOR ${FLAVORS})
   )
 
   # Link to Boost
-  target_link_libraries(${FLAVOR} PRIVATE ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
+  target_link_libraries(${FLAVOR} PRIVATE Boost::filesystem)
   
   # append a 'd' to the output file name of the debug build targets
   set_target_properties(${FLAVOR} PROPERTIES DEBUG_POSTFIX "d")

@@ -24,6 +24,7 @@ env:
   CMAKE_GENERATOR : Ninja
   PYTHON_VERSION : "3.13.3"
   CMAKE_TOOLCHAIN_FILE : C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+  VCPKG_DEFAULT_TRIPLET: x64-windows-static
   
 jobs:
 

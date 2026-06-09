@@ -28,7 +28,7 @@ env:
 jobs:
 
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022 # TODO: Restore windows-latest when able to compile swig
 
     steps:
     - uses: actions/checkout@v4

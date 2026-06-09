@@ -38,11 +38,30 @@ jobs:
       with:
         r-version: ${{env.R_VERSION}}
 
-    - name: Install the customized SWIG from source
-      uses: fabien-ors/install-swig-windows-action@v3
-      with:
-        swig-root: ${{env.SWIG_ROOT}}
-        generator: "Visual Studio 18 2026"
+    - name: Create a folder for compiling SWIG and installing dependencies
+      shell: powershell
+      run: |
+        mkdir swig_src
+
+    - name: Install SWIG dependencies
+      # See nuget.yml in SWIG github repo
+      shell: powershell
+      run: |
+        cd swig_src
+        nuget install Bison -Version 3.7.4 -OutputDirectory .\bison
+        nuget install PCRE2 -Version 10.47.0 -OutputDirectory .\pcre2
+
+    - name: Compile and install [customized] SWIG
+      shell: powershell
+      run: |
+        cd swig_src
+        git clone https://github.com/fabien-ors/swig
+        cd swig
+        $env:PATH="..\bison\Bison.3.7.4\bin;" + $env:PATH
+        $PCRE2_PATH="..\pcre2\PCRE2.10.47.0"
+        cmake -Bbuild -G"Visual Studio 18 2026" -DCMAKE_INSTALL_PREFIX:PATH=${{env.SWIG_ROOT}} -DPCRE2_ROOT="$PCRE2_PATH" -DPCRE2_USE_STATIC_LIBS=ON
+        cmake --build build --config Release
+        cmake --install build --config Release
 
     - name: Configure build directory
       run: |

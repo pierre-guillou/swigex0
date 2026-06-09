@@ -28,7 +28,7 @@ env:
 jobs:
 
   build:
-    runs-on: windows-2022 # TODO: Restore windows-latest when able to compile swig
+    runs-on: windows-2025-vs2026
 
     steps:
     - uses: actions/checkout@v4
@@ -42,7 +42,7 @@ jobs:
       uses: fabien-ors/install-swig-windows-action@v3
       with:
         swig-root: ${{env.SWIG_ROOT}}
-        generator: "Visual Studio 17 2022"
+        generator: "Visual Studio 18 2026"
 
     - name: Configure build directory
       run: |
